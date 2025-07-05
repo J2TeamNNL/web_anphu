@@ -1,0 +1,319 @@
+/* --------------------------
+   ROOT VARIABLES & GLOBALS
+--------------------------- */
+:root {
+    --color-primary: #030a36;    
+    /* --color-secondary: #e2b605; */
+    --color-secondary: #C9B037;
+    --color-dark: #181f2f;            
+    --color-white: #ffffff;
+    --color-text: #444;
+    --color-muted: #666;
+    --color-hover: rgba(240, 240, 240, 0.137)
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+
+    color: var(--color-text);
+}
+
+.company-name {
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--color-primary);
+    /* font-style: italic; */
+    font-weight: bold;
+}
+
+.slogan {
+    color: var(--color-secondary);
+    font-weight: bold;
+    /* margin-bottom: 20px; */
+}
+
+/* --------------------------
+   TOP BAR
+--------------------------- */
+.top-bar {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    font-size: 15px;
+    padding: 10px 0;
+}
+
+.top-bar a,
+.top-bar i {
+    color: var(--color-white);
+    transition: color 0.3s ease;
+}
+
+.top-bar a:hover,
+.top-bar i:hover {
+    color: var(--color-secondary);
+}
+
+.border-divider {
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* --------------------------
+   HEADER MAIN
+--------------------------- */
+.header-main {
+    background-color: var(--color-white);
+    border-bottom: 2px solid var(--color-white);
+}
+
+.header-main .logo img {
+    height: 48px;
+}
+
+.header-main .hotline {
+    font-weight: bold;
+    color: var(--color-secondary);
+    font-size: 16px;
+}
+
+.header-main .email {
+    font-size: 14px;
+    color: var(--color-muted);
+}
+
+/* --------------------------
+   NAVIGATION BAR
+--------------------------- */
+.main-nav {
+    background-color: var(--color-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-nav .fa,
+.top-bar .fa {
+    color: var(--color-secondary);
+}
+
+
+/* Menu tổng */
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Mỗi mục menu */
+.navbar-nav .nav-item {
+    margin: 0 6px; /* Thay padding bằng margin để dãn đều giữa các item */
+    position: relative;
+}
+
+/* Đường kẻ phân cách giữa các mục (trừ mục cuối) */
+.navbar-nav .nav-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -6px; /* dịch sang phải để nằm ngoài phần tử */
+    top: 30%;
+    height: 40%;
+    width: 1px;
+    background-color: var(--color-secondary);
+}
+
+/* Link trong mỗi mục menu */
+.dropdown-item .icon-highlight {
+    color: var(--color-primary); 
+}
+
+.dropdown-menu .dropdown-item {
+    transition: all 0.2s ease;
+}
+.dropdown-menu .dropdown-item:hover {
+    font-weight: bold;
+    background-color: #f8f9fa;
+}
+
+.main-nav .nav-link {
+    display: inline-block;
+    padding: 10px 16px;
+    color: var(--color-white) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+/* Hover và Active trạng thái */
+.main-nav .nav-link:hover {
+    background-color: var(--color-hover);
+}
+
+.main-nav .nav-item.active .nav-link {
+    background-color: var(--color-muted);
+}
+
+/* --------------------------
+   TEXT & UTILITIES
+--------------------------- */
+.highlight-text {
+    color: var(--color-secondary);
+    font-weight: bold;
+}
+
+.lead-text {
+    font-size: 1.1rem;
+    color: var(--color-text);
+}
+
+/* --------------------------
+   INTRO SECTION
+--------------------------- */
+.section-intro {
+    padding: 30px 15px;
+}
+
+.anphu-box {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 25px;
+    background-color: var(--color-white);
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.anphu-box h3 {
+    font-size: 22px;
+    color: #1f2b7b;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--color-secondary);
+    padding-left: 10px;
+}
+
+.anphu-box ul {
+    padding-left: 18px;
+}
+
+.anphu-box ul li {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.anphu-box ul li strong {
+    color: var(--color-secondary);
+}
+
+/* --------------------------
+   HERO SLIDER (Static Background + Fade Content)
+--------------------------- */
+.hero-static-slider {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    min-height: 500px;
+    padding-top: 140px;
+    padding-bottom: 60px;
+    color: var(--color-white);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    transition: background-image 0.6s ease-in-out;
+}
+
+.hero-static-slider::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* 👈 độ mờ */
+    z-index: 1;
+}
+
+.hero-static-slider .container {
+    position: relative;
+    z-index: 2;
+}
+
+.slide-content-box {
+    position: absolute;
+    top: -60px; /* cố định vị trí theo padding trên */
+    left: 30px;
+    background-color: rgba(0, 0, 0, 0.61);
+    padding: 20px 30px;
+    border-radius: 10px;
+    color: #fff;
+    max-width: 500;
+}
+
+.slide-content-box.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* --------------------------
+   HERRO BUTTONS
+--------------------------- */
+.slide-buttons {
+    text-align: left;
+}
+
+.btn-slide {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border-radius: 3px;
+    margin-right: 6px;
+    padding: 6px 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-slide:hover,
+.btn-slide.active {
+    background-color: var(--color-dark);
+    color: var(--color-secondary);
+    border: 1px solid var(--color-hover);
+}
+
+
+/* --------------------------
+   FOOTER
+--------------------------- */
+
+.footer-info {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+}
+
+.footer-info a {
+    color: var(--color-secondary);
+}
+.footer-info a:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+}
+.footer-info h5 {
+    color: var(--color-secondary);
+}
+
+.footer-copyright {
+    color: var(--color-white);
+    font-size: 14px;
+    background-color: var(--color-primary);
+}
+
+
+.spaced-list li {
+    margin-bottom: 12px; /* Tăng khoảng cách giữa các mục */
+    line-height: 2;     /* Tăng độ cao dòng nếu mục quá dài */
+}
+
+.border-4 {
+        border-width: 4px !important;
+}
+.transition-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    transition: all 0.3s ease-in-out;
+}
