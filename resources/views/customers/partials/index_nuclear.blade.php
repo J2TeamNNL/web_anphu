@@ -1,27 +1,42 @@
 <section class="py-5 bg-light">
-    <div class="container">
-    
-        <div class="text-center mt-5">
-            <h4 class="text-blue font-weight-bold mb-4">DỊCH VỤ CỦA XÂY DỰNG AN PHÚ</h4>
+    <div class="container text-center">
+        <h4 class="text-uppercase font-weight-bold mb-5">Dịch Vụ Của Xây Dựng An Phú</h4>
+        <div class="row justify-content-center">
+            <!-- Cột dịch vụ -->
+            <div class="col-md-3 position-relative service-column">
+                <div class="service-box mb-3">
+                    <i class="fa fa-file-alt fa-2x text-primary mb-2"></i>
+                    <h6 class="font-weight-bold">Xin Phép Xây Dựng</h6>
+                </div>
+                <div class="sub-box mb-3">Bước 1: Khảo sát hồ sơ</div>
+                <div class="sub-box">Bước 2: Nộp hồ sơ & xử lý</div>
+            </div>
 
-            <div class="row" data-aos="zoom-in" data-aos-delay="200">
-                @php
-                    $services = [
-                        ['icon' => 'fa-file-alt', 'title' => 'Xin phép xây dựng'],
-                        ['icon' => 'fa-pencil-ruler', 'title' => 'Thiết kế kiến trúc'],
-                        ['icon' => 'fa-home', 'title' => 'Xây nhà trọn gói'],
-                        ['icon' => 'fa-check-circle', 'title' => 'Hoàn công xây dựng'],
-                    ];
-                @endphp
+            <div class="col-md-3 position-relative service-column">
+                <div class="service-box mb-3">
+                    <i class="fa fa-pencil-ruler fa-2x text-primary mb-2"></i>
+                    <h6 class="font-weight-bold">Thiết Kế Kiến Trúc</h6>
+                </div>
+                <div class="sub-box mb-3">Bước 1: Phác thảo ý tưởng</div>
+                <div class="sub-box">Bước 2: Duyệt bản vẽ chi tiết</div>
+            </div>
 
-                @foreach($services as $service)
-                    <div class="col-6 col-md-3 mb-4">
-                        <div class="border p-3 rounded shadow-sm h-100">
-                            <i class="fa {{ $service['icon'] }} fa-2x text-warning mb-3"></i>
-                            <h6 class="font-weight-bold text-uppercase">{{ $service['title'] }}</h6>
-                        </div>
-                    </div>
-                @endforeach
+            <div class="col-md-3 position-relative service-column">
+                <div class="service-box mb-3">
+                    <i class="fa fa-home fa-2x text-primary mb-2"></i>
+                    <h6 class="font-weight-bold">Xây Nhà Trọn Gói</h6>
+                </div>
+                <div class="sub-box mb-3">Bước 1: Triển khai thi công</div>
+                <div class="sub-box">Bước 2: Kiểm soát tiến độ</div>
+            </div>
+
+            <div class="col-md-3 position-relative service-column">
+                <div class="service-box mb-3">
+                    <i class="fa fa-check-circle fa-2x text-primary mb-2"></i>
+                    <h6 class="font-weight-bold">Hoàn Công Xây Dựng</h6>
+                </div>
+                <div class="sub-box mb-3">Bước 1: Chuẩn bị biên bản</div>
+                <div class="sub-box">Bước 2: Nộp & xác nhận hoàn công</div>
             </div>
         </div>
     </div>
