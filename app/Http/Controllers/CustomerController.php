@@ -22,9 +22,19 @@ class CustomerController extends Controller
         return view('customers.pages.about');
     }
 
-    public function services()
+    public function servicesPermit()
     {
-        return view('customers.pages.services');
+        return view('customers.pages.services_permit');
+    }
+
+    public function servicesDesign()
+    {
+        return view('customers.pages.services_design');
+    }
+
+    public function servicesContruction()
+    {
+        return view('customers.pages.services_construction');
     }
 
 

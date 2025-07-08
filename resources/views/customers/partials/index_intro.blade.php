@@ -2,13 +2,14 @@
     <div class="container">
         <div class="row">
             @php
-                $companyName = "An Phú Design";
+                $companyName = "An Phú";
             @endphp
 
-
+            
             <!-- Nội dung -->
             <div class="col-md-8" data-aos="fade-right">
                 <h4 class="text-uppercase text-primary font-weight-bold">Giới Thiệu Về An Phú</h4>
+                <hr class="border-warning" style="border-top: 3px solid orange; width: 80px; margin-left: 0;">
                 <p><span class="company-name">{{ $companyName }}</span> được thành lập từ kinh nghiệm cũng như mong  muốn của chúng tôi về một doanh nghiệp hàng đầu trong lĩnh vực thi công công trình dân dụng</p>
                 <p><span class="company-name">{{ $companyName }}</span> mong muốn tạo ra thật nhiều không gian sống, một không gian lý tưởng để nâng cao chất lượng cuộc sống. Đơn giản chúng tôi tâm niệm rằng: không gian sống không chỉ là nơi để ở mà phải là nơi tận hưởng hạnh phúc của mình.</p>
                 <p>Trải qua một thời gian xây dựng và phát triển, <span class="company-name">{{ $companyName }}</span> đã và đang ngày càng trưởng thành. Chúng tôi đã được rất nhiều Chủ đầu tư và các nhà cung cấp lựa chọn để trở thành đối tác chính trong lĩnh vực thi công công trình dân dụng tại Thành Phố Hà Nội và các tỉnh lân cận.</p>
@@ -29,6 +30,7 @@
                 <img src="{{ asset('assets/img/gallery/anphu_architect.jpg') }}" class="img-fluid rounded mb-3" alt="Engineer">
                 <div class="bg-light p-3 rounded shadow-sm">
                     <h6 class="font-weight-bold text-center text-uppercase mb-3">Báo giá xây nhà!</h6>
+                    <hr class="border-warning">
                     <form>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Họ tên">

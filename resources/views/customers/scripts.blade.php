@@ -10,8 +10,8 @@
         const heroSection = document.getElementById('hero-static-slider');
 
         const backgrounds = {
-            1: '{{ asset('assets/img/hero/slide1.jpg') }}',
-            2: '{{ asset('assets/img/hero/slide2.jpg') }}',
+            1: '{{ asset('assets/img/gallery/scadinavian1.jpg') }}',
+            2: '{{ asset('assets/img/gallery/scadinavian2.jpg') }}',
         };
 
         function loadSlide(slideNum) {

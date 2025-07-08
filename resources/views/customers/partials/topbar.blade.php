@@ -4,7 +4,9 @@
             <div class="row align-items-center text-white">
                 <!-- Logo -->
                 <div class="col-md-3 col-6 text-center text-md-left">
-                    <img src="{{ asset('assets/img/logo/banner.jpg') }}" alt="ANPHU Logo" style="height: 85px;">
+                    <a href="{{ route('customers.index')}}" class="logo-link d-inline-block">
+                        <img class="anphu-logo" src="{{ asset('assets/img/logo/banner.jpg') }}" alt="ANPHU Logo">
+                    </a>
                 </div>
 
                 <!-- Điện thoại & Email -->

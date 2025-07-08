@@ -1,5 +1,5 @@
 <!-- Hero Section -->
-    <section class="hero-static-slider" id="hero-static-slider" style="background-image: url('{{ asset('assets/img/hero/slide1.jpg') }}');">
+    <section class="hero-static-slider" id="hero-static-slider">
         <div class="container position-relative text-white">
             <div class="slide-content-box show" id="slide-content-box">
                 <!-- Nút chọn slide -->

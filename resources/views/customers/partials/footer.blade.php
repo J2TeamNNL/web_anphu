@@ -1,4 +1,4 @@
-<footer class="footer-info py-5 border-top">
+<footer class="footer-info py-5 border-top" style="background-image: url('{{ asset('assets/img/gallery/footer_background_1.jpg') }}');">
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-4">
@@ -22,7 +22,8 @@
 
             <div class="col-md-4">
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Đăng Ký Tư Vấn (Miễn Phí)</h5>
-                <form>
+                <form method="post" action="#">
+                    @csrf
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Họ Tên *" required>
                     </div>

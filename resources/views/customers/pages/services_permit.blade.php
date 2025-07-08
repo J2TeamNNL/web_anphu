@@ -1,9 +1,8 @@
 @extends('customers.layouts.master')
 
-@section('index')
-    @include('customers.partials.index_header')
+@section('services_permit')
 
-    @include('customers.partials.index_nuclear')
+    @include('customers.partials.anphu_permit')
 
     @include('customers.partials.sign_up_1')
 
