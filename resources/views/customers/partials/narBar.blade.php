@@ -25,9 +25,8 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ route('services.permit') }}"><i class="fa fa-cog mr-1 icon-highlight"></i> Hồ sơ cấp phép xây dựng</a>
                             <a class="dropdown-item" href="{{ route('services.design') }}"><i class="fa fa-cog mr-1 icon-highlight"></i> Thiết kế hồ sơ kĩ thuật, nội thất</a>
-                            <a class="dropdown-item" href="{{ route('services.construction') }}"><i class="fa fa-cog mr-1 icon-highlight"></i> Xây dựng phần thô</a>
-                            <a class="dropdown-item" href="#"><i class="fa fa-cog mr-1 icon-highlight"></i> Xây nhà trọn gói</a>
-                            <a class="dropdown-item" href="#"><i class="fa fa-cog mr-1 icon-highlight"></i> Hoàn công xây dựng</a>
+                            <a class="dropdown-item" href="{{ route('services.construction_full') }}"><i class="fa fa-cog mr-1 icon-highlight"></i> Xây nhà trọn gói</a>
+                            <a class="dropdown-item" href="{{ route('services.construction_raw') }}"><i class="fa fa-cog mr-1 icon-highlight"></i> Xây dựng phần thô</a>
                         </div>
                     </li>
 

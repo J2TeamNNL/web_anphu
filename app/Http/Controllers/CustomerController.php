@@ -32,9 +32,14 @@ class CustomerController extends Controller
         return view('customers.pages.services_design');
     }
 
-    public function servicesContruction()
+    public function servicesContructionRaw()
     {
-        return view('customers.pages.services_construction');
+        return view('customers.pages.services_construction_raw');
+    }
+
+    public function servicesContructionFull()
+    {
+        return view('customers.pages.services_construction_full');
     }
 
 

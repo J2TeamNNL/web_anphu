@@ -12,7 +12,7 @@
 
       <div class="row">
          @php
-            $constructions = [
+            $rawConstructions = [
                [
                   'title' => 'Thi công phần thô & nhân công hoàn thiện tiêu chuẩn',
                   'icon' => 'ic_construction_1.webp',
@@ -44,19 +44,19 @@
             ];
          @endphp
 
-         @foreach ($constructions as $construction)
+         @foreach ($rawConstructions as $rawConstruction)
          <div class="col-lg-4 col-md-6 mb-5 d-flex">
             <div class="card border-0 shadow rounded p-4 position-relative d-flex flex-column w-100">
 
                <!-- Icon nổi -->
                <div class="icon-circle-2 position-absolute d-flex align-items-center justify-content-center">
-                  <img src="{{ asset('assets/img/icon/' . $construction['icon']) }}" alt="Icon" style="height: 50px;">
+                  <img src="{{ asset('assets/img/icon/' . $rawConstruction['icon']) }}" alt="Icon" style="height: 50px;">
                </div>
 
                <!-- Tiêu đề & mô tả -->
-               <h5 class="font-weight-bold mt-4">{{ $construction['title'] }}</h5>
+               <h5 class="font-weight-bold mt-4">{{ $rawConstruction['title'] }}</h5>
                <p>
-                  {{ $construction['desc'] }}
+                  {{ $rawConstruction['desc'] }}
                </p>
             </div>
       </div>

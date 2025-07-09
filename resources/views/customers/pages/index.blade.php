@@ -1,14 +1,14 @@
 @extends('customers.layouts.master')
 
 @section('index')
-    @include('customers.partials.index_header')
+    @include('customers.partials.anphu_commitment')
 
-    @include('customers.partials.index_nuclear')
+    @include('customers.partials.anphu_solution')
 
     @include('customers.partials.sign_up_1')
 
-    @include('customers.partials.index_projects')
+    @include('customers.partials.anphu_projects')
     
-    @include('customers.partials.index_partner')
+    @include('customers.partials.anphu_partner')
 @endsection
 

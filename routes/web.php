@@ -10,7 +10,8 @@ Route::get('/about', [CustomerController::class, 'about'])->name('customers.abou
 Route::group(['prefix' => 'services'], function () {
    Route::get('/permit', [CustomerController::class, 'servicesPermit'])->name('services.permit');
    Route::get('/design', [CustomerController::class, 'servicesDesign'])->name('services.design');
-   Route::get('/construction', [CustomerController::class, 'servicesContruction'])->name('services.construction');
+   Route::get('/construction-full', [CustomerController::class, 'servicesContructionFull'])->name('services.construction_full');
+   Route::get('/construction-raw', [CustomerController::class, 'servicesContructionRaw'])->name('services.construction_raw');
 });
 
 Route::get('/elements', [CustomerController::class, 'elements']) ->name('customers.elements');
