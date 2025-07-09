@@ -140,6 +140,12 @@ body {
     background-color: #f8f9fa;
 }
 
+.dropdown-item.active {
+    color: var(--color-primary);
+    font-weight: 600;
+    background-color: var(--color-secondary);
+}
+
 .main-nav .nav-link {
     display: inline-block;
     padding: 10px 16px;
@@ -152,7 +158,7 @@ body {
 
 /* Hover và Active trạng thái */
 .main-nav .nav-link:hover {
-    background-color: var(--color-hover);
+    background-color: var(--color-gray);
 }
 
 .main-nav .nav-item.active .nav-link {

@@ -5,7 +5,6 @@
                 $companyName = "An Phú";
             @endphp
 
-            
             <!-- Nội dung -->
             <div class="col-md-8" data-aos="fade-right">
                 <h4 class="text-uppercase text-primary font-weight-bold">Giới Thiệu Về An Phú</h4>

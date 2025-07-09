@@ -16,12 +16,39 @@ class CustomerController extends Controller
         return view('customers.pages.index');
     }
     
-
-    public function about()
+    public function consultant()
     {
-        return view('customers.pages.about');
+        return view('customers.pages.consultant');
     }
 
+    public function blog()
+    {
+        return view('customers.pages.blog');
+    }
+
+    public function contact()
+    {
+        return view('customers.pages.contact');
+    }
+    
+    // ABOUT
+    public function aboutAnphu()
+    {
+        return view('customers.pages.about_anphu');
+    }
+
+    public function aboutOpenLetter()
+    {
+        return view('customers.pages.about_open_letter');
+    }
+
+    public function aboutCulturalValues()
+    {
+        return view('customers.pages.about_cultural_values');
+    }
+
+
+    // SERVICES
     public function servicesPermit()
     {
         return view('customers.pages.services_permit');
@@ -42,24 +69,38 @@ class CustomerController extends Controller
         return view('customers.pages.services_construction_full');
     }
 
-
-    public function elements()
+    // PORTFOLIO
+    public function portfolioVilla()
     {
-        return view('customers.pages.elements');
+        return view('customers.pages.portfolio_villa');
     }
 
-    public function contact()
+    public function portfolioTownHouse()
     {
-        return view('customers.pages.contact');
+        return view('customers.pages.portfolio_town_house');
     }
 
-    public function portfolio()
+    public function portfolioTradingHouse()
     {
-        return view('customers.pages.portfolio');
+        return view('customers.pages.portfolio_trading_house');
     }
 
-    public function blog()
+    //PRICE
+    public function priceFull()
     {
-        return view('customers.pages.blog');
+        return view('customers.pages.price_full');
     }
+    public function priceRaw()
+    {
+        return view('customers.pages.price_raw');
+    }
+    public function priceDesign()
+    {
+        return view('customers.pages.price_design');
+    }
+    public function pricePermit()
+    {
+        return view('customers.pages.price_permit');
+    }
+
 }

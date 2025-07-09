@@ -8,7 +8,7 @@
          </p>
       </div>
 
-      <div class="row">
+      <div class="row justify-content-center">
          @php
             $permits = [
                [
@@ -56,7 +56,7 @@
          @endphp
 
          @foreach ($permits as $permit)
-         <div class="col-lg-4 col-md-6 mb-5 d-flex">
+         <div class="col-lg-5 col-md-6 mb-5 d-flex">
             <div class="card border-0 shadow rounded p-4 position-relative d-flex flex-column w-100">
 
                <!-- Icon nổi -->
@@ -72,8 +72,8 @@
                   @endforeach
                </ul>
             </div>
+         </div>
+         @endforeach
       </div>
-      @endforeach
-   </div>
    </div>
 </section>

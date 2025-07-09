@@ -16,14 +16,33 @@
     @include('customers.partials.topBar')
     @include('customers.partials.narBar')
 
+
     @yield('index')
-    @yield('about')
+
+    @yield('about_anphu')
+    @yield('about_oppen_letter')
+    @yield('about_cultural_values')
+
     @yield('services_permit')
     @yield('services_design')
-    @yield('services_construction')
+    @yield('services_construction_full')
+    @yield('services_construction_raw')
+
+    @yield('portfolio_villa')
+    @yield('portfolio_town_house')
+    @yield('portfolio_trading_house')
+
+    @yield('price_full')
+    @yield('price_raw')
+    @yield('price_design')
+    @yield('price_permit')
+
+    @yield('consultant')
+    @yield('blog')
+    @yield('contact')
+    
 
     @include('customers.partials.footer')
-
     @include('customers.scripts')
 </body>
 </html>

@@ -5,7 +5,13 @@ use App\Http\Controllers\CustomerController;
 
 
 Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
-Route::get('/about', [CustomerController::class, 'about'])->name('customers.about');
+
+Route::group(['prefix' => 'about'], function () {
+   Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
+   Route::get('/open-letter', [CustomerController::class, 'aboutOpenLetter'])->name('about.open_letter');
+   Route::get('/cultural-values', [CustomerController::class, 'aboutCulturalValues'])->name('about.cultural_values');
+
+});
 
 Route::group(['prefix' => 'services'], function () {
    Route::get('/permit', [CustomerController::class, 'servicesPermit'])->name('services.permit');
@@ -14,9 +20,22 @@ Route::group(['prefix' => 'services'], function () {
    Route::get('/construction-raw', [CustomerController::class, 'servicesContructionRaw'])->name('services.construction_raw');
 });
 
-Route::get('/elements', [CustomerController::class, 'elements']) ->name('customers.elements');
-Route::get('/contact', [CustomerController::class, 'contact'])->name('customers.contact');
-Route::get('/portfolio', [CustomerController::class, 'portfolio'])->name('customers.portfolio');
+Route::group(['prefix' => 'portfolio'], function () {
+   Route::get('/villa', [CustomerController::class, 'portfolioVilla'])->name('portfolio.villa');
+   Route::get('/town-house', [CustomerController::class, 'portfolioTownHouse'])->name('portfolio.town_house');
+   Route::get('/trading-house', [CustomerController::class, 'portfolioTradingHouse'])->name('portfolio.trading_house');
+});
+
+Route::group(['prefix' => 'price'], function () {
+   Route::get('/full', [CustomerController::class, 'priceFull'])->name('price.full');
+   Route::get('/raw', [CustomerController::class, 'priceRaw'])->name('price.raw');
+   Route::get('/design', [CustomerController::class, 'priceDesign'])->name('price.design');
+   Route::get('/permit', [CustomerController::class, 'pricePermit'])->name('price.permit');
+});
+
+Route::get('/consultant', [CustomerController::class, 'consultant'])->name('customers.consultant');
 Route::get('/blog', [CustomerController::class, 'blog'])->name('customers.blog');
+Route::get('/contact', [CustomerController::class, 'contact'])->name('customers.contact');
+
 
 

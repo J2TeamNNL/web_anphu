@@ -1,7 +1,14 @@
 <section class="py-5 bg-white">
     <div class="container">
         <div class="row">
+            <div class="col-md-12" data-aos="fade-left">
+                <img src="{{ asset('assets/img/gallery/anphu_crew.jpg') }}" class="img-fluid mb-4 rounded shadow-sm" alt="anphu_crew">
+            </div>
+        </div>
+
+        <div class="row">
             {{-- SƠ LƯỢC --}}
+        
             <div class="col-md-12" data-aos="fade-right">
                 <h4 class="text-uppercase text-primary font-weight-bold">Sơ lược về An Phú Design</h4>
                 <hr class="border-warning">
