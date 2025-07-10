@@ -1,4 +1,4 @@
-<footer class="footer-info py-5 border-top" style="background-image: url('{{ asset('assets/img/gallery/footer_background_1.jpg') }}');">
+<footer class="footer-info py-5 border-top" style="background-image: url('{{ asset('assets/img/gallery/background_wooden_1.jpg') }}');">
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-4">

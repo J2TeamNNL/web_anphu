@@ -1,9 +1,9 @@
 @extends('customers.layouts.master')
 
-@section('open_letter')
+@section('contact')
 
     @include('customers.partials.sign_up_1')
 
-    @include('customers.partials.anphu_partner')
+    @include('customers.partials.anphu.partner')
 @endsection
 

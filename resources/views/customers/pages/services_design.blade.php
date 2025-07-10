@@ -1,13 +1,13 @@
 @extends('customers.layouts.master')
 
-@section('services_permit')
+@section('services_design')
 
-    @include('customers.partials.anphu_design')
+    @include('customers.partials.anphu.services_design')
 
     @include('customers.partials.sign_up_1')
 
-    @include('customers.partials.anphu_projects')
+    @include('customers.partials.anphu.demo_projects')
     
-    @include('customers.partials.anphu_partner')
+    @include('customers.partials.anphu.partner')
 @endsection
 

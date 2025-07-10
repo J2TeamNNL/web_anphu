@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Models\Portfolio;
 
 class CustomerController extends Controller
 {
@@ -33,7 +34,7 @@ class CustomerController extends Controller
     
     // ABOUT
     public function aboutAnphu()
-    {
+    {   
         return view('customers.pages.about_anphu');
     }
 
@@ -70,20 +71,44 @@ class CustomerController extends Controller
     }
 
     // PORTFOLIO
-    public function portfolioVilla()
+    public function projectIndex($type = null)
     {
-        return view('customers.pages.portfolio_villa');
+        $allTypes = Portfolio::getTypes();
+
+        if ($type && !array_key_exists($type, $allTypes)) {
+            abort(404);
+        }
+        
+        $portfolios = Portfolio::query()
+            ->when($type, fn($q) => $q->where('type', $type))
+            ->get();
+
+        $categories = [];
+        foreach (Portfolio::getCategories() as $typeKey => $catGroup) {
+            foreach ($catGroup as $key => $label) {
+                $categories[] = [
+                    'type' => $typeKey,
+                    'key' => $key,
+                    'class' => $typeKey . ' ' . $key,
+                    'name' => $label,
+                ];
+            }
+        }
+        
+        $projectTitle = 'Tất cả công trình';
+        if ($type && array_key_exists($type, $allTypes)) {
+            $projectTitle = 'Công trình ' . $allTypes[$type];
+        }
+
+        return view('customers.pages.projects', [
+            'portfolios' => $portfolios,
+            'types' => $allTypes,
+            'categories' => $categories,
+            'selectedType' => $type,
+            'projectTitle' => $projectTitle
+        ]);
     }
 
-    public function portfolioTownHouse()
-    {
-        return view('customers.pages.portfolio_town_house');
-    }
-
-    public function portfolioTradingHouse()
-    {
-        return view('customers.pages.portfolio_trading_house');
-    }
 
     //PRICE
     public function priceFull()

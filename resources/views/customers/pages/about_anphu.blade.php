@@ -1,13 +1,15 @@
 @extends('customers.layouts.master')
 
-@section('about')
+@section('about_anphu')
 
-    @include('customers.partials.anphu_history')    
+    @include('customers.partials.anphu.history')    
 
-    @include('customers.partials.anphu_solution')
-
-    @include('customers.partials.anphu_projects')
+    @include('customers.partials.anphu.solution')
     
-    @include('customers.partials.anphu_partner')
+    @include('customers.partials.sign_up_1')
+
+    @include('customers.partials.anphu.demo_projects')
+    
+    @include('customers.partials.anphu.partner')
 @endsection
 

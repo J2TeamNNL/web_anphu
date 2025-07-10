@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 </head>
 <body>
-
+    
     @include('customers.partials.topBar')
     @include('customers.partials.narBar')
 
@@ -20,7 +20,7 @@
     @yield('index')
 
     @yield('about_anphu')
-    @yield('about_oppen_letter')
+    @yield('about_open_letter')
     @yield('about_cultural_values')
 
     @yield('services_permit')
@@ -28,9 +28,7 @@
     @yield('services_construction_full')
     @yield('services_construction_raw')
 
-    @yield('portfolio_villa')
-    @yield('portfolio_town_house')
-    @yield('portfolio_trading_house')
+    @yield('projects')
 
     @yield('price_full')
     @yield('price_raw')

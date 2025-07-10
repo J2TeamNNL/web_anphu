@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
-
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PortfolioController;
+use PHPUnit\Framework\Attributes\Group;
 
 Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
 
@@ -20,11 +22,7 @@ Route::group(['prefix' => 'services'], function () {
    Route::get('/construction-raw', [CustomerController::class, 'servicesContructionRaw'])->name('services.construction_raw');
 });
 
-Route::group(['prefix' => 'portfolio'], function () {
-   Route::get('/villa', [CustomerController::class, 'portfolioVilla'])->name('portfolio.villa');
-   Route::get('/town-house', [CustomerController::class, 'portfolioTownHouse'])->name('portfolio.town_house');
-   Route::get('/trading-house', [CustomerController::class, 'portfolioTradingHouse'])->name('portfolio.trading_house');
-});
+Route::get('/projects/{type}', [CustomerController::class, 'projectIndex'])->name('projects.index');
 
 Route::group(['prefix' => 'price'], function () {
    Route::get('/full', [CustomerController::class, 'priceFull'])->name('price.full');
@@ -38,4 +36,34 @@ Route::get('/blog', [CustomerController::class, 'blog'])->name('customers.blog')
 Route::get('/contact', [CustomerController::class, 'contact'])->name('customers.contact');
 
 
+// Auth
+// Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+//    Route::get('login', [AuthController::class, 'login'])->name('login');
+//    Route::post('login', [AuthController::class, 'processLogin'])->name('process_login');
 
+//    Route::get('register', [AuthController::class, 'register'])->name('register');
+//    Route::post('register', [AuthController::class, 'processRegister'])->name('process_register');
+// });
+
+
+//Admin
+Route::group([
+   // 'middleware' => CheckLoginMiddleware::class,
+], function () {
+   
+   Route::get('logout',[AuthController::class, 'logout'])->name('logout');
+
+   Route::resource('portfolios', PortfolioController::class)->except([
+      'show',
+      'destroy',
+   ]);
+
+   
+   Route::group([
+      // 'middleware' => App\Http\Middleware\CheckSuperAdminMiddleware::class,
+   ], function () {
+      
+      Route::delete('portfolios/{portfolio}', [PortfolioController::class, 'destroy']) ->name('portfolios.destroy');
+   });
+
+});

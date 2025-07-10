@@ -22,9 +22,18 @@
 
                 <!-- MXH -->
                 <div class="col-md-2 text-right">
-                    <a href="#" class="btn btn-sm btn-warning"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="btn btn-sm btn-danger"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><img src="{{ asset('assets/img/logo/logo_zalo.png') }}" style="height: 20px;" alt="Zalo"></a>
+                    <a href="https://www.tiktok.com/@anphudesign" class="btn btn-sm btn-primary">
+                        <img src="{{ asset('assets/img/logo/logo_tiktok.png') }}" style="height: 20px;" alt="Tiktok">
+                    </a>
+                    <a href="#" class="btn btn-sm btn-warning">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-danger">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#">
+                        <img src="{{ asset('assets/img/logo/logo_zalo.png') }}" style="height: 20px;" alt="Zalo">
+                    </a>
                 </div>
             </div>
         </div>
