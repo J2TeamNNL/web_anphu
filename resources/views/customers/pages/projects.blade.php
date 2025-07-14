@@ -18,7 +18,7 @@
                             {{ $cat['name'] }}
                         </button>
                     @endif
-                @endforeach
+                @endforeach 
             </div>
 
             <!-- PROJECT GRID -->

@@ -4,11 +4,11 @@
             <div class="col-md-4 mb-4">
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Thông Tin Liên Hệ</h5>
                 <p><strong>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC VÀ NỘI THẤT AN PHÚ</strong></p>
-                <p><i class="fa fa-map-marker-alt mr-2 text-muted"></i> Số 35 phố Ngõ Huyện, Phường Hàng Trống, Quận Hoàn Kiếm, Thành phố Hà Nội, Việt Nam</p>
-                <p><i class="fa fa-phone-alt mr-2 text-muted"></i><strong class="text-danger">0969 317 331</strong></p>
-                <p><i class="fa fa-envelope mr-2 text-muted"></i> kientrucnoithat.anphu@gmail.com</p>
-                <p class="small text-muted">Giấy chứng nhận ĐKKD số 0108588362 do Sở KHĐT T.P. Hà Nội cấp ngày 15/01/2019</p>
-                <p><a href="#" class="text-primary">▶ Chính Sách Bảo Mật</a></p>
+                <p><i class="fa fa-map-marker-alt mr-2 text-warning"></i> Số 35 phố Ngõ Huyện, Phường Hàng Trống, Quận Hoàn Kiếm, Thành phố Hà Nội, Việt Nam</p>
+                <p><i class="fa fa-phone-alt mr-2 text-warning"></i><strong class="text-white">0969 317 331</strong></p>
+                <p><i class="fa fa-envelope mr-2 text-warning"></i> kientrucnoithat.anphu@gmail.com</p>
+                <p class="small text-white">Giấy chứng nhận ĐKKD số 0108588362 do Sở KHĐT T.P. Hà Nội cấp ngày 15/01/2019</p>
+                <p><a href="#" class="text-white">▶ Chính Sách Bảo Mật</a></p>
                 <img src="{{ asset('assets/img/logo/bocongthuong_thongbao.png') }}" alt="Thông báo Bộ Công Thương" style="height: 150px;">
             </div>
 
@@ -21,7 +21,7 @@
             </div>
 
             <div class="col-md-4">
-                <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Đăng Ký Tư Vấn (Miễn Phí)</h5>
+                <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Đăng Ký Tư Vấn</h5>
                 <form method="post" action="#">
                     @csrf
                     <div class="form-group">

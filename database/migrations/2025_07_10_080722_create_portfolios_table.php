@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('client')->nullable();
             $table->text('description')->nullable();
 
-            $table->enum('type', ['villa', 'town_house', 'trading_house']);
+            $table->enum('type', ['villa', 'town', 'commercial']);
+            
             $table->string('category');
 
             $table->string('image')->nullable();

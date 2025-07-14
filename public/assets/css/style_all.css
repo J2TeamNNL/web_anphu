@@ -268,8 +268,14 @@ body {
 
 
 /* --------------------------
-   HERRO BUTTONS
+BUTTONS
 --------------------------- */
+.filter-button.active {
+    background-color: #ffc107;
+    color: white;
+}
+
+
 .slide-buttons {
     text-align: left;
 }
@@ -357,7 +363,7 @@ body {
 
 
 .service-box {
-    background-color: #f8f9fa;
+    background-color: var(--color-white);
     padding: 20px;
     border-radius: 8px;
     border: 1px solid #dee2e6;
@@ -395,6 +401,11 @@ body {
     background-color: black;
 }
 
+.card-service {
+  border: 2px solid var(--color-primary);
+  border-radius: 1rem;
+}
+
 .logo-link img {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -421,11 +432,11 @@ body {
 }
 
 .icon-circle-2 {
-    top: 0%;
-    left: 50%;
+    top: -1%;
+    left: 15%;
     transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     background-color: #fff;
     border: 3px solid var(--color-primary); 
     border-radius: 50%;
@@ -440,7 +451,8 @@ body {
     font-weight: bold;
     background-color: var(--color-white);
 }
-#project .btn-outline-warning:hover {
+#project .btn-outline-warning:hover
+{
     background-color: var(--color-secondary);
     color: #000;
 }
@@ -478,5 +490,56 @@ body {
 }
 
 .card-project:hover .project-overlay {
+    transform: translateY(0);
+}
+
+
+
+/* ARTICLE */
+#blog .btn-outline-warning {
+    color: var(--color-primary);
+    border-color: var(--color-dark);
+    font-weight: bold;
+    background-color: var(--color-white);
+}
+#blog .btn-outline-warning:hover
+{
+    background-color: var(--color-secondary);
+    color: #000;
+}
+
+.card-blog {
+    height: 350px;
+    background-size: cover;
+    background-position: center;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-blog:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.35);
+}
+
+.blog-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.685);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+}
+
+.card-blog:hover .blog-overlay {
     transform: translateY(0);
 }

@@ -68,21 +68,25 @@
                     </div>
                 </li>
 
-                <li class="nav-item mx-2 dropdown {{ in_array($selectedType, ['villa', 'town-house', 'trading-house']) ? 'active' : '' }}">
+                <li class="nav-item mx-2 dropdown {{ in_array($selectedType, ['interior' , 'villa', 'town', 'commercial']) ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#" id="projectDropdown" data-toggle="dropdown">
                         <i class="fa fa-cogs mr-1"></i> Dự án
                     </a>
                     <div class="dropdown-menu" aria-labelledby="projectDropdown">
+                        <a class="dropdown-item {{ $selectedType === 'interior' ? 'active' : '' }}"
+                        href="{{ route('projects.index', ['type' => 'interior']) }}">
+                        <i class="fa fa-cube mr-1 icon-highlight"></i> Sản phẩm nội thất
+                        </a>
                         <a class="dropdown-item {{ $selectedType === 'villa' ? 'active' : '' }}"
                         href="{{ route('projects.index', ['type' => 'villa']) }}">
                         <i class="fa fa-cube mr-1 icon-highlight"></i> Công trình Biệt thự
                         </a>
-                        <a class="dropdown-item {{ $selectedType === 'town-house' ? 'active' : '' }}"
-                        href="{{ route('projects.index', ['type' => 'town-house']) }}">
+                        <a class="dropdown-item {{ $selectedType === 'town' ? 'active' : '' }}"
+                        href="{{ route('projects.index', ['type' => 'town']) }}">
                         <i class="fa fa-cube mr-1 icon-highlight"></i> Công trình Nhà phố
                         </a>
-                        <a class="dropdown-item {{ $selectedType === 'trading-house' ? 'active' : '' }}"
-                        href="{{ route('projects.index', ['type' => 'trading-house']) }}">
+                        <a class="dropdown-item {{ $selectedType === 'commercial' ? 'active' : '' }}"
+                        href="{{ route('projects.index', ['type' => 'commercial']) }}">
                         <i class="fa fa-cube mr-1 icon-highlight"></i> Công trình Nhà ở kết hợp kinh doanh
                         </a>
                     </div>
@@ -107,7 +111,7 @@
                 </li>
 
                 <li class="nav-item mx-2 {{ isActive($blogRoutes) }}">
-                    <a class="nav-link" href="{{ route('customers.blog') }}">
+                    <a class="nav-link" href="{{ route('blogs.index') }}">
                         <i class="fa fa-newspaper mr-1"></i>Hoạt động
                     </a>
                 </li>

@@ -3,7 +3,7 @@
       <div class="text-center mb-5">
          <h5 class="text-primary font-weight-bold">DỊCH VỤ PHÁP LÝ XÂY DỰNG</h5>
          <h2 class="font-weight-bold">Dịch vụ tư vấn chuẩn xác, thực hiện <span class="text-warning">minh bạch</span> chi phí tối ưu</h2>
-         <p class="text-muted">
+         <p class="text-dark">
             Vấn đề pháp lí trong xây dựng là một trong những vấn đề quan trọng để bắt đầu thiết kế, thi công. Chúng tôi mang lại các giải pháp trọn gói từ khâu tư vấn thông tin đến thực hiện thủ tục xin phép và hoàn công công trình xây dụng nhằm giúp gia chủ làm '' đúng ngay từ đầu'' - tiết kiệm thời gian, công sức và chi phí
          </p>
       </div>
@@ -57,16 +57,16 @@
 
          @foreach ($permits as $permit)
          <div class="col-lg-5 col-md-6 mb-5 d-flex">
-            <div class="card border-0 shadow rounded p-4 position-relative d-flex flex-column w-100">
+            <div class="card card-service shadow rounded p-4 position-relative d-flex flex-column w-100">
 
                <!-- Icon nổi -->
-               <div class="icon-circle-1 position-absolute d-flex align-items-center justify-content-center">
+               <div class="icon-circle-2 position-absolute d-flex align-items-center justify-content-center">
                   <img src="{{ asset('assets/img/icon/' . $permit['icon']) }}" alt="Icon" style="height: 50px;">
                </div>
 
                <!-- Tiêu đề & mô tả -->
-               <h5 class="font-weight-bold mt-4">{{ $permit['title'] }}</h5>
-               <ul class="text-muted pl-3 mt-2 mb-0">
+               <h5 class="font-weight-bold mt-4 text-primary">{{ $permit['title'] }}</h5>
+               <ul class="text-dark pl-3 mt-2 mb-0">
                   @foreach ($permit['list'] as $item)
                      <li>{{ $item }}</li>
                   @endforeach

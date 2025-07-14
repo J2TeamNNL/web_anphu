@@ -3,22 +3,23 @@
         <div class="row">
             <!-- LEFT: Values -->
             <div class="col-lg-6 mb-4">
-                <h4 class="text-warning font-weight-bold">NHỮNG GIÁ TRỊ VƯỢT TRỘI AN PHÚ MANG ĐẾN</h4>
-                <ul class="text-white mt-4 pl-3">
-                    <li>Thiết kế cá nhân hóa</li>
-                    <li>Bố trí công năng khoa học, tối ưu</li>
-                    <li>Cảnh quan mang mảng xanh vào công trình</li>
-                    <li>Thiết kế đối lưu không khí tự nhiên</li>
-                    <li>Tính toán kết cấu bền chắc</li>
-                    <li>Hệ thống ME điện nước, tiết kiệm năng lượng, an toàn</li>
-                    <li>Kiểm tra thông số pháp lý trước khi thiết kế</li>
-                    <li>Ứng dụng Phong thủy mang</li>
-                    <li>Đảm bảo Thi công thực hiện được</li>
-                </ul>
+               <h4 class="text-warning font-weight-bold">NHỮNG GIÁ TRỊ VƯỢT TRỘI AN PHÚ MANG ĐẾN</h4>
+               <ul class="text-white mt-4 pl-3">
+                  <li>Thiết kế cá nhân hóa</li>
+                  <li>Bố trí công năng khoa học, tối ưu</li>
+                  <li>Cảnh quan mang mảng xanh vào công trình</li>
+                  <li>Thiết kế đối lưu không khí tự nhiên</li>
+                  <li>Tính toán kết cấu bền chắc</li>
+                  <li>Hệ thống ME điện nước, tiết kiệm năng lượng, an toàn</li>
+                  <li>Kiểm tra thông số pháp lý trước khi thiết kế</li>
+                  <li>Ứng dụng Phong thủy mang</li>
+               <li>Đảm bảo Thi công thực hiện được</li>
+               </ul>
             </div>
 
             <!-- RIGHT: Form -->
             <div class="col-lg-6">
+               <h4 class="text-warning font-weight-bold text-center" >ĐĂNG KÝ TƯ VẤN</h4>
                <form class="text-dark p-4 rounded" method="post" action="#">
                   @csrf
                   <div class="form-group">

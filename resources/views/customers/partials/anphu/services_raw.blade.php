@@ -5,7 +5,7 @@
          <h2 class="font-weight-bold">
             Giải pháp cho công trình bền vững qua năm tháng
          </h2>
-         <p class="text-muted">
+         <p class="text-dark">
             Tổ chức thi công đạt tiêu chuẩn chất lượng, tiến độ, an toàn với đội ngũ kĩ sư nhiều kinh nghiệm, công nhân lành nghề và trang thiết bị máy móc đầy đủng.
          </p>
       </div>
@@ -45,8 +45,8 @@
          @endphp
 
          @foreach ($rawConstructions as $rawConstruction)
-         <div class="col-lg-4 col-md-6 mb-5 d-flex">
-            <div class="card border-0 shadow rounded p-4 position-relative d-flex flex-column w-100">
+         <div class="col-lg-5 col-md-6 mb-5 d-flex">
+            <div class="card card-service shadow rounded p-4 position-relative d-flex flex-column w-100">
 
                <!-- Icon nổi -->
                <div class="icon-circle-2 position-absolute d-flex align-items-center justify-content-center">
@@ -54,7 +54,7 @@
                </div>
 
                <!-- Tiêu đề & mô tả -->
-               <h5 class="font-weight-bold mt-4">{{ $rawConstruction['title'] }}</h5>
+               <h5 class="font-weight-bold mt-4 text-primary">{{ $rawConstruction['title'] }}</h5>
                <p>
                   {{ $rawConstruction['desc'] }}
                </p>

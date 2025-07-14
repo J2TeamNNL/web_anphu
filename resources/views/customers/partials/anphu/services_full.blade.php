@@ -5,7 +5,7 @@
          <h2 class="font-weight-bold">
             Giải pháp toàn diện từ khởi đầu đến hoàn thành
          </h2>
-         <p class="text-muted">
+         <p class="text-dark">
             Chủ đầu tư tiết kiệm được chi phí, thời gian, công sức khi tất cả công việc từ thiết kế , thủ tục pháp lý, thi công xây dựng và hoàn thiện nội thất được thực hiện bởi một tổng thầu có đầy đủ năng lực
          </p>
       </div>
@@ -46,7 +46,7 @@
 
          @foreach ($fullConstructions as $fullConstruction)
          <div class="col-lg-5 col-md-6 mb-5 d-flex">
-            <div class="card border-0 shadow rounded p-4 position-relative d-flex flex-column w-100">
+            <div class="card card-service shadow rounded p-4 position-relative d-flex flex-column w-100">
 
                <!-- Icon nổi -->
                <div class="icon-circle-2 position-absolute d-flex align-items-center justify-content-center">
@@ -54,7 +54,7 @@
                </div>
 
                <!-- Tiêu đề & mô tả -->
-               <h5 class="font-weight-bold mt-4">{{ $fullConstruction['title'] }}</h5>
+               <h5 class="font-weight-bold mt-4 text-primary">{{ $fullConstruction['title'] }}</h5>
                <p>
                   {{ $fullConstruction['desc'] }}
                </p>

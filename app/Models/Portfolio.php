@@ -33,29 +33,34 @@ class Portfolio extends Model
     public static function getTypes(): array
     {
         return [
+            'interior' => 'Nội thất',
             'villa' => 'Biệt thự',
-            'town-house' => 'Nhà phố',
-            'trading-house' => 'Nhà ở kết hợp kinh doanh',
+            'town' => 'Nhà phố',
+            'commercial' => 'Nhà thương mại'
         ];
     }
 
     public static function getCategories(): array
     {
         return [
+            'interior' => [
+                'home' => 'Nội thất nhà ở',
+                'office' => 'Nội thất văn phòng',
+            ],
             'villa' => [
                 'modern' => 'Hiện đại',
                 'neoclassic' => 'Tân cổ điển',
             ],
-            'town-house' => [
+            'town' => [
                 '2story' => 'Nhà 2 tầng',
                 '3story' => 'Nhà 3 tầng',
-                '4story' => 'Nhà 4 tầng',
+                '4to8story' => 'Nhà 4-8 tầng',
                 '5story' => 'Nhà 5 tầng',
                 'singleStory' => 'Nhà cấp 4',
             ],
-            'trading-house' => [
-                'appartment' => 'Căn hộ - Chung cư',
-                'office' => 'Văn phòng',
+            'commercial' => [
+                'homestay' => 'Homestay',
+                'appartment' => 'Chung cư',
             ],
         ];
     }
