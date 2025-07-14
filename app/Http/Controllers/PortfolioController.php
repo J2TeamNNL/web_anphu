@@ -10,18 +10,15 @@ use Illuminate\Http\Request;
 class PortfolioController extends Controller
 {   
     private Portfolio $model;
+    private array $types;
+    private array $categories;
 
-    private $types = ['villa', 'town_house', 'trading_house'];
-
-    private $categories = [
-        'villa' => ['modern', 'neoclassic'],
-        'town_house' => ['2story', '3story', '4story', '5story', 'singleStory'],
-        'trading_house' => ['appartment', 'office']
-    ];
 
     public function __construct()
     {
         $this->model = new Portfolio();
+        $this->types = Portfolio::getTypes();
+        $this->categories = Portfolio::getCategories();
     }
 
     public function index()
@@ -42,11 +39,11 @@ class PortfolioController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
             'client' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'type' => 'required|in:villa,town_house,trading_house',
+            'type' => 'required|in:villa,town,commercial',
             'category' => 'required|string|max:50',
             'year' => 'nullable|integer|min:2000|max:' . date('Y'),
 
@@ -87,10 +84,10 @@ class PortfolioController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
+            'location' => 'nullable|string|max:255',
             'client' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'type' => 'required|in:villa,town_house,trading_house',
+            'type' => 'required|in:villa,town,commercial',
             'category' => 'required|string|max:50',
             'year' => 'nullable|integer|min:2000|max:' . date('Y'),
             'image_new' => 'nullable|image',

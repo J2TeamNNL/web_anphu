@@ -10,6 +10,8 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    
 </head>
 <body>
     
@@ -29,6 +31,7 @@
     @yield('services_construction_raw')
 
     @yield('projects')
+    @yield('blogs')
 
     @yield('price_full')
     @yield('price_raw')
@@ -41,6 +44,6 @@
     
 
     @include('customers.partials.footer')
-    @include('customers.scripts')
+    @include('customers.scripts_customers')
 </body>
 </html>

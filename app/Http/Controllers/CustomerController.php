@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Portfolio;
+use App\Models\Article;
+
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
-use App\Models\Portfolio;
+
 
 class CustomerController extends Controller
 {
@@ -106,6 +109,34 @@ class CustomerController extends Controller
             'categories' => $categories,
             'selectedType' => $type,
             'projectTitle' => $projectTitle
+        ]);
+    }
+
+    public function blogIndex($type = null)
+    {
+        $types = Article::getTypes();
+
+
+        if ($type && !array_key_exists($type, $types)) {
+            abort(404);
+        }
+        
+        $articles = Article::query()
+            ->when($type, fn($q) => $q->where('type', $type))
+            ->get();
+
+
+        $articleTitle = 'Tất cả hoạt động';
+        if ($type && array_key_exists($type, $types)) {
+            $articleTitle = 'Công trình ' . $types[$type];
+        }
+
+        
+        return view('customers.pages.blogs', [
+            'articles' => $articles,
+            'types' => $types,
+            'selectedType' => $type,
+            'articleTitle' => $articleTitle
         ]);
     }
 

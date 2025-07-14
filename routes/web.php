@@ -2,8 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\AuthController;
+
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ArticleController;
+
+use App\Http\Controllers\AuthController;
+
+use App\Http\Middleware\CheckLoginMiddleware;
+
 use PHPUnit\Framework\Attributes\Group;
 
 Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
@@ -23,6 +29,7 @@ Route::group(['prefix' => 'services'], function () {
 });
 
 Route::get('/projects/{type}', [CustomerController::class, 'projectIndex'])->name('projects.index');
+Route::get('/blogs', [CustomerController::class, 'blogIndex'])->name('blogs.index');
 
 Route::group(['prefix' => 'price'], function () {
    Route::get('/full', [CustomerController::class, 'priceFull'])->name('price.full');
@@ -32,28 +39,32 @@ Route::group(['prefix' => 'price'], function () {
 });
 
 Route::get('/consultant', [CustomerController::class, 'consultant'])->name('customers.consultant');
-Route::get('/blog', [CustomerController::class, 'blog'])->name('customers.blog');
+
 Route::get('/contact', [CustomerController::class, 'contact'])->name('customers.contact');
 
 
-// Auth
-// Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-//    Route::get('login', [AuthController::class, 'login'])->name('login');
-//    Route::post('login', [AuthController::class, 'processLogin'])->name('process_login');
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('login', [AuthController::class, 'processLogin'])->name('process_login');
 
-//    Route::get('register', [AuthController::class, 'register'])->name('register');
-//    Route::post('register', [AuthController::class, 'processRegister'])->name('process_register');
-// });
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('register', [AuthController::class, 'processRegister'])->name('process_register');
 
 
 //Admin
 Route::group([
-   // 'middleware' => CheckLoginMiddleware::class,
-], function () {
+   'middleware' => CheckLoginMiddleware::class, 
+],  function () {
    
-   Route::get('logout',[AuthController::class, 'logout'])->name('logout');
+   Route::get('admin',[AuthController::class, 'index'])->name('admins.index');
 
-   Route::resource('portfolios', PortfolioController::class)->except([
+   Route::get('admin/logout',[AuthController::class, 'logout'])->name('admins.logout');
+
+   Route::resource('admin/portfolios', PortfolioController::class)->except([
+      'show',
+      'destroy',
+   ]);
+
+   Route::resource('admin/articles', ArticleController::class)->except([
       'show',
       'destroy',
    ]);
@@ -63,7 +74,8 @@ Route::group([
       // 'middleware' => App\Http\Middleware\CheckSuperAdminMiddleware::class,
    ], function () {
       
-      Route::delete('portfolios/{portfolio}', [PortfolioController::class, 'destroy']) ->name('portfolios.destroy');
+      Route::delete('admin/portfolios/{portfolio}', [PortfolioController::class, 'destroy']) ->name('portfolios.destroy');
+      Route::delete('admin/articles/{article}', [ArticleController::class, 'destroy']) ->name('articles.destroy');
    });
 
 });
