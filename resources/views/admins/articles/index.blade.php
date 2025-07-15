@@ -3,7 +3,11 @@
 @section('articles_index')
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Danh sách Bài đăng</h4>
+        <h3 class="mb-0">Xin chào {{ session('name')}}</h3>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0 text-primary">Danh sách Bài đăng</h4>
         <a href="{{ route('articles.create') }}" class="btn btn-success">+ Thêm bài đăng</a>
     </div>
 

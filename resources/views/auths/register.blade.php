@@ -3,11 +3,10 @@
 @section('auths.register')
 <div class="container mt-5">
    <div class="row justify-content-center">
-      <div class="col-md-6">
+      <div class="col-md-12">
          <div class="card">
-            <div class="card-header">Đăng ký tài khoản</div>
             <div class="card-body">
-               <form method="POST" action="{{ route('register') }}">
+               <form method="POST" action="{{ route('auths.process_register') }}">
                   @csrf
 
                   <div class="form-group">

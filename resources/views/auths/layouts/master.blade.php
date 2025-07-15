@@ -15,12 +15,20 @@
     
 </head>
 <body>
-    @include('admins.layouts.topBar')
+    @include('auths.layouts.topBar')
 
     <div class="bg-auth">
         <div class="auth-card">
             <div class="auth-header">
-                <h4 class="mb-0">{{ $title ?? 'Đăng nhập quản lý' }}</h4>
+                <h4 class="mb-0">
+                    @if (request()->routeIs('auths.login'))
+                        Đăng nhập CMS
+                    @elseif (request()->routeIs('auths.register'))
+                        Đăng ký tài khoản CMS
+                    @else
+                        {{ $title ?? 'Đăng nhập quản lý' }}
+                    @endif
+                </h4>
             </div>
 
             <div class="card-body">

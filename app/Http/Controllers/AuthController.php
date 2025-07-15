@@ -12,7 +12,8 @@ use App\Http\Requests\StoreAuthRequest;
 use App\Http\Requests\UpdateAuthRequest;
 
 class AuthController extends Controller
-{
+{   
+
     public function login()
     {
         return view('auths.login');
@@ -27,7 +28,7 @@ class AuthController extends Controller
 
             if(!Hash::check($request->get('password'), $user->password))
             {
-                return redirect()->route('login')
+                return redirect()->route('auths.login')
                     ->withErrors(['password' => 'Incorrect password.']);
             }
 
@@ -36,21 +37,22 @@ class AuthController extends Controller
             session()->put('avatar', $user->avatar);
             session()->put('level', $user->level);
 
-            return redirect()->route('stylists.index');
+            return redirect()->route('portfolios.index');
 
         } catch (\Throwable $e) 
         {
-            return redirect()->route('login');
+            return redirect()->route('auths.login');
+            
         } catch (\Throwable $e) 
         {
-            return redirect()->route('login')->withErrors(['email' => 'Something went wrong' . $e->getMessage()]);
+            return redirect()->route('auths.login')->withErrors(['email' => 'Something went wrong' . $e->getMessage()]);
         }
     }
 
     public function logout()
     {
         session()->flush();
-        return redirect()->route('login');
+        return redirect()->route('auths.login');
     }
 
     public function register()
@@ -65,12 +67,11 @@ class AuthController extends Controller
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
-            'level' => 0, // Default level for new users
         ]);
 
         UserRegisteredEvent::dispatch($user);
         // Dispatch the event after user registration
 
-        return redirect()->route('login')->with('success', 'Registration successful! Please log in.');
+        return redirect()->route('auths.login')->with('success', 'Registration successful! Please log in.');
     }
 }

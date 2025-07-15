@@ -40,7 +40,7 @@
             <ul class="navbar-nav mx-auto">
 
                 <li class="nav-item mx-2 {{ isActive($homeRoutes) }}">
-                    <a class="nav-link" href="{{ route('admins.index') }}">
+                    <a class="nav-link" href="{{ route('portfolios.index') }}">
                         <i class="fa fa-home mr-1"></i>Trang Chủ
                     </a>
                 </li>

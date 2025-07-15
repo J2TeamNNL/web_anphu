@@ -42,29 +42,27 @@ Route::get('/consultant', [CustomerController::class, 'consultant'])->name('cust
 
 Route::get('/contact', [CustomerController::class, 'contact'])->name('customers.contact');
 
-
-Route::get('login', [AuthController::class, 'login'])->name('login');
-Route::post('login', [AuthController::class, 'processLogin'])->name('process_login');
-
-Route::get('register', [AuthController::class, 'register'])->name('register');
-Route::post('register', [AuthController::class, 'processRegister'])->name('process_register');
+Route::group(['prefix' => 'auth'], function () {
+   Route::get('/login', [AuthController::class, 'login'])->name('auths.login');
+   Route::post('/login', [AuthController::class, 'processLogin'])->name('auths.process_login');
+   Route::get('/register', [AuthController::class, 'register'])->name('auths.register');
+   Route::post('/register', [AuthController::class, 'processRegister'])->name('auths.process_register');
+});
 
 
 //Admin
 Route::group([
    'middleware' => CheckLoginMiddleware::class, 
 ],  function () {
-   
-   Route::get('admin',[AuthController::class, 'index'])->name('admins.index');
 
-   Route::get('admin/logout',[AuthController::class, 'logout'])->name('admins.logout');
+   Route::get('auth/logout',[AuthController::class, 'logout'])->name('auths.logout');
 
-   Route::resource('admin/portfolios', PortfolioController::class)->except([
+   Route::resource('portfolios', PortfolioController::class)->except([
       'show',
       'destroy',
    ]);
 
-   Route::resource('admin/articles', ArticleController::class)->except([
+   Route::resource('articles', ArticleController::class)->except([
       'show',
       'destroy',
    ]);
@@ -74,8 +72,8 @@ Route::group([
       // 'middleware' => App\Http\Middleware\CheckSuperAdminMiddleware::class,
    ], function () {
       
-      Route::delete('admin/portfolios/{portfolio}', [PortfolioController::class, 'destroy']) ->name('portfolios.destroy');
-      Route::delete('admin/articles/{article}', [ArticleController::class, 'destroy']) ->name('articles.destroy');
+      Route::delete('portfolios/{portfolio}', [PortfolioController::class, 'destroy']) ->name('portfolios.destroy');
+      Route::delete('articles/{article}', [ArticleController::class, 'destroy']) ->name('articles.destroy');
    });
 
 });
