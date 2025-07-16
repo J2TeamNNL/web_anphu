@@ -21,11 +21,42 @@ class PortfolioController extends Controller
         $this->categories = Portfolio::getCategories();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $portfolios = $this->model->latest()->get();
+        $search = $request->input('q');
+        $year = $request->input('year');
+        $category = $request->input('category');
 
-        return view('admins.portfolios.index', compact('portfolios'));
+        $query = Portfolio::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('location', 'like', "%{$search}%")
+                ->orWhere('client', 'like', "%{$search}%");
+            });
+        }
+
+        if ($year) {
+            $query->where('year', $year);
+        }
+
+        if ($category) {
+            $query->where('category', $category);
+        }
+
+        $years = Portfolio::select('year')->distinct()->pluck('year')->filter()->sortDesc()->values();
+
+        $portfolios = $query->orderByDesc('year')->paginate(3)->appends($request->query());
+
+        return view('admins.portfolios.index', [
+            'portfolios' => $portfolios,
+            'categories' => $this->categories,
+            'years' => $years,
+            'search' => $search,
+            'selectedYear' => $year,
+            'selectedCategory' => $category,
+        ]);
     }
 
     public function create()

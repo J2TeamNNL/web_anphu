@@ -11,24 +11,42 @@ class ArticleController extends Controller
 {   
     private Article $model;
 
+    private array $types;
+
     public function __construct()
     {
         $this->model = new Article();
+        
+        $this->types = Article::getTypes();
     }
 
     public function index(Request $request)
     {   
+        $search = $request->input('q');
+        $type = $request->input('type');
+
         $query = Article::query();
 
-        if ($request->filled('type')) {
-            $query->where('type', $request->type);
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+            });
         }
 
-        $types = $this->model->getTypes();
+        if ($type) {
+            $query->where('type', $type);
+        }
 
-        $articles = $this->model->latest()->get();
+        $articles = $query->orderByDesc('type')->paginate(3)->appends($request->query());
 
-        return view('admins.articles.index', compact('articles','types'));
+        return view('admins.articles.index', [
+            'articles' => $articles,
+            'types' => $this->types,
+            'search' => $search,
+            'selectedType' => $type,
+        ]);
+
     }
 
     public function create()

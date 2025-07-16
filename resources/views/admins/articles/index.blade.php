@@ -3,7 +3,7 @@
 @section('articles_index')
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="mb-0">Xin chào {{ session('name')}}</h3>
+        <h5 class="mb-0">Xin chào {{ session('name')}}</h5>
     </div>
 
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -13,23 +13,38 @@
 
     <div class="card shadow-sm">
         <div class="card-body">
-            {{-- Bộ lọc theo loại bài đăng --}}
-            <form method="GET" class="form-inline mb-4">
-                <label for="type" class="mr-2 font-weight-bold">Lọc theo thể loại bài đăng:</label>
-                <select name="type" id="type" class="form-control mr-2">
-                    <option value="">-- Tất cả --</option>
-                    @foreach ($types as $key => $label)
-                        <option value="{{ $key }}" {{ request('type') == $key ? 'selected' : '' }}>
-                            {{ $label }}
-                        </option>
-                    @endforeach
-                </select>
-                <button type="submit" class="btn btn-outline-primary">Lọc</button>
+            <form class="mb-3" method="GET">
+                <div class="form-row">
+                    <div class="col-md-4 mb-2">
+                        <input type="text" name="q" value="{{ old('q', $search ?? '') }}" class="form-control" placeholder="Tìm theo Tên, Mô tả">
+                    </div>
+
+                    <div class="col-md-2 mb-2">
+                        <select name="type" class="form-control">
+                            <option value="">-- Thể loại --</option>
+                            @foreach ($types as $key => $value)
+                                <option value="{{ $key }}" {{ ($selectedType ?? '') == $key ? 'selected' : '' }}>
+                                    {{ $value }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 mb-2">
+                        <button class="btn btn-primary w-100" type="submit">
+                            <i class="fa fa-search mr-1"></i> Tìm kiếm
+                        </button>
+                    </div>
+
+                    <div class="col-md-1 mb-2">
+                        <a href="{{ route('articles.index') }}" class="btn btn-outline-secondary w-100">Đặt lại</a>
+                    </div>
+                </div>
             </form>
 
             <div class="table-responsive">
-                <table class="table table-bordered table-hover table-striped text-center">
-                    <thead class="thead-light">
+                <table class="table table-bordered table-hover text-center">
+                    <thead style="background-color: #242323c0; color: #C9B037">
                         <tr>
                             <th>#</th>
                             <th>Tên bài</th>
@@ -80,6 +95,14 @@
                     </tbody>
                 </table>
             </div>
+
+            @if ($articles->hasPages())
+                <div class="mt-3 d-flex justify-content-center">
+                    <div class="mt-3 d-flex justify-content-center">
+                        {{ $articles->links('pagination::bootstrap-4') }}
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </div>
