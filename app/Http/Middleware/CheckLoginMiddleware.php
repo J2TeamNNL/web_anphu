@@ -17,7 +17,7 @@ class CheckLoginMiddleware
     {
         if(!session()->has('level'))
         {
-                return redirect()->route('login');
+                return redirect()->route('auths.login');
         }
 
         return $next($request);

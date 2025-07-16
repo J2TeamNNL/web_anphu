@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ConsultingRequestController;
 
 use App\Http\Controllers\AuthController;
 
@@ -13,6 +14,8 @@ use App\Http\Middleware\CheckLoginMiddleware;
 use PHPUnit\Framework\Attributes\Group;
 
 Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
+
+Route::post('/consulting-requests', [ConsultingRequestController::class, 'store'])->name('consulting_requests.store');
 
 Route::group(['prefix' => 'about'], function () {
    Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
