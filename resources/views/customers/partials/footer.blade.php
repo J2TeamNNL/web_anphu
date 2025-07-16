@@ -21,54 +21,55 @@
             </div>
 
             <div class="col-md-4">
-                <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Đăng Ký Tư Vấn</h5>
-                <form method="post" action="#">
-                    @csrf
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Họ Tên *" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" class="form-control" placeholder="Số Điện Thoại *" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Vị Trí Xây Dựng *" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Diện Tích Và Số Tầng *" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="d-block">Chi Phí Đầu Tư</label>
-                        <div class="form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" id="duoi15">
-                            <label class="form-check-label" for="duoi15">Dưới 1.5 tỷ</label>
+                <h5 class="text-warning font-weight-bold text-center" >ĐĂNG KÝ TƯ VẤN</h5>
+                <div id="consulting-form-wrapper">
+                    <form class="consulting-form text-dark p-4 rounded" method="post" action="{{ route('consulting_requests.store') }}">
+                        @csrf
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="name" placeholder="Họ Tên *" required>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" id="tu15">
-                            <label class="form-check-label" for="tu15">1.5 - 2 tỷ</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input type="tel" class="form-control" name="phone" placeholder="Số Điện Thoại *" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="email" class="form-control" name="email" placeholder="Email">
+                            </div>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" id="tu2">
-                            <label class="form-check-label" for="tu2">2 - 3 tỷ</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="location" placeholder="Vị Trí Xây Dựng *" required>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" id="tren3">
-                            <label class="form-check-label" for="tren3">Trên 3 tỷ</label>
+                        <div class="d-flex align-items-center">
+                            <button type="submit" class="btn btn-warning mr-3">Gửi cho chúng tôi</button>
+                            <a href="#" class="btn btn-outline-warning mr-2"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><img src="{{ asset('assets/img/logo/logo_zalo.png') }}" style="height: 24px;" alt="Zalo"></a>
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-warning btn-block font-weight-bold">
-                        <i class="fa fa-paper-plane mr-1"></i> ĐĂNG KÝ TƯ VẤN
-                    </button>
-                </form>
-            </div>
-        </div>
+                    </form>
+                </div>
 
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
+            <!-- OVERLAY -->
+            @include('customers.partials.sign_up_form_overlay')
+            @include('customers.partials.sign_up_form_error_overlay')
+        </div>
         <hr>
 
         <div class="footer-copyright text-center py-2">
             © 2025 – Công Ty TNHH Tư vấn Thiết Kế Kiến trúc và Nội thất An Phú.
         </div>
     </div>
+
+    @include('customers.scripts_consulting_requests_thanks')
+    
 </footer>
+
+

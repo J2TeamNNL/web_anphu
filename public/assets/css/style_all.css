@@ -543,3 +543,212 @@ BUTTONS
 .card-blog:hover .blog-overlay {
     transform: translateY(0);
 }
+
+/* ADMIN PAGINATION */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .page-item {
+    margin: 0 3px;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    transition: all 0.2s ease-in-out;
+}
+
+.pagination .page-link:hover {
+    background-color: #e2e6ea;
+    text-decoration: none;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #e9ecef;
+}
+
+
+/* SIGN UP FORM POPUP-FORM*/
+.thank-you-overlay {
+    position: fixed;
+    inset: 0; /* top, left, right, bottom: 0 */
+    background-color: rgba(0, 0, 0, 0.65); /* nền mờ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.thank-you-popup {
+    background: #ffffff;
+    color: #333;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    animation: zoomIn 0.3s ease;
+}
+
+.btn-back {
+    background-color: var(--color-primary);
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: var(--color-secondary);
+    color: white;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* Overlay */
+.error-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(220, 53, 69, 0.25); /* đỏ nhạt */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+/* Popup content */
+.error-popup {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 0 20px rgba(220, 53, 69, 0.5);
+    border: 2px solid #dc3545;
+}
+
+
+/* --- Succeess Animation --- */
+.checkmark-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkmark {
+    width: 64px;
+    height: 64px;
+    stroke: #28a745;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: scaleIn 0.3s ease-in-out;
+}
+
+.checkmark-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke: #28a745;
+    animation: dash 0.6s ease-in-out forwards;
+}
+
+.checkmark-check {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke: #28a745;
+    animation: dash-check 0.3s 0.6s ease-in-out forwards;
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes dash-check {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* --- Error Animation --- */
+/* SVG animation */
+.checkmark.error {
+    stroke: #dc3545;
+    width: 72px;
+    height: 72px;
+    stroke-width: 4;
+    fill: none;
+    animation: error-pop 0.3s ease-out;
+}
+
+.checkmark-circle {
+    stroke: #dc3545;
+    stroke-width: 2;
+    animation: dash 0.3s ease-out forwards;
+}
+
+.checkmark-x {
+    stroke: #dc3545;
+    stroke-width: 4;
+    stroke-linecap: round;
+    animation: dash-x 0.3s ease-out forwards;
+}
+
+@keyframes error-pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes dash-x {
+    0% { stroke-dasharray: 0, 48; }
+    100% { stroke-dasharray: 48, 48; }
+}
+
+.btn-back {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+}

@@ -39,4 +39,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 @stack('scripts_isotope_blog')
 
+@stack('scripts_consulting_requests_thanks')
+
 
