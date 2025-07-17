@@ -6,13 +6,18 @@ import $ from 'jquery';
 window.$ = $;
 window.jQuery = $;
 
-// Bootstrap 5
-import 'bootstrap';
-
-// Select2
-import 'select2';
+import 'select2/dist/js/select2.min.js';
 import 'select2/dist/css/select2.min.css';
 
-document.addEventListener('DOMContentLoaded', function () {
-    $('.select2').select2();
+import 'bootstrap';
+
+$(document).ready(function () {
+    console.log('jQuery version:', $.fn.jquery); // Kiểm tra jQuery có hoạt động
+    console.log('Select2 exists:', typeof $.fn.select2); // Phải là 'function'
+
+    $('.select2').select2({
+        placeholder: 'Chọn danh mục...',
+        allowClear: true,
+        width: '100%',
+    });
 });

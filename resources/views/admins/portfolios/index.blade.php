@@ -1,6 +1,6 @@
 @extends('admins.layouts.master')
 
-@section('portfolios_index')
+@section('content')
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="mb-0">Xin chào {{ session('name') }}</h5>
@@ -52,7 +52,7 @@
 
                     <div class="col-md-3 mb-2">
                         <select class="form-control select2" name="category_id">
-                            <option value="">-- Chọn danh mục --</option>
+                            <option value="">Danh mục</option>
                             @foreach ($categories as $category)
                                 @include('components.category-option', ['category' => $category, 'prefix' => ''])
                             @endforeach

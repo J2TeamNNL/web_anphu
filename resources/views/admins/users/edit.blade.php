@@ -1,6 +1,6 @@
 @extends('admins.layouts.master')
 
-@section('users_create')
+@section('content')
 
 <div class="container mt-5">
    <div class="row justify-content-center">
@@ -60,4 +60,22 @@
 
 @endsection
 
-@include('admins.scripts_users_edit_show_password')
+@push('scripts')
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+       document.querySelectorAll(".toggle-password").forEach(function (btn) {
+           btn.addEventListener("click", function () {
+               const userId = btn.getAttribute("data-user-id");
+               const passwordField = document.getElementById("password-" + userId);
+               passwordField.classList.toggle("d-none");
+
+               if (passwordField.classList.contains("d-none")) {
+                   btn.textContent = "Hiện mật khẩu";
+               } else {
+                   btn.textContent = "Ẩn mật khẩu";
+               }
+           });
+       });
+   });
+</script>
+@endpush
