@@ -8,7 +8,12 @@
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0 text-primary">Danh sách Dự án</h4>
-        <a href="{{ route('portfolios.create') }}" class="btn btn-success">+ Thêm Dự án</a>
+        <a 
+            href="{{ route('portfolios.create') }}" 
+            class="btn btn-success"
+        >
+            <i class="fa fa-plus mr-1"></i> Thêm Dự án
+        </a>
     </div>
 
     <div class="card shadow-sm">
@@ -17,41 +22,59 @@
             <form class="mb-3" method="GET">
                 <div class="form-row">
                     <div class="col-md-4 mb-2">
-                        <input type="text" name="q" value="{{ old('q', $search ?? '') }}" class="form-control" placeholder="Tìm theo Tên, Địa điểm, Khách hàng...">
+                        <input 
+                            type="text" 
+                            name="q" 
+                            value="{{ old('q', $search) }}" 
+                            class="form-control" 
+                            placeholder="Tìm theo Tên, Địa điểm, Khách hàng..."
+                        >
                     </div>
 
                     <div class="col-md-2 mb-2">
-                        <select name="year" class="form-control">
-                            <option value="">-- Năm --</option>
-                            @foreach ($years as $y)
-                                <option value="{{ $y }}" {{ ($selectedYear ?? '') == $y ? 'selected' : '' }}>{{ $y }}</option>
-                            @endforeach
+                        <select 
+                            name="year" 
+                            class="form-control"
+                        >
+                            <option value="" selected disabled>Năm</option>
+                            @for ($i = date('Y'); $i >= 2025; $i--)
+                                <option 
+                                    value="{{ $i }}" 
+                                    @if ($selectedYear == $i)
+                                        selected
+                                    @endif
+                                >
+                                    {{ $i }}
+                                </option>
+                            @endfor
                         </select>
                     </div>
 
                     <div class="col-md-3 mb-2">
-                        <select name="category" class="form-control">
-                            <option value="">-- Danh mục --</option>
-                            @foreach ($categories as $group => $items)
-                                <optgroup label="{{ ucfirst($group) }}">
-                                    @foreach ($items as $key => $label)
-                                        <option value="{{ $key }}" {{ ($selectedCategory ?? '') === $key ? 'selected' : '' }}>
-                                            {{ $label }}
-                                        </option>
-                                    @endforeach
-                                </optgroup>
+                        <select class="form-control select2" name="category_id">
+                            <option value="">-- Chọn danh mục --</option>
+                            @foreach ($categories as $category)
+                                @include('components.category-option', ['category' => $category, 'prefix' => ''])
                             @endforeach
                         </select>
                     </div>
 
                     <div class="col-md-2 mb-2">
-                        <button class="btn btn-primary w-100" type="submit">
+                        <button 
+                            class="btn btn-primary w-100" 
+                            type="submit"
+                        >
                             <i class="fa fa-search mr-1"></i> Tìm kiếm
                         </button>
                     </div>
 
                     <div class="col-md-1 mb-2">
-                        <a href="{{ route('portfolios.index') }}" class="btn btn-outline-secondary w-100">Đặt lại</a>
+                        <a 
+                            href="{{ route('portfolios.index') }}" 
+                            class="btn btn-outline-secondary w-100"
+                        >
+                            Đặt lại
+                        </a>
                     </div>
                 </div>
             </form>
@@ -93,15 +116,22 @@
                                 <td>{{ $portfolio->getTypeName() }}</td>
                                 <td>{{ $portfolio->getCategoryName() }}</td>
                                 <td>
-                                    <a href="{{ route('portfolios.edit', $portfolio) }}" class="btn btn-sm btn-primary mb-1">Sửa</a>
-                                    
-                                    @if(session('level') == 1)
-                                    <form action="{{ route('portfolios.destroy', $portfolio) }}" method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')" class="d-inline">
+                                    <a 
+                                        href="{{ route('portfolios.edit', $portfolio) }}" 
+                                        class="btn btn-sm btn-primary mb-1"
+                                    >
+                                        Sửa
+                                    </a>
+                                    <form 
+                                        action="{{ route('portfolios.destroy', $portfolio) }}" 
+                                        method="POST" 
+                                        onsubmit="return confirm('Bạn chắc chắn muốn xoá?')" 
+                                        class="d-inline"
+                                    >
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
                                     </form>
-                                    @endif
                                 </td>
                             </tr>
                         @empty

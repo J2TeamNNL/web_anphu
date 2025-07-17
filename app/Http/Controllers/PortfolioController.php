@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Portfolio;
 use Illuminate\Support\Facades\Storage;
 
@@ -10,53 +11,46 @@ use Illuminate\Http\Request;
 class PortfolioController extends Controller
 {   
     private Portfolio $model;
-    private array $types;
-    private array $categories;
 
-    const PER_PAGE = 5;
+    private const PER_PAGE = 5;
 
     public function __construct()
     {
         $this->model = new Portfolio();
-        $this->types = Portfolio::getTypes();
-        $this->categories = Portfolio::getCategories();
     }
 
     public function index(Request $request)
     {
         $search = $request->input('q');
-        $year = $request->input('year');
-        $category = $request->input('category');
+        $selectedYear = $request->input('year');
+        $selectedCategoryId = $request->input('category_id');
 
-        $query = $this->model::query();
+        $portfolios = $this->model->query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->orWhere('name', 'like', "%{$search}%");
+                    $q->orWhere('location', 'like', "%{$search}%");
+                    $q->orWhere('client', 'like', "%{$search}%");
+                });
+            })
+            ->when($selectedYear, function ($query, $selectedYear) {
+                $query->where('year', $selectedYear);
+            })
+            ->when($selectedCategoryId, function ($query, $selectedCategoryId) {
+                $query->where('category_id', $selectedCategoryId);
+            })
+            ->orderByDesc('year')
+            ->paginate(self::PER_PAGE)
+            ->appends($request->query());
 
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                ->orWhere('location', 'like', "%{$search}%")
-                ->orWhere('client', 'like', "%{$search}%");
-            });
-        }
-
-        if ($year) {
-            $query->where('year', $year);
-        }
-
-        if ($category) {
-            $query->where('category', $category);
-        }
-
-        $years = $this->model::select('year')->distinct()->pluck('year')->filter()->sortDesc()->values();
-
-        $portfolios = $query->orderByDesc('year')->paginate(self::PER_PAGE)->appends($request->query());
+        $categories = Category::nestedTree();
 
         return view('admins.portfolios.index', [
             'portfolios' => $portfolios,
-            'categories' => $this->categories,
-            'years' => $years,
+            'categories' => $categories,
             'search' => $search,
-            'selectedYear' => $year,
-            'selectedCategory' => $category,
+            'selectedYear' => $selectedYear,
+            'selectedCategoryId' => $selectedCategoryId,
         ]);
     }
 
@@ -150,10 +144,8 @@ class PortfolioController extends Controller
         ], 200);
     }
 
-    public function destroy($id)
+    public function destroy(Portfolio $portfolio)
     {
-        $portfolio = $this->model::findOrFail($id);
-
         foreach (['image', 'image1', 'image2', 'image3', 'image4'] as $field) {
             if ($portfolio->$field && Storage::exists('public/' . $portfolio->$field)) {
                 Storage::delete('public/' . $portfolio->$field);

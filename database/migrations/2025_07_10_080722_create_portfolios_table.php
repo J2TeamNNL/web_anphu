@@ -20,13 +20,7 @@ return new class extends Migration
 
             $table->enum('type', ['villa', 'town', 'commercial']);
             
-            $table->string('category');
-
-            $table->string('image')->nullable();
-            $table->string('image1')->nullable();
-            $table->string('image2')->nullable();
-            $table->string('image3')->nullable();
-            $table->string('image4')->nullable();
+            $table->unsignedBigInteger('category_id');
 
             $table->year('year')->nullable();
 
