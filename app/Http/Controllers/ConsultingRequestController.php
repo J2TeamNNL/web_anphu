@@ -7,7 +7,38 @@ use Illuminate\Http\Request;
 use App\Models\ConsultingRequest;
 
 class ConsultingRequestController extends Controller
-{
+{   
+    private ConsultingRequest $model;
+
+    const PER_PAGE = 5;
+
+    public function __construct()
+    {
+        $this->model = new ConsultingRequest();
+
+    }
+
+    public function index(Request $request)
+    {   
+        $search = $request->input('q');
+
+        $query = ConsultingRequest::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('phone', 'like', "%{$search}%")
+                ->orWhere('location', 'like', "%{$search}%");
+            });
+        }
+
+        $consultingRequests = $query->orderBy('created_at', 'desc')->paginate(self::PER_PAGE)->appends($request->query());
+
+        return view ('admins.consulting_requests.index', [
+            'consultingRequests' => $consultingRequests
+        ]);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -17,7 +48,7 @@ class ConsultingRequestController extends Controller
             'location' => 'required|string|max:255',
         ]);
 
-        $alreadySubmitted = ConsultingRequest::whereDate('created_at', Carbon::today())
+        $alreadySubmitted = $this->model::whereDate('created_at', Carbon::today())
             ->where(function ($query) use ($validated) {
                 $query->where('phone', $validated['phone']);
                 if (!empty($validated['email'])) {
@@ -32,11 +63,28 @@ class ConsultingRequestController extends Controller
             ], 429); // HTTP 429 Too Many Requests
         }
 
-        $consulting = ConsultingRequest::create($validated);
+        $consulting = $this->model::create($validated);
 
         return response()->json([
             'message' => 'Đăng ký thành công',
             'data' => $consulting
         ], 201);
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|integer|in:0,1,2,3',
+        ]);
+
+        $requestItem = ConsultingRequest::findOrFail($id);
+        $requestItem->status = $request->status;
+        $requestItem->save();
+
+        return response()->json([
+            'status' => true,
+            'label' => $requestItem->status->label(),
+            'color' => $requestItem->status->color(),
+        ]);
     }
 }

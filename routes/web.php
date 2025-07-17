@@ -5,17 +5,18 @@ use App\Http\Controllers\CustomerController;
 
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\UserController;
+
 use App\Http\Controllers\ConsultingRequestController;
 
 use App\Http\Controllers\AuthController;
 
 use App\Http\Middleware\CheckLoginMiddleware;
+use App\Http\Middleware\CheckSuperAdminMiddleware;
 
 use PHPUnit\Framework\Attributes\Group;
 
 Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
-
-Route::post('/consulting-requests', [ConsultingRequestController::class, 'store'])->name('consulting_requests.store');
 
 Route::group(['prefix' => 'about'], function () {
    Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
@@ -52,6 +53,7 @@ Route::group(['prefix' => 'auth'], function () {
    Route::post('/register', [AuthController::class, 'processRegister'])->name('auths.process_register');
 });
 
+Route::post('/consulting-requests/store', [ConsultingRequestController::class, 'store'])->name('consulting_requests.store');
 
 //Admin
 Route::group([
@@ -59,6 +61,8 @@ Route::group([
 ],  function () {
 
    Route::get('auth/logout',[AuthController::class, 'logout'])->name('auths.logout');
+
+   Route::patch('/admin/consulting-requests/{id}/status', [ConsultingRequestController::class, 'updateStatus'])->name('consulting_requests.updateStatus');
 
    Route::resource('portfolios', PortfolioController::class)->except([
       'show',
@@ -70,13 +74,18 @@ Route::group([
       'destroy',
    ]);
 
+   Route::get('/consulting-requests/index', [ConsultingRequestController::class, 'index'])->name('consulting_requests.index');
+   Route::put('/consulting-requests/edit', [ConsultingRequestController::class, 'edit'])->name('consulting_requests.edit');
+
    
    Route::group([
-      // 'middleware' => App\Http\Middleware\CheckSuperAdminMiddleware::class,
+      'middleware' => CheckSuperAdminMiddleware::class,
    ], function () {
       
       Route::delete('portfolios/{portfolio}', [PortfolioController::class, 'destroy']) ->name('portfolios.destroy');
       Route::delete('articles/{article}', [ArticleController::class, 'destroy']) ->name('articles.destroy');
+
+      Route::resource('users', UserController::class);
    });
 
 });

@@ -42,7 +42,7 @@
                 </div>
             </form>
 
-            <div class="table-responsive">
+            <div>
                 <table class="table table-bordered table-hover text-center">
                     <thead style="background-color: #242323c0; color: #C9B037">
                         <tr>
@@ -80,11 +80,14 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('articles.edit', $article) }}" class="btn btn-sm btn-primary mb-1">Sửa</a>
+                                    
+                                    @if(session('level') == 1)
                                     <form action="{{ route('articles.destroy', $article) }}" method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
                                     </form>
+                                    @endif
                                 </td>
                             </tr>
                         @empty

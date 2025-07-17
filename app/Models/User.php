@@ -17,9 +17,17 @@ class User extends Model
 
     protected $fillable = [
         'name',
-        'email',
-        'password',   
         'avatar',
         'level',
+        'email',
+        'password', 
     ];
+
+    public static function getLevels(): array
+    {
+        return [
+            '0' => 'Admin',
+            '1' => 'SuperAdmin',
+        ];
+    }
 }

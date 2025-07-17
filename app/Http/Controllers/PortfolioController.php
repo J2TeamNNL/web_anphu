@@ -13,6 +13,7 @@ class PortfolioController extends Controller
     private array $types;
     private array $categories;
 
+    const PER_PAGE = 5;
 
     public function __construct()
     {
@@ -27,7 +28,7 @@ class PortfolioController extends Controller
         $year = $request->input('year');
         $category = $request->input('category');
 
-        $query = Portfolio::query();
+        $query = $this->model::query();
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -45,9 +46,9 @@ class PortfolioController extends Controller
             $query->where('category', $category);
         }
 
-        $years = Portfolio::select('year')->distinct()->pluck('year')->filter()->sortDesc()->values();
+        $years = $this->model::select('year')->distinct()->pluck('year')->filter()->sortDesc()->values();
 
-        $portfolios = $query->orderByDesc('year')->paginate(3)->appends($request->query());
+        $portfolios = $query->orderByDesc('year')->paginate(self::PER_PAGE)->appends($request->query());
 
         return view('admins.portfolios.index', [
             'portfolios' => $portfolios,
@@ -85,8 +86,6 @@ class PortfolioController extends Controller
             'image4' => 'nullable|image',
         ]);
 
-        
-
         $portfolio = new Portfolio($validated);
 
         foreach (['image', 'image1', 'image2', 'image3', 'image4'] as $field) {
@@ -111,7 +110,7 @@ class PortfolioController extends Controller
 
     public function update(Request $request, $id)
     {
-        $portfolio = Portfolio::findOrFail($id);
+        $portfolio = $this->model::findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -153,7 +152,7 @@ class PortfolioController extends Controller
 
     public function destroy($id)
     {
-        $portfolio = Portfolio::findOrFail($id);
+        $portfolio = $this->model::findOrFail($id);
 
         foreach (['image', 'image1', 'image2', 'image3', 'image4'] as $field) {
             if ($portfolio->$field && Storage::exists('public/' . $portfolio->$field)) {

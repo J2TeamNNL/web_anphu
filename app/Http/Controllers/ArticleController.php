@@ -13,6 +13,8 @@ class ArticleController extends Controller
 
     private array $types;
 
+    const PER_PAGE = 5;
+    
     public function __construct()
     {
         $this->model = new Article();
@@ -38,7 +40,7 @@ class ArticleController extends Controller
             $query->where('type', $type);
         }
 
-        $articles = $query->orderByDesc('type')->paginate(3)->appends($request->query());
+        $articles = $query->orderByDesc('type')->paginate(self::PER_PAGE)->appends($request->query());
 
         return view('admins.articles.index', [
             'articles' => $articles,

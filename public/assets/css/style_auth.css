@@ -112,3 +112,10 @@ body {
 .anphu-logo {
     height: 85px;
 }
+
+#save-status-btn {
+    transition: all 0.3s ease;
+}
+#save-status-btn:hover {
+    transform: scale(1.05);
+}

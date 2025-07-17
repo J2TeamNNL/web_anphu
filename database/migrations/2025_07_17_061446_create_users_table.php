@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('avatar')->nullable();
-            $table->tinyInteger('level')->default(1);
+            $table->tinyInteger('level')->default(0);
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();
@@ -30,3 +30,4 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
+
