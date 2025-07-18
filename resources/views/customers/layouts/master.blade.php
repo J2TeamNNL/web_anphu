@@ -16,7 +16,7 @@
 <body>
     
     @include('customers.partials.top_bar')
-    @include('customers.partials.nar_bar')
+    @include('customers.partials.nav_bar')
 
 
     @yield('index')

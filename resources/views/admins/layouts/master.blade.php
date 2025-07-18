@@ -13,8 +13,8 @@
     @stack('styles')
 </head>
 <body>
-    @include('admins.layouts.topBar')
-    @include('admins.layouts.narBar')
+    @include('admins.layouts.top_bar')
+    @include('admins.layouts.nav_bar')
     
     @yield('content')
 
