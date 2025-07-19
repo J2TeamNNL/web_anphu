@@ -1,6 +1,6 @@
 @extends('customers.layouts.master')
 
-@section('services_permit')
+@section('content')
 
     @include('customers.partials.anphu.services_permit')
 

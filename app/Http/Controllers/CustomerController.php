@@ -73,7 +73,7 @@ class CustomerController extends Controller
         return view('customers.pages.services_construction_full');
     }
 
-    // PORTFOLIO
+    // PORTFOLIOS
     public function projectIndex($type = null)
     {
         $allTypes = Portfolio::getTypes();
@@ -112,6 +112,16 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function projectDetail($slug)
+    {
+        $portfolio = Portfolio::where('slug', $slug)->firstOrFail();
+
+        return view('customers.pages.projectdetail', [
+            'portfolio' => $portfolio
+        ]);
+    }
+
+    // BLOGS
     public function blogIndex($type = null)
     {
         $types = Article::getTypes();
@@ -139,7 +149,6 @@ class CustomerController extends Controller
             'articleTitle' => $articleTitle
         ]);
     }
-
 
     //PRICE
     public function priceFull()

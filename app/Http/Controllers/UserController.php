@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+
 class UserController extends Controller
 {   
 
@@ -60,15 +63,9 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'avatar' => 'nullable|image',
-            'level' => 'required|in:0,1',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        $validated = $request->validated();
 
         $validated['password'] = Hash::make($validated['password']);
 
@@ -95,24 +92,11 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
         $user = $this->model::findOrFail($id);
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => "required|email|max:255|unique:users,email,{$id}",
-            'level' => 'required|in:0,1',
-            'password' => 'string',
-            'avatar_new' => 'nullable|image',
-            'avatar_old' => 'nullable|string',
-        ]);
-
-        $data = [
-            'name' => $validated['name'],
-            'level' => $validated['level'],
-            'email' => $validated['email'],
-        ];
+        $validated = $request->validated();
 
         if (!empty($validated['password'])) {
             $user->password = Hash::make($validated['password']);

@@ -1,6 +1,6 @@
 @extends('customers.layouts.master')
 
-@section('contact')
+@section('content')
 
     @include('customers.partials.sign_up_1')
 

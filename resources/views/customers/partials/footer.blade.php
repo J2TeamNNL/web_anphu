@@ -57,9 +57,36 @@
                     </div>
                 @endif
             </div>
+
             <!-- OVERLAY -->
-            @include('customers.partials.sign_up_form_overlay')
-            @include('customers.partials.sign_up_form_error_overlay')
+            <div id="thank-you-overlay" class="thank-you-overlay d-none">
+               <div class="thank-you-popup">
+                  <div class="checkmark-wrapper mb-3">
+                     <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16"/>
+                     </svg>
+                  </div>
+                  <h5 class="text-success">Đã gửi thành công!</h5>
+                  <p class="text-muted mb-3">Cảm ơn bạn đã để lại thông tin, chúng tôi sẽ liên hệ sớm nhất.</p>
+                  <button id="back-button" class="btn btn-back">← Xem tiếp</button>
+               </div>
+            </div>
+
+            <div id="error-overlay" class="error-overlay d-none">
+               <div class="error-popup bg-white text-center">
+                  <div class="checkmark-wrapper mb-3">
+                     <svg class="checkmark error" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark-x" fill="none" d="M16 16 36 36 M36 16 16 36"/>
+                     </svg>
+                  </div>
+                  <h5 class="text-danger font-weight-bold">Bạn đã đăng ký hôm nay!</h5>
+                  <p class="text-muted mb-3">Chúng tôi đã nhận được thông tin của bạn hôm nay. Vui lòng quay lại sau.</p>
+                  <button class="btn btn-back btn-outline-danger mt-2" onclick="document.getElementById('error-overlay').classList.add('d-none')">← Quay lại</button>
+               </div>
+            </div>
+
         </div>
         <hr>
 
@@ -67,9 +94,66 @@
             © 2025 – Công Ty TNHH Tư vấn Thiết Kế Kiến trúc và Nội thất An Phú.
         </div>
     </div>
-
-    @include('customers.scripts_consulting_requests_thanks')
-    
 </footer>
 
+@once
+@push('scripts')
+<script>
+document.querySelectorAll('.consulting-form').forEach(form => {
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
 
+        let formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
+                'Accept': 'application/json',
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) throw response;
+            return response.json();
+        })
+        .then(data => {
+            form.reset();
+            document.getElementById('thank-you-overlay').classList.remove('d-none');
+        })
+        .catch(async error => {
+            let errorText = 'Đã có lỗi xảy ra. Vui lòng thử lại!';
+
+            // (429)
+            if (error.status === 429) {
+                document.getElementById('error-overlay').classList.remove('d-none');
+                return;
+            }
+
+            // validation
+            if (error.json) {
+                const err = await error.json();
+                if (err.errors) {
+                    errorText = Object.values(err.errors).flat().join('<br>');
+                }
+            }
+
+            // Fallback alert
+            alert(errorText);
+        });
+    });
+});
+
+document.getElementById('back-button').addEventListener('click', function () {
+    document.getElementById('thank-you-overlay').classList.add('d-none');
+});
+
+const errorOverlay = document.getElementById('error-overlay');
+if (errorOverlay) {
+    errorOverlay.querySelector('.btn-back')?.addEventListener('click', () => {
+        errorOverlay.classList.add('d-none');
+    });
+}
+</script>
+@endpush
+@endonce

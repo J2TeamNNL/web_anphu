@@ -22,7 +22,12 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'email' => "required|email|max:255|unique:users,email,{$this->user()->id}",
+            'level' => 'required|in:0,1',
+            'password' => 'string',
+            'avatar_new' => 'nullable|image',
+            'avatar_old' => 'nullable|string',
         ];
     }
 }

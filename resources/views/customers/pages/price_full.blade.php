@@ -1,6 +1,6 @@
 @extends('customers.layouts.master')
 
-@section('price_full')
+@section('content')
 
     @include('customers.partials.sign_up_1')
     

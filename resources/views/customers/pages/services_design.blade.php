@@ -1,6 +1,6 @@
 @extends('customers.layouts.master')
 
-@section('services_design')
+@section('content')
 
     @include('customers.partials.anphu.services_design')
 

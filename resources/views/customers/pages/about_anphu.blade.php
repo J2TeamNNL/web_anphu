@@ -1,6 +1,6 @@
 @extends('customers.layouts.master')
 
-@section('about_anphu')
+@section('content')
 
     @include('customers.partials.anphu.history')    
 

@@ -27,8 +27,8 @@
                     <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif
 
-                @yield('auths.login')
-                @yield('auths.register')
+                @yield('content')
+                
             </div>
 
             <div class="auth-footer">

@@ -1,6 +1,6 @@
 @extends('customers.layouts.master')
 
-@section('index')
+@section('content')
     @include('customers.partials.anphu.commitment')
 
     @include('customers.partials.anphu.solution')

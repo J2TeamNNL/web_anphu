@@ -5,6 +5,8 @@ use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use App\Models\ConsultingRequest;
+use App\Http\Requests\StoreConsultingRequest;
+use Illuminate\Contracts\Cache\Store;
 
 class ConsultingRequestController extends Controller
 {   
@@ -39,14 +41,9 @@ class ConsultingRequestController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreConsultingRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'email' => 'nullable|email|max:255',
-            'location' => 'required|string|max:255',
-        ]);
+        $validated = $request->validated();
 
         $alreadySubmitted = $this->model::whereDate('created_at', Carbon::today())
             ->where(function ($query) use ($validated) {

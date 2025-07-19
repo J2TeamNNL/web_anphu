@@ -1,5 +1,5 @@
 @extends('customers.layouts.master')
-@section('projects')
+@section('content')
     <section id="project" class="bg-white py-5 text-primary">
         <div class="container-fluid px-5">
 
@@ -40,10 +40,43 @@
         </div>
     </section>
 
-    @include('customers.scripts_isotope_project')
-
     @include('customers.partials.sign_up_1')
     
     @include('customers.partials.anphu.partner')   
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const grid = document.querySelector('.project-grid');
+            if (!grid) return;
+
+            const iso = new Isotope(grid, {
+                itemSelector: '.project-item',
+                layoutMode: 'fitRows'
+            });
+
+            const selectedType = @json($selectedType ?? '');
+
+            if (selectedType !== '') {
+
+                iso.arrange({ filter: `.${selectedType}` });
+
+                const defaultButton = document.querySelector('.filter-button[data-filter="*"]');
+                if (defaultButton) defaultButton.classList.add('active');
+            }
+
+            // Khi người dùng click filter
+            document.querySelectorAll('.filter-button').forEach(button => {
+                button.addEventListener('click', function () {
+                    const filterValue = this.dataset.filter;
+                    iso.arrange({ filter: filterValue });
+
+                    document.querySelectorAll('.filter-button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+@endpush
 

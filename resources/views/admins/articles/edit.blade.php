@@ -1,6 +1,6 @@
 @extends('admins.layouts.master')
 
-@section('articles_edit')
+@section('content')
 <div class="container my-4">
    <div class="d-flex justify-content-between align-items-center mb-3">
       <h4 class="mb-0">Cập nhật Bài Đăng</h4>
@@ -15,7 +15,7 @@
 
             <div class="form-group">
                <label for="name">Tên bài đăng</label>
-               <input type="text" name="name" id="name" class="form-control" value="{{ $article->name }}" required>
+               <input type="text" name="name" id="name" class="form-control" value="{{ $article->name }}">
             </div>
 
             <div class="form-group">
@@ -25,7 +25,7 @@
 
             <div class="form-group">
                <label for="link">Link</label>
-               <input type="text" name="link" id="link" class="form-control" value="{{ $article->link }}" required>
+               <input type="text" name="link" id="link" class="form-control" value="{{ $article->link }}">
             </div>
 
             <div class="form-group">

@@ -7,6 +7,8 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\CategoryController;
+
 use App\Http\Controllers\ConsultingRequestController;
 
 use App\Http\Controllers\AuthController;
@@ -73,6 +75,11 @@ Route::group([
       'show',
       'destroy',
    ]);
+   
+   Route::resource('categories', CategoryController::class)->except([
+      'show',
+      'destroy',
+   ]);
 
    Route::get('/consulting-requests/index', [ConsultingRequestController::class, 'index'])->name('consulting_requests.index');
    Route::put('/consulting-requests/edit', [ConsultingRequestController::class, 'edit'])->name('consulting_requests.edit');
@@ -84,6 +91,7 @@ Route::group([
       
       Route::delete('portfolios/{portfolio}', [PortfolioController::class, 'destroy']) ->name('portfolios.destroy');
       Route::delete('articles/{article}', [ArticleController::class, 'destroy']) ->name('articles.destroy');
+      Route::delete('categories/{categorie}', [CategoryController::class, 'destroy']) ->name('categories.destroy');
 
       Route::resource('users', UserController::class);
    });

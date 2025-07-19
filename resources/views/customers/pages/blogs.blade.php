@@ -1,5 +1,5 @@
 @extends('customers.layouts.master')
-@section('blogs')
+@section('content')
     <section id="blog" class="bg-white py-5 text-primary">
         <div class="container-fluid px-5">
 
@@ -41,10 +41,27 @@
         </div>
     </section>
 
-    @include('customers.scripts_isotope_blog')
-
     @include('customers.partials.sign_up_1')
     
     @include('customers.partials.anphu.partner')   
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        var $grid = $('.blog-grid').isotope({
+            itemSelector: '.blog-item',
+            layoutMode: 'fitRows'
+        });
+
+        $('.filter-button').on('click', function () {
+            var filterValue = $(this).attr('data-filter');
+            $grid.isotope({ filter: filterValue });
+
+            $('.filter-button').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+</script>
+@endpush
 

@@ -1,6 +1,6 @@
 @extends('admins.layouts.master')
 
-@section('portfolios_edit')
+@section('content')
 <div class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0">Cập nhật Dự án</h4>
@@ -81,5 +81,3 @@
     </div>
 </div>
 @endsection
-
-@include('admins.scripts_portfolios_edit_types_categories')

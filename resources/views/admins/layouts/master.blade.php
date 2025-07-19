@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AnPhuDesign</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @vite(['resources/js/app.js', 'resources/css/app.css'])
     
     <link rel="stylesheet" href="{{ asset('assets/css/style_all.css') }}">
     
@@ -28,7 +29,7 @@
         </div>
     @endif
 
-    {{-- AOS animation --}}
+    <!-- AOS JS: Animation for Fade in - Slide up - Zoom - Flip -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
         AOS.init();

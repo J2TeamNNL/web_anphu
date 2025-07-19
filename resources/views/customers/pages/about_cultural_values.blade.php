@@ -1,6 +1,6 @@
 @extends('customers.layouts.master')
 
-@section('about_cultural_values')
+@section('content')
 
     @include('customers.partials.sign_up_1')
 

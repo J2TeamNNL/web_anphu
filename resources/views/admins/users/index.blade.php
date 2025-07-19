@@ -1,6 +1,6 @@
 @extends('admins.layouts.master')
 
-@section('users_index')
+@section('content')
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="mb-0">Xin chào {{ session('name') }}</h5>

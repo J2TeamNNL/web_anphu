@@ -24,7 +24,7 @@
 
             <div class="form-group">
                <label for="link">Link</label>
-               <input type="text" name="link" id="link" class="form-control">
+               <input type="text" name="link" id="link" class="form-control" required>
             </div>
 
             <div class="form-group">
@@ -39,7 +39,7 @@
 
             <div class="form-group">
                <label for="image">Ảnh bài đăng</label>
-               <input type="file" name="image" id="image" class="form-control-file">
+               <input type="file" name="image" id="image" class="form-control-file" required>
             </div>
 
             <div class="text-right">

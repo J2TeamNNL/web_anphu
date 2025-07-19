@@ -57,8 +57,7 @@ class PortfolioController extends Controller
     public function create()
     {
         return view('admins.portfolios.create', [
-            'types' => $this->types,
-            'categories' => $this->categories
+            //
         ]);
     }
 
@@ -97,8 +96,6 @@ class PortfolioController extends Controller
     {   
         return view('admins.portfolios.edit', [
             'portfolio' => $portfolio,
-            'types' => $this->types,
-            'categories' => $this->categories
         ]);
     }
 
