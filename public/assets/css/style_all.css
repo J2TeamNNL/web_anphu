@@ -19,12 +19,6 @@ body {
     color: var(--color-text);
 }
 
-@media (min-width: 1200px) {
-    .container {
-        max-width: 1320px; /* website width */
-    }
-}
-
 .company-name {
     font-family: 'Segoe UI', sans-serif;
     color: var(--color-secondary);
@@ -44,14 +38,23 @@ body {
 .top-bar {
     background-color: var(--color-dark);
     color: var(--color-white);
-    font-size: 15px;
-    padding: 10px 0;
+    font-size: 14px;
+    padding: 5px 0;
 }
 
-.top-bar a,
+.top-bar .row > div {
+    margin-bottom: 8px;
+}
+
+.top-bar a {
+    color: var(--color-white);
+    transition: color 0.3s ease;
+}
+
 .top-bar i {
     color: var(--color-white);
     transition: color 0.3s ease;
+    margin-right: 5px;
 }
 
 .top-bar a:hover,
@@ -62,6 +65,7 @@ body {
 .border-divider {
     border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
+
 
 /* --------------------------
    HEADER MAIN
@@ -90,9 +94,6 @@ body {
    NAVIGATION BAR
 --------------------------- */
 .main-nav {
-    position: sticky;
-    top: 0; /* dính vào top khi scroll */
-    z-index: 1000;
     background-color: var(--color-primary);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -103,17 +104,14 @@ body {
 }
 
 
-/* Menu tổng */
 .navbar-nav {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Mỗi mục menu */
 .navbar-nav .nav-item {
-    margin: 0 6px; /* Thay padding bằng margin để dãn đều giữa các item */
-    position: relative;
+    margin: 5px 0;
 }
 
 /* Đường kẻ phân cách giữa các mục (trừ mục cuối) */
@@ -222,11 +220,12 @@ body {
 --------------------------- */
 .hero-static-slider {
     position: relative;
+    overflow: hidden;
     background-size: cover;
     background-position: center;
     min-height: 500px;
-    padding-top: 140px;
-    padding-bottom: 60px;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     color: var(--color-white);
     display: flex;
     align-items: flex-start;
@@ -251,6 +250,12 @@ body {
 }
 
 .slide-content-box {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 100%;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
     position: absolute;
     top: -60px; /* cố định vị trí theo padding trên */
     left: 30px;
@@ -258,12 +263,17 @@ body {
     padding: 20px 30px;
     border-radius: 10px;
     color: #fff;
-    max-width: 500;
 }
 
 .slide-content-box.show {
     opacity: 1;
     visibility: visible;
+}
+
+#slide-content {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  max-width: 100%;
 }
 
 
@@ -751,4 +761,27 @@ BUTTONS
     padding: 8px 16px;
     border-radius: 6px;
     font-weight: 600;
+}
+
+@media (max-width: 576px) {
+  .slide-content-box {
+    padding: 1rem !important;
+  }
+
+  .slide-buttons {
+    justify-content: center;
+  }
+
+  #slide-content-box {
+    margin-bottom: 1rem;
+  }
+
+  .spaced-list li {
+    margin-bottom: 0.75rem;
+  }
+
+  .top-bar .btn-sm {
+        padding: 3px 8px;
+        font-size: 0.7rem;
+    }
 }

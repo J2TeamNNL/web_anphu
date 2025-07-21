@@ -71,7 +71,7 @@
             </div>
             </div>
 
-            <div id="error-overlay" class="error-overlay d-none">
+            <div id="error-signup-overlay" class="error-signup-overlay d-none">
             <div class="error-popup bg-white text-center">
                 <div class="checkmark-wrapper mb-3">
                     <svg class="checkmark error" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -81,7 +81,7 @@
                 </div>
                 <h5 class="text-danger font-weight-bold">Bạn đã đăng ký hôm nay!</h5>
                 <p class="text-muted mb-3">Chúng tôi đã nhận được thông tin của bạn hôm nay. Vui lòng quay lại sau.</p>
-                <button class="btn btn-back btn-outline-danger mt-2" onclick="document.getElementById('error-overlay').classList.add('d-none')">← Quay lại</button>
+                <button class="btn btn-back btn-outline-danger mt-2" onclick="document.getElementById('error-signup-overlay').classList.add('d-none')">← Quay lại</button>
             </div>
             </div>
         </div>
@@ -118,7 +118,7 @@ document.querySelectorAll('.consulting-form').forEach(form => {
 
             // (429)
             if (error.status === 429) {
-                document.getElementById('error-overlay').classList.remove('d-none');
+                document.getElementById('error-signup-overlay').classList.remove('d-none');
                 return;
             }
 
@@ -140,10 +140,10 @@ document.getElementById('back-button').addEventListener('click', function () {
     document.getElementById('thank-you-overlay').classList.add('d-none');
 });
 
-const errorOverlay = document.getElementById('error-overlay');
-if (errorOverlay) {
-    errorOverlay.querySelector('.btn-back')?.addEventListener('click', () => {
-        errorOverlay.classList.add('d-none');
+const errorSignupOverlay = document.getElementById('error-overlay');
+if (errorSignupOverlay) {
+    errorSignupOverlay.querySelector('.btn-back')?.addEventListener('click', () => {
+        errorSignupOverlay.classList.add('d-none');
     });
 }
 </script>
