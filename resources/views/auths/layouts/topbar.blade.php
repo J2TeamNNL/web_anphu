@@ -11,8 +11,10 @@
 
             <!-- Contact Info -->
             <div class="col-md-3 col-6 mb-2 mb-md-0 text-md-left border-md-right border-divider">
-                <div><i class="fa fa-phone-alt mr-1"></i> 0969.317.331</div>
+                <div><i class="fa fa-phone-alt mr-1"></i> Zalo: 0949 453 283</div>
+                <div><i class="fa fa-phone-alt mr-1"></i> Hotline: 0969 317 331</div>
                 <div><i class="fa fa-envelope mr-1"></i> kientrucnoithat.anphu@gmail.com</div>
+                <div><i class="fa fa-clock mr-1"></i> Thời gian: 8h - 17h30 T2 - T7</div>
             </div>
 
             <!-- Address -->
