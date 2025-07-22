@@ -125,6 +125,11 @@ body {
     transition: background 0.3s ease;
 }
 
+.navbar-nav .nav-link {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+}
+
 .main-nav .nav-link:hover {
     background-color: var(--color-gray);
 }
