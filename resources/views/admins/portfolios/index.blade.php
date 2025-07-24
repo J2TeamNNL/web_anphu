@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0 text-primary">Danh sách Dự án</h4>
         <a 
-            href="{{ route('portfolios.create') }}" 
+            href="{{ route('admin.portfolios.create') }}" 
             class="btn btn-success"
         >
             <i class="fa fa-plus mr-1"></i> Thêm Dự án
@@ -50,11 +50,18 @@
                         </select>
                     </div>
 
-                    <div class="col-md-3 mb-2">
-                        <select class="form-control select2" name="category_id">
-                            <option value="">Danh mục</option>
-                            @foreach ($categories as $category)
-                                @include('components.category-option', ['category' => $category, 'prefix' => ''])
+                    <div class="form-group">
+                        <select name="category_id" id="category_id" class="form-control select2">
+                            <option value="">-- Chọn danh mục --</option>
+                            @foreach ($categories as $cat)
+                                <optgroup label="{{ $cat->name }}">
+                                    @foreach ($cat->children as $child)
+                                        <option value="{{ $child->id }}"
+                                            {{ old('category_id') == $child->id ? 'selected' : '' }}>
+                                            — {{ $child->name }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
                         </select>
                     </div>
@@ -70,7 +77,7 @@
 
                     <div class="col-md-1 mb-2">
                         <a 
-                            href="{{ route('portfolios.index') }}" 
+                            href="{{ route('admin.portfolios.index') }}" 
                             class="btn btn-outline-secondary w-100"
                         >
                             Đặt lại
@@ -90,8 +97,8 @@
                             <th>Ảnh đại diện</th>
                             <th>Mô tả</th>
                             <th>Năm</th>
-                            <th>Loại</th>
-                            <th>Danh mục</th>
+                            <th>Loại dự án</th>
+                            <th>Loại hình</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -113,17 +120,18 @@
                                     {{ \Illuminate\Support\Str::limit($portfolio->description, 100) }}
                                 </td>
                                 <td>{{ $portfolio->year }}</td>
-                                <td>{{ $portfolio->getTypeName() }}</td>
-                                <td>{{ $portfolio->getCategoryName() }}</td>
+                                <td>{{ $portfolio->getParentCategoryNameAttribute() }}</td>
+                                <td>{{ $portfolio->getCategoryNameAttribute() }}</td>
                                 <td>
                                     <a 
-                                        href="{{ route('portfolios.edit', $portfolio) }}" 
+                                        href="{{ route('admin.portfolios.edit', $portfolio) }}" 
                                         class="btn btn-sm btn-primary mb-1"
                                     >
                                         Sửa
                                     </a>
                                     <form 
-                                        action="{{ route('portfolios.destroy', $portfolio) }}" 
+                                        href="{{ route('admin.portfolios.edit', $portfolio) }}" 
+                                        action="{{ route('admin.portfolios.destroy', $portfolio) }}" 
                                         method="POST" 
                                         onsubmit="return confirm('Bạn chắc chắn muốn xoá?')" 
                                         class="d-inline"

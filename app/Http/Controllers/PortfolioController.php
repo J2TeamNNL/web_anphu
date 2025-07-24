@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePortfolioRequest;
 use App\Models\Category;
 use App\Models\Portfolio;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 
 use Illuminate\Http\Request;
@@ -32,39 +33,42 @@ class PortfolioController extends Controller
         $portfolios = $this->model->query()
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
-                    $q->orWhere('name', 'like', "%{$search}%");
-                    $q->orWhere('location', 'like', "%{$search}%");
-                    $q->orWhere('client', 'like', "%{$search}%");
+                    $q->orWhere('name', 'like', "%{$search}%")
+                    ->orWhere('location', 'like', "%{$search}%")
+                    ->orWhere('client', 'like', "%{$search}%");
                 });
             })
-            ->when($selectedYear, function ($query, $selectedYear) {
-                $query->where('year', $selectedYear);
-            })
-            ->when($selectedCategoryId, function ($query, $selectedCategoryId) {
-                $query->where('category_id', $selectedCategoryId);
-            })
+            ->when($selectedYear, fn($query) => $query->where('year', $selectedYear))
+            ->when($selectedCategoryId, fn($query) => $query->where('category_id', $selectedCategoryId))
             ->orderByDesc('year')
             ->paginate(self::PER_PAGE)
             ->appends($request->query());
 
-        $categories = Category::nestedTree();
+        $categories = Category::with('children')
+            ->where('type', CategoryType::PORTFOLIO)
+            ->whereNull('parent_id')
+            ->get();
 
-        return view('admins.portfolios.index', [
-            'portfolios' => $portfolios,
-            'categories' => $categories,
-            'search' => $search,
-            'selectedYear' => $selectedYear,
-            'selectedCategoryId' => $selectedCategoryId,
-        ]);
+        return view('admins.portfolios.index', compact(
+            'portfolios',
+            'categories',
+            'search',
+            'selectedYear',
+            'selectedCategoryId'
+        ));
     }
 
     public function create()
     {
-        $categories = Category::where('type', CategoryType::PORTFOLIO)->get();
-        $types = Category::where('type', CategoryType::PORTFOLIO_TYPE)->get();
+        $categories = Category::with('children')
+            ->where('type', CategoryType::PORTFOLIO->value)
+            ->whereNull('parent_id')
+            ->orderBy('name')
+            ->get();
 
-        return view('admin.portfolios.create', compact('categories', 'types'));
+        return view('admins.portfolios.create', compact('categories'));
     }
+
 
     public function store(StorePortfolioRequest $request)
     {
@@ -72,8 +76,12 @@ class PortfolioController extends Controller
 
         $portfolio = new Portfolio($validated);
 
+        // Tạo slug từ name nếu chưa có
+        $portfolio->slug = Str::slug($validated['name']);
+
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('portfolio', 'public');
+            $portfolio->image = $request->file('image')
+            ->store('portfolio', 'public');
         }
 
         $portfolio->save();
@@ -88,14 +96,17 @@ class PortfolioController extends Controller
     public function edit($id)
     {
         $portfolio = Portfolio::findOrFail($id);
-        $categories = Category::nestedTree(CategoryType::PORTFOLIO);
-        $types = Category::where('type', CategoryType::PORTFOLIO_TYPE)->get();
 
-        return view('admin.portfolios.create', [
-            'portfolio' => $portfolio,
-            'categories' => $categories,
-            'types' => $types
-        ]);
+        $categories = Category::with('children')
+            ->where('type', CategoryType::PORTFOLIO->value)
+            ->whereNull('parent_id')
+            ->orderBy('name')
+            ->get();
+
+        return view('admins.portfolios.edit', compact(
+            'portfolio',
+            'categories'
+        ));
     }
 
     public function update(UpdatePortfolioRequest $request, $id)
@@ -110,21 +121,23 @@ class PortfolioController extends Controller
             'client' => $validated['client'] ?? null,
             'description' => $validated['description'] ?? null,
             'type' => $validated['type'],
-            'category' => $validated['category'],
+            'category_id' => $validated['category_id'],
             'year' => $validated['year'] ?? null,
         ]);
+
+        $portfolio->slug = Str::slug($validated['name']);
 
         if ($request->hasFile('image_new')) {
             if ($portfolio->image && Storage::exists('public/' . $portfolio->image)) {
                 Storage::delete('public/' . $portfolio->image);
             }
 
-            $path = $request->file('image_new')->store('portfolio', 'public');
-            $portfolio->image = $path;
+            $portfolio->image = $request->file('image_new')
+            ->store('portfolio', 'public');
         }
 
         $portfolio->save();
-        
+
         return response()->json([
             'message' => 'Cập nhật thành công!',
             'data' => $portfolio,

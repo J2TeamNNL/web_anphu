@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Enums\CategoryType;
 
 class UpdatePortfolioRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdatePortfolioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,15 +24,14 @@ class UpdatePortfolioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'client' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'category_id' => 'nullable|exists:categories,id',
-            'portfolio_type_id' => 'nullable',
-            'year' => 'nullable|integer|min:2000|max:' . date('Y'),
-
-            'image' => 'nullable|image',
+            'name' => ['required', 'string'],
+            'location' => ['required', 'string'],
+            'client' => ['nullable', 'string'],
+            'description' => ['nullable', 'string'],
+            'type' => 'nullable',
+            'category_id' => ['required', 'exists:categories,id'],
+            'year' => ['nullable', 'integer'],
+            'image_new' => ['nullable', 'image'],
         ];
     }
 }

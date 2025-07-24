@@ -27,7 +27,7 @@ class StorePortfolioRequest extends FormRequest
             'client' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
-            'portfolio_type_id' => 'nullable',
+            'type' => 'nullable',
             'year' => 'nullable|integer|min:2000|max:' . date('Y'),
 
             'image' => 'nullable|image',

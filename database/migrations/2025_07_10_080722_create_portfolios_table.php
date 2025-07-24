@@ -21,7 +21,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('category_id');
 
-            $table->unsignedBigInteger('portfolio_type_id')->nullable();
+            $table->string('type')->nullable();
             
             $table->year('year')->nullable();
 

@@ -4,12 +4,12 @@
 <div class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0">Cập nhật Dự án</h4>
-        <a href="{{ route('portfolios.index') }}" class="btn btn-sm btn-primary">← Quản lý dự án</a>
+        <a href="{{ route('admin.portfolios.index') }}" class="btn btn-sm btn-primary">← Quản lý dự án</a>
     </div>
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <form action="{{ route('portfolios.update', $portfolio) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.portfolios.update', $portfolio) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -53,21 +53,21 @@
                     <input type="number" name="year" id="year" class="form-control" value="{{ $portfolio->year }}">
                 </div>
 
+                <input type="hidden" name="type" value="porfolio">
+
                 <div class="form-group">
                     <label for="type">Loại hình công trình</label>
-                    <select name="category_id" class="form-control select2">
+                    <select name="category_id" id="category_id" class="form-control select2">
                         <option value="">-- Chọn danh mục --</option>
                         @foreach ($categories as $cat)
-                            <option value="{{ $cat->id }}"
-                                {{ old('category_id', $portfolio->category_id ?? '') == $cat->id ? 'selected' : '' }}>
-                                {{ str_repeat('— ', $cat->depth ?? 0) . $cat->name }}
-                            </option>
-                            @foreach ($cat->children as $child)
-                                <option value="{{ $child->id }}"
-                                    {{ old('category_id', $portfolio->category_id ?? '') == $child->id ? 'selected' : '' }}>
-                                    {{ str_repeat('— ', ($child->depth ?? 1)) . $child->name }}
-                                </option>
-                            @endforeach
+                            <optgroup label="{{ $cat->name }}">
+                                @foreach ($cat->children as $child)
+                                    <option value="{{ $child->id }}"
+                                        {{ old('category_id') == $child->id ? 'selected' : '' }}>
+                                        — {{ $child->name }}
+                                    </option>
+                                @endforeach
+                            </optgroup>
                         @endforeach
                     </select>
                 </div>
