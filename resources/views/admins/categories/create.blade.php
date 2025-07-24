@@ -1,42 +1,54 @@
 @extends('admins.layouts.master')
 
 @section('content')
-<div class="container">
-    <h4 class="mb-4">Tạo danh mục mới</h4>
-
-    <form action="{{ route('categories.store') }}" method="POST">
+<div class="container mt-4">
+    <h2>Thêm danh mục mới</h2>
+    <form action="{{ route('admin.categories.store') }}" method="POST">
         @csrf
 
+        {{-- Name --}}
         <div class="form-group">
             <label for="name">Tên danh mục</label>
-            <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
+            <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control" required>
         </div>
 
+        {{-- Type --}}
         <div class="form-group">
-            <label for="slug">Slug (tùy chọn)</label>
-            <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug') }}">
-        </div>
-
-        <div class="form-group">
-            <label for="parent_id">Danh mục cha</label>
-            <select name="parent_id" id="parent_id" class="form-control">
-                <option value="">-- Không có --</option>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}" {{ old('parent_id') == $category->id ? 'selected' : '' }}>
-                        {{ $category->name }}
+            <label for="type">Loại danh mục</label>
+            <select name="type" id="type" class="form-control" required>
+                @foreach ($types as $type)
+                    <option value="{{ $type->value }}"
+                        {{ old('type', $category->type) === $type->value ? 'selected' : '' }}>
+                        {{ $type->label() }}
                     </option>
                 @endforeach
             </select>
         </div>
 
+        {{-- Parent category --}}
         <div class="form-group">
-            <label for="category_for">Category for (mô tả ngắn)</label>
-            <input type="text" name="category_for" id="category_for" class="form-control" value="{{ old('category_for') }}">
+            <label for="parent_id">Danh mục cha (nếu có)</label>
+            <select name="parent_id" id="parent_id" class="form-control">
+                <option value="">Không có</option>
+                @foreach($parentCategories as $parent)
+                    <option value="{{ $parent->id }}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>
+                        {{ $parent->name }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Tạo danh mục</button>
-        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Quay lại</a>
+        {{-- Slug --}}
+        <div class="form-group">
+            <label for="slug">Slug (URL)</label>
+            <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="form-control">
+            <span class="form-text text-muted">
+                Slug chỉ chứa chữ thường không dấu, không khoảng trắng, dùng dấu gạch ngang (-) để ngăn cách. <br>
+                Ví dụ: <code>villa</code>, <code>daily-news</code>, <code>service-1</code>
+            </span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Tạo mới</button>
     </form>
 </div>
 @endsection
-

@@ -2,36 +2,66 @@
 
 @section('content')
 <div class="container">
-    <h2 class="mb-4">Danh mục {{ ucfirst($type) }}</h2>
-    <a href="{{ route('categories.create', ['type' => $type]) }}" class="btn btn-success mb-3">Thêm danh mục mới</a>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Danh sách danh mục</h4>
+        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">+ Thêm danh mục</a>
+    </div>
 
-    <table class="table table-bordered">
-        <thead>
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
             <tr>
-                <th>Tên</th>
+                <th>ID</th>
+                <th>Tên danh mục</th>
                 <th>Slug</th>
+                <th>Loại</th>
                 <th>Danh mục cha</th>
-                <th>Hành động</th>
+                <th width="150">Hành động</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($categories as $category)
-            <tr>
-                <td>{{ $category->name }}</td>
-                <td>{{ $category->slug }}</td>
-                <td>{{ optional($category->parent)->name }}</td>
-                <td>
-                    <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-primary">Sửa</a>
-                    <form action="{{ route('categories.destroy', $category) }}" method="POST" style="display:inline-block;">
-                        @csrf @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
+            @forelse ($categories as $parent)
+                <tr class="table-primary font-weight-bold">
+                    <td>{{ $parent->id }}</td>
+                    <td>{{ $parent->name }}</td>
+                    <td>{{ $parent->slug }}</td>
+                    <td>{{ $parent->type->label() ?? '-' }}</td>
+                    <td>—</td>
+                    <td>
+                        <a href="{{ route('admin.categories.edit', $parent) }}" class="btn btn-sm btn-warning">Sửa</a>
+                        <form method="POST" action="{{ route('admin.categories.destroy', $parent) }}" class="d-inline" onsubmit="return confirm('Xóa danh mục này?')">
+                            @csrf @method('DELETE')
+                            <button class="btn btn-sm btn-danger">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+
+                @foreach ($parent->children as $child)
+                    <tr>
+                        <td>{{ $child->id }}</td>
+                        <td>↳ {{ $child->name }}</td>
+                        <td>{{ $child->slug }}</td>
+                        <td>{{ $child->type->value ?? '-' }}</td>
+                        <td>{{ $parent->name }}</td>
+                        <td>
+                            <a href="{{ route('admin.categories.edit', $child) }}" class="btn btn-sm btn-warning">Sửa</a>
+                            <form method="POST" action="{{ route('admin.categories.destroy', $child) }}" class="d-inline" onsubmit="return confirm('Xóa danh mục này?')">
+                                @csrf @method('DELETE')
+                                <button class="btn btn-sm btn-danger">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center">Không có danh mục nào</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
-
-    {{ $categories->appends(['type' => $type])->links() }}
 </div>
 @endsection

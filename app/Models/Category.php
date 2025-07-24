@@ -30,7 +30,7 @@ class Category extends Model
 
     public static function nestedTree(array $types = []): Collection
     {
-        $flat = static::tree()
+        $flat = static::query()
             ->when(!empty($types), fn($q) => $q->whereIn('type', $types))
             ->get();
 
@@ -47,16 +47,6 @@ class Category extends Model
             });
     }
 
-    public function portfolios()
-    {
-        return $this->morphedByMany(Portfolio::class, 'categorizable');
-    }
-
-    public function articles()
-    {
-        return $this->morphedByMany(Article::class, 'categorizable');
-    }
-    
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
@@ -65,5 +55,25 @@ class Category extends Model
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id');
+    }
+
+    public function childrenRecursive()
+    {
+        return $this->children()->with('childrenRecursive');
+    }
+
+    public function portfolios()
+    {
+        return $this->hasMany(Portfolio::class);
+    }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function prices()
+    {
+        return $this->hasMany(Price::class);
     }
 }
