@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -18,7 +19,7 @@ class UserSeeder extends Seeder
             'name' => 'An Phu',
             'email' => 'ducvu.nuce60@gmail.com',
             'email_verified_at' => now(),
-            'password' => '892601997',
+            'password' => Hash::make('892601997'),
             'avatar' => null,
             'level' => 1,
             'remember_token' => Str::random(10),

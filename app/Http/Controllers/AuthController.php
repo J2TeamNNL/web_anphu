@@ -37,7 +37,7 @@ class AuthController extends Controller
             session()->put('avatar', $user->avatar);
             session()->put('level', $user->level);
 
-            return redirect()->route('portfolios.index');
+            return redirect()->route('admin.portfolios.index');
 
         } catch (\Throwable $e) 
         {
