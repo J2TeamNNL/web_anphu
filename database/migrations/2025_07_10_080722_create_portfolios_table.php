@@ -14,15 +14,18 @@ return new class extends Migration
         Schema::create('portfolios', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('location');
             $table->string('client')->nullable();
             $table->text('description')->nullable();
 
-            $table->enum('type', ['villa', 'town', 'commercial']);
-            
             $table->unsignedBigInteger('category_id');
 
+            $table->unsignedBigInteger('portfolio_type_id')->nullable();
+            
             $table->year('year')->nullable();
+
+            $table->string('image')->nullable();
 
             $table->timestamps();
         });
