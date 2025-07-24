@@ -4,12 +4,12 @@
 <div class="container my-4">
    <div class="d-flex justify-content-between align-items-center mb-3">
       <h4 class="mb-0">Cập nhật Bài Đăng</h4>
-      <a href="{{ route('articles.index') }}" class="btn btn-sm btn-primary">← Quản lý Bài Đăng</a>
+      <a href="{{ route('admin.articles.index') }}" class="btn btn-sm btn-primary">← Quản lý Bài Đăng</a>
    </div>
 
    <div class="card shadow-sm">
       <div class="card-body">
-         <form action="{{ route('articles.update', $article) }}" method="POST" enctype="multipart/form-data">
+         <form action="{{ route('admin.articles.update', $article) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -28,14 +28,28 @@
                <input type="text" name="link" id="link" class="form-control" value="{{ $article->link }}">
             </div>
 
+            <input type="hidden" name="type" value="article">
+
             <div class="form-group">
-               <label for="type">Loại hình bài đăng</label>
-               <select name="type" id="type" class="form-control" required>
-                  <option value="">-- Chọn loại --</option>
-                  @foreach ($types as $key => $label)
-                     <option value="{{ $key }}" {{ $article->type === $key ? 'selected' : '' }}>
-                        {{ $label }}
-                     </option>
+               <label for="category_id">Danh mục bài đăng</label>
+               <select name="category_id" id="category_id" class="form-control select2">
+                  <option value="">-- Chọn danh mục --</option>
+                  @foreach ($categories as $cat)
+                        {{-- Option cho cấp 1 --}}
+                        <option value="{{ $cat->id }}"
+                           {{ old('category_id', $article->category_id) == $cat->id ? 'selected' : '' }}>
+                           {{ $cat->name }}
+                        </option>
+
+                        {{-- Nếu có cấp con, hiển thị thêm --}}
+                        @if ($cat->children->isNotEmpty())
+                           @foreach ($cat->children as $child)
+                              <option value="{{ $child->id }}"
+                                 {{ (old('category_id', $article->category_id) == $child->id) ? 'selected' : '' }}>
+                                       {{ $child->name }}
+                                 </option>
+                           @endforeach
+                        @endif
                   @endforeach
                </select>
             </div>

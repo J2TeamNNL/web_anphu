@@ -9,32 +9,32 @@
             <ul class="navbar-nav mx-auto">
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="{{ route('portfolios.index') }}">
+                    <a class="nav-link" href="{{ route('admin.portfolios.index') }}">
                         <i class="fa fa-home mr-1"></i>Trang Chủ
                     </a>
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="{{ route('portfolios.index') }}" id="" data-toggle="">
+                    <a class="nav-link" href="{{ route('admin.portfolios.index') }}" id="" data-toggle="">
                         <i class="fa fa-cogs mr-1"></i> Dự án
                     </a>
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="{{ route('articles.index') }}" id="" data-toggle="">
+                    <a class="nav-link" href="{{ route('admin.articles.index') }}" id="" data-toggle="">
                         <i class="fa fa-cogs mr-1"></i> Bài đăng
                     </a>
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="{{ route('consulting_requests.index') }}" id="" data-toggle="">
+                    <a class="nav-link" href="{{ route('admin.consulting_requests.index') }}" id="" data-toggle="">
                         <i class="fa fa-cogs mr-1"></i> Lịch tư vấn
                     </a>
                 </li>
                 
                 @if(session()->get('level') == 1)
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="{{ route('users.index') }}" id="" data-toggle="">
+                        <a class="nav-link" href="{{ route('admin.users.index') }}" id="" data-toggle="">
                             <i class="fa fa-cogs mr-1"></i> Người quản lý
                         </a>
                     </li>
@@ -47,7 +47,7 @@
                         <i class="fa fa-cogs mr-1"></i> Cài đặt
                     </a>
                     <div class="dropdown-menu" aria-labelledby="aboutDropdown">
-                        <a class="dropdown-item small" href="{{ route('settings.company.edit') }}">
+                        <a class="dropdown-item small" href="#">
                             <i class="fa fa-cog mr-1 icon-highlight"></i>
                             Cài đặt thông tin công ty
                         </a>
@@ -59,7 +59,7 @@
                             <i class="fa fa-cog mr-1 icon-highlight"></i>
                             Cài đặt giá
                         </a>
-                        <a class="dropdown-item small" href="{{ route('categories.index') }}">
+                        <a class="dropdown-item small" href="{{ route('admin.categories.index') }}">
                             <i class="fa fa-cog mr-1 icon-highlight"></i>
                             Cài đặt danh mục
                         </a>

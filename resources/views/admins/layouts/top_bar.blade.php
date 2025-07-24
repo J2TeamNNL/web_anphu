@@ -4,7 +4,7 @@
         <div class="row align-items-center text-white">
             <!-- Logo -->
             <div class="col-md-3 col-6 text-center text-md-left">
-                <a href="{{ route('portfolios.index')}}" class="logo-link d-inline-block">
+                <a href="{{ route('admin.portfolios.index')}}" class="logo-link d-inline-block">
                     <img class="anphu-logo" src="{{ asset('assets/img/logo/banner.jpg') }}" alt="ANPHU Logo">
                 </a>
             </div>
@@ -21,7 +21,7 @@
             </div>
 
             <div class="col-md-2 text-center mb-2 mb-md-0 border-md-right border-divider">
-                <a href="{{ route('auths.logout')}}" class="btn btn-sm btn-primary">
+                <a href="{{ route('admin.auths.logout')}}" class="btn btn-sm btn-primary">
                     Đăng xuất
                 </a>
             </div>

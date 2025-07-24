@@ -21,7 +21,7 @@ return new class extends Migration
             
             $table->unsignedBigInteger('category_id');
 
-            $table->unsignedBigInteger('article_type_id')->nullable();
+            $table->string('type')->nullable();
 
             $table->timestamps();
         });

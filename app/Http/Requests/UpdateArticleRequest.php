@@ -22,26 +22,13 @@ class UpdateArticleRequest extends FormRequest
      */
     public function rules(): array
     {   
-        $articleId = $this->route('article');
-        if (is_object($articleId)) {
-            $articleId = $articleId->id;
-        }
-
         return [
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('articles', 'name')->ignore($articleId),
-            ],
-            'link' => [
-                'nullable',
-                'string',
-                'max:255',
-            ],
-            'image' => 'nullable|image',
-            'description' => 'nullable|string',
-            'type' => 'required|in:construction,daily,event',
+            'name' => ['required', 'string', 'max:255'],
+            'image_new' => ['nullable', 'image'],
+            'link' => ['nullable', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'type' => 'nullable'
         ];
     }
 }

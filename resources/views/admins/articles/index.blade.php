@@ -8,7 +8,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0 text-primary">Danh sách Bài đăng</h4>
-        <a href="{{ route('articles.create') }}" class="btn btn-success">+ Thêm bài đăng</a>
+        <a href="{{ route('admin.articles.create') }}" class="btn btn-success">+ Thêm bài đăng</a>
     </div>
 
     <div class="card shadow-sm">
@@ -19,13 +19,25 @@
                         <input type="text" name="q" value="{{ old('q', $search ?? '') }}" class="form-control" placeholder="Tìm theo Tên, Mô tả">
                     </div>
 
-                    <div class="col-md-2 mb-2">
-                        <select name="type" class="form-control">
-                            <option value="">-- Thể loại --</option>
-                            @foreach ($types as $key => $value)
-                                <option value="{{ $key }}" {{ ($selectedType ?? '') == $key ? 'selected' : '' }}>
-                                    {{ $value }}
-                                </option>
+                    <div class="form-group">
+                        <select name="category_id" id="category_id" class="form-control select2">
+                            <option value="">-- Chọn danh mục --</option>
+                            @foreach ($categories as $cat)
+                                    {{-- Option cho cấp 1 --}}
+                                    <option value="{{ $cat->id }}"
+                                    {{ old('category_id') == $cat->id ? 'selected' : '' }}>
+                                    {{ $cat->name }}
+                                    </option>
+
+                                    {{-- Nếu có cấp con, hiển thị thêm --}}
+                                    @if ($cat->children->isNotEmpty())
+                                    @foreach ($cat->children as $child)
+                                        <option value="{{ $child->id }}"
+                                                {{ old('category_id') == $child->id ? 'selected' : '' }}>
+                                                — {{ $child->name }}
+                                        </option>
+                                    @endforeach
+                                    @endif
                             @endforeach
                         </select>
                     </div>
@@ -37,7 +49,7 @@
                     </div>
 
                     <div class="col-md-1 mb-2">
-                        <a href="{{ route('articles.index') }}" class="btn btn-outline-secondary w-100">Đặt lại</a>
+                        <a href="{{ route('admin.articles.index') }}" class="btn btn-outline-secondary w-100">Đặt lại</a>
                     </div>
                 </div>
             </form>
@@ -51,7 +63,8 @@
                             <th>Mô tả</th>
                             <th>Ảnh</th>
                             <th>Link</th>
-                            <th>Thể loại Bài Đăng</th>
+                            <th>Danh mục</th>
+                            <th>Loại bài viết</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -63,13 +76,7 @@
                                 <td class="text-left" style="max-width: 200px;">
                                     {{ \Illuminate\Support\Str::limit($article->description, 100) }}
                                 </td>
-                                <td>
-                                    @if ($article->image)
-                                        <img src="{{ asset("storage/{$article->image}") }}" alt="{{ $article->name }}" width="100" class="img-thumbnail">
-                                    @else
-                                        <span class="text-muted">Không có</span>
-                                    @endif
-                                </td>
+
                                 <td>
                                     <a href="{{ $article->link }}" target="_blank">{{ $article->link }}</a>
                                 </td>
@@ -78,11 +85,15 @@
                                         {{ $types[$article->type] ?? ucfirst($article->type) }}
                                     </span>
                                 </td>
+
+                                <td>{{ $article->category->parent->name ?? '-' }}</td>
+                                <td>{{ $article->category->name ?? '-' }}</td>
+                            
                                 <td>
-                                    <a href="{{ route('articles.edit', $article) }}" class="btn btn-sm btn-primary mb-1">Sửa</a>
+                                    <a href="{{ route('admin.articles.edit', $article) }}" class="btn btn-sm btn-primary mb-1">Sửa</a>
                                     
                                     @if(session('level') == 1)
-                                    <form action="{{ route('articles.destroy', $article) }}" method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')" class="d-inline">
+                                    <form action="{{ route('admin.articles.destroy', $article) }}" method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Xoá</button>

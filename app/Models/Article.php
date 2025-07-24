@@ -13,15 +13,27 @@ class Article extends Model
 
     protected $fillable = [
         'name',
+        'slug',
         'image',
         'link',
         'description',
         'category_id',
-        'article_type_id',
+        'type',
     ];
 
-    public function categories()
+    public function category()
     {
-        return $this->morphToMany(Category::class, 'categorizable');
+        return $this->belongsTo(Category::class)
+            ->where('type', CategoryType::ARTICLE->value);
+    }
+
+    public function getCategoryNameAttribute()
+    {
+        return $this->category?->name ?? null;
+    }
+
+    public function getParentCategoryNameAttribute()
+    {
+        return $this->category?->parent?->name ?? null;
     }
 }

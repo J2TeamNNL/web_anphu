@@ -74,9 +74,8 @@ class PortfolioController extends Controller
     {
         $validated = $request->validated();
 
-        $portfolio = new Portfolio($validated);
+        $portfolio = $this->model::create($validated);
 
-        // Tạo slug từ name nếu chưa có
         $portfolio->slug = Str::slug($validated['name']);
 
         if ($request->hasFile('image')) {
@@ -95,7 +94,7 @@ class PortfolioController extends Controller
 
     public function edit($id)
     {
-        $portfolio = Portfolio::findOrFail($id);
+        $portfolio = $this->model::findOrFail($id);
 
         $categories = Category::with('children')
             ->where('type', CategoryType::PORTFOLIO->value)
