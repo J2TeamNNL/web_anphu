@@ -11,11 +11,15 @@ use App\Http\Controllers\CategoryController;
 
 use App\Http\Controllers\ConsultingRequestController;
 
+use App\Http\Controllers\CompanySettingController;
+use App\Http\Controllers\PolicySettingController;
+use App\Http\Controllers\PriceSettingController;
+
 use App\Http\Controllers\AuthController;
 
 use App\Http\Middleware\CheckLoginMiddleware;
 use App\Http\Middleware\CheckSuperAdminMiddleware;
-
+use App\Models\Category;
 use PHPUnit\Framework\Attributes\Group;
 
 Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
@@ -28,10 +32,10 @@ Route::group(['prefix' => 'about'], function () {
 });
 
 Route::group(['prefix' => 'services'], function () {
-   Route::get('/permit', [CustomerController::class, 'servicesPermit'])->name('services.permit');
-   Route::get('/design', [CustomerController::class, 'servicesDesign'])->name('services.design');
    Route::get('/construction-full', [CustomerController::class, 'servicesContructionFull'])->name('services.construction_full');
-   Route::get('/construction-raw', [CustomerController::class, 'servicesContructionRaw'])->name('services.construction_raw');
+   Route::get('/design-architect', [CustomerController::class, 'servicesDesignArchitect'])->name('services.design_architect');
+   Route::get('/design-interior', [CustomerController::class, 'servicesDesignInterior'])->name('services.design_interior');
+   Route::get('/construction-renovate', [CustomerController::class, 'servicesContructionRenovate'])->name('services.construction_renovate');
 });
 
 Route::get('/projects/{type}', [CustomerController::class, 'projectIndex'])->name('projects.index');
@@ -66,6 +70,7 @@ Route::group([
 
    Route::patch('/admin/consulting-requests/{id}/status', [ConsultingRequestController::class, 'updateStatus'])->name('consulting_requests.updateStatus');
 
+   
    Route::resource('portfolios', PortfolioController::class)->except([
       'show',
       'destroy',
@@ -84,6 +89,10 @@ Route::group([
    Route::get('/consulting-requests/index', [ConsultingRequestController::class, 'index'])->name('consulting_requests.index');
    Route::put('/consulting-requests/edit', [ConsultingRequestController::class, 'edit'])->name('consulting_requests.edit');
 
+   Route::prefix('settings')->group(function () {
+      Route::get('/company', [CompanySettingController::class, 'edit'])->name('settings.company.edit');
+      Route::put('/company', [CompanySettingController::class, 'update'])->name('settings.company.update');
+   });
    
    Route::group([
       'middleware' => CheckSuperAdminMiddleware::class,
@@ -91,7 +100,7 @@ Route::group([
       
       Route::delete('portfolios/{portfolio}', [PortfolioController::class, 'destroy']) ->name('portfolios.destroy');
       Route::delete('articles/{article}', [ArticleController::class, 'destroy']) ->name('articles.destroy');
-      Route::delete('categories/{categorie}', [CategoryController::class, 'destroy']) ->name('categories.destroy');
+      Route::delete('categories/{category}', [CategoryController::class, 'destroy']) ->name('categories.destroy');
 
       Route::resource('users', UserController::class);
    });
