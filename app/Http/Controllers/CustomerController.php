@@ -11,13 +11,20 @@ use App\Http\Requests\UpdateCustomerRequest;
 
 
 class CustomerController extends Controller
-{
+{       
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
-        return view('customers.pages.index');
+    {   
+        $portfolios = Portfolio::query()
+            ->limit(4)
+            ->get();
+
+        return view('customers.pages.index', [
+            'portfolios' => $portfolios
+        ]);
     }
     
     public function consultant()
@@ -53,27 +60,29 @@ class CustomerController extends Controller
 
 
     // SERVICES
-    public function servicesPermit()
-    {
-        return view('customers.pages.services_permit');
-    }
-
-    public function servicesDesign()
-    {
-        return view('customers.pages.services_design');
-    }
-
-    public function servicesContructionRaw()
-    {
-        return view('customers.pages.services_construction_raw');
-    }
 
     public function servicesContructionFull()
     {
         return view('customers.pages.services_construction_full');
     }
 
+    public function servicesDesignArchitect()
+    {
+        return view('customers.pages.services_design_architect');
+    }
+
+    public function servicesDesignInterior()
+    {
+        return view('customers.pages.services_design_interior');
+    }
+
+    public function servicesContructionRenovate()
+    {
+        return view('customers.pages.services_construction_renovate');
+    }
+
     // PORTFOLIOS
+
     public function projectIndex($type = null)
     {
         $allTypes = Portfolio::getTypes();

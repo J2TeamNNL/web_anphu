@@ -2,11 +2,11 @@
 
 @section('content')
 
-    @include('customers.partials.anphu.services_full')
+    @include('customers.partials.anphu.services_construction_full')
 
     @include('customers.partials.sign_up_1')
 
-    @include('customers.partials.anphu.demo_projects')
+    {{-- @include('customers.partials.anphu.demo_projects') --}}
     
     @include('customers.partials.anphu.partner')
 @endsection

@@ -32,6 +32,21 @@ body {
     /* margin-bottom: 20px; */
 }
 
+.content-amplify {
+    color: var(--color-secondary);
+    font-weight: bold;
+}
+
+.content-primary {
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.content-secondary {
+    color: var(--color-secondary);
+    font-weight: bold;
+}
+
 /* --------------------------
    TOP BAR
 --------------------------- */
@@ -157,11 +172,6 @@ body {
 .dropdown-item .icon-highlight {
     color: var(--color-primary);
 }
-
-
-
-
-
 
 
 /* --------------------------
@@ -420,8 +430,8 @@ BUTTONS
     top: -1%;
     left: 15%;
     transform: translate(-50%, -50%);
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     background-color: #fff;
     border: 3px solid var(--color-secondary); 
     border-radius: 50%;

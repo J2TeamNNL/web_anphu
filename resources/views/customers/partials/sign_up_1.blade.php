@@ -5,15 +5,14 @@
             <div class="col-lg-6 mb-4">
                <h4 class="text-warning font-weight-bold">NHỮNG GIÁ TRỊ VƯỢT TRỘI AN PHÚ MANG ĐẾN</h4>
                <ul class="text-white mt-4 pl-3">
-                  <li>Thiết kế cá nhân hóa</li>
-                  <li>Bố trí công năng khoa học, tối ưu</li>
-                  <li>Cảnh quan mang mảng xanh vào công trình</li>
-                  <li>Thiết kế đối lưu không khí tự nhiên</li>
-                  <li>Tính toán kết cấu bền chắc</li>
-                  <li>Hệ thống ME điện nước, tiết kiệm năng lượng, an toàn</li>
-                  <li>Kiểm tra thông số pháp lý trước khi thiết kế</li>
-                  <li>Ứng dụng Phong thủy mang</li>
-               <li>Đảm bảo Thi công thực hiện được</li>
+                  <li>Thiết kế thể hiện cá tính, <span class="content-amplify">phong cách sống</span> của gia chủ</li>
+                  <li>Ứng dụng <span class="content-amplify">Phong thủy khoa học</span> vào thiết kế</li>
+                  <li>
+                    Đảm bảo thiết kế phù hợp với ngân sách, <span class="content-amplify">không phát sinh</span>,
+                    tính toán phương án thi công khả thi thực dụng,
+                    phù hợp với mọi đối tượng khách hàng
+                    </li>
+                  <li>Kiểm tra <span class="content-amplify">quy hoạch pháp lý</span> trước khi thiết kế</li>
                </ul>
             </div>
 

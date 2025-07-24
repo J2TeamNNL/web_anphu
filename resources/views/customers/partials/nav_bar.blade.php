@@ -30,7 +30,7 @@
 @endphp
 
 <!-- Navigation bar -->
-<nav class="navbar main-nav navbar-expand-lg navbar-light">
+<nav class="navbar main-nav navbar-expand-lg navbar-light sticky-top">
     <div class="container">
         <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,9 +51,18 @@
                         <i class="fa fa-users mr-1"></i>Về An Phú
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item small {{ isActive('about.anphu') }}" href="{{ route('about.anphu') }}"><i class="fa fa-users icon-highlight"></i> Giới thiệu</a>
-                        <a class="dropdown-item small {{ isActive('about.open_letter') }}" href="{{ route('about.open_letter') }}"><i class="fa fa-users icon-highlight"></i> Thư ngỏ</a>
-                        <a class="dropdown-item small {{ isActive('about.cultural_values') }}" href="{{ route('about.cultural_values') }}"><i class="fa fa-users icon-highlight"></i> Giá trị văn hóa</a>
+                        <a class="dropdown-item small {{ isActive('about.anphu') }}" href="{{ route('about.anphu') }}">
+                            <i class="fa fa-users icon-highlight"></i>
+                            Giới thiệu
+                        </a>
+                        <a class="dropdown-item small {{ isActive('about.open_letter') }}" href="{{ route('about.open_letter') }}">
+                            <i class="fa fa-users icon-highlight"></i>
+                            Thư ngỏ
+                        </a>
+                        <a class="dropdown-item small {{ isActive('about.cultural_values') }}" href="{{ route('about.cultural_values') }}">
+                            <i class="fa fa-users icon-highlight"></i>
+                            Giá trị văn hóa
+                        </a>
                     </div>
                 </li>
 
@@ -62,10 +71,22 @@
                         <i class="fa fa-cogs mr-1"></i>Dịch Vụ
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item small {{ isActive('services.permit') }}" href="{{ route('services.permit') }}"><i class="fa fa-cog mr-1 icon-highlight"></i> Hồ sơ cấp phép xây dựng</a>
-                        <a class="dropdown-item small {{ isActive('services.design') }}" href="{{ route('services.design') }}"><i class="fa fa-cog mr-1 icon-highlight"></i> Thiết kế hồ sơ kĩ thuật, nội thất</a>
-                        <a class="dropdown-item small {{ isActive('services.construction_full') }}" href="{{ route('services.construction_full') }}"><i class="fa fa-cog mr-1 icon-highlight"></i> Xây nhà trọn gói</a>
-                        <a class="dropdown-item small {{ isActive('services.construction_raw') }}" href="{{ route('services.construction_raw') }}"><i class="fa fa-cog mr-1 icon-highlight"></i> Xây dựng phần thô</a>
+                        <a class="dropdown-item small {{ isActive('services.construction_full') }}" href="{{ route('services.construction_full') }}">
+                            <i class="fa fa-cog mr-1 icon-highlight"></i>
+                            Xây nhà trọn gói
+                        </a>
+                        <a class="dropdown-item small {{ isActive('services.design_architect') }}" href="{{ route('services.design_architect') }}">
+                            <i class="fa fa-cog mr-1 icon-highlight"></i>
+                            Thiết kế kiến trúc
+                        </a>
+                        <a class="dropdown-item small {{ isActive('services.design_interior') }}" href="{{ route('services.design_interior') }}">
+                            <i class="fa fa-cog mr-1 icon-highlight"></i>
+                            Thiết kế nội thất
+                        </a>
+                        <a class="dropdown-item small {{ isActive('services.construction_renovate') }}" href="{{ route('services.construction_renovate') }}">
+                            <i class="fa fa-cog mr-1 icon-highlight"></i>
+                            Cải tạo nhà cũ
+                        </a>
                     </div>
                 </li>
 
