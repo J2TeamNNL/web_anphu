@@ -62,47 +62,47 @@ Route::group(['prefix' => 'auth'], function () {
 Route::post('/consulting-requests/store', [ConsultingRequestController::class, 'store'])->name('consulting_requests.store');
 
 //Admin
-Route::group([
-   'middleware' => CheckLoginMiddleware::class, 
-],  function () {
+Route::prefix('admin')->name('admin.')
+->middleware(CheckLoginMiddleware::class)
+->group(function () {
 
-   Route::get('auth/logout',[AuthController::class, 'logout'])->name('auths.logout');
+   Route::get('logout', [AuthController::class, 'logout'])->name('auths.logout');
 
-   Route::patch('/admin/consulting-requests/{id}/status', [ConsultingRequestController::class, 'updateStatus'])->name('consulting_requests.updateStatus');
+   Route::patch('consulting-requests/{id}/status', [ConsultingRequestController::class, 'updateStatus'])
+      ->name('consulting_requests.updateStatus');
 
-   
    Route::resource('portfolios', PortfolioController::class)->except([
       'show',
-      'destroy',
+      'destroy'
    ]);
 
    Route::resource('articles', ArticleController::class)->except([
       'show',
-      'destroy',
+      'destroy'
    ]);
-   
+
    Route::resource('categories', CategoryController::class)->except([
       'show',
-      'destroy',
+      'destroy'
    ]);
 
-   Route::get('/consulting-requests/index', [ConsultingRequestController::class, 'index'])->name('consulting_requests.index');
-   Route::put('/consulting-requests/edit', [ConsultingRequestController::class, 'edit'])->name('consulting_requests.edit');
+   Route::get('consulting-requests/index', [ConsultingRequestController::class, 'index'])
+   ->name('consulting_requests.index');
 
-   Route::prefix('settings')->group(function () {
-      Route::get('/company', [CompanySettingController::class, 'edit'])->name('settings.company.edit');
-      Route::put('/company', [CompanySettingController::class, 'update'])->name('settings.company.update');
+   Route::put('consulting-requests/edit', [ConsultingRequestController::class, 'edit'])
+   ->name('consulting_requests.edit');
+
+    Route::prefix('settings')->name('settings.')->group(function () {
+      Route::get('company', [CompanySettingController::class, 'edit'])->name('company.edit');
+      Route::put('company', [CompanySettingController::class, 'update'])->name('company.update');
    });
-   
-   Route::group([
-      'middleware' => CheckSuperAdminMiddleware::class,
-   ], function () {
-      
-      Route::delete('portfolios/{portfolio}', [PortfolioController::class, 'destroy']) ->name('portfolios.destroy');
-      Route::delete('articles/{article}', [ArticleController::class, 'destroy']) ->name('articles.destroy');
-      Route::delete('categories/{category}', [CategoryController::class, 'destroy']) ->name('categories.destroy');
 
-      Route::resource('users', UserController::class);
+   Route::middleware(CheckSuperAdminMiddleware::class)->group(function () {
+   Route::delete('portfolios/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolios.destroy');
+   Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+   Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+   Route::resource('users', UserController::class);
    });
 
 });
