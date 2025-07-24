@@ -43,20 +43,21 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="type">Loại hình dự án</label>
-                    <select name="type" id="type" class="form-control" required>
-                        <option value="">-- Chọn loại --</option>
-                        @foreach ($types as $key => $label)
-                            <option value="{{ $key }}">{{ $label }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="category">Phân danh mục</label>
-                    <select name="category" id="category" class="form-control" required>
+                    <label for="category_id">Danh mục công trình</label>
+                    <select name="category_id" class="form-control select2">
                         <option value="">-- Chọn danh mục --</option>
-                        {{-- Sẽ render bằng JS --}}
+                        @foreach ($categories as $cat)
+                            <option value="{{ $cat->id }}"
+                                {{ old('category_id', $portfolio->category_id ?? '') == $cat->id ? 'selected' : '' }}>
+                                {{ str_repeat('— ', $cat->depth ?? 0) . $cat->name }}
+                            </option>
+                            @foreach ($cat->children as $child)
+                                <option value="{{ $child->id }}"
+                                    {{ old('category_id', $portfolio->category_id ?? '') == $child->id ? 'selected' : '' }}>
+                                    {{ str_repeat('— ', ($child->depth ?? 1)) . $child->name }}
+                                </option>
+                            @endforeach
+                        @endforeach
                     </select>
                 </div>
 

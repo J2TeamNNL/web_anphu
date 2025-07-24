@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Enums\CategoryType;
+use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
@@ -21,14 +23,11 @@ class ArticleController extends Controller
     public function __construct()
     {
         $this->model = new Article();
-        
-        $this->types = Article::getTypes();
     }
 
     public function index(Request $request)
     {   
         $search = $request->input('q');
-        $type = $request->input('type');
 
         $query = Article::query();
 
@@ -39,26 +38,17 @@ class ArticleController extends Controller
             });
         }
 
-        if ($type) {
-            $query->where('type', $type);
-        }
+        $articles = $query->latest()->paginate(self::PER_PAGE);
 
-        $articles = $query->orderByDesc('type')->paginate(self::PER_PAGE)->appends($request->query());
-
-        return view('admins.articles.index', [
-            'articles' => $articles,
-            'types' => $this->types,
-            'search' => $search,
-            'selectedType' => $type,
-        ]);
-
+        return view('admins.articles.index', compact('articles'));
     }
 
     public function create()
     {
-        $types = $this->model->getTypes();
+        $categories = Category::nestedTree(CategoryType::ARTICLE);
+        $types = Category::where('type', CategoryType::ARTICLE_TYPE)->get();
 
-        return view('admins.articles.create',compact('types'));
+        return view('admins.articles.create', compact('categories', 'types'));
     }
 
     public function store(StoreArticleRequest $request)
@@ -71,44 +61,44 @@ class ArticleController extends Controller
 
         $article = Article::create($data);
 
-        return response()->json($article, 201);
+        $article->categories()->sync(array_merge(
+            $request->input('category_ids', []),
+            $request->input('type_ids', [])
+        ));
+
+        return redirect()->route('articles.index')->with('success', 'Tạo bài viết thành công');
     }
 
     public function edit(Article $article)
     {
-        $types = $this->model->getTypes();
+        $categories = Category::nestedTree(CategoryType::ARTICLE);
+        $types = Category::where('type', CategoryType::ARTICLE_TYPE)->get();
 
-        return view('admins.articles.edit', [
-            'article' => $article,
-            'types' => $types,
-        ]);
+        $selectedCategories = $article->articleCategories->pluck('id')->toArray();
+        $selectedTypes = $article->articleTypes->pluck('id')->toArray();
+
+        return view('admins.articles.edit', compact('article', 'categories', 'types', 'selectedCategories', 'selectedTypes'));
     }
 
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        $validated = $request->validated();
-
-        $article->fill([
-            'name' => $validated['name'],
-            'link' => $validated['link'] ?? null,
-            'description' => $validated['description'] ?? null,
-            'type' => $validated['type']
-        ]);
+        $data = $request->validated();
 
         if ($request->hasFile('image_new')) {
             if ($article->image && Storage::exists('public/' . $article->image)) {
                 Storage::delete('public/' . $article->image);
             }
-
-            $article->image = $request->file('image_new')->store('article', 'public');
+            $data['image'] = $request->file('image_new')->store('article', 'public');
         }
 
-        $article->save();
+        $article->update($data);
 
-        return response()->json([
-            'message' => 'Cập nhật thành công!',
-            'data' => $article,
-        ]);
+        $article->categories()->sync(array_merge(
+            $request->input('category_ids', []),
+            $request->input('type_ids', [])
+        ));
+
+        return redirect()->route('articles.index')->with('success', 'Cập nhật bài viết thành công');
     }
 
     public function destroy(Article $article)

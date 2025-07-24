@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\CategoryType;
 
 class Article extends Model
 {
@@ -12,24 +13,15 @@ class Article extends Model
 
     protected $fillable = [
         'name',
+        'image',
         'link',
         'description',
-        'image',
-        'type'
+        'category_id',
+        'article_type_id',
     ];
 
-    public static function getTypes(): array
+    public function categories()
     {
-        return [
-            'construction' => 'Hoạt động công trình',
-            'daily' => 'Đời sống An Phú',
-            'event' => 'Tham quan sự kiện'
-        ];
-    }
-
-    // ISOTOPE
-    public function getStyleClass(): string
-    {
-        return 'type-' . $this->type;
+        return $this->morphToMany(Category::class, 'categorizable');
     }
 }

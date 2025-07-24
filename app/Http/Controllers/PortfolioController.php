@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryType;
+use App\Http\Requests\StorePortfolioRequest;
+use App\Http\Requests\UpdatePortfolioRequest;
 use App\Models\Category;
 use App\Models\Portfolio;
 use Illuminate\Support\Facades\Storage;
+
 
 use Illuminate\Http\Request;
 
@@ -56,63 +60,49 @@ class PortfolioController extends Controller
 
     public function create()
     {
-        return view('admins.portfolios.create', [
-            //
-        ]);
+        $categories = Category::where('type', CategoryType::PORTFOLIO)->get();
+        $types = Category::where('type', CategoryType::PORTFOLIO_TYPE)->get();
+
+        return view('admin.portfolios.create', compact('categories', 'types'));
     }
 
-    public function store(Request $request)
+    public function store(StorePortfolioRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'nullable|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'client' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'type' => 'required|in:villa,town,commercial',
-            'category' => 'required|string|max:50',
-            'year' => 'nullable|integer|min:2000|max:' . date('Y'),
-
-            'image' => 'nullable|image',
-            'image1' => 'nullable|image',
-            'image2' => 'nullable|image',
-            'image3' => 'nullable|image',
-            'image4' => 'nullable|image',
-        ]);
+        $validated = $request->validated();
 
         $portfolio = new Portfolio($validated);
 
-        foreach (['image', 'image1', 'image2', 'image3', 'image4'] as $field) {
-            if ($request->hasFile($field)) {
-                $path = $request->file($field)->store('portfolio', 'public');
-                $portfolio->$field = $path;
-            }
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('portfolio', 'public');
         }
 
         $portfolio->save();
+
+        if (!empty($validated['category_ids'])) {
+            $portfolio->categories()->sync($validated['category_ids']);
+        }
+
         return response()->json($portfolio, 201);
     }
 
-    public function edit(Portfolio $portfolio)
-    {   
-        return view('admins.portfolios.edit', [
+    public function edit($id)
+    {
+        $portfolio = Portfolio::findOrFail($id);
+        $categories = Category::nestedTree(CategoryType::PORTFOLIO);
+        $types = Category::where('type', CategoryType::PORTFOLIO_TYPE)->get();
+
+        return view('admin.portfolios.create', [
             'portfolio' => $portfolio,
+            'categories' => $categories,
+            'types' => $types
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdatePortfolioRequest $request, $id)
     {
         $portfolio = $this->model::findOrFail($id);
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'client' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'type' => 'required|in:villa,town,commercial',
-            'category' => 'required|string|max:50',
-            'year' => 'nullable|integer|min:2000|max:' . date('Y'),
-            'image_new' => 'nullable|image',
-        ]);
+        $validated = $request->validated();
 
         $portfolio->fill([
             'name' => $validated['name'],

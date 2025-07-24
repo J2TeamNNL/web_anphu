@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreArticleRequest extends FormRequest
+class UpdatePortfolioRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,11 +22,15 @@ class StoreArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:articles,name',
-            'link' => 'nullable|url|max:255',
-            'image' => 'nullable|image',
+            'name' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'client' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'type' => 'required|in:construction,daily,event',
+            'category_id' => 'nullable|exists:categories,id',
+            'portfolio_type_id' => 'nullable',
+            'year' => 'nullable|integer|min:2000|max:' . date('Y'),
+
+            'image' => 'nullable|image',
         ];
     }
 }
