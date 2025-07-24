@@ -63,8 +63,8 @@
                             <optgroup label="{{ $cat->name }}">
                                 @foreach ($cat->children as $child)
                                     <option value="{{ $child->id }}"
-                                        {{ old('category_id') == $child->id ? 'selected' : '' }}>
-                                        — {{ $child->name }}
+                                    {{ (old('category_id', $portfolio->category_id) == $child->id) ? 'selected' : '' }}>
+                                        {{ $child->name }}
                                     </option>
                                 @endforeach
                             </optgroup>
