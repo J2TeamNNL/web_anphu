@@ -1,32 +1,35 @@
 <!-- Top bar -->
-<div class="top-bar py-2">
-    <div class="container">
-        <div class="row align-items-center text-white justify-content-between">
-            <!-- Logo -->
-            <div class="col-md-3 col-12 mb-2 mb-md-0 text-center text-md-left border-divider">
-                <a href="{{ route('auths.login') }}" class="logo-link d-inline-block">
-                    <img class="anphu-logo img-fluid" src="{{ asset('assets/img/logo/banner.jpg') }}" alt="ANPHU Logo" style="max-height: 50px;">
-                </a>
-            </div>
+    <div class="top-bar py-2">
+        <div class="container">
+            <div class="row align-items-center text-center text-md-left">
+                <!-- Logo -->
+                <div class="col-12 col-md-3 mb-3 mb-md-0">
+                    <a href="{{ route('customers.index')}}" class="logo-link d-inline-block">
+                        <img class="anphu-logo" src="{{ asset('assets/img/logo/banner.jpg') }}" alt="ANPHU Logo">
+                    </a>
+                </div>
 
-            <!-- Contact Info -->
-            <div class="col-md-3 col-6 mb-2 mb-md-0 text-md-left border-md-right border-divider">
-                <div><i class="fa fa-phone-alt mr-1"></i> Zalo: 0949 453 283</div>
-                <div><i class="fa fa-phone-alt mr-1"></i> Hotline: 0969 317 331</div>
-                <div><i class="fa fa-envelope mr-1"></i> kientrucnoithat.anphu@gmail.com</div>
-                <div><i class="fa fa-clock mr-1"></i> Thời gian: 8h - 17h30 T2 - T7</div>
-            </div>
+                <!-- MXH -->
+                <div class="col-12 col-md-2 text-center text-md-right">
+                    <a href="https://www.tiktok.com/@anphudesign" class="btn btn-sm btn-primary">
+                        <img src="{{ asset('assets/img/logo/logo_tiktok.png') }}" style="height: 20px;" alt="Tiktok">
+                    </a>
+                    <a href="#" class="btn btn-sm btn-warning">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-danger">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#">
+                        <img src="{{ asset('assets/img/logo/logo_zalo.png') }}" style="height: 20px;" alt="Zalo">
+                    </a>
+                </div>
 
-            <!-- Address -->
-            <div class="col-md-3 col-6 mb-2 mb-md-0 text-md-left border-md-right border-divider">
-                <div><i class="fa fa-home mr-1"></i> Số 35, Ngõ Huyện, Hoàn Kiếm, Hà Nội</div>
-            </div>
-
-            <!-- Login / Register -->
-            <div class="col-md-3 d-flex justify-content-md-end justify-content-center">
-                <a href="{{ route('auths.login') }}" class="btn btn-sm btn-outline-light mr-2">Đăng nhập</a>
-                <a href="{{ route('auths.register') }}" class="btn btn-sm btn-warning">Đăng ký</a>
+                <div class="col-12 col-md-3 mb-3 mb-md-0">
+                    <a href="{{ route('auths.register')}}" class="logo-link d-inline-block">
+                        <button class="btn btn-success btn-block">Đăng ký</button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
