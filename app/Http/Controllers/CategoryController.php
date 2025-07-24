@@ -2,90 +2,89 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryType;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {   
 
-    private Category $model;
-
-    private const PER_PAGE = 5;
-
-    public function __construct()
-    {
-        $this->model = new Category();
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        $search = $request->input('q');
+        $modelType = $request->get('model', 'portfolio');
+        
+        if (!in_array($modelType, ['portfolio', 'article'])) {
+            abort(404);
+        }
 
-        $categories = $this->model->query()
-            ->when($search, function ($query, $search) {
-                $query->where('name', 'like', "%{$search}%");
-            })
-            ->orderByDesc('id')
-            ->paginate(self::PER_PAGE)
-            ->appends($request->query());
+        $categories = Category::nestedTree([$modelType]);
 
-        return view('admins.categories.index', [
+        return view('admins.categories.index', compact(
+            'categories', 
+            'type'
+        ));
+    }
+
+    public function create(Request $request)
+    {
+        $type = $request->get('type', 'portfolio');
+
+        $parents = Category::where('type', $type)
+        ->whereNull('parent_id')->get();
+
+        return view('admins.categories.create', compact(
+            'parents',
+            'type'
+        ));
+    }
+
+    public function store(StoreCategoryRequest $request)
+    {
+        $data = $request->validated();
+        
+        $data['slug'] = Str::slug($data['name']);
+
+        $data['type'] = $request->get('type', 'portfolio');
+
+        Category::create($data);
+
+        return redirect()->route('admins.categories.index',[
+            'type' => $data['type']]
+        )->with('success', 'Tạo danh mục thành công');
+    }
+
+    public function edit(Request $request)
+    {
+        $modelType = $request->get('model', 'portfolio');
+        
+        if (!in_array($modelType, ['portfolio', 'article'])) {
+            abort(404);
+        }
+
+        $categories = Category::nestedTree([$modelType]);
+
+        return view('admin.categories.edit', [
             'categories' => $categories,
-            'search' => $search,
+            'modelType' => $modelType,
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCategoryRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $data = $request->validated();
+        $data['slug'] = Str::slug($data['name']);
+        $category->update($data);
+
+        return redirect()->route('admins.categories.index')->with('success', 'Cập nhật danh mục thành công');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('admins.categories.index')->with('success', 'Xoá danh mục thành công');
     }
 }

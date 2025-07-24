@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Enums\CategoryType;
 
 class UpdateCategoryRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -20,9 +22,20 @@ class UpdateCategoryRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    {  
         return [
-            //
+            'name' => 'required|string|max:255',
+            'type' => ['required', Rule::in(CategoryType::values())],
+            'parent_id' => [
+                'nullable',
+                'exists:categories,id',
+
+                function ($attribute, $value, $fail) {
+                    if ($value == $this->route('category')->id) {
+                        $fail('Danh mục không được làm cha của chính nó.');
+                    }
+                },
+            ],
         ];
     }
 }

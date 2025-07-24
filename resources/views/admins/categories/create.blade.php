@@ -1,52 +1,42 @@
 @extends('admins.layouts.master')
 
 @section('content')
-<div class="container my-4">
-   <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4 class="mb-0">Thêm Bài Đăng</h4>
-      <a href="{{ route('articles.index') }}" class="btn btn-sm btn-primary">← Quản lý Bài Đăng</a>
-   </div>
+<div class="container">
+    <h4 class="mb-4">Tạo danh mục mới</h4>
 
-   <div class="card shadow-sm">
-      <div class="card-body">
-         <form action="{{ route('articles.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+    <form action="{{ route('categories.store') }}" method="POST">
+        @csrf
 
-            <div class="form-group">
-               <label for="name">Tên bài đăng</label>
-               <input type="text" name="name" id="name" class="form-control" required>
-            </div>
+        <div class="form-group">
+            <label for="name">Tên danh mục</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
+        </div>
 
-            <div class="form-group">
-               <label for="description">Nội dung</label>
-               <textarea name="description" id="description" rows="6" class="form-control"></textarea>
-            </div>
+        <div class="form-group">
+            <label for="slug">Slug (tùy chọn)</label>
+            <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug') }}">
+        </div>
 
-            <div class="form-group">
-               <label for="link">Link</label>
-               <input type="text" name="link" id="link" class="form-control" required>
-            </div>
+        <div class="form-group">
+            <label for="parent_id">Danh mục cha</label>
+            <select name="parent_id" id="parent_id" class="form-control">
+                <option value="">-- Không có --</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ old('parent_id') == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-            <div class="form-group">
-               <label for="type">Loại hình bài đăng</label>
-               <select name="type" id="type" class="form-control" required>
-                  <option value="">-- Chọn loại --</option>
-                  @foreach ($types as $key => $label)
-                     <option value="{{ $key }}">{{ $label }}</option>
-                  @endforeach
-               </select>
-            </div>
+        <div class="form-group">
+            <label for="category_for">Category for (mô tả ngắn)</label>
+            <input type="text" name="category_for" id="category_for" class="form-control" value="{{ old('category_for') }}">
+        </div>
 
-            <div class="form-group">
-               <label for="image">Ảnh bài đăng</label>
-               <input type="file" name="image" id="image" class="form-control-file" required>
-            </div>
-
-            <div class="text-right">
-               <button type="submit" class="btn btn-warning font-weight-bold">Thêm bài đăng</button>
-            </div>
-         </form>
-      </div>
-   </div>
+        <button type="submit" class="btn btn-primary">Tạo danh mục</button>
+        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Quay lại</a>
+    </form>
 </div>
 @endsection
+

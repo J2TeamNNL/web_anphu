@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
+use App\Enums\CategoryType;
+
 class Category extends Model
 {
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
@@ -19,12 +21,18 @@ class Category extends Model
         'name',
         'slug',
         'parent_id',
+        'type',
     ];
 
-    public static function nestedTree(): Collection
+    protected $casts = [
+        'type' => CategoryType::class,
+    ];
+
+    public static function nestedTree(array $types = []): Collection
     {
-        // Lấy toàn bộ tree dạng phẳng, đã sắp xếp đúng thứ tự
-        $flat = static::tree()->get(); // LaravelAdjacencyList
+        $flat = static::tree()
+            ->when(!empty($types), fn($q) => $q->whereIn('type', $types))
+            ->get();
 
         return self::buildNestedTree($flat);
     }
@@ -37,5 +45,25 @@ class Category extends Model
                 $item->children = self::buildNestedTree($flat, $item->id);
                 return $item;
             });
+    }
+
+    public function portfolios()
+    {
+        return $this->morphedByMany(Portfolio::class, 'categorizable');
+    }
+
+    public function articles()
+    {
+        return $this->morphedByMany(Article::class, 'categorizable');
+    }
+    
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
     }
 }

@@ -1,48 +1,37 @@
 @extends('admins.layouts.master')
 
 @section('content')
-<div class="container-fluid my-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0">Xin chào {{ session('name') }}</h5>
-    </div>
+<div class="container">
+    <h2 class="mb-4">Danh mục {{ ucfirst($type) }}</h2>
+    <a href="{{ route('categories.create', ['type' => $type]) }}" class="btn btn-success mb-3">Thêm danh mục mới</a>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0 text-primary">Danh sách Danh mục</h4>
-        <a href="{{ route('categories.create') }}" class="btn btn-success">+ Thêm danh mục</a>
-    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Slug</th>
+                <th>Danh mục cha</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($categories as $category)
+            <tr>
+                <td>{{ $category->name }}</td>
+                <td>{{ $category->slug }}</td>
+                <td>{{ optional($category->parent)->name }}</td>
+                <td>
+                    <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-primary">Sửa</a>
+                    <form action="{{ route('categories.destroy', $category) }}" method="POST" style="display:inline-block;">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <form class="mb-3" method="GET">
-                <div class="form-row">
-                    <div class="col-md-4 mb-2">
-                        <input type="text" name="q" value="{{ old('q', $search ?? '') }}" class="form-control" placeholder="Tìm theo Tên">
-                    </div>
-
-                    <div class="col-md-2 mb-2">
-                        <button class="btn btn-primary w-100" type="submit">
-                            <i class="fa fa-search mr-1"></i> Tìm kiếm
-                        </button>
-                    </div>
-
-                    <div class="col-md-1 mb-2">
-                        <a href="{{ route('categories.index') }}" class="btn btn-outline-secondary w-100">Đặt lại</a>
-                    </div>
-                </div>
-            </form>
-
-            <div>
-                @if ($categories->isEmpty())
-                    <div class="text-muted">Chưa có danh mục nào.</div>
-                @else
-                    <ul class="list-group">
-                        @foreach ($categories as $category)
-                            @include('admins.categories._category_item', ['category' => $category, 'level' => 0])
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
-        </div>
-    </div>
+    {{ $categories->appends(['type' => $type])->links() }}
 </div>
 @endsection

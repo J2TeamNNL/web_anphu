@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+use App\Enums\CategoryType;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
  */
@@ -17,8 +19,10 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->word(),
-            'slug' => fake()->slug(),
+            'name' => $this->faker->word(),
+            'slug' => $this->faker->slug(),
+            'type' => $this->faker->randomElement(CategoryType::values()),
+            'parent_id' => null,
         ];
     }
 }
