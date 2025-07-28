@@ -18,7 +18,7 @@
             </div>
 
             <div class="form-group">
-               <label for="description">Nô tả</label>
+               <label for="description">Mô tả</label>
                <textarea name="description" id="description" rows="6" class="form-control"></textarea>
             </div>
 
