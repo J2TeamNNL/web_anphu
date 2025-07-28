@@ -1,19 +1,11 @@
-@push('scripts')
-<!-- CKEditor CDN -->
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+@push('styles')
+<style>
+  .ck-editor__editable[role="textbox"]{ min-height: 420px; }
+</style>
+@endpush
 
-<script>
-ClassicEditor
-   .create(document.querySelector('#editor'), {
-      ckfinder: {
-         uploadUrl: '{{ route('admin.articles.uploadImage') }}?_token={{ csrf_token() }}'
-      },
-      mediaEmbed: {
-         previewsInData: true
-      }
-   })
-   .catch(error => {
-      console.error(error);
-   });
-</script>
+@push('scripts')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+@vite('resources/js/editor.js')
 @endpush

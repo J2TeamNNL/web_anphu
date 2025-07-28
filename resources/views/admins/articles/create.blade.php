@@ -60,7 +60,8 @@
             
             <div class="form-group">
                <label for="content">Nội dung bài viết</label>
-               <textarea name="content" id="editor" class="form-control" rows="10">{{ old('content', $article->content ?? '') }}</textarea>
+               <textarea name="content" id="editor" class="form-control" rows="20">{{ old('content', $article->content ?? '') }}</textarea>
+               <div id="word-count"></div>
             </div>
 
             <div class="text-right">
