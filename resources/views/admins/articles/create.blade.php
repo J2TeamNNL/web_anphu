@@ -25,13 +25,7 @@
 
             <div class="form-group">
                <label for="description">Nô tả</label>
-               <textarea
-                  name="description"
-                  id="description"
-                  rows="6"
-                  class="form-control"
-               >
-               </textarea>
+               <textarea name="description" id="description" rows="6" class="form-control"></textarea>
             </div>
 
             <div class="form-group">
@@ -72,15 +66,8 @@
             
             <div class="form-group">
                <label for="content">Nội dung bài viết</label>
-               <textarea
-                     name="content"
-                     id="editor"
-                     class="form-control"
-                     rows="10"
-                  >
-                     {{ old('content', $article->content ?? '') }}
-                  </textarea>
-               </div>
+               <textarea name="content" id="editor" class="form-control" rows="10">{{ old('content', $article->content ?? '') }}</textarea>
+            </div>
 
             <div class="text-right">
                <button type="submit" class="btn btn-warning font-weight-bold">Thêm bài đăng</button>
