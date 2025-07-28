@@ -21,29 +21,25 @@
 
             <form class="mb-3" method="GET">
                 <div class="form-row">
+
                     <div class="col-md-4 mb-2">
-                        <input 
-                            type="text" 
-                            name="q" 
-                            value="{{ old('q', $search) }}" 
-                            class="form-control" 
-                            placeholder="Tìm theo Tên, Địa điểm, Khách hàng..."
+                        <input
+                            type="text"
+                            name="q" id="search"
+                            value="{{ old('q', $search ?? '') }}"
+                            class="form-control"
+                            placeholder="Tìm theo Tên, Mô tả"
                         >
                     </div>
 
                     <div class="col-md-2 mb-2">
-                        <select 
-                            name="year" 
+                        <select
+                            name="year"
                             class="form-control"
                         >
-                            <option value="" selected disabled>Năm</option>
-                            @for ($i = date('Y'); $i >= 2025; $i--)
-                                <option 
-                                    value="{{ $i }}" 
-                                    @if ($selectedYear == $i)
-                                        selected
-                                    @endif
-                                >
+                            <option value="">-- Năm --</option>
+                            @for ($i = date('Y'); $i >= 2015; $i--)
+                                <option value="{{ $i }}" {{ request('year') == $i ? 'selected' : '' }}>
                                     {{ $i }}
                                 </option>
                             @endfor
@@ -51,13 +47,18 @@
                     </div>
 
                     <div class="form-group">
-                        <select name="category_id" id="category_id" class="form-control select2">
+                        <select
+                            name="category_id"
+                            id="category_id"
+                            class="form-control select2"
+                        >
                             <option value="">-- Chọn danh mục --</option>
                             @foreach ($categories as $cat)
                                 <optgroup label="{{ $cat->name }}">
                                     @foreach ($cat->children as $child)
                                         <option value="{{ $child->id }}"
-                                            {{ old('category_id') == $child->id ? 'selected' : '' }}>
+                                            {{ request('category_id') == $child->id ? 'selected' : '' }}
+                                        >
                                             — {{ $child->name }}
                                         </option>
                                     @endforeach
@@ -99,6 +100,7 @@
                             <th>Năm</th>
                             <th>Loại dự án</th>
                             <th>Loại hình</th>
+                            <th>Chi tiết</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -122,6 +124,9 @@
                                 <td>{{ $portfolio->year }}</td>
                                 <td>{{ $portfolio->getParentCategoryNameAttribute() }}</td>
                                 <td>{{ $portfolio->getCategoryNameAttribute() }}</td>
+                                <td>
+                                    <a href="{{ route('admin.portfolios.show', $portfolio)}}">Xem chi tiết</a>
+                                </td>
                                 <td>
                                     <a 
                                         href="{{ route('admin.portfolios.edit', $portfolio) }}" 
@@ -162,3 +167,23 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+$(function() {
+    $('#category_id').select2();
+
+    $('#category_id').on('change', function () {
+        const params = new URLSearchParams(window.location.search);
+        params.set('category_id', $(this).val());
+        window.location.search = params.toString();
+    });
+
+    $('select[name="year"]').on('change', function () {
+        const params = new URLSearchParams(window.location.search);
+        params.set('year', $(this).val());
+        window.location.search = params.toString();
+    });
+});
+</script>
+@endpush

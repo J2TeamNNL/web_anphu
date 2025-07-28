@@ -75,7 +75,6 @@ Route::prefix('admin')->name('admin.')
       ->name('consulting_requests.updateStatus');
 
    Route::resource('portfolios', PortfolioController::class)->except([
-      'show',
       'destroy'
    ]);
 
@@ -85,7 +84,6 @@ Route::prefix('admin')->name('admin.')
 
 
    Route::resource('categories', CategoryController::class)->except([
-      'show',
       'destroy'
    ]);
 

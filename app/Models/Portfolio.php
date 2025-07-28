@@ -21,6 +21,7 @@ class Portfolio extends Model
         'image',
         'category_id',
         'type',
+        'content',
     ];
 
     public function category()
@@ -37,6 +38,11 @@ class Portfolio extends Model
     public function getParentCategoryNameAttribute()
     {
         return $this->category?->parent?->name ?? null;
+    }
+
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'mediable');
     }
 }
 

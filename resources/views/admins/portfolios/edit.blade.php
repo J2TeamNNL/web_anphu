@@ -31,7 +31,11 @@
                 <div class="form-group">
                     <label>Ảnh đại diện hiện tại</label><br>
                     @if ($portfolio->image)
-                        <img src="{{ asset('storage/' . $portfolio->image) }}" width="200" class="img-thumbnail mb-2">
+                        <img
+                            src="{{ asset('storage/' . $portfolio->image) }}"
+                            width="200"
+                            class="img-thumbnail mb-2"
+                        >
                     @else
                         <p class="text-muted">Không có ảnh</p>
                     @endif
@@ -72,6 +76,18 @@
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="content">Nội dung bài đăng dự án</label>
+                    <textarea
+                        name="content"
+                        id="editor"
+                        class="form-control"
+                        rows="10"
+                    >
+                        {{ old('content', $portfolio->content ?? '') }}
+                    </textarea>
+                </div>
+
                 <div class="text-right">
                     <button type="submit" class="btn btn-warning font-weight-bold">Cập nhật dự án</button>
                 </div>
@@ -80,3 +96,5 @@
     </div>
 </div>
 @endsection
+
+@include('admins.portfolios.partials.scripts_ckeditor_portfolios')
