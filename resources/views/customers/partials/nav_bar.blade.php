@@ -14,8 +14,6 @@
         'services.construction_raw'
     ];
 
-    $selectedType = request()->route('type');
-    // $currentType = request()->route('type');
 
     $priceRoutes = [
         'price.full',
@@ -90,27 +88,19 @@
                     </div>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ in_array($selectedType, ['interior' , 'villa', 'town', 'commercial']) ? 'active' : '' }}">
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ isset($selectedCategory) ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="projectDropdown" data-toggle="dropdown">
-                        <i class="fa fa-cogs mr-1"></i>Dự án
+                        <i class="fa fa-cubes mr-1"></i>Dự án
                     </a>
                     <div class="dropdown-menu" aria-labelledby="projectDropdown">
-                        <a class="dropdown-item small {{ $selectedType === 'interior' ? 'active' : '' }}"
-                        href="{{ route('projects.index', ['type' => 'interior']) }}">
-                        <i class="fa fa-cube mr-1 icon-highlight"></i>Sản phẩm nội thất
-                        </a>
-                        <a class="dropdown-item small {{ $selectedType === 'villa' ? 'active' : '' }}"
-                        href="{{ route('projects.index', ['type' => 'villa']) }}">
-                        <i class="fa fa-cube mr-1 icon-highlight"></i>Công trình Biệt thự
-                        </a>
-                        <a class="dropdown-item small {{ $selectedType === 'town' ? 'active' : '' }}"
-                        href="{{ route('projects.index', ['type' => 'town']) }}">
-                        <i class="fa fa-cube mr-1 icon-highlight"></i>Công trình Nhà phố
-                        </a>
-                        <a class="dropdown-item small {{ $selectedType === 'commercial' ? 'active' : '' }}"
-                        href="{{ route('projects.index', ['type' => 'commercial']) }}">
-                        <i class="fa fa-cube mr-1 icon-highlight"></i>Công trình Nhà ở kết hợp kinh doanh
-                        </a>
+                        @foreach($portfoliosCategories as $category)
+                            <a
+                                class="dropdown-item small {{ isset($selectedCategory) && $selectedCategory->id === $category->id ? 'active' : '' }}"
+                                href="{{ route('projects.byCategory', ['slug' => $category->slug]) }}"
+                            >
+                                <i class="fa fa-cube mr-1 icon-highlight"></i>{{ $category->name }}
+                            </a>
+                        @endforeach
                     </div>
                 </li>
 

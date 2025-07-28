@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
+    @stack('styles')
     
 </head>
 <body>
@@ -53,6 +54,14 @@
             }
         });
     });
+    </script>
+
+    <script>
+        $('li.dropdown-submenu > a').on("click", function(e) {
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
     </script>
 
     @stack('scripts')

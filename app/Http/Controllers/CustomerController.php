@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryType;
 use App\Models\Customer;
 use App\Models\Portfolio;
 use App\Models\Article;
+use App\Models\Category;
+use Illuminate\Http\Request;
 
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
@@ -83,41 +86,47 @@ class CustomerController extends Controller
 
     // PORTFOLIOS
 
-    public function projectIndex($type = null)
+    public function projectByCategory(Request $request, string $slug)
     {
-        $allTypes = Portfolio::getTypes();
+        $parentCategory = Category::where('slug', $slug)
+            ->where('type', CategoryType::PORTFOLIO->value)
+            ->whereNull('parent_id')
+            ->with('children')
+            ->firstOrFail();
 
-        if ($type && !array_key_exists($type, $allTypes)) {
-            abort(404);
-        }
-        
-        $portfolios = Portfolio::query()
-            ->when($type, fn($q) => $q->where('type', $type))
-            ->get();
+        $childCategories = $parentCategory->children;
 
-        $categories = [];
-        foreach (Portfolio::getCategories() as $typeKey => $catGroup) {
-            foreach ($catGroup as $key => $label) {
-                $categories[] = [
-                    'type' => $typeKey,
-                    'key' => $key,
-                    'class' => $typeKey . ' ' . $key,
-                    'name' => $label,
-                ];
+        $childCategoryIds = $childCategories->pluck('id')->toArray();
+
+        $selectedChildSlug = $request->query('child');
+        $selectedChild = null;
+
+        $query = Portfolio::query()->with('category');
+
+        if ($selectedChildSlug) {
+            $selectedChild = $childCategories->firstWhere('slug', $selectedChildSlug);
+
+            if ($selectedChild) {
+                $query->where('category_id', $selectedChild->id);
+            } else {
+                $query->whereIn('category_id', $childCategoryIds);
             }
+        } else {
+            $query->whereIn('category_id', $childCategoryIds);
         }
-        
-        $projectTitle = 'Tất cả công trình';
-        if ($type && array_key_exists($type, $allTypes)) {
-            $projectTitle = 'Công trình ' . $allTypes[$type];
-        }
+
+        $portfolios = $query->latest()->paginate(9);
+
+        $projectTitle = $selectedChild
+        ? 'Dự án - ' . $selectedChild->name
+        : 'Dự án - ' . $parentCategory->name;
 
         return view('customers.pages.projects', [
             'portfolios' => $portfolios,
-            'types' => $allTypes,
-            'categories' => $categories,
-            'selectedType' => $type,
-            'projectTitle' => $projectTitle
+            'parentCategory' => $parentCategory,
+            'childCategories' => $childCategories,
+            'selectedChild' => $selectedChild,
+            'projectTitle' => $projectTitle,
         ]);
     }
 
@@ -125,7 +134,7 @@ class CustomerController extends Controller
     {
         $portfolio = Portfolio::where('slug', $slug)->firstOrFail();
 
-        return view('customers.pages.projectdetail', [
+        return view('customers.pages.project_detail', [
             'portfolio' => $portfolio
         ]);
     }

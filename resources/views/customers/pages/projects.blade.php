@@ -8,33 +8,49 @@
                 <hr class="border-warning">
             </div>
 
-            <!-- FILTER -->
-            <div class="text-center mb-4">
-                <button class="btn btn-outline-warning mx-2 filter-button" data-filter="*">Xem tất cả</button>
+            <!-- FILTER DANH MỤC -->
+            @if($parentCategory)
+                <div class="text-center mb-4">
+                    <a href="{{ route('projects.byCategory', $parentCategory->slug) }}"
+                    class="btn btn-sm btn-outline-primary {{ is_null($selectedChild) ? 'active' : '' }}">
+                        Tất cả
+                    </a>
 
-                @foreach ($categories as $cat)
-                    @if ($cat['type'] === $selectedType)
-                        <button class="btn btn-outline-warning mx-2 filter-button" data-filter=".{{ $cat['type'] }}.{{ $cat['key'] }}">
-                            {{ $cat['name'] }}
-                        </button>
-                    @endif
-                @endforeach 
-            </div>
+                    @foreach($childCategories as $child)
+                        <a href="{{ route('projects.byCategory', ['slug' => $parentCategory->slug, 'child' => $child->slug]) }}"
+                        class="btn btn-sm btn-outline-primary {{ ($selectedChild && $selectedChild->id === $child->id) ? 'active' : '' }}">
+                            {{ $child->name }}
+                        </a>
+                    @endforeach
+                </div>
+            @endif
 
             <!-- PROJECT GRID -->
             <div class="row project-grid">
                 @foreach ($portfolios as $item)
-                    <div class="col-md-4 mb-4 project-item {{ $item->getStyleClass() }}">
-                        <div class="card card-project"
-                            style="background-image: url('{{ asset('storage/' . $item->image) }}');">
-                            <div class="project-overlay text-white">
-                                <h5 class="font-weight-bold text-warning">{{ $item->name }}</h5>
-                                <p class="mb-1"><i class="fa fa-map-marker-alt mr-1"></i>{{ $item->location }}</p>
-                                <p class="mb-1">Chủ đầu tư: {{ $item->client }}</p>
-                                <p class="mb-0">Phong cách: {{ $item->getCategoryName() }}</p>
+                    <a href="{{ route('customers.project.detail', $item->slug) }}" class="text-decoration-none">
+                        <div class="col-md-4 mb-4 project-item">
+                            <div class="card card-project"
+                                style="background-image: url('{{ asset('storage/' . $item->image) }}');">
+                                <div class="project-overlay text-white">
+                                    <h5 class="font-weight-bold text-warning">{{ $item->name }}</h5>
+
+                                    @if (!empty($item->location))
+                                        <p class="mb-1"><i class="fa fa-map-marker-alt mr-1"></i>{{ $item->location }}</p>
+                                    @endif
+
+                                    @if (!empty($item->client))
+                                        <p class="mb-1">Chủ đầu tư: {{ $item->client }}</p>
+                                    @endif
+
+                                    <p class="mb-0">
+                                        Phong cách:
+                                        {{ $item->category?->name ?? 'Không rõ' }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>

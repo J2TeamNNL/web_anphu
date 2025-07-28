@@ -2,12 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerHomeController;
 
 use App\Http\Controllers\PortfolioController;
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\MediaController;
+
+use App\Http\Controllers\MenuController;
 
 use App\Http\Controllers\UserController;
 
@@ -26,7 +29,7 @@ use App\Http\Middleware\CheckSuperAdminMiddleware;
 use App\Models\Category;
 use PHPUnit\Framework\Attributes\Group;
 
-Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
+Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index');
 
 Route::group(['prefix' => 'about'], function () {
    Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
@@ -42,7 +45,12 @@ Route::group(['prefix' => 'services'], function () {
    Route::get('/construction-renovate', [CustomerController::class, 'servicesContructionRenovate'])->name('services.construction_renovate');
 });
 
-Route::get('/projects/{type}', [CustomerController::class, 'projectIndex'])->name('projects.index');
+Route::get('/projects/category/{slug}', [CustomerController::class, 'projectByCategory'])
+    ->name('projects.byCategory');
+
+Route::get('/du-an/{slug}', [CustomerController::class, 'projectDetail'])->name('customers.project.detail');
+
+
 Route::get('/blogs', [CustomerController::class, 'blogIndex'])->name('blogs.index');
 
 Route::group(['prefix' => 'price'], function () {
