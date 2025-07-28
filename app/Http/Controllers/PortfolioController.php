@@ -98,7 +98,30 @@ class PortfolioController extends Controller
             $portfolio->categories()->sync($validated['category_ids']);
         }
 
-        return response()->json($portfolio, 201);
+        $content = $validated['content'] ?? '';
+        preg_match_all('/<img[^>]+src="([^">]+)"/', $content, $matches);
+        $usedImageUrls = $matches[1] ?? [];
+
+        $usedPaths = collect($usedImageUrls)->map(function ($url) {
+            return str_replace(asset('storage') . '/', '', $url);
+        })->toArray();
+
+        $usedPaths = collect($usedImageUrls)->map(function ($url) {
+            $relative = str_replace(asset('storage') . '/', '', $url);
+            return trim($relative);
+        })->toArray();
+
+        Media::whereNull('mediable_id')
+        ->where('type', 'image')
+        ->whereIn('file_path', $usedPaths)
+        ->update([
+            'mediable_id' => $portfolio->id,
+            'mediable_type' => Portfolio::class,
+        ]);
+
+        return redirect()->route('admin.portfolios.index');
+
+        // return response()->json($portfolio, 201);
     }
 
     public function edit($id)
@@ -145,30 +168,41 @@ class PortfolioController extends Controller
         
         $portfolio->save();
 
+        // Gắn lại media trong content
         $content = $request->input('content');
         preg_match_all('/<img[^>]+src="([^">]+)"/', $content, $matches);
         $usedImageUrls = $matches[1] ?? [];
 
         $usedPaths = collect($usedImageUrls)->map(function ($url) {
-            $relative = str_replace(asset('storage') . '/', '', $url);
-            return trim($relative);
+            return str_replace(asset('storage') . '/', '', $url);
         })->toArray();
 
-        $orphanImages = Media::whereNull('mediable_id')->where('type', 'image')->get();
+        // Cập nhật mediable cho ảnh dùng trong content
+        Media::whereNull('mediable_id')
+            ->where('type', 'image')
+            ->whereIn('file_path', $usedPaths)
+            ->update([
+                'mediable_id' => $portfolio->id,
+                'mediable_type' => Portfolio::class,
+            ]);
 
-        foreach ($orphanImages as $media) {
-            if (!in_array($media->file_path, $usedPaths)) {
+        // Chỉ xoá ảnh chưa có mediable và không dùng nữa trong content này
+        Media::whereNull('mediable_id')
+            ->where('type', 'image')
+            ->whereNotIn('file_path', $usedPaths)
+            ->each(function ($media) {
                 if (Storage::disk('public')->exists($media->file_path)) {
                     Storage::disk('public')->delete($media->file_path);
                 }
                 $media->delete();
-            }
-        }
+            });
         
-        return response()->json([
-            'message' => 'Cập nhật thành công!',
-            'data' => $portfolio,
-        ], 200);
+        return redirect()->route('admin.portfolios.index');
+
+        // return response()->json([
+        //     'message' => 'Cập nhật thành công!',
+        //     'data' => $portfolio,
+        // ], 200);
     }
 
     public function show(Portfolio $portfolio)

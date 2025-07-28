@@ -31,6 +31,7 @@ class StorePortfolioRequest extends FormRequest
             'year' => 'nullable|integer|min:2000|max:' . date('Y'),
 
             'image' => 'nullable|image',
+            'content' => 'nullable|string',
         ];
     }
 }

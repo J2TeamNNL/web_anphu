@@ -32,6 +32,7 @@ class UpdatePortfolioRequest extends FormRequest
             'category_id' => ['required', 'exists:categories,id'],
             'year' => ['nullable', 'integer'],
             'image_new' => ['nullable', 'image'],
+            'content' => 'nullable|string',
         ];
     }
 }
