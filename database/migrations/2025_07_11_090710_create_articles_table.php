@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('link')->nullable();   
             $table->text('description')->nullable();
             
+            // $table->longText('content')->nullable();
+
             $table->unsignedBigInteger('category_id');
 
             $table->string('type')->nullable();
