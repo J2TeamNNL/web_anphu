@@ -4,7 +4,7 @@
             <div class="row align-items-center text-center text-md-left">
                 <!-- Logo -->
                 <div class="col-12 col-md-3 mb-3 mb-md-0">
-                    <a href="{{ route('customers.index')}}" class="logo-link d-inline-block">
+                    <a href="{{ route('auths.login')}}" class="logo-link d-inline-block">
                         <img class="anphu-logo" src="{{ asset('assets/img/logo/banner.jpg') }}" alt="ANPHU Logo">
                     </a>
                 </div>

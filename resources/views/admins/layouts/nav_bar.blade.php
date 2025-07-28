@@ -1,7 +1,8 @@
 <!-- Navigation bar -->
 <nav class="navbar navbar-expand-lg main-nav">
     <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 

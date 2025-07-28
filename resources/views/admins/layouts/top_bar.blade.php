@@ -1,30 +1,39 @@
 <!-- Top bar -->
-<div class="top-bar py-2">
+<div class="top-bar py-2 border-bottom">
     <div class="container">
-        <div class="row align-items-center text-white">
-            <!-- Logo -->
-            <div class="col-md-3 col-6 text-center text-md-left">
-                <a href="{{ route('admin.portfolios.index')}}" class="logo-link d-inline-block">
-                    <img class="anphu-logo" src="{{ asset('assets/img/logo/banner.jpg') }}" alt="ANPHU Logo">
+        <div class="row align-items-center text-center text-md-center">
+
+            <div class="col-12 col-md-3 mb-3 mb-md-0 text-center text-md-left">
+                <a href="{{ route('admin.portfolios.index') }}" class="logo-link d-inline-block">
+                    <img class="anphu-logo img-fluid" src="{{ asset('assets/img/logo/banner.jpg') }}" alt="ANPHU Logo" style="max-height: 60px;">
                 </a>
             </div>
 
-            <!-- Điện thoại & Email -->
-            <div class="col-md-3 col-6 text-center text-md-left mb-2 mb-md-0 border-md-right border-divider">
-                <div><i class="fa fa-phone-alt mr-1"></i> 0969.317.331</div>
-                <div><i class="fa fa-envelope mr-1"></i> kientrucnoithat.anphu@gmail.com</div>
+            <div class="col-12 col-md-4 text-center text-md-center">
+                <h5 class="text-uppercase text-warning font-weight-bold mb-0">Giao diện quản lý</h5>
             </div>
 
-            <!-- Địa chỉ -->
-            <div class="col-md-3 text-center mb-2 mb-md-0 border-md-right border-divider">
-                <div><i class="fa fa-home mr-1"></i> Địa chỉ: Số 35, Ngõ Huyện, Hoàn Kiếm, Hà Nội.</div>
+            <div class="col-12 col-md-2 text-center text-md-center">
+                <a href="https://www.tiktok.com/@anphudesign" class="btn btn-sm btn-primary">
+                    <img src="{{ asset('assets/img/logo/logo_tiktok.png') }}" style="height: 20px;" alt="Tiktok">
+                </a>
+                <a href="#" class="btn btn-sm btn-warning">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="btn btn-sm btn-danger">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#">
+                    <img src="{{ asset('assets/img/logo/logo_zalo.png') }}" style="height: 20px;" alt="Zalo">
+                </a>
             </div>
 
-            <div class="col-md-2 text-center mb-2 mb-md-0 border-md-right border-divider">
-                <a href="{{ route('admin.auths.logout')}}" class="btn btn-sm btn-primary">
+            <div class="col-12 col-md-3 text-center text-md-center">
+                <a href="{{ route('admin.auths.logout') }}" class="btn btn-sm btn-primary">
                     Đăng xuất
                 </a>
             </div>
+
         </div>
     </div>
 </div>
