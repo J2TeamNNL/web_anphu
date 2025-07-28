@@ -60,9 +60,9 @@
                         <tr>
                             <th>#</th>
                             <th>Tên bài</th>
-                            <th>Mô tả</th>
                             <th>Ảnh</th>
-                            <th>Link</th>
+                            <th>Mô tả</th>
+                            <th>Chi tiết</th>
                             <th>Danh mục</th>
                             <th>Loại bài viết</th>
                             <th>Thao tác</th>
@@ -73,12 +73,19 @@
                             <tr>
                                 <td>{{ $article->id }}</td>
                                 <td>{{ $article->name }}</td>
+                                <td>
+                                    @if ($article->image)
+                                        <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->name }}" width="100" class="img-thumbnail">
+                                    @else
+                                        <span class="text-muted">Không có</span>
+                                    @endif
+                                </td>
                                 <td class="text-left" style="max-width: 200px;">
                                     {{ \Illuminate\Support\Str::limit($article->description, 100) }}
                                 </td>
 
                                 <td>
-                                    <a href="{{ $article->link }}" target="_blank">{{ $article->link }}</a>
+                                    <a href="{{ route('admin.articles.show', $article)}}">Xem chi tiết</a>
                                 </td>
                                 <td>
                                     <span class="badge badge-info">
@@ -86,9 +93,7 @@
                                     </span>
                                 </td>
 
-                                <td>{{ $article->category->parent->name ?? '-' }}</td>
                                 <td>{{ $article->category->name ?? '-' }}</td>
-                            
                                 <td>
                                     <a href="{{ route('admin.articles.edit', $article) }}" class="btn btn-sm btn-primary mb-1">Sửa</a>
                                     

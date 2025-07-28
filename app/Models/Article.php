@@ -19,6 +19,7 @@ class Article extends Model
         'description',
         'category_id',
         'type',
+        'content'
     ];
 
     public function category()
@@ -35,5 +36,10 @@ class Article extends Model
     public function getParentCategoryNameAttribute()
     {
         return $this->category?->parent?->name ?? null;
+    }
+
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'mediable');
     }
 }

@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 
 use App\Http\Controllers\PortfolioController;
+
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CKEditorController;
+
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\CategoryController;
@@ -77,9 +80,10 @@ Route::prefix('admin')->name('admin.')
    ]);
 
    Route::resource('articles', ArticleController::class)->except([
-      'show',
       'destroy'
    ]);
+
+   Route::post('/articles/upload-image', [ArticleController::class, 'uploadImage'])->name('articles.uploadImage');
 
    Route::resource('categories', CategoryController::class)->except([
       'show',

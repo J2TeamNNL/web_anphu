@@ -18,7 +18,7 @@
             </div>
 
             <div class="form-group">
-               <label for="description">Nội dung</label>
+               <label for="description">Nô tả</label>
                <textarea name="description" id="description" rows="6" class="form-control"></textarea>
             </div>
 
@@ -57,6 +57,11 @@
                <label for="image">Ảnh bài đăng</label>
                <input type="file" name="image" id="image" class="form-control-file">
             </div>
+            
+            <div class="form-group">
+               <label for="content">Nội dung bài viết</label>
+               <textarea name="content" id="editor" class="form-control" rows="10">{{ old('content', $article->content ?? '') }}</textarea>
+            </div>
 
             <div class="text-right">
                <button type="submit" class="btn btn-warning font-weight-bold">Thêm bài đăng</button>
@@ -66,3 +71,5 @@
    </div>
 </div>
 @endsection
+
+@include('admins.articles.scripts_ckeditor')
