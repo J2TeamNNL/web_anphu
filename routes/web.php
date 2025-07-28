@@ -83,7 +83,6 @@ Route::prefix('admin')->name('admin.')
       'destroy'
    ]);
 
-   Route::post('/articles/upload-image', [ArticleController::class, 'uploadImage'])->name('articles.uploadImage');
 
    Route::resource('categories', CategoryController::class)->except([
       'show',

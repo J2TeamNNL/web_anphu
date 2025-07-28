@@ -14,7 +14,6 @@ use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 
 use App\Models\Media;
-use Illuminate\Support\Facades\Log;
 
 class ArticleController extends Controller
 {   
@@ -39,11 +38,15 @@ class ArticleController extends Controller
                 ->orWhere('description', 'like', "%{$search}%");
             });
         }
+        
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
 
         $articles = $query
-        ->with(['category.parent'])
-        ->latest()
-        ->paginate(self::PER_PAGE);
+            ->with(['category.parent'])
+            ->latest()
+            ->paginate(self::PER_PAGE);
 
         $categories = Category::with('children')
             ->where('type', CategoryType::ARTICLE)
@@ -88,37 +91,6 @@ class ArticleController extends Controller
         return response()->json($article, 201);
     }
 
-    public function uploadImage(Request $request)
-    {
-        try {
-            if (!$request->hasFile('upload')) {
-                return response()->json(['error' => 'No file uploaded.'], 400);
-            }
-
-            $file = $request->file('upload');
-
-            if (!$file->isValid()) {
-                return response()->json(['error' => 'Invalid file.'], 400);
-            }
-
-            $path = $file->store('uploads/articles', 'public');
-
-            $media = Media::create([
-                'file_path' => $path,
-                'type' => 'image',
-            ]);
-
-            return response()->json([
-                'url' => asset('storage/' . $path),
-                'uploaded' => 1,
-                'fileName' => $file->getClientOriginalName(),
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Upload image failed: ' . $e->getMessage());
-            return response()->json(['error' => 'Upload failed.'], 500);
-        }
-    }
-
     public function edit($id)
     {
         $article = $this->model::findOrFail($id);
@@ -154,7 +126,8 @@ class ArticleController extends Controller
             if ($article->image && Storage::exists('public/' . $article->image)) {
                 Storage::delete('public/' . $article->image);
             }
-            $article->image = $request->file('image_new')->store('article', 'public');
+            $article->image = $request->file('image_new')
+            ->store('article', 'public');
         }
 
         $article->save();
@@ -205,4 +178,5 @@ class ArticleController extends Controller
 
         return redirect()->route('admin.articles.index')->with('success', 'Xoá bài viết thành công.');
     }
+    
 }

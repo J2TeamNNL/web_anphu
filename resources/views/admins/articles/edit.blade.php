@@ -15,17 +15,36 @@
 
             <div class="form-group">
                <label for="name">Tên bài đăng</label>
-               <input type="text" name="name" id="name" class="form-control" value="{{ $article->name }}">
+               <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  class="form-control"
+                  value="{{ $article->name }}"
+               >
             </div>
 
             <div class="form-group">
                <label for="description">Mô tả</label>
-               <textarea name="description" id="description" rows="6" class="form-control">{{ $article->description }}</textarea>
+               <textarea
+                  name="description"
+                  id="description"
+                  rows="6"
+                  class="form-control"
+               >
+                  {{ $article->description }}
+            </textarea>
             </div>
 
             <div class="form-group">
                <label for="link">Link</label>
-               <input type="text" name="link" id="link" class="form-control" value="{{ $article->link }}">
+               <input
+                  type="text"
+                  name="link"
+                  id="link"
+                  class="form-control"
+                  value="{{ $article->link }}"
+               >
             </div>
 
             <input type="hidden" name="type" value="article">
@@ -56,7 +75,15 @@
 
             <div class="form-group">
                <label>Ảnh hiện tại</label><br>
-               <img src="{{ asset('storage/' . $article->image) }}" width="200" class="img-thumbnail mb-2">
+               @if ($article->image)
+                  <img
+                     src="{{ asset('storage/' . $article->image) }}"
+                     width="200"
+                     class="img-thumbnail mb-2"
+                  >
+               @else
+                  <p class="text-muted">Không có ảnh</p>
+               @endif
                <input type="hidden" name="image_old" value="{{ $article->image }}">
             </div>
 
@@ -67,7 +94,14 @@
 
             <div class="form-group">
                <label for="content">Nội dung bài viết</label>
-               <textarea name="content" id="editor" class="form-control" rows="10">{{ old('content', $article->content ?? '') }}</textarea>
+               <textarea
+                  name="content"
+                  id="editor"
+                  class="form-control"
+                  rows="10"
+               >
+                  {{ old('content', $article->content ?? '') }}
+               </textarea>
             </div>
 
             <div class="text-right">
@@ -79,26 +113,4 @@
 </div>
 @endsection
 
-{{-- @include('admins.articles.scripts_ckeditor') --}}
-
-@push('scripts')
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-<script>
-   ClassicEditor
-    .create(document.querySelector('#editor'), {
-        ckfinder: {
-            uploadUrl: '{{ route('admin.articles.uploadImage') }}?_token={{ csrf_token() }}'
-        },
-        mediaEmbed: {
-            previewsInData: true
-        }
-    })
-    .then(editor => {
-        window.editor = editor;
-    })
-    .catch(error => {
-        console.error('CKEditor Error:', error);
-        alert("Không thể khởi tạo trình soạn thảo.");
-    });
-</script>
-@endpush
+@include('admins.articles.partials.scripts_ckeditor_articles')

@@ -1,5 +1,31 @@
 @extends('admins.layouts.master')
 
+@push('styles')
+<style>
+
+.select2-container--default .select2-selection--single {
+    height: 38px !important;
+    padding: 6px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 24px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px;
+    right: 6px;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+</style>
+@endpush
+
 @section('content')
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -16,28 +42,23 @@
             <form class="mb-3" method="GET">
                 <div class="form-row">
                     <div class="col-md-4 mb-2">
-                        <input type="text" name="q" value="{{ old('q', $search ?? '') }}" class="form-control" placeholder="Tìm theo Tên, Mô tả">
+                        <input
+                            type="text"
+                            name="q" id="search"
+                            value="{{ old('q', $search ?? '') }}"
+                            class="form-control"
+                            placeholder="Tìm theo Tên, Mô tả"
+                        >
                     </div>
 
                     <div class="form-group">
-                        <select name="category_id" id="category_id" class="form-control select2">
+                        <select name="category_id" id="category_id" class="form-control">
                             <option value="">-- Chọn danh mục --</option>
                             @foreach ($categories as $cat)
-                                    {{-- Option cho cấp 1 --}}
-                                    <option value="{{ $cat->id }}"
+                                <option value="{{ $cat->id }}"
                                     {{ old('category_id') == $cat->id ? 'selected' : '' }}>
                                     {{ $cat->name }}
-                                    </option>
-
-                                    {{-- Nếu có cấp con, hiển thị thêm --}}
-                                    @if ($cat->children->isNotEmpty())
-                                    @foreach ($cat->children as $child)
-                                        <option value="{{ $child->id }}"
-                                                {{ old('category_id') == $child->id ? 'selected' : '' }}>
-                                                — {{ $child->name }}
-                                        </option>
-                                    @endforeach
-                                    @endif
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -126,3 +147,17 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+$(function() {
+    $('#category_id').select2();
+
+    $('#category_id').on('change', function () {
+        const params = new URLSearchParams(window.location.search);
+        params.set('category_id', $(this).val());
+        window.location.search = params.toString();
+    });
+});
+</script>
+@endpush
