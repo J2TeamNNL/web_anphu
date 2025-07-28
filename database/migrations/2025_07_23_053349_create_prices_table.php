@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('unit')->nullable();
             $table->text('description')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
 
         });

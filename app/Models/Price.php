@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\CategoryType;
 
 class Price extends Model
 {
@@ -12,4 +13,10 @@ class Price extends Model
         'unit',
         'category_id'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class)
+            ->where('type', CategoryType::PRICE->value);
+    }
 }
