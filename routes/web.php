@@ -7,6 +7,7 @@ use App\Http\Controllers\PortfolioController;
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CKEditorController;
+use App\Http\Controllers\MediaController;
 
 use App\Http\Controllers\UserController;
 
@@ -82,6 +83,8 @@ Route::prefix('admin')->name('admin.')
       'destroy'
    ]);
 
+   Route::post('/media/upload-image', [MediaController::class, 'uploadImage'])
+   ->name('media.uploadImage');
 
    Route::resource('categories', CategoryController::class)->except([
       'destroy'
@@ -99,11 +102,13 @@ Route::prefix('admin')->name('admin.')
    });
 
    Route::middleware(CheckSuperAdminMiddleware::class)->group(function () {
-   Route::delete('portfolios/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolios.destroy');
-   Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
-   Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+      Route::delete('portfolios/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolios.destroy');
+      Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+      Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
-   Route::resource('users', UserController::class);
+      Route::resource('users', UserController::class);
    });
+
+   
 
 });
