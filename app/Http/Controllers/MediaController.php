@@ -12,17 +12,21 @@ class MediaController extends Controller
     {
         try {
             if (!$request->hasFile('upload')) {
-                return response()->json(['error' => 'No file uploaded.'], 400);
+                return response()->json(['error' => ['message' => 'No file uploaded.']], 400);
             }
 
             $file = $request->file('upload');
 
-            if (!$file->isValid()) {
-                return response()->json(['error' => 'Invalid file.'], 400);
+            if (!$file) {
+                Log::error('No file received. Keys: ' . json_encode($request->all()));
+                return response()->json(['error' => ['message' => 'No file uploaded.']], 400);
             }
 
-            $table = $request->query('table', 'articles'); // mặc định là articles
-            
+            if (!$file->isValid()) {
+                return response()->json(['error' => ['message' => 'Invalid file.']], 400);
+            }
+
+            $table = $request->query('table', 'articles');
             $folder = in_array($table, ['articles', 'portfolios']) ? $table : 'misc';
 
             $path = $file->store("uploads/{$folder}", 'public');
@@ -33,13 +37,12 @@ class MediaController extends Controller
             ]);
 
             return response()->json([
-                'url' => asset('storage/' . $path),
-                'uploaded' => 1,
-                'fileName' => $file->getClientOriginalName(),
+                'uploaded' => true,
+                'url' => asset('storage/' . $path)
             ]);
         } catch (\Exception $e) {
             Log::error('Upload image failed: ' . $e->getMessage());
-            return response()->json(['error' => 'Upload failed.'], 500);
+            return response()->json(['error' => ['message' => 'Upload failed.']], 500);
         }
     }
 }

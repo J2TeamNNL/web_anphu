@@ -46,23 +46,27 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="ol-md-2 mb-2">
                         <select
                             name="category_id"
                             id="category_id"
                             class="form-control select2"
                         >
                             <option value="">-- Chọn danh mục --</option>
+
                             @foreach ($categories as $cat)
-                                <optgroup label="{{ $cat->name }}">
-                                    @foreach ($cat->children as $child)
-                                        <option value="{{ $child->id }}"
-                                            {{ request('category_id') == $child->id ? 'selected' : '' }}
-                                        >
-                                            — {{ $child->name }}
-                                        </option>
-                                    @endforeach
-                                </optgroup>
+                                <option
+                                    value="{{ $cat->id }}"
+                                    {{ request('category_id') == $cat->id ? 'selected' : '' }}
+                                >
+                                    {{ $cat->name }}
+                                </option>
+
+                                @foreach ($cat->children as $child)
+                                    <option value="{{ $child->id }}" {{ request('category_id') == $child->id ? 'selected' : '' }}>
+                                        — {{ $child->name }}
+                                    </option>
+                                @endforeach
                             @endforeach
                         </select>
                     </div>

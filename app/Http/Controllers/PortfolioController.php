@@ -31,11 +31,11 @@ class PortfolioController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('q');
-
-        $query = $this->model::with('category');
-
         $selectedYear = $request->input('year');
-        
+        $categoryId = $request->input('category_id');
+
+        $query = $this->model::with(['category.parent']);
+
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
@@ -48,14 +48,21 @@ class PortfolioController extends Controller
             $query->where('year', $selectedYear);
         }
 
+        // Lọc theo danh mục (bao gồm cả cha và con)
         if ($request->filled('category_id')) {
-            $query->where('category_id', $request->category_id);
+            $categoryIds = Category::where('id', $categoryId)
+                ->orWhere('parent_id', $categoryId)
+                ->pluck('id');
+
+            $query->whereIn('category_id', $categoryIds);
         }
 
-        $portfolios = $query
-            ->with(['category.parent'])
-            ->latest()
-            ->paginate(self::PER_PAGE);
+        $portfolios = $query->latest()->paginate(self::PER_PAGE)
+        ->appends([
+            'q' => $request->q,
+            'year' => $request->year,
+            'category_id' => $request->category_id,
+        ]);
 
         $categories = Category::with('children')
             ->where('type', CategoryType::PORTFOLIO)
@@ -68,6 +75,7 @@ class PortfolioController extends Controller
             'selectedYear' => $selectedYear
         ]);
     }
+
 
     public function create()
     {
