@@ -50,7 +50,7 @@ body {
    TOP BAR
 --------------------------- */
 .top-bar {
-    background-color: var(--color-dark);
+    background-color: var(--color-dark) !important;
     color: var(--color-white);
     font-size: 14px;
     padding: 5px 0;
@@ -108,7 +108,7 @@ body {
    NAVIGATION BAR
 --------------------------- */
 .main-nav {
-    background-color: var(--color-primary);
+    background-color: var(--color-primary) !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
