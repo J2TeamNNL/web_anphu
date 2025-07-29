@@ -3,5 +3,4 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-@import "bootstrap/dist/css/bootstrap.min.css";
-@import "@fortawesome/fontawesome-free/css/all.min.css";
+/* Custom styles - Bootstrap and FontAwesome loaded via CDN */
