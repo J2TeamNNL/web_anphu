@@ -26,6 +26,8 @@ return new class extends Migration
             $table->year('year')->nullable();
 
             $table->string('image')->nullable();
+            
+            // $table->longText('content')->nullable();
 
             $table->timestamps();
         });
