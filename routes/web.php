@@ -34,6 +34,11 @@ use PHPUnit\Framework\Attributes\Group;
 
 Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index');
 
+Route::get('/test-log', function () {
+    logger()->error('✅ Ghi log test thành công');
+    return 'Log test';
+});
+
 Route::group(['prefix' => 'about'], routes: function () {
    Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
    Route::get('/open-letter', [CustomerController::class, 'aboutOpenLetter'])->name('about.open_letter');

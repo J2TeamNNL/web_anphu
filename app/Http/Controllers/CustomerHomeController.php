@@ -7,6 +7,7 @@ use App\Models\Portfolio;
 use App\Models\Partner;
 use App\Models\Category;
 use App\Enums\CategoryType;
+use Illuminate\Support\Facades\Log;
 
 
 class CustomerHomeController extends Controller
@@ -47,7 +48,17 @@ class CustomerHomeController extends Controller
     // }
 
     public function index()
-    {
-        return view('customers.pages.index');
+    {   
+        try {
+            return view('customers.pages.index');
+        } catch (\Throwable $e) {
+            Log::error('Landing page error: ' . $e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            abort(500, 'Something went wrong');
+        }
+        
     }
 }
