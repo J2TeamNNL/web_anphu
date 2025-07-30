@@ -97,4 +97,11 @@
 </div>
 @endsection
 
+@push('styles')
+<style>
+  /* tăng chiều cao vùng gõ */
+  .ck-editor__editable[role="textbox"]{ min-height: 360px; }
+</style>
+@endpush
+
 @include('admins.portfolios.partials.scripts_ckeditor_portfolios')

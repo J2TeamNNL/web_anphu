@@ -7,7 +7,7 @@
       <div class="col-md-8">
          <div class="card">
             <div class="card-body">
-               <form method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
+               <form method="POST" action="{{ route('admin.users.store') }}" enctype="multipart/form-data">
                   @csrf
                   <h4 class="text-primary font-weight-bold text-center" >ĐĂNG KÝ THÀNH VIÊN QUẢN LÝ</h4>
                   <div class="form-group">

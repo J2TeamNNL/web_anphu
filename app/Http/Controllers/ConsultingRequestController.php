@@ -84,4 +84,13 @@ class ConsultingRequestController extends Controller
             'color' => $requestItem->status->color(),
         ]);
     }
+    
+    public function destroy($id)
+    {
+        $requestItem = $this->model::findOrFail($id);
+        $requestItem->delete();
+
+        return redirect()->route('admin.consulting_requests.index')
+        ->with('success', 'Xóa giá thành công');
+    }
 }

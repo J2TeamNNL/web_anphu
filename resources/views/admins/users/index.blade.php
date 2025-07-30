@@ -8,7 +8,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0 text-primary">Danh sách Dự án</h4>
-        <a href="{{ route('users.create') }}" class="btn btn-success">+ Thêm người quản lý</a>
+        <a href="{{ route('admin.users.create') }}" class="btn btn-success">+ Thêm người quản lý</a>
     </div>
 
     <div class="card shadow-sm">
@@ -27,7 +27,7 @@
                     </div>
 
                     <div class="col-md-1 mb-2">
-                        <a href="{{ route('users.index') }}" class="btn btn-outline-secondary w-100">Đặt lại</a>
+                        <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary w-100">Đặt lại</a>
                     </div>
                 </div>
             </form>
@@ -66,10 +66,10 @@
                                     <input type="text" class="form-control form-control-sm mt-1 d-none password-field" id="password-{{ $user->id }}" value="******" readonly>
                                 </td>
                                 <td>
-                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-primary mb-1">Sửa</a>
+                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-primary mb-1">Sửa</a>
                                     
                                     @if(session('level') == 1)
-                                    <form action="{{ route('users.destroy', $user) }}" method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')" class="d-inline">
+                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Xoá</button>

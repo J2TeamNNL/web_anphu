@@ -31,7 +31,7 @@
                   </div>
 
                   <div class="col-md-1 mb-2">
-                     <a href="{{ route('consulting_requests.index') }}" class="btn btn-outline-secondary w-100">Đặt lại</a>
+                     <a href="{{ route('admin.consulting_requests.index') }}" class="btn btn-outline-secondary w-100">Đặt lại</a>
                   </div>
                </div>
             </form>
@@ -47,6 +47,7 @@
                         <th>Địa điểm xây dựng</th>
                         <th>Gửi lúc</th>
                         <th>Duyệt</th>
+                        <th>Xóa</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -65,10 +66,12 @@
 
                                  <div class="dropdown d-inline-block ms-2">
                                     <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
-                                             type="button"
-                                             data-bs-toggle="dropdown"
-                                             aria-expanded="false">
-                                          <i class="bi bi-pencil-square"></i>
+                                       type="button"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true"
+                                       aria-expanded="false"
+                                    >
+                                       <i class="fa fa-pencil"></i>
                                     </button>
                                     <ul class="dropdown-menu">
                                           @foreach (App\Enums\ConsultingRequestStatus::cases() as $statusCase)
@@ -83,6 +86,17 @@
                                           @endforeach
                                     </ul>
                                  </div>
+                              </td>
+                              <td>
+                                 <form
+                                    action="{{ route('admin.consulting_requests.destroy', $item->id) }}"
+                                    method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')"
+                                    class="d-inline"
+                                 >
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                                 </form>
                               </td>
                            </tr>
                      @empty

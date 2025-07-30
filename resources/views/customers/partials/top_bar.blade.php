@@ -11,10 +11,25 @@
 
             <!-- Điện thoại & Email -->
             <div class="col-12 col-md-3 mb-3 mb-md-0 border-divider">
-                <div><i class="fa fa-phone-alt mr-1"></i> Zalo: 0949 453 283</div>
-                <div><i class="fa fa-phone-alt mr-1"></i> Hotline: 0969 317 331</div>
-                <div><i class="fa fa-envelope mr-1"></i> kientrucnoithat.anphu@gmail.com</div>
-                <div><i class="fa fa-clock mr-1"></i> Thời gian: 8h - 17h30 T2 - T7</div>
+                <div>
+                    <i class="fa fa-phone-alt mr-1"></i>
+                    Zalo:
+                    {{ $companySettings->company_phone_1 ?? '0949 453 283' }}
+                </div>
+                <div>
+                    <i class="fa fa-phone-alt mr-1"></i>
+                    Hotline:
+                    {{ $companySettings->company_phone_2 ?? '0969 317 331' }}
+                </div>
+                <div>
+                    <i class="fa fa-envelope mr-1"></i>
+                    {{ $companySettings->company_email ?? 'kientrucnoithat.anphu@gmail.com'}}
+                </div>
+                <div>
+                    <i class="fa fa-clock mr-1"></i>
+                    
+                    {{ $companySettings->working_hours ?? 'Thời gian: 8h - 17h30 T2 - T7'}}
+                </div>
             </div>
 
             <!-- Địa chỉ -->
@@ -23,13 +38,13 @@
                     <span style="font-weight: bold">
                         Địa chỉ VPGD 1:
                     </span>
-                    <br>Số 01, liền kề 18, KĐT Văn Khê
+                    <br>{{ $companySetting->company_address_1 ?? 'Số 01, liền kề 18, KĐT Văn Khê' }}
                 </div>
                 <div><i class="fa fa-home mr-1"></i>
                     <span style="font-weight: bold">
                         Địa chỉ VPGD 2:
                     </span>
-                    <br>Thị trấn Hoàn Long, Hưng Yên
+                    <br>{{ $companySettings->company_address_2 ?? 'Thị trấn Hoàn Long, Hưng Yên' }}
                 </div>
             </div>
 

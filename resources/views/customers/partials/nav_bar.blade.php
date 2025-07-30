@@ -23,7 +23,9 @@
     ];
 
     $consultantRoutes = ['customers.consultant'];
-    $blogRoutes = ['customers.blog'];
+
+    $blogRoutes = ['customer.blog.index'];
+    
     $contactRoutes = ['customers.contact'];
 @endphp
 
@@ -122,10 +124,20 @@
                     </a>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ isActive($blogRoutes) }}">
-                    <a class="nav-link text-center" href="{{ route('blogs.index') }}">
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ isset($selectedBlogCategory) ? 'active' : isActive($blogRoutes) }}">
+                    <a class="nav-link dropdown-toggle text-center" href="#" id="blogDropdown" data-toggle="dropdown">
                         <i class="fa fa-newspaper mr-1"></i>Hoạt động
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="blogDropdown">
+                        @foreach($blogsCategories as $category)
+                            <a
+                                class="dropdown-item small {{ isset($selectedBlogCategory) && $selectedBlogCategory->id === $category->id ? 'active' : '' }}"
+                                href="{{ route('blogs.index', ['slug' => $category->slug]) }}"
+                            >
+                                <i class="fa fa-newspaper mr-1 icon-highlight"></i>{{ $category->name }}
+                            </a>
+                        @endforeach
+                    </div>
                 </li>
 
                 <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ isActive($contactRoutes) }}">

@@ -21,4 +21,15 @@ class MenuController extends Controller
             'selectedCategory' => null,
         ];
     }
+
+    public static function articleNavbarData()
+    {
+        return [
+            'blogsCategories' => Category::where('type', CategoryType::ARTICLE)
+                ->whereNull('parent_id')
+                ->with('children') 
+                ->get(),
+            'selectedCategory' => null,
+        ];
+    }
 }

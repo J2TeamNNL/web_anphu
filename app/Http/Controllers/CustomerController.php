@@ -140,31 +140,37 @@ class CustomerController extends Controller
     }
 
     // BLOGS
-    public function blogIndex($type = null)
+
+    public function blogIndex(Request $request, string $slug)
     {
-        $types = Article::getTypes();
+        $category = Category::where('slug', $slug)
+            ->where('type', CategoryType::ARTICLE->value)
+            ->whereNull('parent_id')
+            ->firstOrFail();
 
-
-        if ($type && !array_key_exists($type, $types)) {
-            abort(404);
-        }
-        
         $articles = Article::query()
-            ->when($type, fn($q) => $q->where('type', $type))
-            ->get();
+            ->where('category_id', $category->id)
+            ->with('category')
+            ->latest()
+            ->paginate(9);
 
+        $articleTitle = 'Hoạt động - ' . $category->name;
 
-        $articleTitle = 'Tất cả hoạt động';
-        if ($type && array_key_exists($type, $types)) {
-            $articleTitle = 'Công trình ' . $types[$type];
-        }
-
-        
         return view('customers.pages.blogs', [
             'articles' => $articles,
-            'types' => $types,
-            'selectedType' => $type,
-            'articleTitle' => $articleTitle
+            'parentCategory' => $category,
+            'childCategories' => collect(),
+            'selectedChild' => null,
+            'articleTitle' => $articleTitle,
+        ]);
+    }
+
+    public function blogDetail($slug)
+    {
+        $article = Article::where('slug', $slug)->firstOrFail();
+
+        return view('customers.pages.blog_detail', [
+            'article' => $article
         ]);
     }
 

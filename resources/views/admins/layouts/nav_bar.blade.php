@@ -48,7 +48,7 @@
                         <i class="fa fa-cogs mr-1"></i> Cài đặt
                     </a>
                     <div class="dropdown-menu" aria-labelledby="aboutDropdown">
-                        <a class="dropdown-item small" href="#">
+                        <a class="dropdown-item small" href="{{ route('admin.settings.company.edit') }}">
                             <i class="fa fa-cog mr-1 icon-highlight"></i>
                             Cài đặt thông tin công ty
                         </a>
@@ -59,6 +59,10 @@
                         <a class="dropdown-item small" href="#">
                             <i class="fa fa-cog mr-1 icon-highlight"></i>
                             Cài đặt giá
+                        </a>
+                        <a class="dropdown-item small" href="{{ route('admin.partners.index') }}">
+                            <i class="fa fa-cog mr-1 icon-highlight"></i>
+                            Cài đặt đối tác công ty
                         </a>
                         <a class="dropdown-item small" href="{{ route('admin.categories.index') }}">
                             <i class="fa fa-cog mr-1 icon-highlight"></i>

@@ -6,3 +6,7 @@
     placeholder="Nhập mô tả dự án..."
     height="500px" 
 />
+
+@push('scripts')
+    @vite(['resources/js/app.js'])
+@endpush

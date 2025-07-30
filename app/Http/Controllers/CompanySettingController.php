@@ -13,7 +13,9 @@ class CompanySettingController extends Controller
     public function edit()
     {
         $setting = CompanySetting::first();
-        return view('admins.settings.company.edit', compact('setting'));
+        return view('admins.settings.company.edit', [
+            'setting' => $setting,        
+        ]);
     }
 
     public function update(UpdateCompanySettingRequest $request)
@@ -31,9 +33,23 @@ class CompanySettingController extends Controller
             $setting->company_logo = $path;
         }
 
+        // Cập nhật tất cả các trường còn lại
         $setting->company_name = $request->input('company_name');
+        $setting->company_email = $request->input('company_email');
+        $setting->company_phone_1 = $request->input('company_phone_1');
+        $setting->company_phone_2 = $request->input('company_phone_2');
+        $setting->company_address_1 = $request->input('company_address_1');
+        $setting->company_address_2 = $request->input('company_address_2');
+        $setting->working_hours = $request->input('working_hours');
+
+        // Nếu cần decode JSON
+        $socialLinks = $request->input('social_links');
+        $setting->social_links = json_decode($socialLinks, true) ?? [];
+
         $setting->save();
 
-        return redirect()->route('settings.company.edit')->with('success', 'Cập nhật thành công');
+        return redirect()->route('admin.settings.company.edit')
+            ->with('success', 'Cập nhật thành công');
     }
+
 }

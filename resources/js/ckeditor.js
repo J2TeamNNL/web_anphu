@@ -1,18 +1,18 @@
-// CKEditor 5 Classic Build - npm version
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-// Make ClassicEditor globally available
 window.ClassicEditor = ClassicEditor;
 
-// Custom Upload Adapter for CKEditor
+console.log(' CKEditor loaded from npm');
+
+// CKEditor upload adapter tùy biến
 class MyUploadAdapter {
     constructor(loader) {
         this.loader = loader;
     }
 
     upload() {
-        return this.loader.file
-            .then(file => new Promise((resolve, reject) => {
+        return this.loader.file.then(file => {
+            return new Promise((resolve, reject) => {
                 const data = new FormData();
                 data.append('upload', file);
                 data.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
@@ -21,36 +21,40 @@ class MyUploadAdapter {
                     method: 'POST',
                     body: data
                 })
-                .then(response => response.json())
-                .then(result => {
-                    if (result.uploaded) {
-                        resolve({
-                            default: result.url
-                        });
-                    } else {
-                        reject(result.error.message);
-                    }
-                })
-                .catch(error => {
-                    reject('Upload failed');
-                });
-            }));
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.uploaded && result.url) {
+                            resolve({
+                                default: result.url
+                            });
+                        } else {
+                            reject(result.error?.message || 'Upload failed');
+                        }
+                    })
+                    .catch(() => {
+                        reject('Upload failed due to network error');
+                    });
+            });
+        });
     }
 
     abort() {
-        // Reject the promise returned from the upload() method
+        // Không cần xử lý cụ thể cho abort trong phiên bản này
     }
 }
 
-// Function to create CKEditor instance with custom configuration
-window.createCKEditor = function(selector, uploadUrl, customConfig = {}) {
+window.createCKEditor = async function (selector, uploadUrl = null, customConfig = {}) {
+    const element = document.querySelector(selector);
+    if (!element) {
+        console.warn(`Không tìm thấy phần tử "${selector}"`);
+        return;
+    }
+
     window.ckeditorUploadUrl = uploadUrl;
-    
-    // Default configuration
+
+    // ✅ Định nghĩa defaultConfig
     const defaultConfig = {
-        mediaEmbed: {
-            previewsInData: true
-        },
+        mediaEmbed: { previewsInData: true },
         image: {
             toolbar: [
                 'imageTextAlternative',
@@ -60,26 +64,26 @@ window.createCKEditor = function(selector, uploadUrl, customConfig = {}) {
             ]
         },
         table: {
-            contentToolbar: [
-                'tableColumn',
-                'tableRow',
-                'mergeTableCells'
-            ]
+            contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
         }
     };
-    
-    // Merge custom config with default config
-    const finalConfig = Object.assign({}, defaultConfig, customConfig);
-    
-    return ClassicEditor
-        .create(document.querySelector(selector), finalConfig)
-        .then(editor => {
-            // Set up the custom upload adapter
-            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-                return new MyUploadAdapter(loader);
-            };
-            return editor;
-        });
+
+    // ✅ Hợp nhất config
+    const finalConfig = {
+        ...defaultConfig,
+        ...customConfig,
+        licenseKey: 'GPL'
+    };
+
+    try {
+        const editor = await ClassicEditor.create(element, finalConfig);
+        if (uploadUrl) {
+            editor.plugins.get('FileRepository').createUploadAdapter = loader => new MyUploadAdapter(loader);
+        }
+        return editor;
+    } catch (error) {
+        console.error(`Lỗi khi khởi tạo CKEditor tại "${selector}"`, error);
+        throw error;
+    }
 };
 
-console.log('CKEditor loaded from npm');

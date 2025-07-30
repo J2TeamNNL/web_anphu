@@ -7,6 +7,9 @@ use App\Http\Controllers\CustomerHomeController;
 use App\Http\Controllers\PortfolioController;
 
 use App\Http\Controllers\ArticleController;
+
+use App\Http\Controllers\PartnerController;
+
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\MediaController;
 
@@ -31,7 +34,7 @@ use PHPUnit\Framework\Attributes\Group;
 
 Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index');
 
-Route::group(['prefix' => 'about'], function () {
+Route::group(['prefix' => 'about'], routes: function () {
    Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
    Route::get('/open-letter', [CustomerController::class, 'aboutOpenLetter'])->name('about.open_letter');
    Route::get('/cultural-values', [CustomerController::class, 'aboutCulturalValues'])->name('about.cultural_values');
@@ -45,13 +48,15 @@ Route::group(['prefix' => 'services'], function () {
    Route::get('/construction-renovate', [CustomerController::class, 'servicesContructionRenovate'])->name('services.construction_renovate');
 });
 
-Route::get('/projects/category/{slug}', [CustomerController::class, 'projectByCategory'])
+Route::get('/du-an/danh-muc/{slug}', [CustomerController::class, 'projectByCategory'])
     ->name('projects.byCategory');
 
 Route::get('/du-an/{slug}', [CustomerController::class, 'projectDetail'])->name('customers.project.detail');
 
+Route::get('/bai-dang/danh-muc/{slug}', [CustomerController::class, 'blogIndex'])
+    ->name('blogs.index');
 
-Route::get('/blogs', [CustomerController::class, 'blogIndex'])->name('blogs.index');
+Route::get('/bai-dang/{slug}', [CustomerController::class, 'blogDetail'])->name('customers.blog.detail');
 
 Route::group(['prefix' => 'price'], function () {
    Route::get('/full', [CustomerController::class, 'priceFull'])->name('price.full');
@@ -80,9 +85,6 @@ Route::prefix('admin')->name('admin.')
 
    Route::get('logout', [AuthController::class, 'logout'])->name('auths.logout');
 
-   Route::patch('consulting-requests/{id}/status', [ConsultingRequestController::class, 'updateStatus'])
-      ->name('consulting_requests.updateStatus');
-
    Route::resource('portfolios', PortfolioController::class)->except([
       'destroy'
    ]);
@@ -98,11 +100,21 @@ Route::prefix('admin')->name('admin.')
       'destroy'
    ]);
 
+   Route::resource('partners', PartnerController::class)->except([
+      'destroy'
+   ]);
+
    Route::get('consulting-requests/index', [ConsultingRequestController::class, 'index'])
    ->name('consulting_requests.index');
 
    Route::put('consulting-requests/edit', [ConsultingRequestController::class, 'edit'])
    ->name('consulting_requests.edit');
+
+   Route::delete('consulting-requests/{id}', [ConsultingRequestController::class, 'destroy'])
+   ->name('consulting_requests.destroy');
+
+   Route::patch('consulting-requests/{id}/status', [ConsultingRequestController::class, 'updateStatus'])
+   ->name('consulting_requests.updateStatus');
 
     Route::prefix('settings')->name('settings.')->group(function () {
       Route::get('company', [CompanySettingController::class, 'edit'])->name('company.edit');
@@ -113,8 +125,11 @@ Route::prefix('admin')->name('admin.')
       Route::delete('portfolios/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolios.destroy');
       Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
       Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+      Route::delete('partners/{partner}', [PartnerController::class, 'destroy'])->name('partners.destroy');
 
       Route::resource('users', UserController::class);
+
+      // Route::resource('prices', PriceController::class);
    });
 
    

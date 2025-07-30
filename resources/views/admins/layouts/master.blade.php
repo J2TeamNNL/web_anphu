@@ -17,7 +17,7 @@
     
     <!-- Custom CSS -->
     <link href="{{ asset('css/style_all.css') }}" rel="stylesheet">
-
+    
     @stack('styles')
 </head>
 <body>

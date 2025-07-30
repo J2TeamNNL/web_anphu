@@ -14,15 +14,15 @@ class CategoryController extends Controller
 {   
 
     public function index(Request $request)
-{
-    $type = $request->query('type');
+    {
+        $type = $request->query('type');
 
-    $categories = Category::nestedTree(
-        $type ? [$type] : []
-    );
+        $categories = Category::nestedTree(
+            $type ? [$type] : []
+        );
 
-    return view('admins.categories.index', compact('categories'));
-}
+        return view('admins.categories.index', compact('categories'));
+    }
 
     public function create()
     {

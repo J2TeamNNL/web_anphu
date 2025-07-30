@@ -4,7 +4,7 @@
 <div class="container my-4">
     <h5 class="mb-4">Cập nhật thông tin công ty</h5>
 
-    <form action="{{ route('settings.company.update') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.settings.company.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -19,12 +19,12 @@
         </div>
 
         <div class="form-group">
-            <label class="font-weight-bold">Điện thoại 1</label>
+            <label class="font-weight-bold">Điện thoại 1 (Zalo)</label>
             <input type="text" name="company_phone_1" class="form-control" value="{{ old('company_phone_1', $setting->company_phone_1) }}">
         </div>
 
         <div class="form-group">
-            <label class="font-weight-bold">Điện thoại 2</label>
+            <label class="font-weight-bold">Điện thoại 2 (Hotline)</label>
             <input type="text" name="company_phone_2" class="form-control" value="{{ old('company_phone_2', $setting->company_phone_2) }}">
         </div>
 

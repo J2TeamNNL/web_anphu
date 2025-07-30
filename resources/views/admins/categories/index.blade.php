@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0">Danh sách danh mục</h4>
+        <h4 class="mb-0">Cài đặt danh mục</h4>
         <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">+ Thêm danh mục</a>
     </div>
 
@@ -11,6 +11,7 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    <h5>Danh sách danh mục</h5>
     <table class="table table-bordered table-hover">
         <thead class="thead-light">
             <tr>
@@ -31,8 +32,18 @@
                     <td>{{ $parent->type->label() ?? '-' }}</td>
                     <td>—</td>
                     <td>
-                        <a href="{{ route('admin.categories.edit', $parent) }}" class="btn btn-sm btn-warning">Sửa</a>
-                        <form method="POST" action="{{ route('admin.categories.destroy', $parent) }}" class="d-inline" onsubmit="return confirm('Xóa danh mục này?')">
+                        <a
+                            href="{{ route('admin.categories.edit', $parent) }}"
+                            class="btn btn-sm btn-warning"
+                        >
+                            Sửa
+                        </a>
+                        <form
+                            method="POST"
+                            action="{{ route('admin.categories.destroy', $parent) }}"
+                            class="d-inline"
+                            onsubmit="return confirm('Xóa danh mục này?')"
+                        >
                             @csrf @method('DELETE')
                             <button class="btn btn-sm btn-danger">Xóa</button>
                         </form>
@@ -42,13 +53,26 @@
                 @foreach ($parent->children as $child)
                     <tr>
                         <td>{{ $child->id }}</td>
-                        <td>↳ {{ $child->name }}</td>
+                        <td>
+                            ↳
+                            {{ $child->name }}
+                        </td>
                         <td>{{ $child->slug }}</td>
                         <td>{{ $child->type->value ?? '-' }}</td>
                         <td>{{ $parent->name }}</td>
                         <td>
-                            <a href="{{ route('admin.categories.edit', $child) }}" class="btn btn-sm btn-warning">Sửa</a>
-                            <form method="POST" action="{{ route('admin.categories.destroy', $child) }}" class="d-inline" onsubmit="return confirm('Xóa danh mục này?')">
+                            <a
+                                href="{{ route('admin.categories.edit', $child) }}"
+                                class="btn btn-sm btn-warning"
+                            >
+                                Sửa
+                            </a>
+                            <form
+                                method="POST"
+                                action="{{ route('admin.categories.destroy', $child) }}"
+                                class="d-inline"
+                                onsubmit="return confirm('Xóa danh mục này?')"
+                            >
                                 @csrf @method('DELETE')
                                 <button class="btn btn-sm btn-danger">Xóa</button>
                             </form>

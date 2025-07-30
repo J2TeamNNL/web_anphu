@@ -11,7 +11,9 @@ class Price extends Model
         'name',
         'price',
         'unit',
-        'category_id'
+        'description',
+        'category_id',
+        'type',
     ];
 
     public function category()

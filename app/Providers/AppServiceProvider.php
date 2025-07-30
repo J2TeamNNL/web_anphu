@@ -32,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
         
         view()->composer('customers.partials.nav_bar', function ($view) {
             $view->with(MenuController::portfolioNavbarData());
+            $view->with(MenuController::articleNavbarData());
         });
+
     }
 }
