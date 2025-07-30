@@ -8,5 +8,5 @@
 />
 
 @push('scripts')
-    @vite(['resources/js/app.js'])
+    @vite(['resources/js/ckeditor.js'])
 @endpush

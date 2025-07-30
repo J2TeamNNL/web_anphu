@@ -6,3 +6,7 @@
     placeholder="Nhập nội dung bài viết..."
     height="400px" 
 />
+
+@push('scripts')
+    @vite(['resources/js/ckeditor.js'])
+@endpush
