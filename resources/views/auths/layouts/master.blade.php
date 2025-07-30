@@ -97,7 +97,7 @@
 
             <!-- body -->
             <div class="card-body">
-                <form method="POST" action="http://web_anphu.test/auth/login">
+                <form method="POST" action="{{ route('auths.process_login') }}">
                     @csrf
                     <div class="form-group">
                         <label for="email">Email</label>
