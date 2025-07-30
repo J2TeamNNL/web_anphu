@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Schema;
 
 use App\Models\Partner;
 use App\Models\Portfolio;
@@ -46,7 +47,11 @@ class ViewServiceProvider extends ServiceProvider
                 ->get();
         }
 
-        $partners = Partner::query()->get();
+        $partners = collect();
+
+        if (Schema::hasTable('partners')) {
+            $partners = Partner::get();
+        }
 
         $companySettings = CompanySetting::first();
 
