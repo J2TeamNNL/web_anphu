@@ -11,6 +11,7 @@ export default defineConfig({
         ],
         refresh: true,
     })],
+    base: '/build/',
     define: {
         global: 'globalThis',
     }
