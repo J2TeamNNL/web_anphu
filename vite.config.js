@@ -6,8 +6,6 @@ export default defineConfig({
         input: [
             'resources/css/app.css',
             'resources/js/app.js',
-            'resources/css/style_all.css',
-            'resources/css/style_auth.css',
         ],
         refresh: true,
     })],
