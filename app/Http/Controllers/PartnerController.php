@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Partner;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class PartnerController extends Controller
 {   
@@ -44,8 +46,17 @@ class PartnerController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            $validated['logo'] = $request->file('logo')
-            ->store('logo', 'public');
+            $file = $request->file('logo');
+            $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('logo');
+
+            // Tạo thư mục nếu chưa có
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+            }
+
+            $file->move($destinationPath, $filename);
+            $validated['logo'] = 'logo/' . $filename;
         }
 
         $this->model::create($validated);
@@ -72,10 +83,20 @@ class PartnerController extends Controller
         ]);
 
         if ($request->hasFile('logo_new')) {
-            if ($partner->logo && Storage::disk('public')->exists($partner->logo)) {
-                Storage::disk('public')->delete($partner->logo);
+            if ($partner->logo && file_exists(public_path($partner->logo))) {
+                unlink(public_path($partner->logo));
             }
-            $partner->logo = $request->file('logo_new')->store('logo', 'public');
+
+            $file = $request->file('logo_new');
+            $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('logo');
+
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+            }
+
+            $file->move($destinationPath, $filename);
+            $partner->logo = 'logo/' . $filename;
         } else {
             $partner->logo = $request->input('logo_old', $partner->logo);
         }
@@ -91,8 +112,14 @@ class PartnerController extends Controller
     public function destroy($id)
     {
         $partner = $this->model::findOrFail($id);
+
+        if ($partner->logo && file_exists(public_path($partner->logo))) {
+            unlink(public_path($partner->logo));
+        }
+
         $partner->delete();
 
-        return redirect()->route('admin.partners.index')->with('success', 'Xóa giá thành công');
+        return redirect()->route('admin.partners.index')
+        ->with('success', 'Xóa giá thành công');
     }
 }

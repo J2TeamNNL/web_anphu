@@ -82,7 +82,7 @@
                                 <td>{{ $partner->name }}</td>
                                 <td>
                                     @if ($partner->logo)
-                                        <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}" width="100" class="img-thumbnail">
+                                        <img src="{{ asset($partner->logo) }}" alt="{{ $partner->name }}" width="100" class="img-thumbnail">
                                     @else
                                         <span class="text-muted">Không có</span>
                                     @endif

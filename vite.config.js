@@ -6,10 +6,10 @@ export default defineConfig({
         input: [
             'resources/css/app.css',
             'resources/js/app.js',
+            'resources/js/ckeditor.js',
         ],
         refresh: true,
     })],
-    base: '/build/',
     define: {
         global: 'globalThis',
     }
