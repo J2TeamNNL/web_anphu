@@ -6,7 +6,3 @@
     placeholder="Nhập mô tả dự án..."
     height="500px" 
 />
-
-@push('scripts')
-    <script src="{{ asset('js/ckeditor.js') }}"></script>
-@endpush
