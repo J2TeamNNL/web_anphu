@@ -6,25 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Partner;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
 
 class PartnerController extends Controller
-{   
-    private Partner $model;
-
+{
     private const PER_PAGE = 6;
 
-    public function __construct()
+    public function index()
     {
-        $this->model = new Partner();
-    }
-
-    public function index(Request $request)
-    {   
-        $search = $request->input('q');
-
-        $partners = $this->model::query()
-            ->latest()
+        $partners = Partner::latest()
             ->orderBy('name', 'asc')
             ->paginate(self::PER_PAGE);
 
@@ -46,20 +35,11 @@ class PartnerController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            $file = $request->file('logo');
-            $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
-            $destinationPath = public_path('logo');
-
-            // Tạo thư mục nếu chưa có
-            if (!File::exists($destinationPath)) {
-                File::makeDirectory($destinationPath, 0755, true);
-            }
-
-            $file->move($destinationPath, $filename);
-            $validated['logo'] = 'logo/' . $filename;
+            $validated['logo'] = $request->file('logo')->store('logo', 'public');
+            // -> lưu vào storage/app/public/logo
         }
 
-        $this->model::create($validated);
+        Partner::create($validated);
 
         return redirect()->route('admin.partners.index')
             ->with('success', 'Thêm Đối tác thành công');
@@ -67,41 +47,27 @@ class PartnerController extends Controller
 
     public function edit($id)
     {
-        $partner = $this->model::findOrFail($id);
+        $partner = Partner::findOrFail($id);
         return view('admins.partners.edit', compact('partner'));
     }
 
     public function update(Request $request, Partner $partner)
     {
-        $partner = $this->model::findOrFail($partner->id);
-
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:partners,name,' . $partner->id,
-            'logo' => 'nullable|string|max:255',
             'link' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        if ($request->hasFile('logo_new')) {
-            if ($partner->logo && file_exists(public_path($partner->logo))) {
-                unlink(public_path($partner->logo));
+        if ($request->hasFile('logo')) {
+            // Xóa ảnh cũ
+            if ($partner->logo && Storage::disk('public')->exists($partner->logo)) {
+                Storage::disk('public')->delete($partner->logo);
             }
 
-            $file = $request->file('logo_new');
-            $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
-            $destinationPath = public_path('logo');
-
-            if (!File::exists($destinationPath)) {
-                File::makeDirectory($destinationPath, 0755, true);
-            }
-
-            $file->move($destinationPath, $filename);
-            $partner->logo = 'logo/' . $filename;
-        } else {
-            $partner->logo = $request->input('logo_old', $partner->logo);
+            $validated['logo'] = $request->file('logo')->store('logo', 'public');
         }
-
-        $validated['logo'] = $partner->logo;
 
         $partner->update($validated);
 
@@ -111,15 +77,15 @@ class PartnerController extends Controller
 
     public function destroy($id)
     {
-        $partner = $this->model::findOrFail($id);
+        $partner = Partner::findOrFail($id);
 
-        if ($partner->logo && file_exists(public_path($partner->logo))) {
-            unlink(public_path($partner->logo));
+        if ($partner->logo && Storage::disk('public')->exists($partner->logo)) {
+            Storage::disk('public')->delete($partner->logo);
         }
 
         $partner->delete();
 
         return redirect()->route('admin.partners.index')
-        ->with('success', 'Xóa giá thành công');
+            ->with('success', 'Xóa đối tác thành công');
     }
 }
