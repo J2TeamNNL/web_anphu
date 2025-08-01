@@ -1,10 +1,10 @@
 <!-- Hero Section -->
 <section class="hero-static-slider d-flex align-items-center justify-content-center py-5" id="hero-static-slider"
-style="background-image: url('{{ asset('assets/img/gallery/background_project_1.jpg') }}');">>
+style="background-image: url('{{ asset('assets/img/gallery/background_project_2.jpg') }}');">>
     <div class="container text-white d-flex justify-content-center">
         <div class="slide-content-box p-4 rounded w-100 w-md-75 w-lg-50" style="background-color: rgba(0,0,0,0.6);">
             <div class="text-content">
-                <h2 class="h4 h3-md mb-3">Thương hiệu xây dựng trọn gói toàn dân chất lượng 5 sao</h2>
+                <h2 class="h4 h3-md mb-3">Thương hiệu toàn dân/ An Phú Build - dựng xây ngôi nhà việt</h2>
                 <ul class="spaced-list small pl-2">
                     <li class="mb-2">Cam kết đúng chủng loại vật tư vật liệu, nếu phát hiện sai <span class="content-secondary">đền 300%</span></li>
                     <li class="mb-2">Cam kết về tiến độ, nếu <span class="content-secondary">chậm 1 ngày đền 1 triệu đồng</span></li>
