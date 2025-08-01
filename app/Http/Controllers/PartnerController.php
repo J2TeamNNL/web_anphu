@@ -6,17 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\Partner;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\URL;
 
 class PartnerController extends Controller
 {
+    private Partner $model;
     private const PER_PAGE = 6;
 
-    public function index()
+    public function __construct()
     {
-        $partners = Partner::latest()
-            ->orderBy('name', 'asc')
-            ->paginate(self::PER_PAGE);
+        $this->model = new Partner();
+    }
 
+    public function index(Request $request)
+    {
+        $partners = $this->model->orderBy('id', 'desc')->paginate(self::PER_PAGE);
         return view('admins.partners.index', compact('partners'));
     }
 
@@ -27,84 +31,82 @@ class PartnerController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'link' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        $data = $request->all();
 
         if ($request->hasFile('logo')) {
-            $file = $request->file('logo');
-            $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
-            $destinationPath = public_path('uploads/logo');
+            $logo = $request->file('logo');
+            $filename = Str::random(20) . '.' . $logo->getClientOriginalExtension();
+            $path = public_path('uploads/logo');
 
-            // Tạo thư mục nếu chưa có
-            if (!File::exists($destinationPath)) {
-                File::makeDirectory($destinationPath, 0755, true);
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0755, true);
             }
 
-            $file->move($destinationPath, $filename);
-            $validated['logo'] = 'uploads/logo/' . $filename;
+            $logo->move($path, $filename);
+
+            // ✅ Lưu đường dẫn đầy đủ
+            $data['logo'] = URL::to('/') . '/uploads/logo/' . $filename;
         }
 
-        Partner::create($validated);
+        $this->model->create($data);
 
         return redirect()->route('admin.partners.index')
-            ->with('success', 'Thêm Đối tác thành công');
+            ->with('success', 'Tạo mới thành công');
     }
 
     public function edit($id)
     {
-        $partner = Partner::findOrFail($id);
+        $partner = $this->model->findOrFail($id);
         return view('admins.partners.edit', compact('partner'));
     }
 
-    public function update(Request $request, Partner $partner)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:partners,name,' . $partner->id,
-            'link' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        $partner = $this->model->findOrFail($id);
+        $data = $request->all();
 
-        if ($request->hasFile('logo')) {
-            // Xóa logo cũ nếu tồn tại
-            if ($partner->logo && file_exists(public_path($partner->logo))) {
-                unlink(public_path($partner->logo));
+        if ($request->hasFile('logo_new')) {
+            // Xoá ảnh cũ nếu có
+            if ($partner->logo) {
+                $oldFile = public_path(parse_url($partner->logo, PHP_URL_PATH));
+                if (File::exists($oldFile)) {
+                    File::delete($oldFile);
+                }
             }
 
-            $file = $request->file('logo');
-            $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
-            $destinationPath = public_path('uploads/logo');
+            // Upload ảnh mới
+            $logo = $request->file('logo_new');
+            $filename = Str::random(20) . '.' . $logo->getClientOriginalExtension();
+            $path = public_path('uploads/logo');
 
-            // Tạo thư mục nếu chưa có
-            if (!File::exists($destinationPath)) {
-                File::makeDirectory($destinationPath, 0755, true);
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0755, true);
             }
 
-            $file->move($destinationPath, $filename);
-            $validated['logo'] = 'uploads/logo/' . $filename;
+            $logo->move($path, $filename);
+            $data['logo'] = URL::to('/') . '/uploads/logo/' . $filename;
         }
 
-        $partner->update($validated);
+        $partner->update($data);
 
         return redirect()->route('admin.partners.index')
-            ->with('success', 'Cập nhật đối tác thành công');
+            ->with('success', 'Cập nhật thành công');
     }
 
     public function destroy($id)
     {
-        $partner = Partner::findOrFail($id);
+        $partner = $this->model->findOrFail($id);
 
-        if ($partner->logo && file_exists(public_path($partner->logo))) {
-            unlink(public_path($partner->logo));
+        if ($partner->logo) {
+            $logoPath = public_path(parse_url($partner->logo, PHP_URL_PATH));
+            if (File::exists($logoPath)) {
+                File::delete($logoPath);
+            }
         }
 
         $partner->delete();
 
         return redirect()->route('admin.partners.index')
-            ->with('success', 'Xóa đối tác thành công');
+            ->with('success', 'Xóa thành công');
     }
 }
