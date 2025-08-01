@@ -23,9 +23,18 @@
                >
             </div>
 
+            {{-- Component Quill --}}
             <div class="form-group">
-               <label for="description">Mô tả</label>
-               <textarea name="description" id="description" rows="6" class="form-control"></textarea>
+               <label for="content">Nội dung chi tiết</label>
+               <x-editor 
+                     selector="#quill-editor"
+                     uploadTable="articles"
+                     toolbar="full"
+                     height="500px"
+                     placeholder="Nhập nội dung mô tả chi tiết..."
+                     :uploadRoute="route('admin.media.uploadImage')"
+                     :content="old('content')"
+               />
             </div>
 
             <div class="form-group">
@@ -78,4 +87,4 @@
 </div>
 @endsection
 
-@include('admins.articles.partials.scripts_ckeditor_articles')
+@include('admins.portfolios.partials.editor_styles')

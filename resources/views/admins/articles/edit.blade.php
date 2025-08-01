@@ -92,16 +92,18 @@
                <input type="file" name="image_new" id="image_new" class="form-control-file">
             </div>
 
+            {{-- Component Quill --}}
             <div class="form-group">
-               <label for="content">Nội dung bài viết</label>
-               <textarea
-                  name="content"
-                  id="editor"
-                  class="form-control"
-                  rows="10"
-               >
-                  {{ old('content', $article->content ?? '') }}
-               </textarea>
+               <label for="content">Nội dung chi tiết</label>
+               <x-editor 
+                  selector="#quill-editor"
+                  uploadTable="articles"
+                  toolbar="full"
+                  height="500px"
+                  placeholder="Nhập nội dung mô tả chi tiết..."
+                  :uploadRoute="route('admin.media.uploadImage')"
+                  :content="old('content', $article->content)"
+               />
             </div>
 
             <div class="text-right">
@@ -113,4 +115,4 @@
 </div>
 @endsection
 
-@include('admins.articles.partials.scripts_ckeditor_articles')
+@include('admins.portfolios.partials.editor_styles')
