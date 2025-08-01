@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Partner;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class PartnerController extends Controller
 {
@@ -35,8 +35,17 @@ class PartnerController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            $validated['logo'] = $request->file('logo')->store('logo', 'public');
-            // -> lưu vào storage/app/public/logo
+            $file = $request->file('logo');
+            $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/logo');
+
+            // Tạo thư mục nếu chưa có
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+            }
+
+            $file->move($destinationPath, $filename);
+            $validated['logo'] = 'uploads/logo/' . $filename;
         }
 
         Partner::create($validated);
@@ -61,12 +70,22 @@ class PartnerController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            // Xóa ảnh cũ
-            if ($partner->logo && Storage::disk('public')->exists($partner->logo)) {
-                Storage::disk('public')->delete($partner->logo);
+            // Xóa logo cũ nếu tồn tại
+            if ($partner->logo && file_exists(public_path($partner->logo))) {
+                unlink(public_path($partner->logo));
             }
 
-            $validated['logo'] = $request->file('logo')->store('logo', 'public');
+            $file = $request->file('logo');
+            $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/logo');
+
+            // Tạo thư mục nếu chưa có
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+            }
+
+            $file->move($destinationPath, $filename);
+            $validated['logo'] = 'uploads/logo/' . $filename;
         }
 
         $partner->update($validated);
@@ -79,8 +98,8 @@ class PartnerController extends Controller
     {
         $partner = Partner::findOrFail($id);
 
-        if ($partner->logo && Storage::disk('public')->exists($partner->logo)) {
-            Storage::disk('public')->delete($partner->logo);
+        if ($partner->logo && file_exists(public_path($partner->logo))) {
+            unlink(public_path($partner->logo));
         }
 
         $partner->delete();
