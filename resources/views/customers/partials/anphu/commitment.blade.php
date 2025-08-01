@@ -1,6 +1,6 @@
 <!-- Hero Section -->
 <section class="hero-static-slider d-flex align-items-center justify-content-center py-5" id="hero-static-slider"
-style="background-image: url('{{ asset('assets/img/gallery/background_project_2.jpg') }}');">>
+style="background-image: url('{{ asset('assets/img/gallery/background_project_1.jpg') }}');">>
     <div class="container text-white d-flex justify-content-center">
         <div class="slide-content-box p-4 rounded w-100 w-md-75 w-lg-50" style="background-color: rgba(0,0,0,0.6);">
             <div class="text-content">
