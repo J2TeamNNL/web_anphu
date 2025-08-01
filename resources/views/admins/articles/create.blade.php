@@ -23,20 +23,6 @@
                >
             </div>
 
-            {{-- Component Quill --}}
-            <div class="form-group">
-               <label for="content">Nội dung chi tiết</label>
-               <x-editor 
-                     selector="#quill-editor"
-                     uploadTable="articles"
-                     toolbar="full"
-                     height="500px"
-                     placeholder="Nhập nội dung mô tả chi tiết..."
-                     :uploadRoute="route('admin.media.uploadImage')"
-                     :content="old('content')"
-               />
-            </div>
-
             <div class="form-group">
                <label for="link">Link</label>
                <input type="text" name="link" id="link" class="form-control">
@@ -72,10 +58,19 @@
                <label for="image">Ảnh bài đăng</label>
                <input type="file" name="image" id="image" class="form-control-file">
             </div>
-            
+
+            {{-- Component Quill --}}
             <div class="form-group">
-               <label for="content">Nội dung bài viết</label>
-               <textarea name="content" id="editor" class="form-control" rows="10">{{ old('content', $article->content ?? '') }}</textarea>
+               <label for="content">Nội dung chi tiết</label>
+               <x-editor 
+                     selector="#quill-editor"
+                     uploadTable="articles"
+                     toolbar="full"
+                     height="500px"
+                     placeholder="Nhập nội dung mô tả chi tiết..."
+                     :uploadRoute="route('admin.media.uploadImage')"
+                     :content="old('content')"
+               />
             </div>
 
             <div class="text-right">

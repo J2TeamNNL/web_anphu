@@ -15,6 +15,7 @@ use App\Http\Requests\StorePortfolioRequest;
 use App\Http\Requests\UpdatePortfolioRequest;
 
 use App\Models\Media;
+use App\Helpers\ImageHelper;
 
 
 class PortfolioController extends Controller
@@ -106,18 +107,22 @@ class PortfolioController extends Controller
             $portfolio->categories()->sync($validated['category_ids']);
         }
 
-        $content = $validated['content'] ?? '';
-        preg_match_all('/<img[^>]+src="([^">]+)"/', $content, $matches);
-        $usedImageUrls = $matches[1] ?? [];
+        // $content = $validated['content'] ?? '';
+        // preg_match_all('/<img[^>]+src="([^">]+)"/', $content, $matches);
+        // $usedImageUrls = $matches[1] ?? [];
 
-        $usedPaths = collect($usedImageUrls)->map(function ($url) {
-            return str_replace(asset('storage') . '/', '', $url);
-        })->toArray();
+        // $usedPaths = collect($usedImageUrls)->map(function ($url) {
+        //     return str_replace(asset('storage') . '/', '', $url);
+        // })->toArray();
 
-        $usedPaths = collect($usedImageUrls)->map(function ($url) {
-            $relative = str_replace(asset('storage') . '/', '', $url);
-            return trim($relative);
-        })->toArray();
+        // $usedPaths = collect($usedImageUrls)->map(function ($url) {
+        //     $relative = str_replace(asset('storage') . '/', '', $url);
+        //     return trim($relative);
+        // })->toArray();
+
+        $result = ImageHelper::extractAndUploadBase64Images($validated['content'] ?? '');
+        $validated['content'] = $result['content'];
+        $usedPaths = $result['paths'];
 
         Media::whereNull('mediable_id')
         ->where('type', 'image')
@@ -154,6 +159,11 @@ class PortfolioController extends Controller
 
         $validated = $request->validated();
 
+        // Xử lý ảnh content trước khi fill content vào portfolio
+        $result = ImageHelper::extractAndUploadBase64Images($validated['content'] ?? '');
+        $validated['content'] = $result['content'];
+        $usedPaths = $result['paths'];
+
         $portfolio->fill([
             'name' => $validated['name'],
             'location' => $validated['location'],
@@ -162,40 +172,23 @@ class PortfolioController extends Controller
             'type' => $validated['type'],
             'category_id' => $validated['category_id'],
             'year' => $validated['year'] ?? null,
-            'content' => $request->input('content'),
+            'content' => $validated['content'],
         ]);
 
+        // Xử lý ảnh đại diện
         if ($request->hasFile('image_new')) {
             if ($portfolio->image && Storage::exists('public/' . $portfolio->image)) {
                 Storage::delete('public/' . $portfolio->image);
             }
 
-            $portfolio->image = $request->file('image_new')
-            ->store('portfolio', 'public');
+            $portfolio->image = $request->file('image_new')->store('portfolio', 'public');
         }
-        
+
         $portfolio->save();
 
-        // Gắn lại media trong content
-        $content = $request->input('content');
-        preg_match_all('/<img[^>]+src="([^">]+)"/', $content, $matches);
-        $usedImageUrls = $matches[1] ?? [];
-
-        $usedPaths = collect($usedImageUrls)->map(function ($url) {
-            return str_replace(asset('storage') . '/', '', $url);
-        })->toArray();
-
-        // Cập nhật mediable cho ảnh dùng trong content
-        Media::whereNull('mediable_id')
-            ->where('type', 'image')
-            ->whereIn('file_path', $usedPaths)
-            ->update([
-                'mediable_id' => $portfolio->id,
-                'mediable_type' => Portfolio::class,
-            ]);
-
-        // Chỉ xoá ảnh chưa có mediable và không dùng nữa trong content này
-        Media::whereNull('mediable_id')
+        // XÓA ảnh cũ đã gắn với portfolio nhưng không còn dùng trong content
+        Media::where('mediable_id', $portfolio->id)
+            ->where('mediable_type', Portfolio::class)
             ->where('type', 'image')
             ->whereNotIn('file_path', $usedPaths)
             ->each(function ($media) {
@@ -204,13 +197,17 @@ class PortfolioController extends Controller
                 }
                 $media->delete();
             });
-        
-        return redirect()->route('admin.portfolios.index');
 
-        // return response()->json([
-        //     'message' => 'Cập nhật thành công!',
-        //     'data' => $portfolio,
-        // ], 200);
+        // GẮN ảnh mới (đang tạm thời chưa liên kết) vào portfolio
+        Media::whereNull('mediable_id')
+            ->where('type', 'image')
+            ->whereIn('file_path', $usedPaths)
+            ->update([
+                'mediable_id' => $portfolio->id,
+                'mediable_type' => Portfolio::class,
+            ]);
+
+        return redirect()->route('admin.portfolios.index');
     }
 
     public function show(Portfolio $portfolio)
