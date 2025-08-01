@@ -28,7 +28,7 @@
                <label>Ảnh hiện tại</label><br>
                @if ($partner->logo)
                   <img
-                     src="{{ asset($partner->logo) }}"
+                     src="{{ asset('uploads/logo/' . $partner->logo) }}"
                      width="200"
                      class="img-thumbnail mb-2"
                   >
