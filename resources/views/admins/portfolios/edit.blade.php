@@ -1,3 +1,4 @@
+{{-- portfolios/edit.blade.php --}}
 @extends('admins.layouts.master')
 
 @section('content')
@@ -15,27 +16,23 @@
 
                 <div class="form-group">
                     <label for="name">Tên dự án</label>
-                    <input type="text" name="name" id="name" class="form-control" value="{{ $portfolio->name }}" required>
+                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $portfolio->name) }}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="location">Địa điểm</label>
-                    <input type="text" name="location" id="location" class="form-control" value="{{ $portfolio->location }}">
+                    <input type="text" name="location" id="location" class="form-control" value="{{ old('location', $portfolio->location) }}">
                 </div>
 
                 <div class="form-group">
                     <label for="client">Khách hàng</label>
-                    <input type="text" name="client" id="client" class="form-control" value="{{ $portfolio->client }}">
+                    <input type="text" name="client" id="client" class="form-control" value="{{ old('client', $portfolio->client) }}">
                 </div>
 
                 <div class="form-group">
                     <label>Ảnh đại diện hiện tại</label><br>
                     @if ($portfolio->image)
-                        <img
-                            src="{{ asset('storage/' . $portfolio->image) }}"
-                            width="200"
-                            class="img-thumbnail mb-2"
-                        >
+                        <img src="{{ asset('storage/' . $portfolio->image) }}" width="200" class="img-thumbnail mb-2">
                     @else
                         <p class="text-muted">Không có ảnh</p>
                     @endif
@@ -49,25 +46,25 @@
 
                 <div class="form-group">
                     <label for="description">Mô tả</label>
-                    <textarea name="description" id="description" rows="4" class="form-control">{{ $portfolio->description }}</textarea>
+                    <textarea name="description" id="description" rows="4" class="form-control">{{ old('description', $portfolio->description) }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="year">Năm thực hiện</label>
-                    <input type="number" name="year" id="year" class="form-control" value="{{ $portfolio->year }}">
+                    <input type="number" name="year" id="year" class="form-control" value="{{ old('year', $portfolio->year) }}">
                 </div>
 
-                <input type="hidden" name="type" value="porfolio">
+                <input type="hidden" name="type" value="portfolio">
 
                 <div class="form-group">
-                    <label for="type">Loại hình công trình</label>
+                    <label for="category_id">Loại hình công trình</label>
                     <select name="category_id" id="category_id" class="form-control select2">
                         <option value="">-- Chọn danh mục --</option>
                         @foreach ($categories as $cat)
                             <optgroup label="{{ $cat->name }}">
                                 @foreach ($cat->children as $child)
                                     <option value="{{ $child->id }}"
-                                    {{ (old('category_id', $portfolio->category_id) == $child->id) ? 'selected' : '' }}>
+                                        {{ old('category_id', $portfolio->category_id) == $child->id ? 'selected' : '' }}>
                                         {{ $child->name }}
                                     </option>
                                 @endforeach
@@ -76,16 +73,18 @@
                     </select>
                 </div>
 
+                {{-- Component Quill --}}
                 <div class="form-group">
-                    <label for="content">Nội dung bài đăng dự án</label>
-                    <textarea
-                        name="content"
-                        id="editor"
-                        class="form-control"
-                        rows="10"
-                    >
-                        {{ old('content', $portfolio->content ?? '') }}
-                    </textarea>
+                    <label for="content">Nội dung chi tiết</label>
+                    <x-editor 
+                        selector="#quill-editor"
+                        uploadTable="portfolios"
+                        toolbar="full"
+                        height="500px"
+                        placeholder="Nhập nội dung mô tả chi tiết..."
+                        :uploadRoute="route('admin.media.uploadImage')"
+                        :content="old('content', $portfolio->content)"
+                    />
                 </div>
 
                 <div class="text-right">
@@ -97,4 +96,4 @@
 </div>
 @endsection
 
-@include('admins.portfolios.partials.scripts_ckeditor_portfolios')
+@include('admins.portfolios.partials.editor_styles')

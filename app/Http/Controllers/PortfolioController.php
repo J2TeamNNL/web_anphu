@@ -144,7 +144,7 @@ class PortfolioController extends Controller
 
         return view('admins.portfolios.edit', compact(
             'portfolio',
-            'categories'
+            'categories',
         ));
     }
 
@@ -217,9 +217,9 @@ class PortfolioController extends Controller
     {
         $portfolio->load('media');
 
-        return view('admins.portfolios.show', compact(
-            'portfolio'
-        ));
+        return view('admins.portfolios.show', [
+            'portfolio' => $portfolio,
+        ]);
     }
 
 

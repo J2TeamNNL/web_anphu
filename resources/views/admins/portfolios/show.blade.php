@@ -27,9 +27,9 @@
         border-radius: 6px;
     }
 
-    .portfolio-content p, 
-    .portfolio-content h1, 
-    .portfolio-content h2, 
+    .portfolio-content p,
+    .portfolio-content h1,
+    .portfolio-content h2,
     .portfolio-content h3 {
         word-break: break-word;
         line-height: 1.6;
@@ -45,12 +45,14 @@
         Đăng ngày {{ $portfolio->created_at->format('d/m/Y') }}
     </p>
 
-    <div class="portfolio-content mb-4">
+    {{-- Nội dung đã được lưu từ Quill editor --}}
+    <div class="portfolio-content">
         {!! $portfolio->content !!}
     </div>
 
+    {{-- Gallery --}}
     @if ($portfolio->media->count())
-        <div class="media-gallery">
+        <div class="media-gallery mt-5">
             <div class="row">
                 @foreach ($portfolio->media as $media)
                     <div class="col-md-4 mb-4 d-flex align-items-stretch">
