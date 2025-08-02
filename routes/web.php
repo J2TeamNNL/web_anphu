@@ -32,11 +32,12 @@ use App\Http\Middleware\CheckSuperAdminMiddleware;
 use App\Models\Category;
 use PHPUnit\Framework\Attributes\Group;
 
+
+
 Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index');
 
-Route::get('/test-log', function () {
-    logger()->error('✅ Ghi log test thành công');
-    return 'Log test';
+Route::get('/test-cloudinary', function () {
+    dd(config('cloudinary'));
 });
 
 Route::group(['prefix' => 'about'], routes: function () {
