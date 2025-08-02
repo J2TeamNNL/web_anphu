@@ -18,6 +18,13 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/style_all.css') }}">
     
+    <!-- Quill.js core -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+    <!-- ImageUploader Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/quill-image-uploader@1.2.3/dist/quill.imageUploader.min.js"></script>
+
     @stack('styles')
 </head>
 <body>
@@ -46,6 +53,7 @@
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
+        
     <script>
         $(document).ready(function() {
             // Initialize Select2
