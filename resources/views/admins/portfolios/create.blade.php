@@ -1,4 +1,3 @@
-{{-- portfolios/create.blade.php --}}
 @extends('admins.layouts.master')
 
 @section('content')
@@ -49,7 +48,7 @@
                         height="500px"
                         placeholder="Nhập nội dung mô tả chi tiết..."
                         :uploadRoute="route('admin.media.uploadImage')"
-                        :content="old('content')"
+                        :content="old('content', $portfolio->content ?? '')"
                     />
                 </div>
 
@@ -88,4 +87,4 @@
 </div>
 @endsection
 
-@include('admins.portfolios.partials.editor_styles')
+{{-- @include('admins.portfolios.partials.scripts_quill_image_upload') --}}

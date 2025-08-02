@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <label>Ảnh đại diện hiện tại</label><br>
                     @if ($portfolio->image)
-                        <img src="{{ asset('storage/' . $portfolio->image) }}" width="200" class="img-thumbnail mb-2">
+                        <img src="{{ $portfolio->image }}" width="200" class="img-thumbnail mb-2">
                     @else
                         <p class="text-muted">Không có ảnh</p>
                     @endif
@@ -83,7 +83,7 @@
                         height="500px"
                         placeholder="Nhập nội dung mô tả chi tiết..."
                         :uploadRoute="route('admin.media.uploadImage')"
-                        :content="old('content', $portfolio->content)"
+                        :content="old('content', $portfolio->content ?? '')"
                     />
                 </div>
 
@@ -95,5 +95,3 @@
     </div>
 </div>
 @endsection
-
-@include('admins.portfolios.partials.editor_styles')

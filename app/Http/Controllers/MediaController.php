@@ -5,44 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Media;
 use Illuminate\Support\Facades\Log;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class MediaController extends Controller
 {
     public function uploadImage(Request $request)
     {
+        $request->validate([
+            'image' => 'required|image|max:5120', // tối đa 5MB
+        ]);
+
         try {
-            if (!$request->hasFile('upload')) {
-                return response()->json(['error' => ['message' => 'No file uploaded.']], 400);
-            }
+            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
 
-            $file = $request->file('upload');
-
-            if (!$file) {
-                Log::error('No file received. Keys: ' . json_encode($request->all()));
-                return response()->json(['error' => ['message' => 'No file uploaded.']], 400);
-            }
-
-            if (!$file->isValid()) {
-                return response()->json(['error' => ['message' => 'Invalid file.']], 400);
-            }
-
-            $table = $request->query('table', 'articles');
-            $folder = in_array($table, ['articles', 'portfolios']) ? $table : 'misc';
-
-            $path = $file->store("uploads/{$folder}", 'public');
-
-            Media::create([
-                'file_path' => $path,
+            $media = Media::create([
+                'url' => $uploadedFileUrl,
                 'type' => 'image',
             ]);
 
-            return response()->json([
-                'uploaded' => true,
-                'url' => asset('storage/' . $path)
-            ]);
+            return response()->json(['success' => true, 'url' => $media->url]);
         } catch (\Exception $e) {
-            Log::error('Upload image failed: ' . $e->getMessage());
-            return response()->json(['error' => ['message' => 'Upload failed.']], 500);
+            Log::error('Upload failed: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Upload failed.'], 500);
         }
     }
 }

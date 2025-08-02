@@ -16,6 +16,7 @@ use App\Http\Requests\UpdatePortfolioRequest;
 
 use App\Models\Media;
 use App\Helpers\ImageHelper;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 
 class PortfolioController extends Controller
@@ -97,8 +98,12 @@ class PortfolioController extends Controller
         $validated['slug'] = Str::slug($validated['name']);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')
-            ->store('portfolio', 'public');
+            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'portfolios',
+            ]);
+
+            $validated['image'] = $uploadedFileUrl->getSecurePath();
+            $validated['image_public_id'] = $uploadedFileUrl->getPublicId();
         }
 
         $portfolio = $this->model::create($validated);
@@ -106,19 +111,6 @@ class PortfolioController extends Controller
         if (!empty($validated['category_ids'])) {
             $portfolio->categories()->sync($validated['category_ids']);
         }
-
-        // $content = $validated['content'] ?? '';
-        // preg_match_all('/<img[^>]+src="([^">]+)"/', $content, $matches);
-        // $usedImageUrls = $matches[1] ?? [];
-
-        // $usedPaths = collect($usedImageUrls)->map(function ($url) {
-        //     return str_replace(asset('storage') . '/', '', $url);
-        // })->toArray();
-
-        // $usedPaths = collect($usedImageUrls)->map(function ($url) {
-        //     $relative = str_replace(asset('storage') . '/', '', $url);
-        //     return trim($relative);
-        // })->toArray();
 
         $result = ImageHelper::extractAndUploadBase64Images($validated['content'] ?? '');
         $validated['content'] = $result['content'];
@@ -153,52 +145,29 @@ class PortfolioController extends Controller
         ));
     }
 
-    public function update(UpdatePortfolioRequest $request, $id)
+    public function update(UpdatePortfolioRequest $request, Portfolio $portfolio)
     {
-        $portfolio = $this->model::findOrFail($id);
+        $data = $request->validated();
 
-        $validated = $request->validated();
-
-        // Xử lý ảnh content trước khi fill content vào portfolio
-        $result = ImageHelper::extractAndUploadBase64Images($validated['content'] ?? '');
-        $validated['content'] = $result['content'];
-        $usedPaths = $result['paths'];
-
-        $portfolio->fill([
-            'name' => $validated['name'],
-            'location' => $validated['location'],
-            'client' => $validated['client'] ?? null,
-            'description' => $validated['description'] ?? null,
-            'type' => $validated['type'],
-            'category_id' => $validated['category_id'],
-            'year' => $validated['year'] ?? null,
-            'content' => $validated['content'],
-        ]);
-
-        // Xử lý ảnh đại diện
+        // Nếu người dùng tải ảnh mới
         if ($request->hasFile('image_new')) {
-            if ($portfolio->image && Storage::exists('public/' . $portfolio->image)) {
-                Storage::delete('public/' . $portfolio->image);
+            // Xóa ảnh cũ từ Cloudinary (nếu có public_id)
+            if ($portfolio->image_public_id) {
+                Cloudinary::destroy($portfolio->image_public_id);
             }
 
-            $portfolio->image = $request->file('image_new')->store('portfolio', 'public');
+            $uploadedFileUrl = Cloudinary::upload($request->file('image_new')->getRealPath(), [
+                'folder' => 'portfolios',
+            ]);
+
+            $data['image'] = $uploadedFileUrl->getSecurePath();
+            $data['image_public_id'] = $uploadedFileUrl->getPublicId();
         }
 
-        $portfolio->save();
+        $result = ImageHelper::extractAndUploadBase64Images($data['content'] ?? '');
+        $data['content'] = $result['content'];
+        $usedPaths = $result['paths'];
 
-        // XÓA ảnh cũ đã gắn với portfolio nhưng không còn dùng trong content
-        Media::where('mediable_id', $portfolio->id)
-            ->where('mediable_type', Portfolio::class)
-            ->where('type', 'image')
-            ->whereNotIn('file_path', $usedPaths)
-            ->each(function ($media) {
-                if (Storage::disk('public')->exists($media->file_path)) {
-                    Storage::disk('public')->delete($media->file_path);
-                }
-                $media->delete();
-            });
-
-        // GẮN ảnh mới (đang tạm thời chưa liên kết) vào portfolio
         Media::whereNull('mediable_id')
             ->where('type', 'image')
             ->whereIn('file_path', $usedPaths)
@@ -207,7 +176,10 @@ class PortfolioController extends Controller
                 'mediable_type' => Portfolio::class,
             ]);
 
-        return redirect()->route('admin.portfolios.index');
+        $portfolio->update($data);
+
+        return redirect()->route('admin.portfolios.index')
+        ->with('success', 'Cập nhật thành công!');
     }
 
     public function show(Portfolio $portfolio)
@@ -222,8 +194,8 @@ class PortfolioController extends Controller
 
     public function destroy(Portfolio $portfolio)
     {
-        if ($portfolio->image && Storage::exists('public/' . $portfolio->image)) {
-            Storage::delete('public/' . $portfolio->image);
+        if ($portfolio->image_public_id) {
+            Cloudinary::destroy($portfolio->image_public_id);
         }
 
         $portfolio->delete();
