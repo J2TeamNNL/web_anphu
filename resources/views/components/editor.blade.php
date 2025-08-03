@@ -61,69 +61,27 @@
 @push('scripts')
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/quill-image-uploader@1.2.3/dist/quill.imageUploader.min.js"></script>
+    <script src="{{ asset('js/quill-editor.js') }}"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const elementId = @json($elementId);
-            const editorElem = document.getElementById(elementId);
-            if (!editorElem) return;
-
-            const isReadonly = @json($readonly);
-            const placeholder = @json($placeholder);
-            const toolbarOptions = @json($toolbarOptions);
-            const uploadUrl = @json($uploadRoute . '?table=' . $uploadTable);
-
-            // Đăng ký imageUploader module
+            // Register the image uploader module
             Quill.register("modules/imageUploader", window.ImageUploader);
-
-            const quill = new Quill(editorElem, {
-                theme: 'snow',
-                placeholder: placeholder,
-                readOnly: isReadonly,
-                modules: {
-                    toolbar: isReadonly ? false : toolbarOptions,
-                    imageUploader: isReadonly ? undefined : {
-                        upload: file => {
-                            const formData = new FormData();
-                            formData.append("image", file);
-
-                            return fetch(uploadUrl, {
-                                method: "POST",
-                                headers: {
-                                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                                },
-                                body: formData
-                            })
-                            .then(res => res.json())
-                            .then(data => {
-                                if (data.url) return data.url;
-                                throw new Error("Upload failed");
-                            });
-                        }
-                    }
-                }
+            
+            // Initialize Quill editor with our custom manager
+            const quillManager = new QuillEditorManager({
+                selector: '#{{ $elementId }}',
+                uploadUrl: @json($uploadRoute),
+                uploadTable: @json($uploadTable),
+                height: @json($height),
+                placeholder: @json($placeholder),
+                readonly: @json($readonly),
+                toolbar: @json($toolbar)
             });
-
-            editorElem.style.height = @json($height);
-
-            if (!isReadonly) {
-                const textarea = document.getElementById(elementId + '-textarea');
-                const form = editorElem.closest('form');
-
-                const syncTextarea = () => {
-                    if (textarea) {
-                        textarea.value = quill.root.innerHTML;
-                    }
-                };
-
-                if (form) {
-                    form.addEventListener('submit', (e) => {
-                        syncTextarea();
-                    });
-                }
-
-                setInterval(syncTextarea, 60000);
-            }
+            
+            // Store manager instance for potential cleanup
+            window.quillManagers = window.quillManagers || {};
+            window.quillManagers['{{ $elementId }}'] = quillManager;
         });
     </script>
 @endpush
