@@ -28,15 +28,29 @@ class ImageUploadService
 
             return $media->url;
 
-        } catch (Exception $e) {
-            Log::error('Image upload failed', [
+        } catch (\CloudinaryLabs\CloudinaryLaravel\CloudinaryException $e) {
+            Log::error('Cloudinary upload failed', [
+                'error' => $e->getMessage(),
+                'original_name' => $file->getClientOriginalName(),
+                'size' => $file->getSize()
+            ]);
+            throw new Exception('Lỗi dịch vụ lưu trữ ảnh. Vui lòng thử lại sau.');
+            
+        } catch (\Illuminate\Database\QueryException $e) {
+            Log::error('Database error during media creation', [
+                'error' => $e->getMessage(),
+                'original_name' => $file->getClientOriginalName()
+            ]);
+            throw new Exception('Lỗi lưu thông tin ảnh. Vui lòng thử lại.');
+            
+        } catch (\Exception $e) {
+            Log::error('Unexpected error during image upload', [
                 'error' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
                 'original_name' => $file->getClientOriginalName(),
                 'size' => $file->getSize()
             ]);
-
             throw new Exception('Tải ảnh lên thất bại. Vui lòng thử lại.');
         }
     }
@@ -88,12 +102,25 @@ class ImageUploadService
             Media::where('public_id', $publicId)->delete();
             
             return true;
-        } catch (Exception $e) {
-            Log::error('Image deletion failed', [
+        } catch (\CloudinaryLabs\CloudinaryLaravel\CloudinaryException $e) {
+            Log::error('Cloudinary deletion failed', [
                 'error' => $e->getMessage(),
                 'public_id' => $publicId
             ]);
+            return false;
             
+        } catch (\Illuminate\Database\QueryException $e) {
+            Log::error('Database error during media deletion', [
+                'error' => $e->getMessage(),
+                'public_id' => $publicId
+            ]);
+            return false;
+            
+        } catch (\Exception $e) {
+            Log::error('Unexpected error during image deletion', [
+                'error' => $e->getMessage(),
+                'public_id' => $publicId
+            ]);
             return false;
         }
     }
