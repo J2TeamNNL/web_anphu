@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 use App\Events\UserRegisteredEvent;
 
@@ -16,7 +17,8 @@ class AuthController extends Controller
 
     public function login()
     {
-        return view('auths.login');
+        $title = 'Đăng nhập';
+        return view('auths.login', compact('title'));
     }
 
     public function processLogin(Request $request)
@@ -39,13 +41,17 @@ class AuthController extends Controller
 
             return redirect()->route('admin.portfolios.index');
 
-        } catch (\Throwable $e) 
-        {
-            return redirect()->route('auths.login');
-            
-        } catch (\Throwable $e) 
-        {
-            return redirect()->route('auths.login')->withErrors(['email' => 'Something went wrong' . $e->getMessage()]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('auths.login')
+                ->withErrors(['message' => 'Tài khoản không tồn tại.']);
+                
+        } catch (\Exception $e) {
+            Log::error('Login error', [
+                'error' => $e->getMessage(),
+                'email' => $request->get('email')
+            ]);
+            return redirect()->route('auths.login')
+                ->withErrors(['message' => 'Đã xảy ra lỗi. Vui lòng thử lại.']);
         }
     }
 
@@ -57,7 +63,8 @@ class AuthController extends Controller
 
     public function register()
     {
-        return view('auths.register');
+        $title = 'Đăng ký tài khoản';
+        return view('auths.register', compact('title'));
     }
 
     public function processRegister(Request $request)
@@ -67,6 +74,8 @@ class AuthController extends Controller
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'avatar' => 'default-avatar.png',
+            'level' => 1,
         ]);
 
         UserRegisteredEvent::dispatch($user);
