@@ -3,42 +3,19 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerHomeController;
-
 use App\Http\Controllers\PortfolioController;
-
 use App\Http\Controllers\ArticleController;
-
 use App\Http\Controllers\PartnerController;
-
-use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\MediaController;
-
-use App\Http\Controllers\MenuController;
-
 use App\Http\Controllers\UserController;
-
 use App\Http\Controllers\CategoryController;
-
 use App\Http\Controllers\ConsultingRequestController;
-
 use App\Http\Controllers\CompanySettingController;
-use App\Http\Controllers\PolicySettingController;
-use App\Http\Controllers\PriceSettingController;
-
 use App\Http\Controllers\AuthController;
-
 use App\Http\Middleware\CheckLoginMiddleware;
 use App\Http\Middleware\CheckSuperAdminMiddleware;
-use App\Models\Category;
-use PHPUnit\Framework\Attributes\Group;
-
-
 
 Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index');
-
-Route::get('/test-cloudinary', function () {
-    dd(config('cloudinary'));
-});
 
 Route::group(['prefix' => 'about'], routes: function () {
    Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
