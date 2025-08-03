@@ -77,6 +77,7 @@ Route::prefix('admin')->name('admin.')
    ]);
 
    Route::post('/media/upload-image', [MediaController::class, 'uploadImage'])
+   ->middleware(['auth', 'throttle:10,1'])
    ->name('media.uploadImage');
 
    Route::resource('categories', CategoryController::class)->except([
