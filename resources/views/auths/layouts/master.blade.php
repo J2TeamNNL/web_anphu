@@ -11,76 +11,224 @@
     <!-- FontAwesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- AOS CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    
-    <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
-    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/style_all.css') }}">
     
     <style>
-        /* --------------------------
-        AUTH
-        --------------------------- */
+        /* Auth Styles - Keeping Original Color Scheme */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%);
+            min-height: 100vh;
+            margin: 0;
+        }
+
         .bg-auth {
-            background-image: url("../img/gallery/form_background.webp");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            min-height: calc(100vh - 100px);
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        .bg-auth::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23C9B037" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            pointer-events: none;
         }
 
         .auth-card {
-            background-color: #f8f9fa;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-            padding: 5px;
-            width: 350px;
-            max-width: 100%;
-            border: solid 1px var(--color-dark);
-        }
-
-        .auth-card .card-body {
-            padding: 0;
-        }
-
-        .auth-card .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .auth-card .form-control {
+            box-shadow: 0 8px 32px rgba(3, 10, 54, 0.2);
+            border: 2px solid var(--color-secondary);
             width: 100%;
-            font-size: 14px;
-            padding: 0.5rem 0.75rem;
-            border-radius: 6px;
-        }
-
-        .auth-card .btn-block {
-            width: 100%;
-            border-radius: 6px;
+            max-width: 400px;
+            overflow: hidden;
+            position: relative;
         }
 
         .auth-header {
-            background-color: var(--color-primary);
-            color: #fff;
-            padding: 1rem 1.5rem;
-            border-top-left-radius: .5rem;
-            border-top-right-radius: .5rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%);
+            color: var(--color-white);
+            padding: 1.5rem 2rem;
             text-align: center;
+            position: relative;
+            border-bottom: 3px solid var(--color-secondary);
+        }
+
+        .auth-header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--color-secondary);
+            border-radius: 0;
+        }
+
+        .auth-header h4 {
+            margin: 0;
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: var(--color-white);
+        }
+
+        .auth-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+            font-size: 0.875rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: var(--color-white);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 0 3px rgba(201, 176, 55, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%);
+            border: 2px solid var(--color-secondary);
+            border-radius: 8px;
+            color: var(--color-white);
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(3, 10, 54, 0.3);
+            border-color: var(--color-secondary);
+        }
+
+        .btn-auth:active {
+            transform: translateY(0);
+        }
+
+        .btn-auth::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(201, 176, 55, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-auth:hover::before {
+            left: 100%;
         }
 
         .auth-footer {
+            padding: 1rem 2rem;
             text-align: center;
-            padding: 0.75rem;
-            font-size: 0.9rem;
-            color: #666;
-            border-top: 1px solid #eee;
+            background: var(--color-gray);
+            border-top: 2px solid var(--color-secondary);
+            color: var(--color-text);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .auth-link {
+            color: var(--color-secondary);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+
+        .auth-link:hover {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .alert {
+            border-radius: 12px;
+            border: none;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-danger {
+            background: #fef2f2;
+            color: #dc2626;
+            border-left: 4px solid #dc2626;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            color: #16a34a;
+            border-left: 4px solid #16a34a;
+        }
+
+        /* Animation */
+        .auth-card {
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .auth-header {
+                padding: 1.5rem 1rem 1rem;
+            }
+            
+            .auth-body {
+                padding: 1.5rem;
+            }
+            
+            .auth-footer {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
@@ -90,31 +238,34 @@
     <div class="bg-auth">
         <div class="auth-card">
             <!-- header -->
-            <div class="auth-header text-center mb-3">
-                <h4 class="mb-0">Đăng nhập quản lý</h4>
+            <div class="auth-header">
+                <h4>{{ $title ?? config('app.name') }}</h4>
             </div>
-
+     
             <!-- body -->
-            <div class="card-body">
-                <form method="POST" action="{{ route('auths.process_login') }}">
-                    @csrf
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" required autofocus>
+            <div class="auth-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
+                @endif
 
-                    <div class="form-group">
-                        <label for="password">Mật khẩu</label>
-                        <input type="password" class="form-control" name="password" required>
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
                     </div>
+                @endif
 
-                    <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
-                </form>
+                @yield('content')
             </div>
 
             <!-- footer -->
-            <div class="auth-footer text-center mt-3">
-                ©2025 AnPhuBuilding
+            <div class="auth-footer">
+                ©2025 {{ config('app.name') }}
             </div>
         </div>
     </div>
@@ -123,9 +274,4 @@
 <!-- Bootstrap 4 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Isotope Layout -->
-<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
-
-<!-- AOS JS -->
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 </html>
