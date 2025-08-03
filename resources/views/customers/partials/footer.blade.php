@@ -1,27 +1,44 @@
-<footer class="footer-info py-5 border-top" style="background-image: url('{{ asset('assets/img/gallery/background_wooden_1.jpg') }}');">
+<footer class="footer-info pt-5 border-top" style="background-image: url('{{ asset(config('company.assets.background.footer')) }}');">
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-4">
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Thông Tin Liên Hệ</h5>
-                <p><strong>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC VÀ NỘI THẤT AN PHÚ</strong></p>
-                <p><i class="fa fa-map-marker-alt mr-2 text-warning"></i> Số 35 phố Ngõ Huyện, Phường Hàng Trống, Quận Hoàn Kiếm, Thành phố Hà Nội, Việt Nam</p>
-                <p><i class="fa fa-phone-alt mr-2 text-warning"></i><strong class="text-white">0969 317 331</strong></p>
-                <p><i class="fa fa-envelope mr-2 text-warning"></i> kientrucnoithat.anphu@gmail.com</p>
-                <p class="small text-white">Giấy chứng nhận ĐKKD số 0108588362 do Sở KHĐT T.P. Hà Nội cấp ngày 15/01/2019</p>
-                <p><a href="#" class="text-white">▶ Chính Sách Bảo Mật</a></p>
-                <img src="{{ asset('assets/img/logo/bocongthuong_thongbao.png') }}" alt="Thông báo Bộ Công Thương" style="height: 150px;">
+                <p><strong>{{ config('company.name.full') }}</strong></p>
+                <p>
+                    <i class="fas fa-map-marker-alt me-2 text-warning"></i> 
+                    {{ config('company.contact.address') }}
+                </p>
+                <p>
+                    <a href="{{ config('company.contact.phone_link') }}">
+                        <i class="fas fa-phone me-2 text-warning"></i>
+                        <strong class="text-white">{{ config('company.contact.phone') }}</strong>
+                    </a>
+                </p>
+                <p>
+                    <a href="{{ config('company.contact.email_link') }}">
+                        <i class="fas fa-envelope me-2 text-warning"></i> 
+                        {{ config('company.contact.email') }}
+                    </a>
+                </p>
+                <p class="small text-white">
+                    {{ config('company.business.license_full_text') }}
+                </p>
+                <p>
+                    <a href="{{ config('company.privacy_policy.url') }}" class="text-white">▶ {{ config('company.privacy_policy.text') }}</a>
+                </p>
+                <img src="{{ asset(config('company.assets.certification.bocongthuong')) }}" alt="Thông báo Bộ Công Thương" style="height: 150px;">
             </div>
 
             <div class="col-md-4 mb-4">
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Bản Đồ</h5>
                 <div class="embed-responsive embed-responsive-4by3 border rounded">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4651.941213619061!2d105.76204787601887!3d20.9752479896129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134530013984bd5%3A0xa071284b1bd0393f!2sAn%20Ph%C3%BA%20Design!5e1!3m2!1svi!2s!4v1751625845553!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    <iframe src="{{ config('company.map.embed_url') }}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <h5 class="text-warning font-weight-bold text-center" >ĐĂNG KÝ TƯ VẤN</h5>
+                <h5 class="text-warning font-weight-bold text-center">ĐĂNG KÝ TƯ VẤN</h5>
                 <div id="consulting-form-wrapper">
                     <form class="consulting-form text-dark p-4 rounded" method="post" action="{{ route('consulting_requests.store') }}">
                         @csrf
@@ -39,10 +56,19 @@
                         <div class="form-group">
                             <input type="text" class="form-control" name="location" placeholder="Vị Trí Xây Dựng *" required>
                         </div>
-                        <div class="d-flex align-items-center">
-                            <button type="submit" class="btn btn-warning mr-3">Gửi cho chúng tôi</button>
-                            <a href="#" class="btn btn-outline-warning mr-2"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><img src="{{ asset('assets/img/logo/logo_zalo.png') }}" style="height: 24px;" alt="Zalo"></a>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-warning w-100 mb-3">
+                                <i class="fas fa-paper-plane me-2"></i>Gửi Yêu Cầu Tư Vấn
+                            </button>
+                            
+                            <div class="social-connect text-center">
+                                <p class="social-text mb-2 small text-muted">Hoặc liên hệ qua:</p>
+                                <x-social-media 
+                                    size="small" 
+                                    style="outline" 
+                                    class="d-flex justify-content-center" 
+                                />
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -88,10 +114,11 @@
             </div>
 
         </div>
-        <hr>
-
-        <div class="footer-copyright text-center py-2">
-            © 2025 – Công Ty TNHH Tư vấn Thiết Kế Kiến trúc và Nội thất An Phú.
+        
+        </div>
+        
+        <div class="footer-copyright text-center py-3 mt-4 border-top">
+            <small class="text-muted">{{ config('company.copyright.text') }}</small>
         </div>
     </div>
 </footer>

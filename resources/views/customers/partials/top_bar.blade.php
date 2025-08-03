@@ -1,67 +1,42 @@
 <!-- Top bar -->
 <div class="top-bar py-2">
     <div class="container">
-        <div class="row align-items-center text-center text-md-left">
+        <div class="row align-items-center">
             <!-- Logo -->
-            <div class="col-12 col-md-3 mb-3 mb-md-0">
-                <a href="{{ route('customers.index')}}" class="logo-link d-inline-block">
-                    <img class="anphu-logo" src="{{ asset('assets/img/logo/banner.jpg') }}" alt="ANPHU Logo">
+            <div class="col-12 col-md-3 text-center text-md-left mb-2 mb-md-0">
+                <a href="{{ route('customers.index')}}" class="logo-link">
+                    <img class="anphu-logo" src="{{ asset(config('company.assets.logo.main')) }}" alt="{{ config('company.name.brand') }} Logo">
                 </a>
             </div>
 
-            <!-- Điện thoại & Email -->
-            <div class="col-12 col-md-3 mb-3 mb-md-0 border-divider">
-                <div>
-                    <i class="fa fa-phone-alt mr-1"></i>
-                    Zalo:
-                    {{ $companySettings->company_phone_1 ?? '0949 453 283' }}
-                </div>
-                <div>
-                    <i class="fa fa-phone-alt mr-1"></i>
-                    Hotline:
-                    {{ $companySettings->company_phone_2 ?? '0969 317 331' }}
-                </div>
-                <div>
-                    <i class="fa fa-envelope mr-1"></i>
-                    {{ $companySettings->company_email ?? 'kientrucnoithat.anphu@gmail.com'}}
-                </div>
-                <div>
-                    <i class="fa fa-clock mr-1"></i>
-                    
-                    {{ $companySettings->working_hours ?? 'Thời gian: 8h - 17h30 T2 - T7'}}
+            <!-- Company Contact -->
+            <div class="col-12 col-md-6 text-center mb-2 mb-md-0">
+                <div class="company-info">
+                    <div class="info-item">
+                        <i class="fas fa-phone me-1"></i>
+                        <small>{{ config('company.contact.phone') }}</small>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope me-1"></i>
+                        <small>{{ config('company.contact.email') }}</small>
+                    </div>
                 </div>
             </div>
 
-            <!-- Địa chỉ -->
-            <div class="col-12 col-md-3 mb-3 mb-md-0 border-divider">
-                <div><i class="fa fa-home mr-1"></i>
-                    <span style="font-weight: bold">
-                        Địa chỉ VPGD 1:
-                    </span>
-                    <br>{{ $companySetting->company_address_1 ?? 'Số 01, liền kề 18, KĐT Văn Khê' }}
+            <!-- Social Links & Contact Button -->
+            <div class="col-12 col-md-3 text-center text-md-right">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-end">
+                    <div class="me-3">
+                        <x-social-media 
+                            size="small" 
+                            style="minimal" 
+                            class="d-flex" 
+                        />
+                    </div>
+                    <a href="#" class="btn btn-warning btn-sm">
+                        <i class="fas fa-phone me-1"></i>Liên Hệ
+                    </a>
                 </div>
-                <div><i class="fa fa-home mr-1"></i>
-                    <span style="font-weight: bold">
-                        Địa chỉ VPGD 2:
-                    </span>
-                    <br>{{ $companySettings->company_address_2 ?? 'Thị trấn Hoàn Long, Hưng Yên' }}
-                </div>
-            </div>
-
-            <!-- MXH -->
-            <div class="col-12 col-md-2 text-center text-md-right">
-                <a href="https://www.tiktok.com/@anphudesign" class="btn btn-sm btn-primary">
-                    <img src="{{ asset('assets/img/logo/logo_tiktok.png') }}" style="height: 20px;" alt="Tiktok">
-                </a>
-                <a href="#" class="btn btn-sm btn-warning">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" class="btn btn-sm btn-danger">
-                    <i class="fab fa-youtube"></i>
-                </a>
-                <a href="#">
-                    <img src="{{ asset('assets/img/logo/logo_zalo.png') }}" style="height: 20px;" alt="Zalo">
-                </a>
             </div>
         </div>
     </div>

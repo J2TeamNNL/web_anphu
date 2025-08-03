@@ -1,35 +1,46 @@
 <!-- Top bar -->
-    <div class="top-bar py-2">
-        <div class="container">
-            <div class="row align-items-center text-center text-md-left">
-                <!-- Logo -->
-                <div class="col-12 col-md-3 mb-3 mb-md-0">
-                    <a href="{{ route('auths.login')}}" class="logo-link d-inline-block">
-                        <img class="anphu-logo" src="{{ asset('assets/img/logo/banner.jpg') }}" alt="ANPHU Logo">
-                    </a>
+<div class="top-bar py-2">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="company-info d-flex align-items-center">
+                    <img src="{{ asset(config('company.assets.logo.main')) }}" alt="{{ config('company.name.brand') }} Logo" class="anphu-logo me-3">
+                    <div class="company-details">
+                        <h6 class="mb-0 text-white">{{ config('company.name.full') }}</h6>
+                        <p class="mb-0 text-warning small">
+                            <i class="fas fa-phone me-1"></i>{{ config('company.contact.phone') }} | 
+                            <i class="fas fa-envelope me-1"></i>{{ config('company.contact.email') }}
+                        </p>
+                    </div>
                 </div>
+            </div>
 
-                <!-- MXH -->
-                <div class="col-12 col-md-2 text-center text-md-right">
-                    <a href="https://www.tiktok.com/@anphudesign" class="btn btn-sm btn-primary">
-                        <img src="{{ asset('assets/img/logo/logo_tiktok.png') }}" style="height: 20px;" alt="Tiktok">
-                    </a>
-                    <a href="#" class="btn btn-sm btn-warning">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="btn btn-sm btn-danger">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="#">
-                        <img src="{{ asset('assets/img/logo/logo_zalo.png') }}" style="height: 20px;" alt="Zalo">
-                    </a>
+            <div class="col-md-4 text-end">
+                <div class="social-links d-flex align-items-center justify-content-end">
+                    <div class="me-3">
+                        <x-social-media 
+                            size="medium" 
+                            style="default" 
+                            class="d-flex" 
+                        />
+                    </div>
+                    <div class="auth-buttons">
+                        <a href="{{ route('login') }}" class="btn btn-outline-warning btn-sm me-2">
+                            <i class="fas fa-sign-in-alt me-1"></i>Đăng Nhập
+                        </a>
+                        <a href="{{ route('register') }}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-user-plus me-1"></i>Đăng Ký
+                        </a>
+                    </div>
                 </div>
+            </div>
 
-                <div class="col-12 col-md-3 mb-3 mb-md-0">
-                    <a href="{{ route('auths.register')}}" class="logo-link d-inline-block">
-                        <button class="btn btn-success btn-block">Đăng ký</button>
-                    </a>
-                </div>
+            <!-- Auth Button -->
+            <div class="col-12 col-md-4 text-center text-md-right">
+                <a href="{{ route('auths.login')}}" class="btn btn-primary px-4">
+                    <i class="fas fa-sign-in-alt me-1"></i>Đăng nhập
+                </a>
             </div>
         </div>
     </div>
+</div>

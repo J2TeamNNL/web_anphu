@@ -14,6 +14,10 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/style_all.css') }}">
     
+    <!-- Social Media Component CSS -->
+    <link rel="stylesheet" href="{{ asset('css/social-media.css') }}">
+
+    @stack('styles')
     <style>
         /* Auth Styles - Keeping Original Color Scheme */
         body {
@@ -216,6 +220,31 @@
             }
         }
 
+        /* Topbar Fixes */
+        .anphu-logo {
+            height: 60px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .logo-link {
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.25rem;
+            flex-wrap: wrap;
+        }
+
+        .social-links .btn {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
         /* Responsive */
         @media (max-width: 480px) {
             .auth-header {
@@ -228,6 +257,15 @@
             
             .auth-footer {
                 padding: 1rem;
+            }
+
+            .anphu-logo {
+                height: 35px;
+            }
+
+            .social-links {
+                justify-content: center;
+                margin: 0.5rem 0;
             }
         }
     </style>

@@ -20,6 +20,9 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/style_all.css') }}">
+    
+    <!-- Social Media Component CSS -->
+    <link rel="stylesheet" href="{{ asset('css/social-media.css') }}">
 
     @stack('styles')
     
