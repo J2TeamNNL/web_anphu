@@ -1,0 +1,105 @@
+<?php
+
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | Company Information
+    |--------------------------------------------------------------------------
+    |
+    | This file contains all company-related information that is used
+    | throughout the application, including contact details, social media
+    | links, and business registration information.
+    |
+    */
+
+    'name' => [
+        'full' => 'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC VÀ NỘI THẤT AN PHÚ',
+        'short' => 'An Phú Design',
+        'brand' => 'An Phú',
+    ],
+
+    'contact' => [
+        'address' => 'Số 35 phố Ngõ Huyện, Phường Hàng Trống, Quận Hoàn Kiếm, Thành phố Hà Nội, Việt Nam',
+        'phone' => '0969 317 331',
+        'phone_link' => 'tel:0969317331',
+        'email' => 'kientrucnoithat.anphu@gmail.com',
+        'email_link' => 'mailto:kientrucnoithat.anphu@gmail.com',
+        'website' => 'https://anphudesign.vn',
+    ],
+
+    'business' => [
+        'license_number' => '0108588362',
+        'license_authority' => 'Sở KHĐT T.P. Hà Nội',
+        'license_date' => '15/01/2019',
+        'license_full_text' => 'Giấy chứng nhận ĐKKD số 0108588362 do Sở KHĐT T.P. Hà Nội cấp ngày 15/01/2019',
+    ],
+
+    'social_media' => [
+        'zalo' => [
+            'url' => 'https://zalo.me/0969317331',
+            'icon' => null, // Uses custom logo
+            'name' => 'Zalo',
+            'logo' => 'assets/img/logo/logo_zalo.png',
+            'color' => '#0068ff',
+        ],
+        'facebook' => [
+            'url' => 'https://www.facebook.com/anphudesign',
+            'icon' => 'fab fa-facebook-f',
+            'name' => 'Facebook',
+            'color' => '#1877f2',
+        ],
+        'tiktok' => [
+            'url' => 'https://www.tiktok.com/@anphudesign',
+            'icon' => 'fab fa-tiktok',
+            'name' => 'TikTok',
+            'logo' => 'assets/img/logo/logo_tiktok.png',
+            'color' => '#000000',
+        ],
+        'youtube' => [
+            'url' => 'https://www.youtube.com/@anphudesign',
+            'icon' => 'fab fa-youtube',
+            'name' => 'YouTube',
+            'color' => '#ff0000',
+        ],
+    ],
+
+    'assets' => [
+        'logo' => [
+            'main' => 'assets/img/logo/banner.jpg',
+            'favicon' => 'assets/img/logo/favicon.ico',
+            'footer' => 'assets/img/logo/banner.jpg',
+        ],
+        'certification' => [
+            'bocongthuong' => 'assets/img/logo/bocongthuong_thongbao.png',
+        ],
+        'background' => [
+            'footer' => 'assets/img/gallery/background_wooden_1.jpg',
+        ],
+    ],
+
+    'map' => [
+        'embed_url' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4651.941213619061!2d105.76204787601887!3d20.9752479896129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134530013984bd5%3A0xa071284b1bd0393f!2sAn%20Ph%C3%BA%20Design!5e1!3m2!1svi!2s!4v1751625845553!5m2!1svi!2s',
+        'coordinates' => [
+            'lat' => 20.9752479896129,
+            'lng' => 105.76204787601887,
+        ],
+    ],
+
+    'copyright' => [
+        'year' => '2025',
+        'text' => '© 2025 – Công Ty TNHH Tư vấn Thiết Kế Kiến trúc và Nội thất An Phú.',
+        'full_text' => '© 2025 Công Ty TNHH Tư vấn Thiết Kế Kiến trúc và Nội thất An Phú',
+    ],
+
+    'privacy_policy' => [
+        'url' => '#',
+        'text' => 'Chính Sách Bảo Mật',
+    ],
+
+    'working_hours' => [
+        'weekdays' => '8:00 - 17:30',
+        'saturday' => '8:00 - 12:00',
+        'sunday' => 'Nghỉ',
+        'text' => 'Thứ 2 - Thứ 6: 8:00 - 17:30 | Thứ 7: 8:00 - 12:00',
+    ],
+];
