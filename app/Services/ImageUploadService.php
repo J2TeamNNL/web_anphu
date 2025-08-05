@@ -8,6 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
+
 class ImageUploadService
 {
     /**
@@ -59,7 +60,8 @@ class ImageUploadService
      * Upload file to Cloudinary.
      */
     private function uploadToCloudinary(UploadedFile $file, string $table): array
-    {
+    {   
+
         $folder = $this->getFolderFromTable($table);
         $uploadOptions = [
             'folder' => $folder,
@@ -69,12 +71,18 @@ class ImageUploadService
         ];
 
         $uploadResult = Cloudinary::upload($file->getRealPath(), $uploadOptions);
-        
+
+        dd($uploadResult);
+
         return [
-            'secure_url' => $uploadResult->getSecurePath(),
-            'public_id' => $uploadResult->getPublicId()
+            // 'secure_url' => $uploadResult->getSecurePath(),
+            // 'public_id' => $uploadResult->getPublicId()
+
+            'secure_url' => $uploadResult['secure_url'],
+            'public_id' => $uploadResult['public_id']
         ];
     }
+
 
     /**
      * Create media record in database.

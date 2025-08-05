@@ -158,6 +158,7 @@ return [
     Illuminate\Translation\TranslationServiceProvider::class,
     Illuminate\Validation\ValidationServiceProvider::class,
     Illuminate\View\ViewServiceProvider::class,
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -167,7 +168,8 @@ return [
 
     App\Providers\AppServiceProvider::class,
     App\Providers\ViewServiceProvider::class,
-
+    
+    CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
 ],
 
 ];

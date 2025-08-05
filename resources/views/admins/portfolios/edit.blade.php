@@ -84,6 +84,7 @@
                         placeholder="Nhập nội dung mô tả chi tiết..."
                         :uploadRoute="route('admin.media.uploadImage')"
                         :content="old('content', $portfolio->content ?? '')"
+                        textareaName="content"
                     />
                 </div>
 

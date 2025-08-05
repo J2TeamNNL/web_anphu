@@ -5,12 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 use App\Events\UserRegisteredEvent;
-
-use App\Http\Requests\StoreAuthRequest;
-use App\Http\Requests\UpdateAuthRequest;
 
 class AuthController extends Controller
 {   
@@ -23,41 +20,21 @@ class AuthController extends Controller
 
     public function processLogin(Request $request)
     {
-        try {
-            $user = User::query()
-            ->where('email', $request->get('email'))
-            ->firstOrFail();
+        $credentials = $request->only('email', 'password');
 
-            if(!Hash::check($request->get('password'), $user->password))
-            {
-                return redirect()->route('auths.login')
-                    ->withErrors(['password' => 'Incorrect password.']);
-            }
-
-            session()->put('id', $user->id);
-            session()->put('name', $user->name);
-            session()->put('avatar', $user->avatar);
-            session()->put('level', $user->level);
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
 
             return redirect()->route('admin.portfolios.index');
-
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return redirect()->route('auths.login')
-                ->withErrors(['message' => 'Tài khoản không tồn tại.']);
-                
-        } catch (\Exception $e) {
-            Log::error('Login error', [
-                'error' => $e->getMessage(),
-                'email' => $request->get('email')
-            ]);
-            return redirect()->route('auths.login')
-                ->withErrors(['message' => 'Đã xảy ra lỗi. Vui lòng thử lại.']);
         }
+
+        return redirect()->route('auths.login')
+            ->withErrors(['message' => 'Email hoặc mật khẩu không đúng.']);
     }
 
     public function logout()
     {
-        session()->flush();
+        Auth::logout();
         return redirect()->route('auths.login');
     }
 
@@ -81,6 +58,7 @@ class AuthController extends Controller
         UserRegisteredEvent::dispatch($user);
         // Dispatch the event after user registration
 
-        return redirect()->route('auths.login')->with('success', 'Registration successful! Please log in.');
+        return redirect()->route('auths.login')
+        ->with('success', 'Registration successful! Please log in.');
     }
 }

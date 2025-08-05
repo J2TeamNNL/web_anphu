@@ -199,7 +199,8 @@ class QuillEditorManager {
             headers: {
                 'X-CSRF-TOKEN': csrfToken,
                 'Accept': 'application/json'
-            }
+            },
+            credentials: 'same-origin'
         });
 
         if (!response.ok) {

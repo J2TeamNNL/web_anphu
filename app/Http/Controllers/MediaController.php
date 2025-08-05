@@ -6,6 +6,10 @@ use App\Http\Requests\UploadImageRequest;
 use App\Services\ImageUploadService;
 use Illuminate\Http\JsonResponse;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 class MediaController extends Controller
 {
     protected ImageUploadService $imageUploadService;
@@ -13,13 +17,15 @@ class MediaController extends Controller
     public function __construct(ImageUploadService $imageUploadService)
     {
         $this->imageUploadService = $imageUploadService;
+        $this->middleware('auth');
     }
-
+    
     /**
      * Upload image via AJAX for Quill editor.
      */
     public function uploadImage(UploadImageRequest $request): JsonResponse
-    {
+    {   
+
         $url = $this->imageUploadService->uploadImage(
             $request->file('image'),
             $request->input('table')

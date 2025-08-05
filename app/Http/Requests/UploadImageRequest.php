@@ -28,11 +28,20 @@ class UploadImageRequest extends FormRequest
                 'max:5120', // 5MB
                 'dimensions:max_width=4000,max_height=4000'
             ],
+            
             'table' => [
                 'sometimes',
                 'string',
                 'in:articles,portfolios,partners'
-            ]
+            ],
+
+            'file' => [
+                'nullable',
+                'image',
+                'mimes:jpeg,png,jpg,gif,webp',
+                'max:5120',
+                'dimensions:max_width=4000,max_height=4000'
+            ],
         ];
     }
 
