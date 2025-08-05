@@ -54,7 +54,7 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => explode(',', env('LOG_STACK', 'single')),
+            'channels' => explode(',', env('LOG_STACK', 'single,discord')),
             'ignore_exceptions' => false,
         ],
 
@@ -71,6 +71,13 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => env('LOG_DAILY_DAYS', 14),
             'replace_placeholders' => true,
+        ],
+
+        'discord' => [
+            'driver' => 'custom',
+            'via' => MarvinLabs\DiscordLogger\Logger::class,
+            'url' => 'https://discord.com/api/webhooks/1402308578597142641/zptIb1ykeoZDZjUC0EO9F_ZBXAXVbp4En3ZUycQ-y960ka1F7faoFzyHhwIhRbc1Mv7G',
+            'level' => 'error',
         ],
 
         'slack' => [
