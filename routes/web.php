@@ -12,7 +12,6 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConsultingRequestController;
 use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\AuthController;
-use App\Http\Middleware\CheckLoginMiddleware;
 use App\Http\Middleware\CheckSuperAdminMiddleware;
 
 Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index');
@@ -53,18 +52,18 @@ Route::get('/consultant', [CustomerController::class, 'consultant'])->name('cust
 Route::get('/contact', [CustomerController::class, 'contact'])->name('customers.contact');
 
 Route::group(['prefix' => 'auth'], function () {
-   Route::get('/login', [AuthController::class, 'login'])->name('auths.login');
-   Route::post('/login', [AuthController::class, 'processLogin'])->name('auths.process_login');
-   Route::get('/register', [AuthController::class, 'register'])->name('auths.register');
-   Route::post('/register', [AuthController::class, 'processRegister'])->name('auths.process_register');
+    Route::get('/login', [AuthController::class, 'login'])->name('auths.login');
+    Route::post('/login', [AuthController::class, 'processLogin'])->name('auths.process_login');
+    Route::get('/register', [AuthController::class, 'register'])->name('auths.register');
+    Route::post('/register', [AuthController::class, 'processRegister'])->name('auths.process_register');
 });
 
 Route::post('/consulting-requests/store', [ConsultingRequestController::class, 'store'])->name('consulting_requests.store');
 
 //Admin
 Route::prefix('admin')->name('admin.')
-->middleware(CheckLoginMiddleware::class)
-->group(function () {
+    ->middleware('auth')
+    ->group(function () {
 
    Route::get('logout', [AuthController::class, 'logout'])->name('auths.logout');
 
@@ -77,8 +76,9 @@ Route::prefix('admin')->name('admin.')
    ]);
 
    Route::post('/media/upload-image', [MediaController::class, 'uploadImage'])
-   ->middleware(['auth', 'throttle:10,1'])
-   ->name('media.uploadImage');
+      ->middleware(['throttle:10,1'])
+      ->name('media.uploadImage');
+
 
    Route::resource('categories', CategoryController::class)->except([
       'destroy'
