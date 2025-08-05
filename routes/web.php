@@ -12,10 +12,17 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConsultingRequestController;
 use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CloudinaryDemoController;
 use App\Http\Middleware\CheckSuperAdminMiddleware;
 
-Route::get('/test-cloudinary', function () {
-    dd(config('cloudinary'));
+// Cloudinary Demo Routes - Using Storage Disk
+Route::prefix('cloudinary-demo')->name('cloudinary-demo.')->group(function () {
+    Route::get('/', [CloudinaryDemoController::class, 'index'])->name('index');
+    Route::get('/create', [CloudinaryDemoController::class, 'create'])->name('create');
+    Route::post('/upload', [CloudinaryDemoController::class, 'store'])->name('store');
+    Route::get('/list', [CloudinaryDemoController::class, 'list'])->name('list');
+    Route::get('/show/{path}', [CloudinaryDemoController::class, 'show'])->name('show')->where('path', '.*');
+    Route::delete('/delete/{path}', [CloudinaryDemoController::class, 'destroy'])->name('destroy')->where('path', '.*');
 });
 
 Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index');
