@@ -14,6 +14,10 @@ use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\CheckSuperAdminMiddleware;
 
+Route::get('/test-cloudinary', function () {
+    dd(config('cloudinary'));
+});
+
 Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index');
 
 Route::group(['prefix' => 'about'], routes: function () {
