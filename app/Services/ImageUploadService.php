@@ -30,6 +30,7 @@ class ImageUploadService
                 'image'
             );
 
+            // Log successful upload
             return $media;
 
         } catch (\CloudinaryLabs\CloudinaryLaravel\CloudinaryException $e) {
