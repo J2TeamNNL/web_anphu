@@ -1,5 +1,9 @@
 @extends('admins.layouts.master')
 
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 @push('styles')
 <style>
     .img-wrapper {
@@ -45,7 +49,21 @@
         Đăng ngày {{ $portfolio->created_at->format('d/m/Y') }}
     </p>
 
-    {{-- Nội dung đã được lưu từ Quill editor --}}
+    {{-- Ảnh đại diện chính --}}
+    @if ($portfolio->thumbnail)
+        <div class="img-wrapper mb-4">
+            <img src="{{ $portfolio->thumbnail }}" alt="{{ $portfolio->name }}">
+        </div>
+    @endif
+
+    {{-- Nội dung mô tả --}}
+    @if ($portfolio->description)
+        <div class="mb-4">
+            <p class="lead" style="white-space: pre-line;">{{ $portfolio->description }}</p>
+        </div>
+    @endif
+
+    {{-- Nội dung chi tiết --}}
     <div class="portfolio-content">
         {!! $portfolio->content !!}
     </div>
@@ -60,14 +78,16 @@
                             @if(Str::contains($media->type, 'image'))
                                 <div class="text-center p-2">
                                     <div class="img-wrapper bg-light border rounded overflow-hidden">
-                                        <img src="{{ asset('storage/' . $media->file_path) }}"
-                                            class="img-fixed"
-                                            alt="media">
+                                        <img src="{{ $media->file_path }}"
+                                             class="img-fixed"
+                                             alt="media">
                                     </div>
                                 </div>
                             @elseif(Str::contains($media->type, 'youtube'))
                                 <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="{{ $media->file_path }}" allowfullscreen></iframe>
+                                    <iframe class="embed-responsive-item"
+                                            src="{{ $media->file_path }}"
+                                            allowfullscreen></iframe>
                                 </div>
                             @endif
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateMediaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,18 @@ return new class extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->id();
-            $table->string('file_path');
-            $table->enum('type', ['image', 'video'])->default('image');
+            $table->string('file_path', 255);
+            $table->string('url')->nullable();
+            $table->string('public_id')->nullable();
 
+            $table->enum('type', ['image', 'video'])->default('image');
             $table->string('caption')->nullable();
             $table->integer('order')->default(0);
 
-            $table->nullableMorphs('mediable');
+            $table->unsignedBigInteger('mediaable_id')->nullable();
+            $table->string('mediaable_type')->nullable();
+
+            $table->string('table_name')->nullable(); // nếu bạn vẫn cần
 
             $table->timestamps();
         });
@@ -32,4 +37,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('media');
     }
-};
+}

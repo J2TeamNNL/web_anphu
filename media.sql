@@ -28,13 +28,13 @@ CREATE TABLE `media` (
   `type` enum('image','video') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'image',
   `caption` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `order` int NOT NULL DEFAULT '0',
-  `mediable_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mediable_id` bigint unsigned DEFAULT NULL,
+  `mediaable_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mediaable_id` bigint unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `table_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `media_mediable_type_mediable_id_index` (`mediable_type`,`mediable_id`)
+  KEY `media_mediaable_type_mediaable_id_index` (`mediaable_type`,`mediaable_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

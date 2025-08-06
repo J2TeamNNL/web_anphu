@@ -74,22 +74,34 @@
             </div>
 
             <div class="form-group">
-               <label>Ảnh hiện tại</label><br>
-               @if ($article->image)
-                  <img
-                     src="{{ asset('storage/' . $article->image) }}"
-                     width="200"
-                     class="img-thumbnail mb-2"
-                  >
-               @else
-                  <p class="text-muted">Không có ảnh</p>
-               @endif
-               <input type="hidden" name="image_old" value="{{ $article->image }}">
+               <label>Ảnh đại diện hiện tại</label><br>
+                  @if ($article->thumbnail)
+                        <img
+                           src="{{ $article->thumbnail }}"
+                           alt="{{ $article->name }}"
+                           width="100"
+                           class="img-thumbnail"
+                        >
+                  @else
+                        <p class="text-muted">Không có ảnh</p>
+                  @endif
             </div>
 
             <div class="form-group">
-               <label for="image_new">Thay ảnh mới (tùy chọn)</label>
-               <input type="file" name="image_new" id="image_new" class="form-control-file">
+               <label for="thumbnail">Thay ảnh đại diện (tùy chọn)</label>
+               <input type="file" name="thumbnail" id="thumbnail" class="form-control-file">
+            </div>
+
+            <div class="form-group">
+               <label for="description">Mô tả</label>
+               <textarea
+                  name="description"
+                  id="description"
+                  rows="4"
+                  class="form-control"
+               >
+                  {{ old('description', $article->description) }}
+               </textarea>
             </div>
 
             {{-- Component Quill --}}
@@ -102,7 +114,8 @@
                   height="500px"
                   placeholder="Nhập nội dung mô tả chi tiết..."
                   :uploadRoute="route('admin.media.uploadImage')"
-                  :content="old('content', $article->content)"
+                  :content="old('content', $article->content ?? '')"
+                  textareaName="content"
                />
             </div>
 
@@ -114,5 +127,3 @@
    </div>
 </div>
 @endsection
-
-@include('admins.portfolios.partials.editor_styles')

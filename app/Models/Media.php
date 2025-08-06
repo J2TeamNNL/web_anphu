@@ -7,21 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class Media extends Model
 {
     protected $fillable = [
+        'file_path',
         'url',
         'public_id',
-        'file_path',
+        
         'type',
         'caption',
         'order',
-        'mediable_id',
-        'mediable_type'
+        'mediaable_id',
+        'mediaable_type'
     ];
 
     protected $casts = [
         'order' => 'integer',
     ];
 
-    public function mediable()
+    public function mediaable()
     {
         return $this->morphTo();
     }

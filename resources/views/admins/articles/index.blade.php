@@ -81,11 +81,11 @@
                         <tr>
                             <th>#</th>
                             <th>Tên bài</th>
-                            <th>Ảnh</th>
+                            <th>Ảnh mô tả</th>
                             <th>Mô tả</th>
-                            <th>Chi tiết</th>
                             <th>Danh mục</th>
                             <th>Loại bài viết</th>
+                            <th>Chi tiết</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -95,18 +95,14 @@
                                 <td>{{ $article->id }}</td>
                                 <td>{{ $article->name }}</td>
                                 <td>
-                                    @if ($article->image)
-                                        <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->name }}" width="100" class="img-thumbnail">
+                                    @if ($article->thumbnail)
+                                        <img src="{{ $article->thumbnail }}" alt="{{ $article->name }}" width="100" class="img-thumbnail">
                                     @else
                                         <span class="text-muted">Không có</span>
                                     @endif
                                 </td>
                                 <td class="text-left" style="max-width: 200px;">
                                     {{ \Illuminate\Support\Str::limit($article->description, 100) }}
-                                </td>
-
-                                <td>
-                                    <a href="{{ route('admin.articles.show', $article)}}">Xem chi tiết</a>
                                 </td>
                                 <td>
                                     <span class="badge badge-info">
@@ -116,15 +112,26 @@
 
                                 <td>{{ $article->category->name ?? '-' }}</td>
                                 <td>
-                                    <a href="{{ route('admin.articles.edit', $article) }}" class="btn btn-sm btn-primary mb-1">Sửa</a>
-                                    
-                                    @if(session('level') == 1)
-                                    <form action="{{ route('admin.articles.destroy', $article) }}" method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')" class="d-inline">
+                                    <a href="{{ route('admin.articles.show', $article)}}">Xem chi tiết</a>
+                                </td>
+                                <td>
+                                    <a 
+                                        href="{{ route('admin.articles.edit', $article) }}" 
+                                        class="btn btn-sm btn-primary mb-1"
+                                    >
+                                        Sửa
+                                    </a>
+                                    <form 
+                                        href="{{ route('admin.articles.edit', $article) }}" 
+                                        action="{{ route('admin.articles.destroy', $article) }}" 
+                                        method="POST" 
+                                        onsubmit="return confirm('Bạn chắc chắn muốn xoá?')" 
+                                        class="d-inline"
+                                    >
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
                                     </form>
-                                    @endif
                                 </td>
                             </tr>
                         @empty

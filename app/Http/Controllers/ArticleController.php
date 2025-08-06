@@ -14,6 +14,9 @@ use App\Http\Requests\UpdateArticleRequest;
 
 use App\Models\Media;
 use App\Helpers\ImageHelper;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
+use App\Services\CloudinaryService;
 
 class ArticleController extends Controller
 {
@@ -67,20 +70,17 @@ class ArticleController extends Controller
         return view('admins.articles.create', compact('categories'));
     }
 
-    public function store(StoreArticleRequest $request)
+    public function store(StoreArticleRequest $request, CloudinaryService $cloudinaryService)
     {
         $validated = $request->validated();
-
         $validated['slug'] = Str::slug($validated['name']);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('article', 'public');
-        }
+        if ($request->hasFile('thumbnail')) {
+            $uploadResult = $cloudinaryService->upload($request
+                ->file('thumbnail'), 'articles');
 
-        // Xử lý ảnh trong content
-        $result = ImageHelper::extractAndUploadBase64Images($request->input('content') ?? '');
-        $validated['content'] = $result['content'];
-        $usedPaths = $result['paths'];
+            $validated['thumbnail'] = $uploadResult['url'];
+        }
 
         $article = $this->model::create($validated);
 
@@ -88,16 +88,19 @@ class ArticleController extends Controller
             $article->categories()->sync($validated['category_ids']);
         }
 
-        // Gắn lại media mới cho article
-        Media::whereNull('mediable_id')
+        $result = ImageHelper::extractAndUploadBase64Images($validated['content'] ?? '');
+        $validated['content'] = $result['content'];
+        $usedPaths = $result['paths'];
+
+        Media::whereNull('mediaable_id')
             ->where('type', 'image')
             ->whereIn('file_path', $usedPaths)
             ->update([
-                'mediable_id' => $article->id,
-                'mediable_type' => Article::class,
+                'mediaable_id' => $article->id,
+                'mediaable_type' => Article::class,
             ]);
 
-        return response()->json($article, 201);
+        return redirect()->route('admin.articles.index');
     }
 
     public function edit($id)
@@ -110,60 +113,46 @@ class ArticleController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('admins.articles.edit', compact('article', 'categories'));
+        return view('admins.articles.edit', compact(
+            'article', 'categories'
+        ));
     }
 
-    public function update(UpdateArticleRequest $request, $id)
+    public function update(UpdateArticleRequest $request, Article $article, CloudinaryService $cloudinaryService)
     {
-        $article = $this->model::findOrFail($id);
+        $data = $request->validated();
 
-        $validated = $request->validated();
-
-        // Xử lý ảnh trong content trước khi fill
-        $result = ImageHelper::extractAndUploadBase64Images($request->input('content') ?? '');
-        $validated['content'] = $result['content'];
-        $usedPaths = $result['paths'];
-
-        $article->fill([
-            'name' => $validated['name'],
-            'link' => $validated['link'] ?? null,
-            'description' => $validated['description'] ?? null,
-            'category_id' => $validated['category_id'],
-            'type' => $validated['type'],
-            'content' => $validated['content'],
-        ]);
-
-        if ($request->hasFile('image_new')) {
-            if ($article->image && Storage::exists('public/' . $article->image)) {
-                Storage::delete('public/' . $article->image);
+        if ($request->hasFile('thumbnail')) {
+            if ($article->thumbnail_public_id) {
+                $cloudinaryService->delete($article->thumbnail_public_id);
             }
-            $article->image = $request->file('image_new')->store('article', 'public');
+
+            $uploadResult = $cloudinaryService->upload($request->file('thumbnail'), 'articles');
+
+            $data['thumbnail'] = $uploadResult['url'] ?? null; // Đảm bảo đúng key như store()
+            $data['thumbnail_public_id'] = $uploadResult['public_id'] ?? null;
+        } else {
+            // Rất quan trọng: giữ nguyên ảnh cũ nếu không upload ảnh mới
+            $data['thumbnail'] = $article->thumbnail;
+            $data['thumbnail_public_id'] = $article->thumbnail_public_id;
         }
 
-        $article->save();
+        $result = ImageHelper::extractAndUploadBase64Images($data['content'] ?? '');
+        $data['content'] = $result['content'];
+        $usedPaths = $result['paths'];
 
-        // Xoá media cũ không còn được dùng trong content
-        Media::where('mediable_id', $article->id)
-            ->where('mediable_type', Article::class)
-            ->where('type', 'image')
-            ->whereNotIn('file_path', $usedPaths)
-            ->each(function ($media) {
-                if (Storage::disk('public')->exists($media->file_path)) {
-                    Storage::disk('public')->delete($media->file_path);
-                }
-                $media->delete();
-            });
-
-        // Gắn lại media mới
-        Media::whereNull('mediable_id')
+        Media::whereNull('mediaable_id')
             ->where('type', 'image')
             ->whereIn('file_path', $usedPaths)
             ->update([
-                'mediable_id' => $article->id,
-                'mediable_type' => Article::class,
+                'mediaable_id' => $article->id,
+                'mediaable_type' => Article::class,
             ]);
 
-        return redirect()->route('admin.articles.index');
+        $article->update($data);
+
+        return redirect()->route('admin.articles.index')
+            ->with('success', 'Cập nhật thành công!');
     }
 
     public function show(Article $article)
@@ -175,12 +164,13 @@ class ArticleController extends Controller
 
     public function destroy(Article $article)
     {
-        if ($article->image && Storage::exists('public/' . $article->image)) {
-            Storage::delete('public/' . $article->image);
+        if ($article->thumbnail_public_id) {
+            Cloudinary::destroy($article->thumbnail_public_id);
         }
 
         $article->delete();
 
-        return redirect()->route('admin.articles.index')->with('success', 'Xoá bài viết thành công.');
+        return redirect()->route('admin.articles.index')
+        ->with('success', 'Xoá bài viết thành công.');
     }
 }

@@ -27,9 +27,9 @@ return new class extends Migration
 
             $table->string('image')->nullable();
             
-            // $table->longText('content')->nullable();
+            $table->longText('content')->nullable();
             
-            // $table->string('image_public_id')->nullable();
+            $table->string('image_public_id')->nullable();
 
             $table->timestamps();
         });

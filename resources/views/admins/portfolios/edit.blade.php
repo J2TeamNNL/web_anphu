@@ -31,22 +31,28 @@
 
                 <div class="form-group">
                     <label>Ảnh đại diện hiện tại</label><br>
-                    @if ($portfolio->image)
-                        <img src="{{ $portfolio->image }}" width="200" class="img-thumbnail mb-2">
-                    @else
-                        <p class="text-muted">Không có ảnh</p>
-                    @endif
-                    <input type="hidden" name="image_old" value="{{ $portfolio->image }}">
+                        @if ($portfolio->thumbnail)
+                            <img src="{{ $portfolio->thumbnail }}" alt="{{ $portfolio->name }}" width="100" class="img-thumbnail">
+                        @else
+                            <p class="text-muted">Không có ảnh</p>
+                        @endif
                 </div>
 
                 <div class="form-group">
-                    <label for="image_new">Thay ảnh chính (tùy chọn)</label>
-                    <input type="file" name="image_new" id="image_new" class="form-control-file">
+                    <label for="thumbnail">Thay ảnh đại diện (tùy chọn)</label>
+                    <input type="file" name="thumbnail" id="thumbnail" class="form-control-file">
                 </div>
 
                 <div class="form-group">
                     <label for="description">Mô tả</label>
-                    <textarea name="description" id="description" rows="4" class="form-control">{{ old('description', $portfolio->description) }}</textarea>
+                    <textarea
+                        name="description"
+                        id="description"
+                        rows="4"
+                        class="form-control"
+                    >
+                        {{ old('description', $portfolio->description) }}
+                    </textarea>
                 </div>
 
                 <div class="form-group">

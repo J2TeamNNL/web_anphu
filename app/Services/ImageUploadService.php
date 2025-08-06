@@ -8,13 +8,16 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
-
 class ImageUploadService
 {
     /**
      * Upload image to Cloudinary and create media record.
+     *
+     * @param UploadedFile $file
+     * @param string $table
+     * @return \App\Models\Media
      */
-    public function uploadImage(UploadedFile $file, string $table): string
+    public function uploadImage(UploadedFile $file, string $table): Media
     {
         try {
             // Upload to Cloudinary
@@ -27,7 +30,7 @@ class ImageUploadService
                 'image'
             );
 
-            return $media->url;
+            return $media;
 
         } catch (\CloudinaryLabs\CloudinaryLaravel\CloudinaryException $e) {
             Log::error('Cloudinary upload failed', [
@@ -60,26 +63,33 @@ class ImageUploadService
      * Upload file to Cloudinary.
      */
     private function uploadToCloudinary(UploadedFile $file, string $table): array
-    {   
-
+    {
         $folder = $this->getFolderFromTable($table);
-        $uploadOptions = [
-            'folder' => $folder,
-            'resource_type' => 'image',
-            'quality' => 'auto:good',
-            'fetch_format' => 'auto'
-        ];
 
-        $uploadResult = Cloudinary::upload($file->getRealPath(), $uploadOptions);
+        $uploadResult = Cloudinary::uploadApi()->upload(
+            $file->getRealPath(),
+            [
+                'folder' => $folder,
+                'resource_type' => 'image',
+                'quality' => 'auto:good',
+                'fetch_format' => 'auto'
+            ]
+        );
 
-        dd($uploadResult);
+        // Chuyển object -> array
+        $resultArray = $uploadResult->getArrayCopy();
+
+        // Ghi log để debug nếu cần
+        Log::info('Cloudinary upload result array', ['result' => $resultArray]);
+
+        // Kiểm tra kỹ để tránh lỗi thiếu field
+        if (empty($resultArray['secure_url']) || empty($resultArray['public_id'])) {
+            throw new \Exception('Upload failed - no URL returned');
+        }
 
         return [
-            // 'secure_url' => $uploadResult->getSecurePath(),
-            // 'public_id' => $uploadResult->getPublicId()
-
-            'secure_url' => $uploadResult['secure_url'],
-            'public_id' => $uploadResult['public_id']
+            'secure_url' => $resultArray['secure_url'],
+            'public_id' => $resultArray['public_id']
         ];
     }
 
@@ -88,7 +98,8 @@ class ImageUploadService
      * Create media record in database.
      */
     private function createMediaRecord(string $url, string $publicId, string $type): Media
-    {
+    {   
+
         return Media::create([
             'url' => $url,
             'public_id' => $publicId,

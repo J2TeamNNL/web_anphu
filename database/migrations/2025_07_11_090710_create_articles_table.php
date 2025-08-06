@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('link')->nullable();   
             $table->text('description')->nullable();
             
-            // $table->longText('content')->nullable();
+            $table->longText('content')->nullable();
+
+            $table->string('image_public_id')->nullable();
 
             $table->unsignedBigInteger('category_id');
 

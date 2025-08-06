@@ -15,7 +15,8 @@ class Article extends Model
     protected $fillable = [
         'name',
         'slug',
-        'image',
+        'thumbnail',
+        'thumbnail_public_id',
         'link',
         'description',
         'category_id',
@@ -41,6 +42,6 @@ class Article extends Model
 
     public function media()
     {
-        return $this->morphMany(Media::class, 'mediable');
+        return $this->morphMany(Media::class, 'mediaable');
     }
 }

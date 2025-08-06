@@ -99,7 +99,7 @@
                             <th>Tên dự án</th>
                             <th>Địa điểm</th>
                             <th>Khách hàng</th>
-                            <th>Ảnh đại diện</th>
+                            <th>Ảnh mô tả</th>
                             <th>Mô tả</th>
                             <th>Năm</th>
                             <th>Loại dự án</th>
@@ -116,8 +116,8 @@
                                 <td>{{ $portfolio->location }}</td>
                                 <td>{{ $portfolio->client }}</td>
                                 <td>
-                                    @if ($portfolio->image)
-                                        <img src="{{ asset('storage/' . $portfolio->image) }}" alt="{{ $portfolio->name }}" width="100" class="img-thumbnail">
+                                    @if ($portfolio->thumbnail)
+                                        <img src="{{ $portfolio->thumbnail }}" alt="{{ $portfolio->name }}" width="100" class="img-thumbnail">
                                     @else
                                         <span class="text-muted">Không có</span>
                                     @endif

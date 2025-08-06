@@ -18,10 +18,11 @@ class Portfolio extends Model
         'client',
         'description',
         'year',        
-        'image',
+        'thumbnail',
+        'thumbnail_public_id',
         'category_id',
         'type',
-        'content',
+        'content'
     ];
 
     public function category()
@@ -42,7 +43,7 @@ class Portfolio extends Model
 
     public function media()
     {
-        return $this->morphMany(Media::class, 'mediable');
+        return $this->morphMany(Media::class, 'mediaable');
     }
 }
 

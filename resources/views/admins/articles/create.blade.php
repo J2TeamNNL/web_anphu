@@ -55,21 +55,34 @@
             </div>
 
             <div class="form-group">
-               <label for="image">Ảnh bài đăng</label>
-               <input type="file" name="image" id="image" class="form-control-file">
+               <label for="thumbnail">Ảnh mô tả <span class="text-danger">*</span></label>
+               <input type="file" name="thumbnail" id="thumbnail" class="form-control-file">
+            </div>
+
+            <div class="form-group">
+               <label for="description">Mô tả</label>
+               <textarea
+                  name="description"
+                  id="description"
+                  rows="4"
+                  class="form-control"
+               >
+                  {{ old('description') }}
+               </textarea>
             </div>
 
             {{-- Component Quill --}}
             <div class="form-group">
                <label for="content">Nội dung chi tiết</label>
                <x-editor 
-                     selector="#quill-editor"
-                     uploadTable="articles"
-                     toolbar="full"
-                     height="500px"
-                     placeholder="Nhập nội dung mô tả chi tiết..."
-                     :uploadRoute="route('admin.media.uploadImage')"
-                     :content="old('content')"
+                  selector="#quill-editor"
+                  uploadTable="articles"
+                  toolbar="full"
+                  height="500px"
+                  placeholder="Nhập nội dung mô tả chi tiết..."
+                  :uploadRoute="route('admin.media.uploadImage')"
+                  :content="old('content', $article->content ?? '')"
+                  textareaName="content"
                />
             </div>
 
@@ -81,5 +94,3 @@
    </div>
 </div>
 @endsection
-
-@include('admins.portfolios.partials.editor_styles')

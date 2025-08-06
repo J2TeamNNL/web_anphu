@@ -9,20 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::table('articles', function (Blueprint $table) {
-            $table->longText('content')->nullable()->after('description');
+            $table->renameColumn('image_public_id', 'thumbnail_public_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::table('articles', function (Blueprint $table) {
-            //
+            $table->renameColumn('thumbnail_public_id', 'image_public_id');
         });
     }
 };

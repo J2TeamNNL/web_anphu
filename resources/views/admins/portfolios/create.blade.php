@@ -12,7 +12,6 @@
             <form action="{{ route('admin.portfolios.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                {{-- Các trường input thông thường --}}
                 <div class="form-group">
                     <label for="name">Tên Dự Án <span class="text-danger">*</span></label>
                     <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
@@ -29,8 +28,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="image">Ảnh mô tả <span class="text-danger">*</span></label>
-                    <input type="file" name="image" id="image" class="form-control-file">
+                    <label for="thumbnail">Ảnh mô tả <span class="text-danger">*</span></label>
+                    <input type="file" name="thumbnail" id="thumbnail" class="form-control-file">
                 </div>
 
                 <div class="form-group">
@@ -87,5 +86,3 @@
     </div>
 </div>
 @endsection
-
-{{-- @include('admins.portfolios.partials.scripts_quill_image_upload') --}}

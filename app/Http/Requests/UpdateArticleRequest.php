@@ -28,7 +28,9 @@ class UpdateArticleRequest extends FormRequest
             'link' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'category_id' => ['required', 'exists:categories,id'],
-            'type' => 'nullable'
+            'type' => 'nullable',
+            'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:5120'],
+            'content' => 'nullable|string',
         ];
     }
 }

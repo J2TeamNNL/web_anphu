@@ -6,10 +6,8 @@ use App\Models\Portfolio;
 use App\Enums\CategoryType;
 use App\Models\Category;
 
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 use App\Http\Requests\StorePortfolioRequest;
 use App\Http\Requests\UpdatePortfolioRequest;
@@ -17,6 +15,8 @@ use App\Http\Requests\UpdatePortfolioRequest;
 use App\Models\Media;
 use App\Helpers\ImageHelper;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
+use App\Services\CloudinaryService;
 
 
 class PortfolioController extends Controller
@@ -91,19 +91,16 @@ class PortfolioController extends Controller
     }
 
 
-    public function store(StorePortfolioRequest $request)
+    public function store(StorePortfolioRequest $request, CloudinaryService $cloudinaryService)
     {
         $validated = $request->validated();
-
         $validated['slug'] = Str::slug($validated['name']);
 
-        if ($request->hasFile('image')) {
-            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
-                'folder' => 'portfolios',
-            ]);
+        if ($request->hasFile('thumbnail')) {
+            $uploadResult = $cloudinaryService
+                ->upload($request->file('thumbnail'), 'portfolios');
 
-            $validated['image'] = $uploadedFileUrl->getSecurePath();
-            $validated['image_public_id'] = $uploadedFileUrl->getPublicId();
+            $validated['thumbnail'] = $uploadResult['url'];
         }
 
         $portfolio = $this->model::create($validated);
@@ -116,17 +113,15 @@ class PortfolioController extends Controller
         $validated['content'] = $result['content'];
         $usedPaths = $result['paths'];
 
-        Media::whereNull('mediable_id')
-        ->where('type', 'image')
-        ->whereIn('file_path', $usedPaths)
-        ->update([
-            'mediable_id' => $portfolio->id,
-            'mediable_type' => Portfolio::class,
-        ]);
+        Media::whereNull('mediaable_id')
+            ->where('type', 'image')
+            ->whereIn('file_path', $usedPaths)
+            ->update([
+                'mediaable_id' => $portfolio->id,
+                'mediaable_type' => Portfolio::class,
+            ]);
 
         return redirect()->route('admin.portfolios.index');
-
-        // return response()->json($portfolio, 201);
     }
 
     public function edit($id)
@@ -145,42 +140,43 @@ class PortfolioController extends Controller
         ));
     }
 
-    public function update(UpdatePortfolioRequest $request, Portfolio $portfolio)
+    public function update(UpdatePortfolioRequest $request, Portfolio $portfolio, CloudinaryService $cloudinaryService)
     {
         $data = $request->validated();
 
-        // Nếu người dùng tải ảnh mới
-        if ($request->hasFile('image_new')) {
-            // Xóa ảnh cũ từ Cloudinary (nếu có public_id)
-            if ($portfolio->image_public_id) {
-                Cloudinary::destroy($portfolio->image_public_id);
+        if ($request->hasFile('thumbnail')) {
+            if ($portfolio->thumbnail_public_id) {
+                $cloudinaryService->delete($portfolio->thumbnail_public_id);
             }
 
-            $uploadedFileUrl = Cloudinary::upload($request->file('image_new')->getRealPath(), [
-                'folder' => 'portfolios',
-            ]);
+            $uploadResult = $cloudinaryService->upload($request->file('thumbnail'), 'portfolios');
 
-            $data['image'] = $uploadedFileUrl->getSecurePath();
-            $data['image_public_id'] = $uploadedFileUrl->getPublicId();
+            $data['thumbnail'] = $uploadResult['url'] ?? null; // Đảm bảo đúng key như store()
+            $data['thumbnail_public_id'] = $uploadResult['public_id'] ?? null;
+        } else {
+            // Rất quan trọng: giữ nguyên ảnh cũ nếu không upload ảnh mới
+            $data['thumbnail'] = $portfolio->thumbnail;
+            $data['thumbnail_public_id'] = $portfolio->thumbnail_public_id;
         }
 
         $result = ImageHelper::extractAndUploadBase64Images($data['content'] ?? '');
         $data['content'] = $result['content'];
         $usedPaths = $result['paths'];
 
-        Media::whereNull('mediable_id')
+        Media::whereNull('mediaable_id')
             ->where('type', 'image')
             ->whereIn('file_path', $usedPaths)
             ->update([
-                'mediable_id' => $portfolio->id,
-                'mediable_type' => Portfolio::class,
+                'mediaable_id' => $portfolio->id,
+                'mediaable_type' => Portfolio::class,
             ]);
 
         $portfolio->update($data);
 
         return redirect()->route('admin.portfolios.index')
-        ->with('success', 'Cập nhật thành công!');
+            ->with('success', 'Cập nhật thành công!');
     }
+
 
     public function show(Portfolio $portfolio)
     {
@@ -194,8 +190,8 @@ class PortfolioController extends Controller
 
     public function destroy(Portfolio $portfolio)
     {
-        if ($portfolio->image_public_id) {
-            Cloudinary::destroy($portfolio->image_public_id);
+        if ($portfolio->thumbnail_public_id) {
+            Cloudinary::destroy($portfolio->thumbnail_public_id);
         }
 
         $portfolio->delete();
