@@ -37,10 +37,10 @@
     ];
     
     $containerClass = 'social-media-container ' . 
-                     ($sizeClasses[$size] ?? 'social-md') . ' ' .
-                     ($styleClasses[$style] ?? 'social-default') . ' ' .
-                     ($direction === 'vertical' ? 'social-vertical' : 'social-horizontal') . ' ' .
-                     $class;
+    ($sizeClasses[$size] ?? 'social-md') . ' ' .
+    ($styleClasses[$style] ?? 'social-default') . ' ' .
+    ($direction === 'vertical' ? 'social-vertical' : 'social-horizontal') . ' ' .
+    $class;
 @endphp
 
 <div class="{{ $containerClass }}">
@@ -55,7 +55,11 @@
                 @if($social['icon'])
                     <i class="{{ $social['icon'] }}"></i>
                 @else
-                    <img src="{{ asset($social['logo']) }}" alt="{{ $social['name'] }}" class="social-logo">
+                    <img
+                        src="{{ asset($social['logo']) }}"
+                        alt="{{ $social['name'] }}"
+                        style="height: 30px;"
+                    >
                 @endif
             </span>
             
