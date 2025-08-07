@@ -12,21 +12,21 @@
                 {{-- Dự án --}}
                 <li class="nav-item mx-2 {{ request()->routeIs('admin.portfolios.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('admin.portfolios.index') }}">
-                        <i class="fa fa-folder-open mr-1"></i> Dự án
+                        <i class="fa fa-home mr-1"></i> Dự án
                     </a>
                 </li>
 
                 {{-- Bài đăng --}}
                 <li class="nav-item mx-2 {{ request()->routeIs('admin.articles.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('admin.articles.index') }}">
-                        <i class="fa fa-newspaper-o mr-1"></i> Bài đăng
+                        <i class="fa fa-newspaper me-1"></i> Bài đăng
                     </a>
                 </li>
 
                 {{-- Lịch tư vấn --}}
                 <li class="nav-item mx-2 {{ request()->routeIs('admin.consulting_requests.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('admin.consulting_requests.index') }}">
-                        <i class="fa fa-calendar-check-o mr-1"></i> Lịch tư vấn
+                        <i class="fa fa-calendar-check mr-1"></i> Lịch tư vấn
                     </a>
                 </li>
 

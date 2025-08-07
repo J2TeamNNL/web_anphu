@@ -22,7 +22,7 @@
     height: 120px;
     object-fit: contain;
     filter: grayscale(20%);
-    transition: filter 0.3s ease;
+    transition: filter 0.25s ease;
   }
 
   .logo-item img:hover {
