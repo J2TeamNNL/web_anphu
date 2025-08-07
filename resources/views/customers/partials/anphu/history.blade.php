@@ -4,21 +4,6 @@
             <div class="col-md-12" data-aos="fade-left">
                 <img src="{{ asset('assets/img/gallery/anphu_crew.jpg') }}" class="img-fluid mb-4 rounded shadow-sm" alt="anphu_crew">
             </div>
-            {{-- <div class="col-md-8" data-aos="fade-left">
-                <div class="d-flex-center">
-                    <b class="text-light fs-3x me-2 fs-3x px-1">
-                        <span data-incremental="6">6</span><!--!-->+
-                    </b><!--!-->
-                    <span>Năm phát triển</span>
-                </div>
-                <div class="d-flex-center">
-                    <b class="text-light fs-3x me-2 fs-3x px-1">
-                        <span data-incremental="6">6</span><!--!-->+
-                    </b><!--!-->
-                    <span>Năm phát triển</span>
-                </div>
-            </div>
-        </div> --}}
 
         <div class="row">
             {{-- SƠ LƯỢC --}}
@@ -31,7 +16,7 @@
                 <p>Ngày thành lập: 15/01/2019</p>
                 <p>Mã số thuế: 0108588362</p>
                 <p>Số 35 phố Ngõ Huyện, Phường Hàng Trống, Quận Hoàn Kiếm, Thành phố Hà Nội, Việt Nam</p>
-                <p>Người đại diện: Phạm Thị Lê Thu</p>
+                <p>Người đại diện: Phạm Đăng Thu</p>
             </div>
 
             {{-- LỊCH SỬ HÌNH THÀNH --}}
