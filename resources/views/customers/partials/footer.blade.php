@@ -1,120 +1,85 @@
-<footer class="footer-info py-5 border-top" style="background-image: url('{{ asset('assets/img/gallery/background_wooden_1.jpg') }}');">
+<footer class="footer-info pt-5 border-top" style="background-image: url('{{ asset(config('company.assets.background.footer')) }}');">
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-4">
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Thông Tin Liên Hệ</h5>
+                <p><strong>{{ config('company.name.full') }}</strong></p>
                 <p>
-                    <strong>{{ $companySettings->company_name }}</strong>
+                    <i class="fas fa-map-marker-alt me-2 text-warning"></i> 
+                    {{ config('company.contact.address') }}
                 </p>
                 <p>
-                    <i class="fa fa-home mr-1 text-warning"></i>
-                    <span style="font-weight: bold; color: #C9B037">
-                        Địa chỉ VPGD 1:
-                    </span>
-                    <br>{{ $companySettings->company_address_1 ?? 'Số 01, liền kề 18, KĐT Văn Khê' }}
-                </p>
-                <p>
-                    <i class="fa fa-home mr-1 text-warning"></i>
-                    <span style="font-weight: bold; color: #C9B037">
-                        Địa chỉ VPGD 2:
-                    </span>
-                    <br>{{ $companySettings->company_address_2 ?? 'Thị trấn Hoàn Long, Hưng Yên' }}
-                </p>
-
-                <p>
-                    <i class="fa fa-phone-alt mr-1 text-warning"></i>
-                    <span style="font-weight: bold; color: #C9B037">
-                        Zalo:
-                    </span>
-                    {{ $companySettings->company_phone_1 ?? '0949 453 283' }}
-                </p>
-                <p>
-                    <i class="fa fa-phone-alt mr-1 text-warning"></i>
-                    <span style="font-weight: bold; color: #C9B037">
-                        Hotline:
-                    </span>
-                    {{ $companySettings->company_phone_2 ?? '0969 317 331' }}
-                </p>
-
-                <p>
-                    <i class="fa fa-envelope mr-1 text-warning"></i>
-                    <span style="font-weight: bold; color: #C9B037">
-                        Email:
-                    </span>
-                    {{ $companySettings->company_email ?? 'kientrucnoithat.anphu@gmail.com'}}
-                </p>
-
-                <p>
-                    <a
-                        href="#"
-                        class="text-white"
-                    >
-                        ▶ Chính Sách Bảo Mật
+                    <a href="{{ config('company.contact.phone_link') }}">
+                        <i class="fas fa-phone me-2 text-warning"></i>
+                        <strong class="text-white">{{ config('company.contact.phone') }}</strong>
                     </a>
                 </p>
-                <img src="{{ asset('assets/img/logo/bocongthuong_thongbao.png') }}" alt="Thông báo Bộ Công Thương" style="height: 150px;">
+                <p>
+                    <a href="{{ config('company.contact.email_link') }}">
+                        <i class="fas fa-envelope me-2 text-warning"></i> 
+                        {{ config('company.contact.email') }}
+                    </a>
+                </p>
+                <p class="small text-white">
+                    {{ config('company.business.license_full_text') }}
+                </p>
+                <p>
+                    <a href="{{ config('company.privacy_policy.url') }}" class="text-white">▶ {{ config('company.privacy_policy.text') }}</a>
+                </p>
+                <img src="{{ asset(config('company.assets.certification.bocongthuong')) }}" alt="Thông báo Bộ Công Thương" style="height: 150px;">
             </div>
 
             <div class="col-md-4 mb-4">
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Bản Đồ</h5>
-                
                 <div class="embed-responsive embed-responsive-4by3 border rounded">
                     <iframe
-                        src="{{ $companySettings->google_map }}"
+                        src="{{ config('company.map.embed_url') }}"
                         width="600"
                         height="450"
                         style="border:0;"
                         allowfullscreen=""
                         loading="lazy"
-                        class="embed-responsive-item"
-                        referrerpolicy="no-referrer-when-downgrade">
+                        referrerpolicy="no-referrer-when-downgrade"
+                    >
                     </iframe>
                 </div>
-
             </div>
 
             <div class="col-md-4">
-                <h5 class="text-warning font-weight-bold text-center" >ĐĂNG KÝ TƯ VẤN</h5>
+                <h5 class="text-warning font-weight-bold text-center">ĐĂNG KÝ TƯ VẤN</h5>
                 <div id="consulting-form-wrapper">
                     <form class="consulting-form text-dark p-4 rounded" method="post" action="{{ route('consulting_requests.store') }}">
                         @csrf
                         <div class="form-group">
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="name" placeholder="Họ Tên *"
-                                required
-                            >
+                            <input type="text" class="form-control" name="name" placeholder="Họ Tên *" required>
                         </div>
+                        
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <input
-                                    type="tel"
-                                    class="form-control"
-                                    name="phone"
-                                    placeholder="Số Điện Thoại *"
-                                    required
-                                >
+                                <input type="tel" class="form-control" name="phone" placeholder="Số Điện Thoại *" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <input type="email" class="form-control" name="email" placeholder="Email">
                             </div>
                         </div>
+
                         <div class="form-group">
                             <input type="text" class="form-control" name="location" placeholder="Vị Trí Xây Dựng *" required>
                         </div>
-                        <div class="d-flex align-items-center">
-                            <button type="submit" class="btn btn-warning mr-3">Gửi cho chúng tôi</button>
-                            <a href="#" class="btn btn-outline-warning mr-2">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#">
-                                <img
-                                    src="{{ asset('assets/img/logo/logo_zalo.png') }}"
-                                    style="height: 24px;"
-                                    alt="Zalo"
-                                >
-                            </a>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-warning w-100 mb-3">
+                                <i class="fas fa-paper-plane me-2"></i>Gửi Yêu Cầu Tư Vấn
+                            </button>
+                            
+                            <div class="social-connect text-center">
+                                <p class="social-text mb-2 small text-muted">Hoặc liên hệ qua:</p>
+                                <x-social-media 
+                                    size="small" 
+                                    style="outline" 
+                                    class="d-flex justify-content-center" 
+                                />
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -158,74 +123,9 @@
                   <button class="btn btn-back btn-outline-danger mt-2" onclick="document.getElementById('error-overlay').classList.add('d-none')">← Quay lại</button>
                </div>
             </div>
-
         </div>
-        <hr>
-
-        <div class="footer-copyright text-center py-2">
-            © 2025 – Công Ty TNHH Tư vấn Thiết Kế Kiến trúc và Nội thất An Phú.
+        <div class="footer-copyright text-center py-3 mt-4 border-top">
+            <small class="text-muted">{{ config('company.copyright.text') }}</small>
         </div>
     </div>
 </footer>
-
-@once
-@push('scripts')
-<script>
-document.querySelectorAll('.consulting-form').forEach(form => {
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        let formData = new FormData(form);
-
-        fetch(form.action, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
-                'Accept': 'application/json',
-            },
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) throw response;
-            return response.json();
-        })
-        .then(data => {
-            form.reset();
-            document.getElementById('thank-you-overlay').classList.remove('d-none');
-        })
-        .catch(async error => {
-            let errorText = 'Đã có lỗi xảy ra. Vui lòng thử lại!';
-
-            // (429)
-            if (error.status === 429) {
-                document.getElementById('error-overlay').classList.remove('d-none');
-                return;
-            }
-
-            // validation
-            if (error.json) {
-                const err = await error.json();
-                if (err.errors) {
-                    errorText = Object.values(err.errors).flat().join('<br>');
-                }
-            }
-
-            // Fallback alert
-            alert(errorText);
-        });
-    });
-});
-
-document.getElementById('back-button').addEventListener('click', function () {
-    document.getElementById('thank-you-overlay').classList.add('d-none');
-});
-
-const errorOverlay = document.getElementById('error-overlay');
-if (errorOverlay) {
-    errorOverlay.querySelector('.btn-back')?.addEventListener('click', () => {
-        errorOverlay.classList.add('d-none');
-    });
-}
-</script>
-@endpush
-@endonce

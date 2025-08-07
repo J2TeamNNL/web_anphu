@@ -20,8 +20,12 @@ return [
 
     'contact' => [
         'address' => 'Số 35 phố Ngõ Huyện, Phường Hàng Trống, Quận Hoàn Kiếm, Thành phố Hà Nội, Việt Nam',
-        'phone' => '0969 317 331',
-        'phone_link' => 'tel:0969317331',
+        'phone_1' => '0949 453 283',
+        'phone_link_1' => 'tel:0949453283',
+        'phone_2' => '0969 317 331',
+        'phone_link_2' => 'tel:0969317331',
+        'address_1' => 'Số 01, liền kề 18, KĐT Văn Khê',
+        'address_2' => 'Thị trấn Hoàn Long, Hưng Yên',
         'email' => 'kientrucnoithat.anphu@gmail.com',
         'email_link' => 'mailto:kientrucnoithat.anphu@gmail.com',
         'website' => 'https://anphudesign.vn',

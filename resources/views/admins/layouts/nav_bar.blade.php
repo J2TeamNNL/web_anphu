@@ -40,25 +40,49 @@
                 @endif
 
                 {{-- Dropdown: Cài đặt --}}
-                <li class="nav-item dropdown mx-2 mx-lg-3 my-1 my-lg-0 small">
+                <li
+                    class="nav-item dropdown mx-2 mx-lg-3 my-1 my-lg-0 small
+                    {{
+                        request()->routeIs(
+                            'admin.settings.*',
+                            'admin.partners.index',
+                            'admin.categories.index'
+                        ) ? 'active' : '' 
+                    }}"
+                >
                     <a class="nav-link dropdown-toggle text-center" href="#" id="settingsDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-cogs mr-1"></i> Cài đặt
                     </a>
                     <div class="dropdown-menu" aria-labelledby="settingsDropdown">
-                        <a class="dropdown-item small" href="{{ route('admin.settings.company.edit') }}">
+                        <a
+                            class="dropdown-item small {{ request()->routeIs('admin.settings.company.edit') ? 'active' : '' }}"
+                            href="{{ route('admin.settings.company.edit') }}"
+                        >
                             <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt thông tin công ty
                         </a>
-                        <a class="dropdown-item small" href="{{ route('admin.settings.company.editPolicy') }}">
+                        <a
+                            class="dropdown-item small {{ request()->routeIs('admin.settings.company.editPolicy') ? 'active' : '' }}"
+                            href="{{ route('admin.settings.company.editPolicy') }}"
+                        >
                             <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt chính sách công ty
                         </a>
-                        <a class="dropdown-item small" href="#">
+                        <a
+                            class="dropdown-item small" href="#"
+                        >
                             <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt giá
                         </a>
-                        <a class="dropdown-item small" href="{{ route('admin.partners.index') }}">
+                        <a
+                            class="dropdown-item small {{ request()->routeIs('admin.partners.index') ? 'active' : '' }}"
+                            href="{{ route('admin.partners.index') }}"
+                        >
                             <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt đối tác công ty
                         </a>
-                        <a class="dropdown-item small" href="{{ route('admin.categories.index') }}">
+                        <a
+                            class="dropdown-item small {{ request()->routeIs('admin.categories.index') ? 'active' : '' }}"
+
+                            href="{{ route('admin.categories.index') }}"
+                        >
                             <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt danh mục
                         </a>
                     </div>

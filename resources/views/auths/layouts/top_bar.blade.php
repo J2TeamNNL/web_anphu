@@ -9,15 +9,17 @@
                         class="anphu-logo"
                         src="{{ asset(config('company.assets.logo.main')) }}"
                         alt="{{ config('company.name.brand') }} Logo"
-                        height="30px"
+                        height="50px"
                     >
                 </a>
             </div>
 
-            <div class="col-12 col-md-3 mb-3 mb-md-0">
+            <!-- Contact -->
+            <div class="col-12 col-md-4 mb-3 mb-md-0">
                 <h6 class="mb-0 text-white">{{ config('company.name.full') }}</h6>
                 <p class="mb-0 text-warning small">
-                    <i class="fas fa-phone me-1"></i>{{ config('company.contact.phone') }} | 
+                    <i class="fas fa-phone me-1"></i>Zalo: {{ config('company.contact.phone_1') }} |
+                    <i class="fas fa-phone me-1"></i>Hoteline: {{ config('company.contact.phone_2') }}
                     <i class="fas fa-envelope me-1"></i>{{ config('company.contact.email') }}
                 </p>
             </div>

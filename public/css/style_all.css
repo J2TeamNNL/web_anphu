@@ -607,9 +607,8 @@ body {
 }
 
 .dropdown-item .icon-highlight {
-    color: var(--color-primary);
+    color: var(--color-dark) !important;
 }
-
 
 /* --------------------------
    TEXT & UTILITIES

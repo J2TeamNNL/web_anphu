@@ -32,7 +32,7 @@
 <!-- Navigation bar -->
 <nav class="navbar main-nav navbar-expand-lg navbar-light sticky-top">
     <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -53,15 +53,15 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item small {{ isActive('about.anphu') }}" href="{{ route('about.anphu') }}">
                             <i class="fa fa-info-circle me-2 icon-highlight"></i>
-                            Giới thiệu
+                             Giới thiệu
                         </a>
                         <a class="dropdown-item small {{ isActive('about.open_letter') }}" href="{{ route('about.open_letter') }}">
                             <i class="fa fa-envelope-open me-2 icon-highlight"></i>
-                            Thư ngỏ
+                             Thư ngỏ
                         </a>
                         <a class="dropdown-item small {{ isActive('about.cultural_values') }}" href="{{ route('about.cultural_values') }}">
                             <i class="fa fa-heart me-2 icon-highlight"></i>
-                            Giá trị văn hóa
+                             Giá trị văn hóa
                         </a>
                     </div>
                 </li>
@@ -71,15 +71,24 @@
                         <i class="fa fa-tools me-1"></i> Dịch Vụ
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item small {{ isActive('services.construction_full') }}" href="{{ route('services.construction_full') }}">
+                        <a
+                            class="dropdown-item small {{ isActive('services.construction_full') }}"
+                            href="{{ route('services.construction_full') }}"
+                        >
                             <i class="fa fa-home me-2 icon-highlight"></i>
                              Xây nhà trọn gói
                         </a>
-                        <a class="dropdown-item small {{ isActive('services.design_architect') }}" href="{{ route('services.design_architect') }}">
+                        <a
+                            class="dropdown-item small {{ isActive('services.design_architect') }}"
+                            href="{{ route('services.design_architect') }}"
+                        >
                             <i class="fa fa-drafting-compass me-2 icon-highlight"></i>
                              Thiết kế kiến trúc
                         </a>
-                        <a class="dropdown-item small {{ isActive('services.design_interior') }}" href="{{ route('services.design_interior') }}">
+                        <a
+                            class="dropdown-item small {{ isActive('services.design_interior') }}"
+                            href="{{ route('services.design_interior') }}"
+                        >
                             <i class="fa fa-couch me-2 icon-highlight"></i>
                              Thiết kế nội thất
                         </a>
@@ -100,7 +109,8 @@
                                 class="dropdown-item small {{ isset($selectedCategory) && $selectedCategory->id === $category->id ? 'active' : '' }}"
                                 href="{{ route('projects.byCategory', ['slug' => $category->slug]) }}"
                             >
-                                <i class="fa fa-folder me-2 icon-highlight"></i> {{ $category->name }}
+                                <i class="fa fa-folder me-2 icon-highlight"></i>
+                                 {{ $category->name }}
                             </a>
                         @endforeach
                     </div>
@@ -142,7 +152,8 @@
                                 class="dropdown-item small {{ isset($selectedBlogCategory) && $selectedBlogCategory->id === $category->id ? 'active' : '' }}"
                                 href="{{ route('blogs.index', ['slug' => $category->slug]) }}"
                             >
-                                <i class="fa fa-bookmark me-2 icon-highlight"></i>{{ $category->name }}
+                                <i class="fa fa-bookmark me-2 icon-highlight"></i>
+                                 {{ $category->name }}
                             </a>
                         @endforeach
                     </div>

@@ -1,69 +1,67 @@
 <!-- Top bar -->
 <div class="top-bar py-2">
     <div class="container">
-        <div class="row align-items-center text-center text-md-left">
+        <div class="row text-center text-md-left align-items-center justify-content-between">
             <!-- Logo -->
-            <div class="col-12 col-md-3 mb-3 mb-md-0">
-                <a href="{{ route('customers.index')}}" class="logo-link d-inline-block">
-                    <img class="anphu-logo" src="{{ asset('assets/img/logo/banner.jpg') }}" alt="ANPHU Logo">
+            <div class="col-12 col-md-3 d-flex flex-column align-items-center justify-content-center mb-3 mb-md-0 border-divider">
+                <a href="{{ route('customers.index')}}" class="logo-link">
+                    <img
+                        class="anphu-logo"
+                        src="{{ asset(config('company.assets.logo.main')) }}"
+                        alt="{{ config('company.name.brand') }} Logo"
+                        style="max-height: 80px;"
+                    >
                 </a>
             </div>
 
             <!-- Điện thoại & Email -->
-            <div class="col-12 col-md-3 mb-3 mb-md-0 border-divider">
+            <div class="col-12 col-md-3 d-flex flex-column align-items-left justify-content-center mb-3 mb-md-0 border-divider">
                 <div>
                     <i class="fa fa-phone-alt mr-1"></i>
                     Zalo:
-                    {{ $companySettings->company_phone_1 ?? '0949 453 283' }}
+                    {{ config('company.contact.phone_1') }}
                 </div>
                 <div>
                     <i class="fa fa-phone-alt mr-1"></i>
                     Hotline:
-                    {{ $companySettings->company_phone_2 ?? '0969 317 331' }}
+                    {{ config('company.contact.phone_2') }}
                 </div>
                 <div>
                     <i class="fa fa-envelope mr-1"></i>
-                    {{ $companySettings->company_email ?? 'kientrucnoithat.anphu@gmail.com'}}
+                    {{ config('company.contact.email') }}
                 </div>
                 <div>
                     <i class="fa fa-clock mr-1"></i>
-                    
-                    {{ $companySettings->working_hours ?? 'Thời gian: 8h - 17h30 T2 - T7'}}
+
+                    {{ config('company.working_hours.text') }}
                 </div>
             </div>
 
             <!-- Địa chỉ -->
-            <div class="col-12 col-md-3 mb-3 mb-md-0 border-divider">
+            <div class="col-12 col-md-3 d-flex flex-column align-items-center justify-content-center mb-3 mb-md-0 border-divider">
                 <div>
                     <i class="fa fa-home mr-1"></i>
                     <span style="font-weight: bold">
                         Địa chỉ VPGD 1:
                     </span>
-                    <br>{{ $companySetting->company_address_1 ?? 'Số 01, liền kề 18, KĐT Văn Khê' }}
+                    <br>{{ config('company.contact.address_1') }}
                 </div>
                 <div>
                     <i class="fa fa-home mr-1"></i>
                     <span style="font-weight: bold">
                         Địa chỉ VPGD 2:
                     </span>
-                    <br>{{ $companySettings->company_address_2 ?? 'Thị trấn Hoàn Long, Hưng Yên' }}
+                    <br>{{ config('company.contact.address_2') }}
                 </div>
             </div>
 
-            <!-- MXH -->
-            <div class="col-12 col-md-2 text-center text-md-right">
-                <a href="https://www.tiktok.com/@anphudesign" class="btn btn-sm btn-primary">
-                    <img src="{{ asset('assets/img/logo/logo_tiktok.png') }}" style="height: 20px;" alt="Tiktok">
-                </a>
-                <a href="#" class="btn btn-sm btn-warning">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" class="btn btn-sm btn-danger">
-                    <i class="fab fa-youtube"></i>
-                </a>
-                <a href="#">
-                    <img src="{{ asset('assets/img/logo/logo_zalo.png') }}" style="height: 20px;" alt="Zalo">
-                </a>
+            <!-- Social Links -->
+            <div class="col-12 col-md-3 d-flex flex-column align-items-center justify-content-center border-divider">
+                <x-social-media 
+                    size="small" 
+                    style="minimal" 
+                    class="d-flex justify-content-center" 
+                />
             </div>
         </div>
     </div>
