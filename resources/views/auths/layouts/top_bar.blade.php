@@ -5,7 +5,12 @@
             <!-- Logo -->
             <div class="col-12 col-md-3 mb-3 mb-md-0">
                 <a href="{{ route('auths.login')}}" class="logo-link d-inline-block">
-                    <img class="anphu-logo" src="{{ asset(config('company.assets.logo.main')) }}" alt="{{ config('company.name.brand') }} Logo">
+                    <img
+                        class="anphu-logo"
+                        src="{{ asset(config('company.assets.logo.main')) }}"
+                        alt="{{ config('company.name.brand') }} Logo"
+                        height="30px"
+                    >
                 </a>
             </div>
 
