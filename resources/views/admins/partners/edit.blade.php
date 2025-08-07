@@ -28,9 +28,10 @@
                <label>Ảnh hiện tại</label><br>
                @if ($partner->logo)
                   <img
-                     src="{{ asset('uploads/logo/' . $partner->logo) }}"
-                     width="200"
-                     class="img-thumbnail mb-2"
+                     src="{{ $partner->logo }}"
+                     alt="{{ $partner->name }}"
+                     width="100"
+                     class="img-thumbnail"
                   >
                @else
                   <p class="text-muted">Không có ảnh</p>
@@ -39,8 +40,8 @@
             </div>
 
             <div class="form-group">
-               <label for="logo_new">Thay ảnh mới (tùy chọn)</label>
-               <input type="file" name="logo_new" id="logo_new" class="form-control-file">
+               <label for="logo">Thay ảnh mới (tùy chọn)</label>
+               <input type="file" name="logo" id="logo" class="form-control-file">
             </div>
 
             <div class="form-group">

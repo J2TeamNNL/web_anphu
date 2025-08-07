@@ -82,7 +82,12 @@
                                 <td>{{ $partner->name }}</td>
                                 <td>
                                     @if ($partner->logo)
-                                        <img src="{{ asset('uploads/logo/' . $partner->logo) }}" alt="{{ $partner->name }}" width="100" class="img-thumbnail">
+                                        <img
+                                            src="{{ $partner->logo }}"
+                                            alt="{{ $partner->name }}"
+                                            width="100"
+                                            class="img-thumbnail"
+                                        >
                                     @else
                                         <span class="text-muted">Không có</span>
                                     @endif
@@ -94,9 +99,13 @@
                                     <a href="{{ $partner->link }}">{{ $partner->link }}</a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.partners.edit', $partner) }}" class="btn btn-sm btn-primary mb-1">Sửa</a>
+                                    <a
+                                        href="{{ route('admin.partners.edit', $partner) }}"
+                                        class="btn btn-sm btn-primary mb-1"
+                                    >
+                                        Sửa
+                                    </a>
                                     
-                                    @if(session('level') == 1)
                                     <form
                                         action="{{ route('admin.partners.destroy', $partner) }}"
                                         method="POST"
@@ -107,7 +116,6 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
                                     </form>
-                                    @endif
                                 </td>
                             </tr>
                         @empty
