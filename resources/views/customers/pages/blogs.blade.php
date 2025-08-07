@@ -31,13 +31,9 @@
                     <a href="{{ route('customers.blog.detail', $item->slug) }}" class="text-decoration-none">
                         <div class="col-md-4 mb-4 blog-item">
                             <div class="card card-blog"
-                                 style="background-image: url('{{ asset('storage/' . $item->image) }}'); background-size: cover; background-position: center;">
+                                 style="background-image: url('{{ $item->thumbnail }}'); background-size: cover; background-position: center;">
                                 <div class="blog-overlay text-white p-3" style="background: rgba(0,0,0,0.6);">
                                     <h5 class="font-weight-bold text-warning">{{ $item->name }}</h5>
-
-                                    @if (!empty($item->author))
-                                        <p class="mb-1"><i class="fa fa-user mr-1"></i> {{ $item->author }}</p>
-                                    @endif
 
                                     @if (!empty($item->category))
                                         <p class="mb-0 font-weight-bold">Chủ đề: {{ $item->category->name }}</p>

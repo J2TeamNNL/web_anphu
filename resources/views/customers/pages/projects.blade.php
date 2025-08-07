@@ -31,7 +31,7 @@
                     <a href="{{ route('customers.project.detail', $item->slug) }}" class="text-decoration-none">
                         <div class="col-md-4 mb-4 project-item">
                             <div class="card card-project"
-                                style="background-image: url('{{ asset('storage/' . $item->image) }}');">
+                                style="background-image: url('{{ $item->thumbnail }}');">
                                 <div class="project-overlay text-white">
                                     <h5 class="font-weight-bold text-warning">{{ $item->name }}</h5>
 
