@@ -43,7 +43,7 @@
       @foreach($partners as $partner)
         <div class="logo-track">
           <img 
-            src="{{ asset('storage/' . ltrim($partner->logo, '/')) }}" 
+            src="{{ $partner->logo }}"
             class="img-fluid" 
             alt="{{ $partner->name ?? 'Partner logo' }}"
           >

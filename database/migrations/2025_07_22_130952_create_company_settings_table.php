@@ -27,7 +27,7 @@ return new class extends Migration
             
             $table->json('social_links')->nullable();
             $table->text('working_hours')->nullable();
-
+            
             $table->timestamps();
         });
     }

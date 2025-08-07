@@ -144,7 +144,7 @@ body {
 
 .dropdown-item:hover {
     background-color: var(--color-primary);
-    color: white;
+    color: var(--color-primary);
     transform: translateX(5px);
 }
 

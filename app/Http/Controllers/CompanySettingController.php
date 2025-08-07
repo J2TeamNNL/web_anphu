@@ -41,6 +41,8 @@ class CompanySettingController extends Controller
         $setting->company_address_1 = $request->input('company_address_1');
         $setting->company_address_2 = $request->input('company_address_2');
         $setting->working_hours = $request->input('working_hours');
+        $setting->policy_content = $request->input('policy_content');
+        $setting->google_map = $request->input('google_map');
 
         // Nếu cần decode JSON
         $socialLinks = $request->input('social_links');
@@ -52,4 +54,15 @@ class CompanySettingController extends Controller
             ->with('success', 'Cập nhật thành công');
     }
 
+    public function editPolicy()
+    {
+        return view('admins.settings.policy.edit', [     
+            //
+        ]);
+    }
+
+    public function updatePolicy()
+    {
+        //
+    }
 }

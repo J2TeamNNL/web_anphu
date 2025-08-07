@@ -20,5 +20,7 @@ class CompanySetting extends Model
         'pocily',
         'social_links',
         'working_hours',
+        'policy_content',
+        'google_map',
     ];
 }

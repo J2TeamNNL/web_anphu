@@ -42,7 +42,7 @@
 
                 <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ isActive($homeRoutes) }}">
                     <a class="nav-link text-center" href="{{ route('customers.index') }}">
-                        <i class="fa fa-home mr-1"></i>Trang Chủ
+                        <i class="fa fa-home mr-1"></i> Trang Chủ
                     </a>
                 </li>
 
@@ -73,19 +73,19 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item small {{ isActive('services.construction_full') }}" href="{{ route('services.construction_full') }}">
                             <i class="fa fa-home me-2 icon-highlight"></i>
-                            Xây nhà trọn gói
+                             Xây nhà trọn gói
                         </a>
                         <a class="dropdown-item small {{ isActive('services.design_architect') }}" href="{{ route('services.design_architect') }}">
                             <i class="fa fa-drafting-compass me-2 icon-highlight"></i>
-                            Thiết kế kiến trúc
+                             Thiết kế kiến trúc
                         </a>
                         <a class="dropdown-item small {{ isActive('services.design_interior') }}" href="{{ route('services.design_interior') }}">
                             <i class="fa fa-couch me-2 icon-highlight"></i>
-                            Thiết kế nội thất
+                             Thiết kế nội thất
                         </a>
                         <a class="dropdown-item small {{ isActive('services.construction_renovate') }}" href="{{ route('services.construction_renovate') }}">
                             <i class="fa fa-hammer me-2 icon-highlight"></i>
-                            Cải tạo nhà cũ
+                             Cải tạo nhà cũ
                         </a>
                     </div>
                 </li>
@@ -100,7 +100,7 @@
                                 class="dropdown-item small {{ isset($selectedCategory) && $selectedCategory->id === $category->id ? 'active' : '' }}"
                                 href="{{ route('projects.byCategory', ['slug' => $category->slug]) }}"
                             >
-                                <i class="fa fa-folder me-2 icon-highlight"></i>{{ $category->name }}
+                                <i class="fa fa-folder me-2 icon-highlight"></i> {{ $category->name }}
                             </a>
                         @endforeach
                     </div>

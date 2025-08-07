@@ -112,8 +112,10 @@ Route::prefix('admin')->name('admin.')
    ->name('consulting_requests.updateStatus');
 
     Route::prefix('settings')->name('settings.')->group(function () {
-      Route::get('company', [CompanySettingController::class, 'edit'])->name('company.edit');
-      Route::put('company', [CompanySettingController::class, 'update'])->name('company.update');
+      Route::get('company/', [CompanySettingController::class, 'edit'])->name('company.edit');
+      Route::put('company/', [CompanySettingController::class, 'update'])->name('company.update');
+      Route::get('company/policy', [CompanySettingController::class, 'editPolicy'])->name('company.editPolicy');
+      Route::put('company/policy', [CompanySettingController::class, 'updatePolicy'])->name('company.updatePolicy');
    });
 
    Route::middleware(CheckSuperAdminMiddleware::class)->group(function () {

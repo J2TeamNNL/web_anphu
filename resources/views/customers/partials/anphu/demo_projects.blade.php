@@ -7,9 +7,10 @@
                 <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="#">
                     <div class="card h-100 shadow-sm">
                         <img
-                            src="{{ asset('storage/' . $project->image) }}"
+                            src="{{ $project->thumbnail }}"
                             class="card-img-top object-cover"
                             style="height: 200px; width: 100%; object-fit: cover;"
+                            alt="{{ $project->name }}"
                         >
                         <div class="card-body">
                             <h6 class="card-title font-weight-bold">{{$project->name}}</h6>
@@ -33,9 +34,10 @@
                 <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="#">
                     <div class="card h-100 shadow-sm">
                         <img
-                            src="{{ asset('storage/' . $project->image) }}"
+                            src="{{ $project->thumbnail }}"
                             class="card-img-top object-cover"
                             style="height: 200px; width: 100%; object-fit: cover;"
+                            alt="{{ $project->name }}"
                         >
                         <div class="card-body">
                             <h6 class="card-title font-weight-bold">{{$project->name}}</h6>

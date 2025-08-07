@@ -3,21 +3,74 @@
         <div class="row">
             <div class="col-md-4 mb-4">
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Thông Tin Liên Hệ</h5>
-                <p><strong>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC VÀ NỘI THẤT AN PHÚ</strong></p>
-                <p><i class="fa fa-map-marker-alt mr-2 text-warning"></i> Số 35 phố Ngõ Huyện, Phường Hàng Trống, Quận Hoàn Kiếm, Thành phố Hà Nội, Việt Nam</p>
-                <p><i class="fa fa-phone-alt mr-2 text-warning"></i><strong class="text-white">0969 317 331</strong></p>
-                <p><i class="fa fa-envelope mr-2 text-warning"></i> kientrucnoithat.anphu@gmail.com</p>
-                <p class="small text-white">Giấy chứng nhận ĐKKD số 0108588362 do Sở KHĐT T.P. Hà Nội cấp ngày 15/01/2019</p>
-                <p><a href="#" class="text-white">▶ Chính Sách Bảo Mật</a></p>
+                <p>
+                    <strong>{{ $companySettings->company_name }}</strong>
+                </p>
+                <p>
+                    <i class="fa fa-home mr-1 text-warning"></i>
+                    <span style="font-weight: bold; color: #C9B037">
+                        Địa chỉ VPGD 1:
+                    </span>
+                    <br>{{ $companySettings->company_address_1 ?? 'Số 01, liền kề 18, KĐT Văn Khê' }}
+                </p>
+                <p>
+                    <i class="fa fa-home mr-1 text-warning"></i>
+                    <span style="font-weight: bold; color: #C9B037">
+                        Địa chỉ VPGD 2:
+                    </span>
+                    <br>{{ $companySettings->company_address_2 ?? 'Thị trấn Hoàn Long, Hưng Yên' }}
+                </p>
+
+                <p>
+                    <i class="fa fa-phone-alt mr-1 text-warning"></i>
+                    <span style="font-weight: bold; color: #C9B037">
+                        Zalo:
+                    </span>
+                    {{ $companySettings->company_phone_1 ?? '0949 453 283' }}
+                </p>
+                <p>
+                    <i class="fa fa-phone-alt mr-1 text-warning"></i>
+                    <span style="font-weight: bold; color: #C9B037">
+                        Hotline:
+                    </span>
+                    {{ $companySettings->company_phone_2 ?? '0969 317 331' }}
+                </p>
+
+                <p>
+                    <i class="fa fa-envelope mr-1 text-warning"></i>
+                    <span style="font-weight: bold; color: #C9B037">
+                        Email:
+                    </span>
+                    {{ $companySettings->company_email ?? 'kientrucnoithat.anphu@gmail.com'}}
+                </p>
+
+                <p>
+                    <a
+                        href="#"
+                        class="text-white"
+                    >
+                        ▶ Chính Sách Bảo Mật
+                    </a>
+                </p>
                 <img src="{{ asset('assets/img/logo/bocongthuong_thongbao.png') }}" alt="Thông báo Bộ Công Thương" style="height: 150px;">
             </div>
 
             <div class="col-md-4 mb-4">
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Bản Đồ</h5>
+                
                 <div class="embed-responsive embed-responsive-4by3 border rounded">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4651.941213619061!2d105.76204787601887!3d20.9752479896129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134530013984bd5%3A0xa071284b1bd0393f!2sAn%20Ph%C3%BA%20Design!5e1!3m2!1svi!2s!4v1751625845553!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    <iframe
+                        src="{{ $companySettings->google_map }}"
+                        width="600"
+                        height="450"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        class="embed-responsive-item"
+                        referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
+
             </div>
 
             <div class="col-md-4">
@@ -26,11 +79,22 @@
                     <form class="consulting-form text-dark p-4 rounded" method="post" action="{{ route('consulting_requests.store') }}">
                         @csrf
                         <div class="form-group">
-                            <input type="text" class="form-control" name="name" placeholder="Họ Tên *" required>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="name" placeholder="Họ Tên *"
+                                required
+                            >
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <input type="tel" class="form-control" name="phone" placeholder="Số Điện Thoại *" required>
+                                <input
+                                    type="tel"
+                                    class="form-control"
+                                    name="phone"
+                                    placeholder="Số Điện Thoại *"
+                                    required
+                                >
                             </div>
                             <div class="form-group col-md-6">
                                 <input type="email" class="form-control" name="email" placeholder="Email">
@@ -41,8 +105,16 @@
                         </div>
                         <div class="d-flex align-items-center">
                             <button type="submit" class="btn btn-warning mr-3">Gửi cho chúng tôi</button>
-                            <a href="#" class="btn btn-outline-warning mr-2"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><img src="{{ asset('assets/img/logo/logo_zalo.png') }}" style="height: 24px;" alt="Zalo"></a>
+                            <a href="#" class="btn btn-outline-warning mr-2">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#">
+                                <img
+                                    src="{{ asset('assets/img/logo/logo_zalo.png') }}"
+                                    style="height: 24px;"
+                                    alt="Zalo"
+                                >
+                            </a>
                         </div>
                     </form>
                 </div>

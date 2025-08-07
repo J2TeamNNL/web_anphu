@@ -32,6 +32,8 @@ class UpdateCompanySettingRequest extends FormRequest
             'policy' => 'nullable|string',
             'social_links' => 'nullable|string',
             'working_hours' => 'nullable|string',
+            'policy_content' => 'nullable|string',
+            'google_map' => 'nullable|string',
         ];
     }
 }

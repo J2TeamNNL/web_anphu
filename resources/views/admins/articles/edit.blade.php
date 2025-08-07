@@ -29,11 +29,11 @@
                <textarea
                   name="description"
                   id="description"
-                  rows="6"
+                  rows="4"
                   class="form-control"
                >
-                  {{ $article->description }}
-            </textarea>
+                  {{ old('description', $article->description) }}
+               </textarea>
             </div>
 
             <div class="form-group">
@@ -90,18 +90,6 @@
             <div class="form-group">
                <label for="thumbnail">Thay ảnh đại diện (tùy chọn)</label>
                <input type="file" name="thumbnail" id="thumbnail" class="form-control-file">
-            </div>
-
-            <div class="form-group">
-               <label for="description">Mô tả</label>
-               <textarea
-                  name="description"
-                  id="description"
-                  rows="4"
-                  class="form-control"
-               >
-                  {{ old('description', $article->description) }}
-               </textarea>
             </div>
 
             {{-- Component Quill --}}
