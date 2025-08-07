@@ -7,29 +7,36 @@
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     background: #fff;
-}
+    position: relative;
+  }
 
-.logo-track {
-    display: inline-block;
-    white-space: nowrap;
-    animation: scroll-left 15s linear infinite;
-}
+  .logo-track {
+    display: flex;
+    align-items: center;
+    gap: 40px; /* khoảng cách giữa các logo */
+    animation: scroll-left 20s linear infinite;
+    width: max-content;
+  }
 
-.logo-track img {
-    height: 150px;
-    margin: 0px 40px;
-    vertical-align: middle;
-}
+  .logo-item img {
+    height: 120px;
+    object-fit: contain;
+    filter: grayscale(20%);
+    transition: filter 0.3s ease;
+  }
 
-@keyframes scroll-left {
-    from {
-        transform: translateX(100%);
+  .logo-item img:hover {
+    filter: grayscale(0%);
+  }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0%);
     }
-    to {
-        transform: translateX(-100%);
+    100% {
+      transform: translateX(-50%);
     }
-}
-
+  }
 </style>
 @endpush
 
@@ -40,15 +47,28 @@
     <hr class="border-warning">
 
     <div class="logo-marquee">
-      @foreach($partners as $partner)
-        <div class="logo-track">
-          <img 
-            src="{{ $partner->logo }}"
-            class="img-fluid" 
-            alt="{{ $partner->name ?? 'Partner logo' }}"
-          >
-        </div>
-      @endforeach
+      <div class="logo-track">
+        @foreach($partners as $partner)
+          <div class="logo-item">
+            <img 
+              src="{{ $partner->logo }}"
+              alt="{{ $partner->name ?? 'Partner logo' }}"
+              class="img-fluid"
+            >
+          </div>
+        @endforeach
+
+        {{-- Duplicate logos for seamless infinite loop --}}
+        @foreach($partners as $partner)
+          <div class="logo-item">
+            <img 
+              src="{{ $partner->logo }}"
+              alt="{{ $partner->name ?? 'Partner logo' }}"
+              class="img-fluid"
+            >
+          </div>
+        @endforeach
+      </div>
     </div>
   </div>
 </section>
