@@ -15,12 +15,12 @@
     ];
 
 
-    $priceRoutes = [
-        'price.full',
-        'price.raw',
-        'price.design',
-        'price.permit'
-    ];
+    // $priceRoutes = [
+    //     'price.full',
+    //     'price.raw',
+    //     'price.design',
+    //     'price.permit'
+    // ];
 
     $consultantRoutes = ['customers.consultant'];
 
@@ -66,8 +66,6 @@
                     </div>
                 </li>
                 
-                
-
                 <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ isActive($serviceRoutes) }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="serviceDropdown" data-toggle="dropdown">
                         <i class="fa fa-tools me-1"></i> Dịch Vụ
@@ -75,7 +73,7 @@
                     <div class="dropdown-menu">
                         @foreach($services as $service)
                             <a
-                                class="dropdown-item small {{ request()->is('services/' . $service->slug) ? 'active' : '' }}"
+                                class="dropdown-item small {{ request()->is('dich-vu/' . $service->slug) ? 'active' : '' }}"
                                 href="{{ route('customers.service.detail', $service->slug) }}"
                             >
                                 <i class="fa fa-tools me-2 icon-highlight"></i>
@@ -102,10 +100,21 @@
                     </div>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ isActive($priceRoutes) }}">
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="priceDropdown" data-toggle="dropdown">
-                        <i class="fa fa-tags me-1"></i> Bảng Giá
+                        <i class="fa fa-tags me-1"></i> Báo Giá
                     </a>
+                    <div class="dropdown-menu">
+                        @foreach($services as $service)
+                            <a
+                                class="dropdown-item small {{ request()->is('dich-vu/bao-gia' . $service->slug) ? 'active' : '' }}"
+                                href="{{ route('customers.service.price', $service->slug) }}"
+                            >
+                                <i class="fa fa-tools me-2 icon-highlight"></i>
+                                Báo giá {{ $service->name }}
+                            </a>
+                        @endforeach
+                    </div>
                 </li>
 
                 <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ isActive($consultantRoutes) }}">

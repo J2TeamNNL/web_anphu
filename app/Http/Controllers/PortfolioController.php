@@ -150,7 +150,10 @@ class PortfolioController extends Controller
                 $cloudinaryService->delete($portfolio->thumbnail_public_id);
             }
 
-            $uploadResult = $cloudinaryService->upload($request->file('thumbnail'), 'portfolios');
+            $uploadResult = $cloudinaryService->upload(
+                $request->file('thumbnail'),
+                'portfolios'
+            );
 
             $data['thumbnail'] = $uploadResult['url'] ?? null; // Đảm bảo đúng key như store()
             $data['thumbnail_public_id'] = $uploadResult['public_id'] ?? null;

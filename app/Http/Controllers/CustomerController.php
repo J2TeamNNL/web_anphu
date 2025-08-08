@@ -71,6 +71,13 @@ class CustomerController extends Controller
         return view('customers.pages.service_detail', compact('service'));
     }
 
+    public function servicePrice($slug)
+    {
+        $service = Service::where('slug', $slug)->firstOrFail();
+
+        return view('customers.pages.service_price', compact('service'));
+    }
+
     // PORTFOLIOS
 
     public function projectByCategory(Request $request, string $slug)

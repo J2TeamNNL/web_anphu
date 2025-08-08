@@ -6,6 +6,12 @@ use App\Http\Requests\UpdateCompanySettingRequest;
 use Illuminate\Http\Request;
 use App\Models\CompanySetting;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Media;
+use App\Helpers\ImageHelper;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
+use App\Services\CloudinaryService;
 
 class CompanySettingController extends Controller
 {
@@ -54,15 +60,50 @@ class CompanySettingController extends Controller
             ->with('success', 'Cập nhật thành công');
     }
 
+
     public function editPolicy()
     {
-        return view('admins.settings.policy.edit', [     
-            //
+        $policyContent = CompanySetting::value('policy_content') ?? '';
+
+        return view('admins.settings.policy.edit', [
+            'policyContent' => $policyContent,
         ]);
     }
 
-    public function updatePolicy()
+    public function updatePolicy(Request $request, CloudinaryService $cloudinaryService)
     {
-        //
+        $request->validate([
+            'policy_content' => 'nullable|string',
+        ]);
+
+        $adminPassword = $request->input('admin_password');
+
+        // Kiểm tra mật khẩu admin với user hiện tại
+        $user = Auth::user();
+        if (!$user || !Hash::check($adminPassword, $user->password)) {
+            return redirect()->back()
+                ->withErrors(['admin_password' => 'Mật khẩu quản trị viên không đúng.'])
+                ->withInput();
+        }
+
+        $companySetting = CompanySetting::first() ?? new CompanySetting();
+
+        $policyContent = $request->input('policy_content', '');
+
+        $result = ImageHelper::extractAndUploadBase64Images($policyContent);
+
+        $companySetting->policy_content = $result['content'];
+        $companySetting->save();
+
+        Media::whereNull('mediaable_id')
+            ->where('type', 'image')
+            ->whereIn('file_path', $result['paths'])
+            ->update([
+                'mediaable_id' => $companySetting->id,
+                'mediaable_type' => CompanySetting::class,
+            ]);
+
+        return redirect()->back()->with('success', 'Cập nhật chính sách công ty thành công!');
     }
+
 }

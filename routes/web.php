@@ -35,6 +35,7 @@ Route::group(['prefix' => ''], function () {
 });
 
 Route::get('/dich-vu/{slug}', [CustomerController::class, 'serviceDetail'])->name('customers.service.detail');
+Route::get('/dich-vu/bao-gia/{slug}', [CustomerController::class, 'servicePrice'])->name('customers.service.price');
 
 Route::get('/du-an/danh-muc/{slug}', [CustomerController::class, 'projectByCategory'])
     ->name('projects.byCategory');
@@ -45,13 +46,6 @@ Route::get('/bai-dang/danh-muc/{slug}', [CustomerController::class, 'blogIndex']
     ->name('blogs.index');
 
 Route::get('/bai-dang/{slug}', [CustomerController::class, 'blogDetail'])->name('customers.blog.detail');
-
-Route::group(['prefix' => 'price'], function () {
-   Route::get('/full', [CustomerController::class, 'priceFull'])->name('price.full');
-   Route::get('/raw', [CustomerController::class, 'priceRaw'])->name('price.raw');
-   Route::get('/design', [CustomerController::class, 'priceDesign'])->name('price.design');
-   Route::get('/permit', [CustomerController::class, 'pricePermit'])->name('price.permit');
-});
 
 Route::get('/consultant', [CustomerController::class, 'consultant'])->name('customers.consultant');
 
@@ -110,11 +104,12 @@ Route::prefix('admin')->name('admin.')
    Route::patch('consulting-requests/{id}/status', [ConsultingRequestController::class, 'updateStatus'])
    ->name('consulting_requests.updateStatus');
 
-    Route::prefix('settings')->name('settings.')->group(function () {
+   Route::prefix('settings')->name('settings.')->group(function () {
       Route::get('company/', [CompanySettingController::class, 'edit'])->name('company.edit');
       Route::put('company/', [CompanySettingController::class, 'update'])->name('company.update');
       Route::get('company/policy', [CompanySettingController::class, 'editPolicy'])->name('company.editPolicy');
       Route::put('company/policy', [CompanySettingController::class, 'updatePolicy'])->name('company.updatePolicy');
+      Route::post('company/policy/check-password', [CompanySettingController::class, 'checkAdminPassword'])->name('company.updatePolicy.checkPassword');
    });
 
    Route::middleware(CheckSuperAdminMiddleware::class)->group(function () {
