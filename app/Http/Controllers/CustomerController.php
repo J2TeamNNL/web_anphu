@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Enums\CategoryType;
-use App\Models\Customer;
 use App\Models\Portfolio;
 use App\Models\Article;
+use App\Models\Service;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -64,24 +64,11 @@ class CustomerController extends Controller
 
     // SERVICES
 
-    public function servicesContructionFull()
+    public function serviceDetail($slug)
     {
-        return view('customers.pages.services_construction_full');
-    }
+        $service = Service::where('slug', $slug)->firstOrFail();
 
-    public function servicesDesignArchitect()
-    {
-        return view('customers.pages.services_design_architect');
-    }
-
-    public function servicesDesignInterior()
-    {
-        return view('customers.pages.services_design_interior');
-    }
-
-    public function servicesContructionRenovate()
-    {
-        return view('customers.pages.services_construction_renovate');
+        return view('customers.pages.service_detail', compact('service'));
     }
 
     // PORTFOLIOS

@@ -65,37 +65,23 @@
                         </a>
                     </div>
                 </li>
+                
+                
 
                 <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ isActive($serviceRoutes) }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="serviceDropdown" data-toggle="dropdown">
                         <i class="fa fa-tools me-1"></i> Dịch Vụ
                     </a>
                     <div class="dropdown-menu">
-                        <a
-                            class="dropdown-item small {{ isActive('services.construction_full') }}"
-                            href="{{ route('services.construction_full') }}"
-                        >
-                            <i class="fa fa-home me-2 icon-highlight"></i>
-                             Xây nhà trọn gói
-                        </a>
-                        <a
-                            class="dropdown-item small {{ isActive('services.design_architect') }}"
-                            href="{{ route('services.design_architect') }}"
-                        >
-                            <i class="fa fa-drafting-compass me-2 icon-highlight"></i>
-                             Thiết kế kiến trúc
-                        </a>
-                        <a
-                            class="dropdown-item small {{ isActive('services.design_interior') }}"
-                            href="{{ route('services.design_interior') }}"
-                        >
-                            <i class="fa fa-couch me-2 icon-highlight"></i>
-                             Thiết kế nội thất
-                        </a>
-                        <a class="dropdown-item small {{ isActive('services.construction_renovate') }}" href="{{ route('services.construction_renovate') }}">
-                            <i class="fa fa-hammer me-2 icon-highlight"></i>
-                             Cải tạo nhà cũ
-                        </a>
+                        @foreach($services as $service)
+                            <a
+                                class="dropdown-item small {{ request()->is('services/' . $service->slug) ? 'active' : '' }}"
+                                href="{{ route('customers.service.detail', $service->slug) }}"
+                            >
+                                <i class="fa fa-tools me-2 icon-highlight"></i>
+                                {{ $service->name }}
+                            </a>
+                        @endforeach
                     </div>
                 </li>
 
@@ -120,20 +106,6 @@
                     <a class="nav-link dropdown-toggle text-center" href="#" id="priceDropdown" data-toggle="dropdown">
                         <i class="fa fa-tags me-1"></i> Bảng Giá
                     </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item small {{ isActive('price.full') }}" href="{{ route('price.full') }}">
-                            <i class="fa fa-home me-2 icon-highlight"></i> Báo giá Xây nhà trọn gói
-                        </a>
-                        <a class="dropdown-item small {{ isActive('price.raw') }}" href="{{ route('price.raw') }}">
-                            <i class="fa fa-hard-hat me-2 icon-highlight"></i> Báo giá Xây thô
-                        </a>
-                        <a class="dropdown-item small {{ isActive('price.design') }}" href="{{ route('price.design') }}">
-                            <i class="fa fa-pencil-ruler me-2 icon-highlight"></i> Báo giá Thiết kế
-                        </a>
-                        <a class="dropdown-item small {{ isActive('price.permit') }}" href="{{ route('price.permit') }}">
-                            <i class="fa fa-file-contract me-2 icon-highlight"></i> Báo giá Xin cấp phép xây dựng
-                        </a>
-                    </div>
                 </li>
 
                 <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ isActive($consultantRoutes) }}">
