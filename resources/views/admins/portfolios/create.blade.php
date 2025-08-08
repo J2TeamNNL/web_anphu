@@ -32,9 +32,21 @@
                     <input type="file" name="thumbnail" id="thumbnail" class="form-control-file">
                 </div>
 
-                <div class="form-group">
-                    <label for="description">Mô tả</label>
-                    <textarea name="description" id="description" rows="4" class="form-control">{{ old('description') }}</textarea>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="description" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Mô tả</label>
+                    <textarea 
+                        name="description" 
+                        id="description" 
+                        rows="4" 
+                        style="
+                            width: 100%;
+                            padding: 0.5rem;
+                            border: 1px solid #ced4da;
+                            border-radius: 0.25rem;
+                            font-size: 1rem;
+                            resize: vertical;
+                        "
+                    >{{ old('description') }}</textarea>
                 </div>
 
                 {{-- Component Quill --}}

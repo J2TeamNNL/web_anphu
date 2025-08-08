@@ -30,6 +30,13 @@
                     </a>
                 </li>
 
+                {{-- Dịch vụ --}}
+                <li class="nav-item mx-2 {{ request()->routeIs('admin.services.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.services.index') }}">
+                        <i class="fa fa-newspaper me-1"></i> Dịch vụ
+                    </a>
+                </li>
+
                 {{-- Người quản lý (chỉ hiển thị nếu là admin cấp cao) --}}
                 @if(session()->get('level') == 1)
                     <li class="nav-item mx-2 {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
@@ -67,11 +74,7 @@
                         >
                             <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt chính sách công ty
                         </a>
-                        <a
-                            class="dropdown-item small" href="#"
-                        >
-                            <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt giá
-                        </a>
+
                         <a
                             class="dropdown-item small {{ request()->routeIs('admin.partners.index') ? 'active' : '' }}"
                             href="{{ route('admin.partners.index') }}"

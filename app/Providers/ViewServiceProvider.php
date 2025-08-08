@@ -10,6 +10,7 @@ use App\Models\Partner;
 use App\Models\Portfolio;
 use App\Models\Category;
 use App\Models\CompanySetting;
+use App\Models\Service;
 
 use App\Enums\CategoryType;
 use Illuminate\Support\Facades\Log;
@@ -57,11 +58,18 @@ class ViewServiceProvider extends ServiceProvider
 
             $companySettings = CompanySetting::first();
 
+            $services = collect();
+
+            if (class_exists(Service::class) && Schema::hasTable('services')) {
+                $services = Service::all();
+            }
+
             View::share([
                 'interiorProjects' => $interiorProjects,
                 'otherProjects' => $otherProjects,
                 'partners' => $partners,
                 'companySettings' => $companySettings,
+                'services' => $services,
             ]);
 
         } catch (\Throwable $e) {
