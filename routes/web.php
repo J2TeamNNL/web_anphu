@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerHomeController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
@@ -27,19 +28,13 @@ Route::prefix('cloudinary-demo')->name('cloudinary-demo.')->group(function () {
 
 Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index');
 
-Route::group(['prefix' => 'about'], routes: function () {
-   Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
-   Route::get('/open-letter', [CustomerController::class, 'aboutOpenLetter'])->name('about.open_letter');
-   Route::get('/cultural-values', [CustomerController::class, 'aboutCulturalValues'])->name('about.cultural_values');
-
+Route::group(['prefix' => ''], function () {
+    Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
+    Route::get('/open-letter', [CustomerController::class, 'aboutOpenLetter'])->name('about.open_letter');
+    Route::get('/cultural-values', [CustomerController::class, 'aboutCulturalValues'])->name('about.cultural_values');
 });
 
-Route::group(['prefix' => 'services'], function () {
-   Route::get('/construction-full', [CustomerController::class, 'servicesContructionFull'])->name('services.construction_full');
-   Route::get('/design-architect', [CustomerController::class, 'servicesDesignArchitect'])->name('services.design_architect');
-   Route::get('/design-interior', [CustomerController::class, 'servicesDesignInterior'])->name('services.design_interior');
-   Route::get('/construction-renovate', [CustomerController::class, 'servicesContructionRenovate'])->name('services.construction_renovate');
-});
+Route::get('/dich-vu/{slug}', [CustomerController::class, 'serviceDetail'])->name('customers.service.detail');
 
 Route::get('/du-an/danh-muc/{slug}', [CustomerController::class, 'projectByCategory'])
     ->name('projects.byCategory');
@@ -99,6 +94,10 @@ Route::prefix('admin')->name('admin.')
       'destroy'
    ]);
 
+   Route::resource('services', ServiceController::class)->except([
+      'destroy'
+   ]);
+
    Route::get('consulting-requests/index', [ConsultingRequestController::class, 'index'])
    ->name('consulting_requests.index');
 
@@ -123,12 +122,11 @@ Route::prefix('admin')->name('admin.')
       Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
       Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
       Route::delete('partners/{partner}', [PartnerController::class, 'destroy'])->name('partners.destroy');
+      Route::delete('services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
 
       Route::resource('users', UserController::class);
 
       // Route::resource('prices', PriceController::class);
    });
-
-   
 
 });
