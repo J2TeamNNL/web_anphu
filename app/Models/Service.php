@@ -13,6 +13,7 @@ class Service extends Model
         'image',
         'description',
         'image_public_id',
+        'content_price',
 
         'title_1',
         'icon_1',
@@ -34,4 +35,9 @@ class Service extends Model
         'icon_4_public_id',
         'content_4',
     ];
+
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'mediaable');
+    }
 }

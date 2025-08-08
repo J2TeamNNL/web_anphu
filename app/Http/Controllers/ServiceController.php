@@ -9,6 +9,9 @@ use App\Http\Requests\UpdateServiceRequest;
 use App\Services\CloudinaryService;
 use Illuminate\Support\Str;
 
+use App\Models\Media;
+use App\Helpers\ImageHelper;
+
 class ServiceController extends Controller
 {
     private Service $model;
@@ -61,7 +64,19 @@ class ServiceController extends Controller
             }
         }
 
-        $this->model::create($validated);
+        $service = $this->model::create($validated);
+
+        $result = ImageHelper::extractAndUploadBase64Images($validated['content_price'] ?? '');
+        $validated['content_price'] = $result['content'];
+        $usedPaths = $result['paths'];
+
+        Media::whereNull('mediaable_id')
+            ->where('type', 'image')
+            ->whereIn('file_path', $usedPaths)
+            ->update([
+                'mediaable_id' => $service->id,
+                'mediaable_type' => Service::class,
+            ]);
 
         return redirect()->route('admin.services.index')
             ->with('success', 'Thêm dịch vụ thành công!');
@@ -86,7 +101,9 @@ class ServiceController extends Controller
             if ($service->image_public_id) {
                 $cloudinaryService->delete($service->image_public_id);
             }
-            $uploadResult = $cloudinaryService->upload($request->file('image'), 'services');
+            $uploadResult = $cloudinaryService
+            ->upload($request->file('image'), 'services');
+            
             $data['image'] = $uploadResult['url'] ?? null;
             $data['image_public_id'] = $uploadResult['path'] ?? null;
         } else {
@@ -111,6 +128,18 @@ class ServiceController extends Controller
                 $data[$iconPublicIdKey] = $service->$iconPublicIdKey;
             }
         }
+
+        $result = ImageHelper::extractAndUploadBase64Images($data['content_price'] ?? '');
+        $data['content_price'] = $result['content'];
+        $usedPaths = $result['paths'];
+
+        Media::whereNull('mediaable_id')
+            ->where('type', 'image')
+            ->whereIn('file_path', $usedPaths)
+            ->update([
+                'mediaable_id' => $service->id,
+                'mediaable_type' => Service::class,
+            ]);
 
         $service->update($data);
 

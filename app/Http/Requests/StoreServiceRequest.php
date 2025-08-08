@@ -28,6 +28,7 @@ class StoreServiceRequest extends FormRequest
             'image'=> 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
             'description'=> 'nullable|string',
             'image_public_id'=> 'nullable|string',
+            'content_price'=> 'nullable|string',
 
             'title_1' => 'nullable|string|max:255',
             'icon_1' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
