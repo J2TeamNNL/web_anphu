@@ -7,21 +7,6 @@
         'about.cultural_values'
     ];
 
-    $serviceRoutes = [
-        'services.permit',
-        'services.design',
-        'services.construction_full',
-        'services.construction_raw'
-    ];
-
-
-    // $priceRoutes = [
-    //     'price.full',
-    //     'price.raw',
-    //     'price.design',
-    //     'price.permit'
-    // ];
-
     $consultantRoutes = ['customers.consultant'];
 
     $blogRoutes = ['customer.blog.index'];
@@ -66,7 +51,7 @@
                     </div>
                 </li>
                 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ isActive($serviceRoutes) }}">
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('dich-vu/*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="serviceDropdown" data-toggle="dropdown">
                         <i class="fa fa-tools me-1"></i> Dịch Vụ
                     </a>
@@ -83,14 +68,14 @@
                     </div>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ isset($selectedCategory) ? 'active' : '' }}">
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('du-an/*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="projectDropdown" data-toggle="dropdown">
                         <i class="fa fa-project-diagram me-1"></i> Dự án
                     </a>
                     <div class="dropdown-menu" aria-labelledby="projectDropdown">
                         @foreach($portfoliosCategories as $category)
                             <a
-                                class="dropdown-item small {{ isset($selectedCategory) && $selectedCategory->id === $category->id ? 'active' : '' }}"
+                                class="dropdown-item small {{ request()->is('du-an/danh-muc/' . $category->slug) ? 'active' : '' }}"
                                 href="{{ route('projects.byCategory', ['slug' => $category->slug]) }}"
                             >
                                 <i class="fa fa-folder me-2 icon-highlight"></i>
@@ -100,14 +85,14 @@
                     </div>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small">
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('bao-gia/*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="priceDropdown" data-toggle="dropdown">
                         <i class="fa fa-tags me-1"></i> Báo Giá
                     </a>
                     <div class="dropdown-menu">
                         @foreach($services as $service)
                             <a
-                                class="dropdown-item small {{ request()->is('dich-vu/bao-gia' . $service->slug) ? 'active' : '' }}"
+                                class="dropdown-item small {{ request()->is('bao-gia/' . $service->slug) ? 'active' : '' }}"
                                 href="{{ route('customers.service.price', $service->slug) }}"
                             >
                                 <i class="fa fa-tools me-2 icon-highlight"></i>
@@ -123,14 +108,14 @@
                     </a>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ isset($selectedBlogCategory) ? 'active' : isActive($blogRoutes) }}">
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('bai-dang/*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="blogDropdown" data-toggle="dropdown">
                         <i class="fa fa-newspaper me-1"></i> Hoạt động
                     </a>
                     <div class="dropdown-menu" aria-labelledby="blogDropdown">
                         @foreach($blogsCategories as $category)
                             <a
-                                class="dropdown-item small {{ isset($selectedBlogCategory) && $selectedBlogCategory->id === $category->id ? 'active' : '' }}"
+                                class="dropdown-item small {{ request()->is('bai-dang/danh-muc/' . $category->slug) ? 'active' : '' }}"
                                 href="{{ route('blogs.index', ['slug' => $category->slug]) }}"
                             >
                                 <i class="fa fa-bookmark me-2 icon-highlight"></i>

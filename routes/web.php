@@ -35,7 +35,7 @@ Route::group(['prefix' => ''], function () {
 });
 
 Route::get('/dich-vu/{slug}', [CustomerController::class, 'serviceDetail'])->name('customers.service.detail');
-Route::get('/dich-vu/bao-gia/{slug}', [CustomerController::class, 'servicePrice'])->name('customers.service.price');
+Route::get('/bao-gia/{slug}', [CustomerController::class, 'servicePrice'])->name('customers.service.price');
 
 Route::get('/du-an/danh-muc/{slug}', [CustomerController::class, 'projectByCategory'])
     ->name('projects.byCategory');
