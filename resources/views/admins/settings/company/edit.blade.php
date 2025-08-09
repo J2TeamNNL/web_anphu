@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container my-4">
-    <h5 class="mb-4">Cập nhật thông tin công ty</h5>
+    <h4 class="mb-4 text-warning">Cập nhật thông tin công ty</h4>
 
     <form
         action="{{ route('admin.settings.company.update') }}"
@@ -12,6 +12,12 @@
         @csrf
         @method('PUT')
 
+
+        <div class="form-group">
+            <h4 class="font-weight-bold text-primary">Thông tin chung</h4>
+            <hr>
+        </div>
+
         <div class="form-group">
             <label class="font-weight-bold">Tên công ty</label>
             <input
@@ -20,6 +26,72 @@
                 class="form-control"
                 value="{{ old('company_name', $setting->company_name) }}"
             >
+        </div>
+
+        <div class="form-group">
+            <label class="font-weight-bold">Tên quốc tế</label>
+            <input
+                type="text"
+                name="international_name"
+                class="form-control"
+                value="{{ old('international_name', $setting->international_name) }}"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="established_date" class="form-label">
+                Ngày thành lập <span class="text-muted">(dd/mm/yyyy)</span>
+            </label>
+            <input 
+                type="date" 
+                class="form-control @error('established_date') is-invalid @enderror" 
+                id="established_date" 
+                name="established_date" 
+                value="{{ old('established_date', $setting->established_date ?? '') }}"
+                max="{{ now()->toDateString() }}"
+            >
+            @error('established_date')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div>
+            <label for="tax_code" class="form-label">
+                Mã số thuế
+            </label>
+            <input 
+                type="text" 
+                class="form-control @error('tax_code') is-invalid @enderror" 
+                id="tax_code" 
+                name="tax_code" 
+                placeholder="Nhập mã số thuế (10 hoặc 13 số)"
+                value="{{ old('tax_code', $setting->tax_code ?? '') }}"
+            >
+            @error('tax_code')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror    
+        </div>
+
+        <div class="form-group">
+            <label for="director" class="form-label">
+                Người đại diện
+            </label>
+            <input 
+                type="text" 
+                class="form-control @error('director') is-invalid @enderror" 
+                id="director" 
+                name="director" 
+                placeholder="Nhập người đại diện"
+                value="{{ old('director', $setting->director ?? '') }}"
+            >
+            @error('director')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror    
+        </div>
+
+        <div class="form-group">
+            <h4 class="font-weight-bold text-primary">Thông tin liên hệ</h4>
+            <hr>
         </div>
 
         <div class="form-group">
@@ -68,20 +140,6 @@
         </div>
 
         <div class="form-group">
-            <label class="font-weight-bold">Logo công ty (nếu muốn thay)</label>
-            <input type="file" name="company_logo" class="form-control-file">
-            @if ($setting->company_logo)
-                <p class="mt-2">Logo hiện tại:</p>
-                <img
-                    src="{{ asset('storage/' . $setting->company_logo) }}"
-                    alt="Logo"
-                    style="max-height: 80px;"
-                >
-
-            @endif
-        </div>
-
-        <div class="form-group">
             <label class="font-weight-bold">Giờ làm việc</label>
             <input
                 type="text"
@@ -101,6 +159,24 @@
                 class="form-control"
                 value="{{ old('google_map', $setting->google_map) }}"
             >
+        </div>
+
+        <div class="form-group">
+            <h4 class="font-weight-bold text-primary">Logo, mạng xã hội</h4>
+            <hr>
+        </div>
+        <div class="form-group">
+            <label class="font-weight-bold">Logo công ty (nếu muốn thay)</label>
+            <input type="file" name="company_logo" class="form-control-file">
+            @if ($setting->company_logo)
+                <p class="mt-2">Logo hiện tại:</p>
+                <img
+                    src="{{ asset('storage/' . $setting->company_logo) }}"
+                    alt="Logo"
+                    style="max-height: 80px;"
+                >
+
+            @endif
         </div>
 
         <div class="form-group">

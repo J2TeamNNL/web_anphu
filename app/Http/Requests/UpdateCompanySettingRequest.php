@@ -23,6 +23,8 @@ class UpdateCompanySettingRequest extends FormRequest
     {
         return [
             'company_name' => 'required|string|max:255',
+            'international_name' => 'nullable|string|max:255',
+            'director' => 'nullable|string|max:255',
             'company_logo' => 'nullable|image|max:2048',
             'company_email' => 'required|email',
             'company_phone_1' => 'required|string',
@@ -34,6 +36,9 @@ class UpdateCompanySettingRequest extends FormRequest
             'working_hours' => 'nullable|string',
             'policy_content' => 'nullable|string',
             'google_map' => 'nullable|string',
+
+            'established_date' => ['nullable', 'date', 'before_or_equal:today'],
+            'tax_code' => ['nullable', 'regex:/^\d{10}(\d{3})?$/'],
         ];
     }
 }

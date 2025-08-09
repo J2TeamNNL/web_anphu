@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container my-4">
-    <h4 class="mb-3">Chính sách công ty</h4>
+    <h3 class="mb-3">Cài đặt chính sách công ty</h3>
 
     <div class="card shadow-sm">
         <div class="card-body">

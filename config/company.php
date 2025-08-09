@@ -98,7 +98,7 @@ return [
 
     'privacy_policy' => [
         'url' => '#',
-        'text' => 'Chính Sách Bảo Mật',
+        'text' => 'Chính Sách Công ty',
     ],
 
     'working_hours' => [

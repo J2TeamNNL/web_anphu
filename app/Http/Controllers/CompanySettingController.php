@@ -41,6 +41,8 @@ class CompanySettingController extends Controller
 
         // Cập nhật tất cả các trường còn lại
         $setting->company_name = $request->input('company_name');
+        $setting->international_name = $request->input('international_name');
+        $setting->director = $request->input('director');
         $setting->company_email = $request->input('company_email');
         $setting->company_phone_1 = $request->input('company_phone_1');
         $setting->company_phone_2 = $request->input('company_phone_2');
@@ -49,6 +51,12 @@ class CompanySettingController extends Controller
         $setting->working_hours = $request->input('working_hours');
         $setting->policy_content = $request->input('policy_content');
         $setting->google_map = $request->input('google_map');
+
+        $setting->established_date = $request->input('established_date');
+        $setting->tax_code = $request->input('tax_code');
+
+        
+
 
         // Nếu cần decode JSON
         $socialLinks = $request->input('social_links');
