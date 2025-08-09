@@ -13,6 +13,7 @@ class CompanySetting extends Model
 
     protected $fillable = [
         'company_name',
+        'company_brand',
         'international_name',
 
         'director',
@@ -34,13 +35,9 @@ class CompanySetting extends Model
 
     protected $casts = [
         'established_date' => 'date',
+        'social_links' => 'array',
+        'certificates' => 'array',
+        'certificates_public_ids' => 'array',
     ];
-
-    public function getEstablishedDateFormattedAttribute()
-    {
-        return $this->established_date
-            ? $this->established_date->format('d/m/Y')
-            : null;
-    }
 
 }

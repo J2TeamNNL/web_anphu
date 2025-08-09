@@ -24,12 +24,13 @@ class CompanySettingController extends Controller
         ]);
     }
 
-    public function update(UpdateCompanySettingRequest $request)
+    public function update(UpdateCompanySettingRequest $request, CloudinaryService $cloudinaryService)
     {
         $request->validated();
 
         $setting = CompanySetting::first();
 
+        // Xử lý logo công ty (giữ nguyên như cũ)
         if ($request->hasFile('company_logo')) {
             if ($setting->company_logo && Storage::disk('public')->exists($setting->company_logo)) {
                 Storage::disk('public')->delete($setting->company_logo);
@@ -39,8 +40,31 @@ class CompanySettingController extends Controller
             $setting->company_logo = $path;
         }
 
-        // Cập nhật tất cả các trường còn lại
+        // Xử lý certificates
+        if ($request->hasFile('certificates')) {
+            // Xoá ảnh cũ trên Cloudinary nếu có
+            if (!empty($setting->certificates_public_ids)) {
+                foreach ($setting->certificates_public_ids as $publicId) {
+                    $cloudinaryService->delete($publicId);
+                }
+            }
+
+            $certUrls = [];
+            $certPublicIds = [];
+
+            foreach ($request->file('certificates') as $file) {
+                $uploadResult = $cloudinaryService->upload($file, 'certificates');
+                $certUrls[] = $uploadResult['url'] ?? null;
+                $certPublicIds[] = $uploadResult['path'] ?? null; // hoặc public_id
+            }
+
+            $setting->certificates = $certUrls;
+            $setting->certificates_public_ids = $certPublicIds;
+        }
+
+        // Cập nhật các trường khác
         $setting->company_name = $request->input('company_name');
+        $setting->company_brand = $request->input('company_brand');
         $setting->international_name = $request->input('international_name');
         $setting->director = $request->input('director');
         $setting->company_email = $request->input('company_email');
@@ -51,14 +75,10 @@ class CompanySettingController extends Controller
         $setting->working_hours = $request->input('working_hours');
         $setting->policy_content = $request->input('policy_content');
         $setting->google_map = $request->input('google_map');
-
         $setting->established_date = $request->input('established_date');
         $setting->tax_code = $request->input('tax_code');
 
-        
-
-
-        // Nếu cần decode JSON
+        // Social links
         $socialLinks = $request->input('social_links');
         $setting->social_links = json_decode($socialLinks, true) ?? [];
 

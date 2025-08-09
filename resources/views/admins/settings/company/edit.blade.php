@@ -12,7 +12,7 @@
         @csrf
         @method('PUT')
 
-
+        {{-- THÔNG TIN CHUNG --}}
         <div class="form-group">
             <h4 class="font-weight-bold text-primary">Thông tin chung</h4>
             <hr>
@@ -25,6 +25,16 @@
                 name="company_name"
                 class="form-control"
                 value="{{ old('company_name', $setting->company_name) }}"
+            >
+        </div>
+
+        <div class="form-group">
+            <label class="font-weight-bold">Tên thương hiệu (Brand)</label>
+            <input
+                type="text"
+                name="company_brand"
+                class="form-control"
+                value="{{ old('company_brand', $setting->company_brand) }}"
             >
         </div>
 
@@ -91,6 +101,23 @@
             @enderror    
         </div>
 
+        <div class="form-group">
+            <label>Ảnh chứng chỉ (tối đa 6 ảnh)</label>
+            <input type="file" name="certificates[]" class="form-control" multiple accept="image/*">
+            @if(!empty($setting->certificates))
+                <div class="row mt-2">
+                    @foreach($setting->certificates as $img)
+                        <div class="col-md-3 mb-2">
+                            <img src="{{ $img }}" class="img-fluid rounded shadow-sm">
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+
+
+
+        {{-- THÔNG TIN LIÊN HỆ --}}
         <div class="form-group">
             <h4 class="font-weight-bold text-primary">Thông tin liên hệ</h4>
             <hr>
@@ -163,6 +190,8 @@
             >
         </div>
 
+
+        {{-- LOGO, MẠNG XÃ HỘI --}}
         <div class="form-group">
             <h4 class="font-weight-bold text-primary">Logo, mạng xã hội</h4>
             <hr>

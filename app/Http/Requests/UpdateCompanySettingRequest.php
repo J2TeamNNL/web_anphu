@@ -23,6 +23,7 @@ class UpdateCompanySettingRequest extends FormRequest
     {
         return [
             'company_name' => 'required|string|max:255',
+            'company_brand' => 'nullable|string|max:255',
             'international_name' => 'nullable|string|max:255',
             'director' => 'nullable|string|max:255',
             'company_logo' => 'nullable|image|max:2048',
@@ -39,6 +40,12 @@ class UpdateCompanySettingRequest extends FormRequest
 
             'established_date' => ['nullable', 'date', 'before_or_equal:today'],
             'tax_code' => ['nullable', 'regex:/^\d{10}(\d{3})?$/'],
+
+            'certificates'   => 'nullable|array|max:6', //upload maxinum 6 images
+            'certificates.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
+
+            'certificates_ids'   => 'nullable|array',
+            'certificates_ids.*' => 'string',
         ];
     }
 }

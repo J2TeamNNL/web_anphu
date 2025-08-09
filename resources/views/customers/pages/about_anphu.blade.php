@@ -16,27 +16,27 @@
                     
                     <p>
                         <span class="font-weight-bold">Tên công ty: </span>
-                        {{ $companySettings->company_name }}
+                        {{ $companySettings->company_name ?? 'Chưa cập nhật' }}
                     </p>
 
                     <p>
                         <span class="font-weight-bold">Tên quốc tế: </span>
-                        {{ $companySettings->international_name }}
+                        {{ $companySettings->international_name ?? 'Chưa cập nhật' }}
                     </p>
 
                     <p>
                         <span class="font-weight-bold">Ngày thành lập: </span>
-                        {{ $companySettings->established_date->format('d/m/Y') }}
+                        {{ optional($companySettings->established_date)->format('d/m/Y') ?? 'Chưa cập nhật' }}
                     </p>
 
                     <p>
                         <span class="font-weight-bold">Mã số thuế: </span>
-                        {{ $companySettings->tax_code }}
+                        {{ $companySettings->tax_code ?? 'Chưa cập nhật' }}
                     </p>
 
                     <p>
                         <span class="font-weight-bold">Người đại diện: </span>
-                        {{ $companySettings->director }}
+                        {{ $companySettings->director ?? 'Chưa cập nhật' }}
                     </p>
                 </div>
 
@@ -50,10 +50,15 @@
                         Với mong muốn, những ngôi nhà nhỏ được xây lên phải xinh xắn, đầy đủ tiện nghi, đáp ứng mọi công năng sinh hoạt, đem lại cảm giác thoải mái cho gia chủ.
                     </p>
                     <p>
-                        <span class="font-weight-bold">{{ config('company.name.brand') }}</span>
+                        <span class="font-weight-bold">
+                            {{ $companySettings->company_brand ?? 'Chưa cập nhật' }}
+                        </span>
                         đại diện cho Bình an và Phú quý.
-                        Đó là kim chỉ nam cho đội ngũ của <span class="font-weight-bold">{{ config('company.name.brand') }}</span>,
-                        nhằm đem lại cho khách hàng một ấm hiện đại, công năng cao.
+                        Đó là kim chỉ nam cho đội ngũ của
+                         <span class="font-weight-bold">
+                            {{ $companySettings->company_brand ?? 'Chưa cập nhật' }}
+                        </span>
+                        , nhằm đem lại cho khách hàng một ấm hiện đại, công năng cao.
                     </p>
                 </div>
 
@@ -61,23 +66,19 @@
                 <div class="col-md-12" data-aos="fade-right">
                     <h4 class="text-uppercase text-primary font-weight-bold">Chứng chỉ hoạt động</h4>
                     <hr class="border-warning">
-                    <div class="row justify-content-center">
-                        <div class="col-md-4 text-center">
-                            <div class="certificate-box mb-3">
-                                <img src="{{ asset('assets/img/hero/certificate1.jpg') }}" alt="certificate1" class="img-fluid rounded shadow-sm">
-                            </div>
+                    @if(!empty($companySettings->certificates))
+                        <div class="row justify-content-center">
+                            @foreach($companySettings->certificates as $img)
+                                <div class="col-md-4 text-center">
+                                    <div class="certificate-box mb-3">
+                                        <img src="{{ $img }}" alt="certificate" class="img-fluid rounded shadow-sm">
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                        <div class="col-md-4 text-center">
-                            <div class="certificate-box mb-3">
-                                <img src="{{ asset('assets/img/hero/certificate2.jpg') }}" alt="certificate2" class="img-fluid rounded shadow-sm">
-                            </div>
-                        </div>
-                        <div class="col-md-4 text-center">
-                            <div class="certificate-box mb-3">
-                                <img src="{{ asset('assets/img/hero/certificate3.jpg') }}" alt="certificate3" class="img-fluid rounded shadow-sm">
-                            </div>
-                        </div>
-                    </div>
+                    @else
+                        <p class="text-muted">Chưa cập nhật chứng chỉ</p>
+                    @endif
                 </div>
             </div>
         </div>
