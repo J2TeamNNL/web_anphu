@@ -27,6 +27,7 @@ class UpdateCompanySettingRequest extends FormRequest
             'international_name' => 'nullable|string|max:255',
             'director' => 'nullable|string|max:255',
             'company_logo' => 'nullable|image|max:2048',
+            'company_logo_public_id' => 'nullable|string',
             'company_email' => 'required|email',
             'company_phone_1' => 'required|string',
             'company_phone_2' => 'required|string',

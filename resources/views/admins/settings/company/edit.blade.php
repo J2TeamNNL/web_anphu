@@ -199,14 +199,19 @@
         <div class="form-group">
             <label class="font-weight-bold">Logo công ty (nếu muốn thay)</label>
             <input type="file" name="company_logo" class="form-control-file">
-            @if ($setting->company_logo)
-                <p class="mt-2">Logo hiện tại:</p>
-                <img
-                    src="{{ asset('storage/' . $setting->company_logo) }}"
-                    alt="Logo"
-                    style="max-height: 80px;"
-                >
 
+            @if (!empty($setting->company_logo))
+                <div class="mt-3">
+                    <p class="mb-2">Logo hiện tại:</p>
+                    <img 
+                        src="{{ $setting->company_logo }}" 
+                        alt="Logo công ty" 
+                        style="max-height: 80px; border: 1px solid #ddd; padding: 4px; background: #fff;"
+                        onerror="this.onerror=null;this.src='/images/default-logo.png';"
+                    >
+                </div>
+            @else
+                <p class="mt-2 text-muted">Chưa có logo</p>
             @endif
         </div>
 

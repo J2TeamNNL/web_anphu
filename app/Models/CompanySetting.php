@@ -18,6 +18,8 @@ class CompanySetting extends Model
 
         'director',
         'company_logo',
+        'company_logo_public_id',
+
         'director',
         'company_email',
         'company_phone_1',
@@ -31,6 +33,9 @@ class CompanySetting extends Model
 
         'established_date',
         'tax_code',
+
+        'certificates',
+        'certificates_public_ids',
     ];
 
     protected $casts = [

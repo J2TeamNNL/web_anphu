@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateCompanySettingRequest;
 use Illuminate\Http\Request;
 use App\Models\CompanySetting;
-use Illuminate\Support\Facades\Storage;
+use App\Services\ImageUploadService;
 use App\Models\Media;
 use App\Helpers\ImageHelper;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\JsonResponse;
 use App\Services\CloudinaryService;
 
 class CompanySettingController extends Controller
@@ -26,66 +25,58 @@ class CompanySettingController extends Controller
 
     public function update(UpdateCompanySettingRequest $request, CloudinaryService $cloudinaryService)
     {
-        $request->validated();
+        $data = $request->validated();
 
-        $setting = CompanySetting::first();
+        $companySetting = CompanySetting::firstOrFail();
 
-        // Xử lý logo công ty (giữ nguyên như cũ)
+        /** Xử lý logo */
         if ($request->hasFile('company_logo')) {
-            if ($setting->company_logo && Storage::disk('public')->exists($setting->company_logo)) {
-                Storage::disk('public')->delete($setting->company_logo);
+            // Xoá ảnh cũ nếu có
+            if (!empty($companySetting->company_logo_public_id)) {
+                $cloudinaryService->delete($companySetting->company_logo_public_id);
             }
 
-            $path = $request->file('company_logo')->store('logos', 'public');
-            $setting->company_logo = $path;
+            // Upload ảnh mới vào folder company_settings/logo
+            $uploadResult = $cloudinaryService->upload($request->file('company_logo'), 'company_settings/logo');
+
+            $data['company_logo'] = $uploadResult['url'] ?? null;
+            $data['company_logo_public_id'] = $uploadResult['path'] ?? null;
+        } else {
+            // Giữ nguyên logo cũ
+            $data['company_logo'] = $companySetting->company_logo;
+            $data['company_logo_public_id'] = $companySetting->company_logo_public_id;
         }
 
-        // Xử lý certificates
+        /** Xử lý certificates (mảng ảnh) */
         if ($request->hasFile('certificates')) {
-            // Xoá ảnh cũ trên Cloudinary nếu có
-            if (!empty($setting->certificates_public_ids)) {
-                foreach ($setting->certificates_public_ids as $publicId) {
+            // Xoá tất cả ảnh cũ nếu có
+            if (!empty($companySetting->certificates_public_ids) && is_array($companySetting->certificates_public_ids)) {
+                foreach ($companySetting->certificates_public_ids as $publicId) {
                     $cloudinaryService->delete($publicId);
                 }
             }
 
-            $certUrls = [];
-            $certPublicIds = [];
+            $newCertificates = [];
+            $newCertificatesPublicIds = [];
 
-            foreach ($request->file('certificates') as $file) {
-                $uploadResult = $cloudinaryService->upload($file, 'certificates');
-                $certUrls[] = $uploadResult['url'] ?? null;
-                $certPublicIds[] = $uploadResult['path'] ?? null; // hoặc public_id
+            foreach ($request->file('certificates') as $certificate) {
+                $uploadResult = $cloudinaryService->upload($certificate, 'company_settings/certificates');
+                $newCertificates[] = $uploadResult['url'] ?? null;
+                $newCertificatesPublicIds[] = $uploadResult['path'] ?? null;
             }
 
-            $setting->certificates = $certUrls;
-            $setting->certificates_public_ids = $certPublicIds;
+            $data['certificates'] = $newCertificates;
+            $data['certificates_public_ids'] = $newCertificatesPublicIds;
+        } else {
+            // Giữ nguyên certificates cũ
+            $data['certificates'] = $companySetting->certificates;
+            $data['certificates_public_ids'] = $companySetting->certificates_public_ids;
         }
 
-        // Cập nhật các trường khác
-        $setting->company_name = $request->input('company_name');
-        $setting->company_brand = $request->input('company_brand');
-        $setting->international_name = $request->input('international_name');
-        $setting->director = $request->input('director');
-        $setting->company_email = $request->input('company_email');
-        $setting->company_phone_1 = $request->input('company_phone_1');
-        $setting->company_phone_2 = $request->input('company_phone_2');
-        $setting->company_address_1 = $request->input('company_address_1');
-        $setting->company_address_2 = $request->input('company_address_2');
-        $setting->working_hours = $request->input('working_hours');
-        $setting->policy_content = $request->input('policy_content');
-        $setting->google_map = $request->input('google_map');
-        $setting->established_date = $request->input('established_date');
-        $setting->tax_code = $request->input('tax_code');
-
-        // Social links
-        $socialLinks = $request->input('social_links');
-        $setting->social_links = json_decode($socialLinks, true) ?? [];
-
-        $setting->save();
+        $companySetting->update($data);
 
         return redirect()->route('admin.settings.company.edit')
-            ->with('success', 'Cập nhật thành công');
+            ->with('success', 'Cập nhật thông tin công ty thành công!');
     }
 
 
