@@ -1,5 +1,38 @@
 @extends('customers.layouts.master')
 
+@push('styles')
+<style>
+    .btn-outline-shadow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: white;
+        color: #007bff;
+        font-size: 1.05rem;
+        font-weight: 600;
+        border: 2px solid #007bff;
+        border-radius: 50px;
+        padding: 12px 28px;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.25);
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .btn-outline-shadow:hover {
+        background-color: #007bff;
+        color: white;
+        box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .btn-outline-shadow:active {
+        transform: translateY(0);
+        box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
+    }
+</style>
+@endpush
+
+
 @section('content')
 
     <section class="bg-light py-5">
@@ -80,10 +113,10 @@
                 </div>
             </div>
 
-            <div class="row justify-content-center">
-                <div class="col-lg-5 col-md-6 mb-5 d-flex">
-                    <a href="{{ route('customers.service.price', $service->slug) }}">
-                        <button class="btn btn-primary">Báo giá dịch vụ</button>
+            <div class="row">
+                <div class="col-12 text-center mt-4">
+                    <a href="{{ route('customers.service.price', $service->slug) }}" class="btn-outline-shadow">
+                        📄 Báo giá dịch vụ
                     </a>
                 </div>
             </div>
