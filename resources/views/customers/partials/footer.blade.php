@@ -24,7 +24,7 @@
                     {{ config('company.business.license_full_text') }}
                 </p>
                 <p>
-                    <a href="{{ config('company.privacy_policy.url') }}" class="text-white">▶ {{ config('company.privacy_policy.text') }}</a>
+                    <a href="{{ route('customers.policy.detail')}}" class="text-white">▶ {{ config('company.privacy_policy.text') }}</a>
                 </p>
                 <img src="{{ asset(config('company.assets.certification.bocongthuong')) }}" alt="Thông báo Bộ Công Thương" style="height: 150px;">
             </div>

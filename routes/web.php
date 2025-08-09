@@ -30,12 +30,13 @@ Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index
 
 Route::group(['prefix' => ''], function () {
     Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
-    Route::get('/open-letter', [CustomerController::class, 'aboutOpenLetter'])->name('about.open_letter');
-    Route::get('/cultural-values', [CustomerController::class, 'aboutCulturalValues'])->name('about.cultural_values');
+    Route::get('/thu-ngo', [CustomerController::class, 'aboutOpenLetter'])->name('about.open_letter');
+    Route::get('/gia-tri-van-hoa', [CustomerController::class, 'aboutCulturalValues'])->name('about.cultural_values');
 });
 
 Route::get('/dich-vu/{slug}', [CustomerController::class, 'serviceDetail'])->name('customers.service.detail');
 Route::get('/bao-gia/{slug}', [CustomerController::class, 'servicePrice'])->name('customers.service.price');
+Route::get('/chinh-sach', [CustomerController::class, 'policyDetail'])->name('customers.policy.detail');
 
 Route::get('/du-an/danh-muc/{slug}', [CustomerController::class, 'projectByCategory'])
     ->name('projects.byCategory');
