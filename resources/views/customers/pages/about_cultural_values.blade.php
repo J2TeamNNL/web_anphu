@@ -2,9 +2,14 @@
 
 @section('content')
 
+    @include('customers.partials.anphu.cultural_values')
+
+    @include('customers.partials.anphu.solution')
+    
     @include('customers.partials.sign_up_1')
 
     @include('customers.partials.anphu.demo_projects')
+    
     @include('customers.partials.anphu.partner')
 @endsection
 
