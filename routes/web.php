@@ -52,9 +52,9 @@ Route::get('/consultant', [CustomerController::class, 'consultant'])->name('cust
 
 Route::get('/contact', [CustomerController::class, 'contact'])->name('customers.contact');
 
-Route::group(['prefix' => 'auth'], function () {
-    Route::get('/login', [AuthController::class, 'login'])->name('auths.login');
-    Route::post('/login', [AuthController::class, 'processLogin'])->name('auths.process_login');
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', [AuthController::class, 'login'])->name('auths.login');
+    Route::post('/', [AuthController::class, 'processLogin'])->name('auths.process_login');
     Route::get('/register', [AuthController::class, 'register'])->name('auths.register');
     Route::post('/register', [AuthController::class, 'processRegister'])->name('auths.process_register');
 });
