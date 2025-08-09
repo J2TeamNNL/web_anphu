@@ -26,7 +26,7 @@
 
                     <p>
                         <span class="font-weight-bold">Ngày thành lập: </span>
-                        {{ $companySettings->established_date }}
+                        {{ $companySettings->established_date->format('d/m/Y') }}
                     </p>
 
                     <p>
@@ -45,7 +45,7 @@
                     <h4 class="text-uppercase text-primary font-weight-bold">Lịch sử hình thành</h4>
                     <hr class="border-warning">
                     <p>
-                        Bắt đầu thành lập công ty ngày <span class="font-weight-bold">{{ $companySettings->established_date }}</span>
+                        Bắt đầu thành lập công ty ngày <span class="font-weight-bold">{{ $companySettings->established_date->format('d/m/Y') }}</span>
                         với tên gọi <span class="font-weight-bold">{{ $companySettings->company_name }}</span>.
                         Với mong muốn, những ngôi nhà nhỏ được xây lên phải xinh xắn, đầy đủ tiện nghi, đáp ứng mọi công năng sinh hoạt, đem lại cảm giác thoải mái cho gia chủ.
                     </p>

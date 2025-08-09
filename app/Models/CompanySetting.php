@@ -32,13 +32,15 @@ class CompanySetting extends Model
         'tax_code',
     ];
 
-    protected function establishedDate(): Attribute
+    protected $casts = [
+        'established_date' => 'date',
+    ];
+
+    public function getEstablishedDateFormattedAttribute()
     {
-        return Attribute::make(
-            get: fn ($value) => $value ? Carbon::parse($value)->format('d/m/Y') : null,
-            set: fn ($value) => $value 
-                ? Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d') 
-                : null
-        );
+        return $this->established_date
+            ? $this->established_date->format('d/m/Y')
+            : null;
     }
+
 }

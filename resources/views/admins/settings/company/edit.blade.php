@@ -39,24 +39,26 @@
         </div>
 
         <div class="form-group">
-            <label for="established_date" class="form-label">
+            <label for="established_date" class="form-label font-weight-bold">
                 Ngày thành lập <span class="text-muted">(dd/mm/yyyy)</span>
             </label>
+
             <input 
                 type="date" 
-                class="form-control @error('established_date') is-invalid @enderror" 
-                id="established_date" 
-                name="established_date" 
-                value="{{ old('established_date', $setting->established_date ?? '') }}"
+                name="established_date"
+                class="form-control @error('established_date') is-invalid @enderror"
+                id="established_date"
+                value="{{ old('established_date', $setting->established_date ? $setting->established_date->format('Y-m-d') : '') }}"
                 max="{{ now()->toDateString() }}"
             >
+
             @error('established_date')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
 
         <div>
-            <label for="tax_code" class="form-label">
+            <label for="tax_code" class="form-label font-weight-bold">
                 Mã số thuế
             </label>
             <input 
@@ -73,7 +75,7 @@
         </div>
 
         <div class="form-group">
-            <label for="director" class="form-label">
+            <label for="director" class="form-label font-weight-bold">
                 Người đại diện
             </label>
             <input 
