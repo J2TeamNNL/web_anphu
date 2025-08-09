@@ -202,7 +202,8 @@
 
             @if (!empty($setting->company_logo))
                 <div class="mt-3">
-                    <p class="mb-2">Logo hiện tại:</p>
+                    <label class="font-weight-bold">Logo hiện tại:</label>
+                    <br>
                     <img 
                         src="{{ $setting->company_logo }}" 
                         alt="Logo công ty" 
