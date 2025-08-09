@@ -17,7 +17,6 @@ class CompanySetting extends Model
         'company_phone_2',
         'company_address_1',
         'company_address_2',
-        'pocily',
         'social_links',
         'working_hours',
         'policy_content',

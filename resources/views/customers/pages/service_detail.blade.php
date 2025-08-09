@@ -79,6 +79,14 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-6 mb-5 d-flex">
+                    <a href="{{ route('customers.service.price', $service->slug) }}">
+                        <button class="btn btn-primary">Báo giá dịch vụ</button>
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 

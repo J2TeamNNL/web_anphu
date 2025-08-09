@@ -38,8 +38,11 @@
                     </div>
                     <div class="d-flex align-items-center">
                         <button type="submit" class="btn btn-warning mr-3">Gửi cho chúng tôi</button>
-                        <a href="#" class="btn btn-outline-warning mr-2"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><img src="{{ asset('assets/img/logo/logo_zalo.png') }}" style="height: 24px;" alt="Zalo"></a>
+                        <x-social-media 
+                            size="small" 
+                            style="outline" 
+                            class="d-flex justify-content-center" 
+                        />
                     </div>
                 </form>
             </div>

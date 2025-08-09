@@ -8,6 +8,7 @@ use App\Models\Article;
 use App\Models\Service;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\CompanySetting;
 
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
@@ -76,6 +77,15 @@ class CustomerController extends Controller
         $service = Service::where('slug', $slug)->firstOrFail();
 
         return view('customers.pages.service_price', compact('service'));
+    }
+
+    public function policyDetail()
+    {
+        $policyContent = CompanySetting::value('policy_content') ?? '';
+
+        return view('customers.pages.policy', [
+            'policyContent' => $policyContent,
+        ]);
     }
 
     // PORTFOLIOS

@@ -2,14 +2,14 @@
 
 @push('styles')
 <style>
-    .service-wrapper {
+    .policy-wrapper {
         display: grid;
         grid-template-columns: 250px 1fr;
         gap: 2rem;
     }
 
     /* Sidebar mục lục */
-    .service-toc {
+    .policy-toc {
         position: sticky;
         top: 100px;
         background: #f8f9fa;
@@ -19,38 +19,38 @@
         height: fit-content;
     }
 
-    .service-toc h5 {
+    .policy-toc h5 {
         font-size: 1rem;
         margin-bottom: 0.75rem;
         font-weight: 600;
         color: #0d6efd;
     }
 
-    .service-toc ul {
+    .policy-toc ul {
         list-style: none;
         padding-left: 0;
         margin: 0;
     }
 
-    .service-toc li {
+    .policy-toc li {
         margin-bottom: 0.5rem;
     }
 
-    .service-toc a {
+    .policy-toc a {
         text-decoration: none;
         color: #333;
         font-size: 0.95rem;
         transition: color 0.2s;
     }
 
-    .service-toc a:hover,
-    .service-toc a.active {
+    .policy-toc a:hover,
+    .policy-toc a.active {
         color: #0d6efd;
         font-weight: 500;
     }
 
     /* Nội dung chính sách */
-    .service-content {
+    .policy-content {
         padding: 2rem;
         background-color: #fff;
         border-left: 4px solid #0d6efd;
@@ -59,13 +59,13 @@
         animation: fadeInUp 0.6s ease;
     }
 
-    .service-content p {
+    .policy-content p {
         font-size: 1.05rem;
         line-height: 1.75;
         margin-bottom: 1rem;
     }
 
-    .service-content h1, .service-content h2, .service-content h3 {
+    .policy-content h1, .policy-content h2, .policy-content h3 {
         margin-top: 1.5rem;
         color: #030a36;
         font-weight: 600;
@@ -78,10 +78,10 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-        .service-wrapper {
+        .policy-wrapper {
             grid-template-columns: 1fr;
         }
-        .service-toc {
+        .policy-toc {
             position: static;
             margin-bottom: 1rem;
         }
@@ -90,16 +90,16 @@
 @endpush
 
 @section('content')
-<div class="container my-4 service-wrapper">
+<div class="container my-4 policy-wrapper">
     <!-- Sidebar mục lục -->
-    <aside class="service-toc">
+    <aside class="policy-toc">
         <h5>Mục lục</h5>
-        <ul id="service-toc-list"></ul>
+        <ul id="policy-toc-list"></ul>
     </aside>
 
     <!-- Nội dung chính sách -->
-    <div class="service-content mb-4" id="service-content">
-        {!! $service->content_price !!}
+    <div class="policy-content mb-4" id="policy-content">
+        {!! $policyContent !!}
     </div>
 </div>
 
@@ -109,8 +109,8 @@
 @push('scripts')
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const content = document.getElementById("service-content");
-    const tocList = document.getElementById("service-toc-list");
+    const content = document.getElementById("policy-content");
+    const tocList = document.getElementById("policy-toc-list");
     const headings = content.querySelectorAll("h2, h3");
 
     headings.forEach((heading, index) => {

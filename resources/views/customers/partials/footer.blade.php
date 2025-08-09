@@ -5,24 +5,56 @@
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Thông Tin Liên Hệ</h5>
                 <p><strong>{{ config('company.name.full') }}</strong></p>
                 <p>
-                    <i class="fas fa-map-marker-alt me-2 text-warning"></i> 
-                    {{ config('company.contact.address') }}
+                    <i class="fa fa-home mr-1 text-warning"></i>
+                    <span style="font-weight: bold" class="text-warning">
+                        VPGD 1:
+                    </span>
+                    {{ config('company.contact.address_1') }}
                 </p>
+
                 <p>
-                    <a href="{{ config('company.contact.phone_link') }}">
+                    <i class="fa fa-home mr-1 text-warning"></i>
+                    <span style="font-weight: bold" class="text-warning">
+                        VPGD 2:
+                    </span>
+                    {{ config('company.contact.address_2') }}
+                </p>
+
+                <p>
+                    <a href="{{ config('company.contact.phone_link_1') }}">
                         <i class="fas fa-phone me-2 text-warning"></i>
-                        <strong class="text-white">{{ config('company.contact.phone') }}</strong>
+                        <span style="font-weight: bold" class="text-warning">
+                            Zalo:
+                        </span>
+                        {{ config('company.contact.phone_1') }}
+                    </a>
+                    
+                </p>
+
+                <p>
+                    <a href="{{ config('company.contact.phone_link_2') }}">
+                        <i class="fas fa-phone me-2 text-warning"></i>
+                        <span style="font-weight: bold" class="text-warning">
+                            Hotline:
+                        </span>
+                        {{ config('company.contact.phone_2') }}
                     </a>
                 </p>
+
                 <p>
                     <a href="{{ config('company.contact.email_link') }}">
-                        <i class="fas fa-envelope me-2 text-warning"></i> 
+                        <i class="fa fa-envelope me-2 text-warning"></i>
+                        <span style="font-weight: bold" class="text-warning">
+                            Email:
+                        </span>
                         {{ config('company.contact.email') }}
                     </a>
                 </p>
+
                 <p class="small text-white">
                     {{ config('company.business.license_full_text') }}
                 </p>
+
                 <p>
                     <a href="{{ route('customers.policy.detail')}}" class="text-white">▶ {{ config('company.privacy_policy.text') }}</a>
                 </p>

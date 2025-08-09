@@ -5,17 +5,15 @@
                 <img src="{{ asset('assets/img/gallery/anphu_crew.jpg') }}" class="img-fluid mb-4 rounded shadow-sm" alt="anphu_crew">
             </div>
 
-        <div class="row">
             {{-- SƠ LƯỢC --}}
-        
             <div class="col-md-12" data-aos="fade-right">
-                <h4 class="text-uppercase text-primary font-weight-bold">Sơ lược về An Phú Design</h4>
+                <h4 class="text-uppercase text-primary font-weight-bold">Sơ lược về An Phú Build</h4>
                 <hr class="border-warning">
-                <p>Tên công ty: Công ty TNHH Tư vấn Thiết kế Kiến trúc và Nội thất An Phú</p>
-                <p>Tên quốc tế: An Phu Architecture and Interior Design Consulting Company Limited</p>
-                <p>Ngày thành lập: 15/01/2019</p>
-                <p>Mã số thuế: 0108588362</p>
-                <p>Số 35 phố Ngõ Huyện, Phường Hàng Trống, Quận Hoàn Kiếm, Thành phố Hà Nội, Việt Nam</p>
+                <p>Tên công ty: {{ config('company.name.full') }}</p>
+                <p>Tên quốc tế: {{ config('company.name.international') }}</p>
+                <p>Ngày thành lập: {{ config('company.business.license_date') }}</p>
+                <p>Mã số thuế: {{ config('company.business.license_number') }}</p>
+                <p>Địa chỉ đăng </p>
                 <p>Người đại diện: Phạm Đăng Thu</p>
             </div>
 
@@ -33,7 +31,6 @@
                 </p>
             </div>
 
-
             {{-- CHỨNG CHỈ HOẠT ĐỘNG --}}
             <div class="col-md-12" data-aos="fade-right">
                 <h4 class="text-uppercase text-primary font-weight-bold">Chứng chỉ hoạt động</h4>
@@ -41,18 +38,17 @@
                 <div class="row justify-content-center">
                     <div class="col-md-4 text-center">
                         <div class="certificate-box mb-3">
-                            <img src="{{ asset('assets/img/hero/certificate1.jpg') }}" alt="certificate1" style="width: 300px">
+                            <img src="{{ asset('assets/img/hero/certificate1.jpg') }}" alt="certificate1" class="img-fluid rounded shadow-sm">
                         </div>
                     </div>
                     <div class="col-md-4 text-center">
                         <div class="certificate-box mb-3">
-                            <img src="{{ asset('assets/img/hero/certificate2.jpg') }}" alt="certificate2" style="width: 300px">
+                            <img src="{{ asset('assets/img/hero/certificate2.jpg') }}" alt="certificate2" class="img-fluid rounded shadow-sm">
                         </div>
                     </div>
-
                     <div class="col-md-4 text-center">
                         <div class="certificate-box mb-3">
-                            <img src="{{ asset('assets/img/hero/certificate3.jpg') }}" alt="certificate3" style="width: 300px">
+                            <img src="{{ asset('assets/img/hero/certificate3.jpg') }}" alt="certificate3" class="img-fluid rounded shadow-sm">
                         </div>
                     </div>
                 </div>

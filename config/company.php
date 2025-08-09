@@ -13,8 +13,9 @@ return [
     */
 
     'name' => [
-        'full' => 'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC VÀ NỘI THẤT AN PHÚ',
-        'short' => 'An Phú Design',
+        'full' => 'Công ty TNHH Tư vấn Thiết kế Kiến trúc và Nội thất An Phú',
+        'international' => 'An Phu Architecture and Interior Design Consulting Company Limited',
+        'short' => 'An Phú Build',
         'brand' => 'An Phú',
     ],
 

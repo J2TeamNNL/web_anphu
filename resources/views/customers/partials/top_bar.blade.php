@@ -17,22 +17,27 @@
             <!-- Điện thoại & Email -->
             <div class="col-12 col-md-3 d-flex flex-column align-items-left justify-content-center mb-3 mb-md-0 border-divider">
                 <div>
-                    <i class="fa fa-phone-alt mr-1"></i>
-                    Zalo:
-                    {{ config('company.contact.phone_1') }}
+                    <a href="{{ config('company.contact.phone_link_1') }}">
+                        <i class="fa fa-phone-alt mr-1"></i>
+                        Zalo:
+                        {{ config('company.contact.phone_1') }}
+                    </a>
                 </div>
                 <div>
-                    <i class="fa fa-phone-alt mr-1"></i>
-                    Hotline:
-                    {{ config('company.contact.phone_2') }}
+                    <a href="{{ config('company.contact.phone_link_2') }}">
+                        <i class="fa fa-phone-alt mr-1"></i>
+                        Hotline:
+                        {{ config('company.contact.phone_2') }}
+                    </a>
                 </div>
                 <div>
-                    <i class="fa fa-envelope mr-1"></i>
-                    {{ config('company.contact.email') }}
+                    <a href="{{ config('company.contact.email_link') }}">
+                        <i class="fa fa-envelope mr-1"></i>
+                        {{ config('company.contact.email') }}
+                    </a>
                 </div>
                 <div>
                     <i class="fa fa-clock mr-1"></i>
-
                     {{ config('company.working_hours.text') }}
                 </div>
             </div>
@@ -56,7 +61,7 @@
             </div>
 
             <!-- Social Links -->
-            <div class="col-12 col-md-3 d-flex flex-column align-items-center justify-content-center border-divider">
+            <div class="col-12 col-md-3 d-flex flex-column align-items-center justify-content-center">
                 <x-social-media 
                     size="small" 
                     style="minimal" 

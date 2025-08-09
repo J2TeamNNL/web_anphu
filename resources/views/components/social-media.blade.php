@@ -58,7 +58,7 @@
                     <img
                         src="{{ asset($social['logo']) }}"
                         alt="{{ $social['name'] }}"
-                        style="height: 30px;"
+                        style="height: 40px;"
                     >
                 @endif
             </span>
