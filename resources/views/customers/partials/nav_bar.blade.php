@@ -109,12 +109,6 @@
                     </div>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ isActive($consultantRoutes) }}">
-                    <a class="nav-link text-center" href="{{ route('customers.consultant') }}">
-                        <i class="fa fa-user-tie me-1"></i> Tư vấn
-                    </a>
-                </li>
-
                 <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('bai-dang/*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="blogDropdown" data-toggle="dropdown">
                         <i class="fa fa-newspaper me-1"></i> Hoạt động
