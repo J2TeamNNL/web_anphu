@@ -13,6 +13,7 @@ class Service extends Model
         'image',
         'description',
         'image_public_id',
+        'content_service',
         'content_price',
 
         'title_1',

@@ -166,7 +166,7 @@ class ImageUploadService
             'articles' => 'articles/content',
             'portfolios' => 'portfolios/content',
             'partners' => 'partners/content',
-            'services' => 'services/content_price',
+            'services' => 'services/content',
             'company_settings' => 'company_settings/content',
             default => 'general/content'
         };

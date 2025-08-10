@@ -64,15 +64,31 @@ class ServiceController extends Controller
             }
         }
 
+        // Xử lý content_price
+        $resultPrice = ImageHelper::extractAndUploadBase64Images($validated['content_price'] ?? '');
+        $validated['content_price'] = $resultPrice['content'];
+        $usedPathsPrice = $resultPrice['paths'];
+
+        // Xử lý content_service
+        $resultService = ImageHelper::extractAndUploadBase64Images($validated['content_service'] ?? '');
+        $validated['content_service'] = $resultService['content'];
+        $usedPathsService = $resultService['paths'];
+
         $service = $this->model::create($validated);
 
-        $result = ImageHelper::extractAndUploadBase64Images($validated['content_price'] ?? '');
-        $validated['content_price'] = $result['content'];
-        $usedPaths = $result['paths'];
-
+        // Cập nhật media cho content_price
         Media::whereNull('mediaable_id')
             ->where('type', 'image')
-            ->whereIn('file_path', $usedPaths)
+            ->whereIn('file_path', $usedPathsPrice)
+            ->update([
+                'mediaable_id' => $service->id,
+                'mediaable_type' => Service::class,
+            ]);
+
+        // Cập nhật media cho content_service
+        Media::whereNull('mediaable_id')
+            ->where('type', 'image')
+            ->whereIn('file_path', $usedPathsService)
             ->update([
                 'mediaable_id' => $service->id,
                 'mediaable_type' => Service::class,
@@ -92,7 +108,6 @@ class ServiceController extends Controller
     {
         $data = $request->validated();
 
-        // Sinh slug nếu chưa có
         if (empty($data['slug'])) {
             $data['slug'] = Str::slug($data['name'] ?? $service->name);
         }
@@ -101,9 +116,7 @@ class ServiceController extends Controller
             if ($service->image_public_id) {
                 $cloudinaryService->delete($service->image_public_id);
             }
-            $uploadResult = $cloudinaryService
-            ->upload($request->file('image'), 'services');
-            
+            $uploadResult = $cloudinaryService->upload($request->file('image'), 'services');
             $data['image'] = $uploadResult['url'] ?? null;
             $data['image_public_id'] = $uploadResult['path'] ?? null;
         } else {
@@ -116,7 +129,6 @@ class ServiceController extends Controller
             $iconPublicIdKey = "{$iconKey}_public_id";
 
             if ($request->hasFile($iconKey)) {
-                // Xóa icon cũ nếu có
                 if ($service->$iconPublicIdKey) {
                     $cloudinaryService->delete($service->$iconPublicIdKey);
                 }
@@ -129,13 +141,27 @@ class ServiceController extends Controller
             }
         }
 
-        $result = ImageHelper::extractAndUploadBase64Images($data['content_price'] ?? '');
-        $data['content_price'] = $result['content'];
-        $usedPaths = $result['paths'];
+        // Xử lý content_price
+        $resultPrice = ImageHelper::extractAndUploadBase64Images($data['content_price'] ?? '');
+        $data['content_price'] = $resultPrice['content'];
+        $usedPathsPrice = $resultPrice['paths'];
+
+        // Xử lý content_service
+        $resultService = ImageHelper::extractAndUploadBase64Images($data['content_service'] ?? '');
+        $data['content_service'] = $resultService['content'];
+        $usedPathsService = $resultService['paths'];
 
         Media::whereNull('mediaable_id')
             ->where('type', 'image')
-            ->whereIn('file_path', $usedPaths)
+            ->whereIn('file_path', $usedPathsPrice)
+            ->update([
+                'mediaable_id' => $service->id,
+                'mediaable_type' => Service::class,
+            ]);
+
+        Media::whereNull('mediaable_id')
+            ->where('type', 'image')
+            ->whereIn('file_path', $usedPathsService)
             ->update([
                 'mediaable_id' => $service->id,
                 'mediaable_type' => Service::class,

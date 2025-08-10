@@ -66,7 +66,7 @@
             {{-- NỘI DUNG 1 --}}
             <div class="form-group">
                <h5 class="text-primary d-flex justify-content-between align-items-center">
-                  Đoạn nội dung 1
+                  Nội dung tóm tắt 1
                   <button
                      class="btn btn-sm btn-outline-primary"
                      type="button"
@@ -109,7 +109,7 @@
             {{-- NỘI DUNG 2 --}}
             <div class="form-group">
                <h5 class="text-primary d-flex justify-content-between align-items-center">
-                  Đoạn nội dung 2
+                  Nội dung tóm tắt 2
                   <button
                      class="btn btn-sm btn-outline-primary"
                      type="button"
@@ -152,7 +152,7 @@
             {{-- NỘI DUNG 3 --}}
             <div class="form-group">
                <h5 class="text-primary d-flex justify-content-between align-items-center">
-                  Đoạn nội dung 3
+                  Nội dung tóm tắt 3
                   <button
                      class="btn btn-sm btn-outline-primary"
                      type="button"
@@ -195,7 +195,7 @@
             {{-- NỘI DUNG 4 --}}
             <div class="form-group">
                <h5 class="text-primary d-flex justify-content-between align-items-center">
-                  Đoạn nội dung 4
+                  Nội dung tóm tắt 4
                   <button
                      class="btn btn-sm btn-outline-primary"
                      type="button"
@@ -235,10 +235,42 @@
                </div>
             </div>
 
+            {{-- NỘI DUNG DỊCH VỤ --}}
+            <div class="form-group">
+               <h5 class="text-primary d-flex justify-content-between align-items-center">
+                  Nội dung dịch vụ (quy trình thực hiện)
+                  <button
+                        class="btn btn-sm btn-outline-primary"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#contentService"
+                        aria-expanded="false"
+                        aria-controls="contentService"
+                  >
+                        <i class="fas fa-chevron-down"></i>
+                  </button>
+               </h5>
+            </div>
+
+            <div class="collapse" id="contentService">
+               <div class="form-group">
+                  <x-editor
+                     selector="#quill-editor-service"
+                     uploadTable="services"
+                     toolbar="full"
+                     height="500px"
+                     placeholder="Nhập nội dung chi tiết cho dịch vụ ..."
+                     :uploadRoute="route('admin.media.uploadImage')"
+                     :content="old('content_service', $service->content_service ?? '')"
+                     textareaName="content_service"
+                  />
+               </div>
+            </div>
+
             {{-- NỘI DUNG BÁO GIÁ --}}
             <div class="form-group">
                <h5 class="text-primary d-flex justify-content-between align-items-center">
-                  Nội dung báo giá
+                  Nội dung báo giá Dich vụ
                   <button
                         class="btn btn-sm btn-outline-primary"
                         type="button"
@@ -253,10 +285,9 @@
             </div>
 
             <div class="collapse" id="contentPrice">
-               {{-- Component Quill --}}
                <div class="form-group">
                   <x-editor
-                     selector="#quill-editor"
+                     selector="#quill-editor-price"
                      uploadTable="services"
                      toolbar="full"
                      height="500px"

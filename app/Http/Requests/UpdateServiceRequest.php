@@ -28,6 +28,8 @@ class UpdateServiceRequest extends FormRequest
             'image' => 'nullable',
             'description' => 'nullable',
             'image_public_id' => 'nullable',
+
+            'content_service' => 'nullable|string',
             'content_price' => 'nullable|string',
 
             'title_1' => 'nullable|string|max:255',
