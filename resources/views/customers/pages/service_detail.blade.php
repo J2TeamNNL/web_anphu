@@ -28,7 +28,7 @@
     }
 
     .service-section-bg {
-        background-image: url("{{ asset('assets/img/gallery/background_construction_1.webp') }}");
+        /* background-image: url("{{ asset('assets/img/gallery/background_construction_1.jpg') }}"); */
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -118,6 +118,28 @@
             margin-bottom: 1rem;
         }
     }
+
+    .custom-price-btn {
+        display: inline-block;
+        padding: 12px 24px;
+        border: 2px solid #C9B037;
+        border-radius: 6px;
+        background: transparent;
+        color: #C9B037;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+    }
+
+    
+    /* Hover nổi bật */
+    .custom-price-btn:hover {
+        background: #C9B037;
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(201,176,55,0.4);
+        transform: translateY(-2px);
+    }
 </style>
 @endpush
 
@@ -161,22 +183,22 @@
 {{-- Phần content_service với mục lục sticky --}}
 @if (!empty($service->content_service))
 <div class="service-section-bg">
-<h3
-    style="
-        text-align: center;
-        font-weight: 700;
-        margin: 2rem 0;
-        font-family: 'Poppins', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        background: linear-gradient(45deg, #FFD700, #C9B037);
-        -webkit-background-clip: text;
-        color: transparent;
-        text-shadow: 0 0 10px rgba(201,176,55,0.6);
-    "
->
-    Chi tiết dịch vụ {{ $service->name }}
-</h3>
+    <h3
+        style="
+            text-align: center;
+            font-weight: 700;
+            margin: 2rem 0;
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: linear-gradient(45deg, #FFD700, #C9B037);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(201,176,55,0.6);
+        "
+    >
+        Chi tiết dịch vụ {{ $service->name }}
+    </h3>
     <div class="service-wrapper mt-5">
         <!-- Sidebar mục lục -->
         <aside class="service-toc">
@@ -189,21 +211,20 @@
             {!! $service->content_service !!}
         </div>
     </div>
+
+    <!-- Nút báo giá ra ngoài grid -->
+    <div class="text-center mt-4">
+        <a href="{{ route('customers.service.price', $service->slug) }}" class="btn-outline-shadow custom-price-btn">
+            📄 Báo giá dịch vụ
+        </a>
+    </div>
+    <hr>
+
 </div>
 @endif
 
-{{-- Nút báo giá --}}
-<div class="row">
-    <div class="col-12 text-center mt-4">
-        <a href="{{ route('customers.service.price', $service->slug) }}" class="btn-outline-shadow">
-            📄 Báo giá dịch vụ
-        </a>
-        <hr>
-    </div>
-</div>
-
-@include('customers.partials.sign_up_1')
 @include('customers.partials.anphu.demo_projects')
+@include('customers.partials.sign_up_1')
 @include('customers.partials.anphu.partner')
 @endsection
 
