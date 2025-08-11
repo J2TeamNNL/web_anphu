@@ -32,7 +32,7 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        background-color: #181f2f;
+        background-color: #2a3650;
         width: 100%;
         padding: 1px 0;
     }
