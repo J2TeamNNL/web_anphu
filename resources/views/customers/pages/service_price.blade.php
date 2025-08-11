@@ -5,22 +5,25 @@
     /* Container bao ngoài giữ nội dung quill giữa */
     .service-wrapper {
         position: relative;
-        max-width: 900px;
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 2rem;
+        max-width: 1200px;
         margin: 0 auto;
     }
 
-    /* Sidebar mục lục tách hẳn sang trái */
+    /* Sidebar mục lục sticky */
     .service-toc {
-        position: absolute;
-        left: -260px;
-        top: 0;
-        width: 220px;
+        position: sticky;
+        top: 100px; /* Khoảng cách từ trên khi bám */
         background: #fff;
         padding: 0.75rem;
         border-radius: 6px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         word-wrap: break-word;
         overflow-wrap: break-word;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
     }
 
     .service-toc h5 {
@@ -32,7 +35,7 @@
 
     .service-toc ul {
         list-style: none;
-        padding-left: 1rem;
+        padding-left: 0;
         margin: 0;
     }
 
@@ -45,8 +48,7 @@
         text-decoration: none;
         color: #333;
         font-size: 0.9rem;
-        display: inline-block;
-        white-space: normal;
+        display: block;
         transition: color 0.2s ease;
     }
 
@@ -91,10 +93,13 @@
 
     /* Responsive */
     @media (max-width: 1024px) {
+        .service-wrapper {
+            grid-template-columns: 1fr;
+        }
         .service-toc {
             position: static;
-            left: auto;
-            width: 100%;
+            max-height: none;
+            overflow-y: visible;
             margin-bottom: 1rem;
         }
     }
@@ -141,13 +146,27 @@ document.addEventListener("DOMContentLoaded", function () {
         a.textContent = heading.textContent;
         a.classList.add("toc-link");
 
-        // Padding theo cấp heading
         const level = parseInt(heading.tagName.substring(1));
         a.style.paddingLeft = `${(level - 1) * 15}px`;
         a.style.fontSize = `${1 - (level - 1) * 0.05}rem`;
 
         li.appendChild(a);
         tocList.appendChild(li);
+    });
+
+    // Scroll mượt khi click mục lục
+    document.querySelectorAll(".toc-link").forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href").substring(1);
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+                window.scrollTo({
+                    top: targetEl.offsetTop - 80, // chừa khoảng header
+                    behavior: "smooth"
+                });
+            }
+        });
     });
 
     // Highlight mục lục khi cuộn
