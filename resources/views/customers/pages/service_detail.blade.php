@@ -107,6 +107,12 @@
         border-radius: 6px;
     }
 
+    .content-service-section img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
     @media (max-width: 1024px) {
         .service-wrapper {
             grid-template-columns: 1fr;
