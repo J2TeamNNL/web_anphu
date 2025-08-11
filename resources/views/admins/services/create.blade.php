@@ -24,7 +24,7 @@
 
             <div class="form-group">
                <label for="slogan">Slogan</label>
-               <input type="text" name="slogan" id="slogan" class="form-control" required>
+               <input type="text" name="slogan" id="slogan" class="form-control">
             </div>
 
             <div class="form-group">

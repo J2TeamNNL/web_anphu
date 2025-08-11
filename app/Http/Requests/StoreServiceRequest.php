@@ -23,7 +23,7 @@ class StoreServiceRequest extends FormRequest
     {
         return [
             'name'=> 'required|string|max:255',
-            'slogan'=> 'required|string|max:255',
+            'slogan'=> 'nullable|string|max:255',
             'slug'=> 'nullable|string|unique:services,slug',
             'image'=> 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
             'description'=> 'nullable|string',

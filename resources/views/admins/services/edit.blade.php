@@ -50,6 +50,13 @@
                <h5 for="logo">Thay Logo mới (tùy chọn)</h5>
                <input type="file" name="image" id="image" class="form-control-file">
             </div>
+            
+             <div class="form-group">
+               <label for="slogan">Slogan</label>
+               <input type="text" name="slogan" id="slogan" class="form-control"
+                  value="{{ $service->slogan }}"
+               >
+            </div>
 
             <div class="form-group">
                <h5 for="description">Mô tả</h5>
@@ -184,6 +191,7 @@
                   <h5 for="icon_3">Thay icon mới (tùy chọn)</h5>
                   <input type="file" name="icon_3" id="icon_3" class="form-control-file">
                </div>
+
                <div class="form-group">
                   <h5 for="content_3">Nội dung</h5>
                   <textarea name="content_3" id="content_3" rows="6" class="form-control">

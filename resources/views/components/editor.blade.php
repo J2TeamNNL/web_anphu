@@ -37,7 +37,9 @@
 @endphp
 
 @push('styles')
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    @once
+        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    @endonce
     <style>
         #{{ $elementId }} img {
             max-width: 100%;
@@ -59,9 +61,11 @@
 
 
 @push('scripts')
-    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/quill-image-uploader@1.2.3/dist/quill.imageUploader.min.js"></script>
-    <script src="{{ asset('js/quill-editor.js') }}"></script>
+    @once
+        <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/quill-image-uploader@1.2.3/dist/quill.imageUploader.min.js"></script>
+        <script src="{{ asset('js/quill-editor.js') }}"></script>
+    @endonce
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
