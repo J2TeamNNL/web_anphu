@@ -2,73 +2,86 @@
 
 @push('styles')
 <style>
+    /* Container bao ngoài giữ nội dung quill giữa */
     .service-wrapper {
-        display: grid;
-        grid-template-columns: 250px 1fr;
-        gap: 2rem;
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
     }
 
-    /* Sidebar mục lục */
+    /* Sidebar mục lục tách hẳn sang trái */
     .service-toc {
-        position: sticky;
-        top: 100px;
-        background: #f8f9fa;
-        padding: 1rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        height: fit-content;
+        position: absolute;
+        left: -260px;
+        top: 0;
+        width: 220px;
+        background: #fff;
+        padding: 0.75rem;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     .service-toc h5 {
-        font-size: 1rem;
-        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
         font-weight: 600;
         color: #0d6efd;
     }
 
     .service-toc ul {
         list-style: none;
-        padding-left: 0;
+        padding-left: 1rem;
         margin: 0;
     }
 
     .service-toc li {
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
+        line-height: 1.3;
     }
 
     .service-toc a {
         text-decoration: none;
         color: #333;
-        font-size: 0.95rem;
-        transition: color 0.2s;
+        font-size: 0.9rem;
+        display: inline-block;
+        white-space: normal;
+        transition: color 0.2s ease;
     }
 
     .service-toc a:hover,
     .service-toc a.active {
-        color: #0d6efd;
+        color: #C9B037;
         font-weight: 500;
     }
 
-    /* Nội dung chính sách */
+    /* Nội dung dịch vụ */
     .service-content {
         padding: 2rem;
         background-color: #fff;
-        border-left: 4px solid #0d6efd;
+        border: 1px solid rgba(0,0,0,0.3);
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         border-radius: 6px;
         animation: fadeInUp 0.6s ease;
     }
-
     .service-content p {
         font-size: 1.05rem;
         line-height: 1.75;
         margin-bottom: 1rem;
     }
-
-    .service-content h1, .service-content h2, .service-content h3 {
+    .service-content h1,
+    .service-content h2,
+    .service-content h3 {
         margin-top: 1.5rem;
         color: #030a36;
         font-weight: 600;
+    }
+    .service-content img {
+        max-width: 100% !important;
+        height: auto !important;
+        display: block;
+        margin: 0 auto;
     }
 
     @keyframes fadeInUp {
@@ -77,12 +90,11 @@
     }
 
     /* Responsive */
-    @media (max-width: 768px) {
-        .service-wrapper {
-            grid-template-columns: 1fr;
-        }
+    @media (max-width: 1024px) {
         .service-toc {
             position: static;
+            left: auto;
+            width: 100%;
             margin-bottom: 1rem;
         }
     }
@@ -90,16 +102,18 @@
 @endpush
 
 @section('content')
-<div class="container my-4 service-wrapper">
-    <!-- Sidebar mục lục -->
-    <aside class="service-toc">
-        <h5>Mục lục</h5>
-        <ul id="service-toc-list"></ul>
-    </aside>
+<div class="container my-4">
+    <div class="service-wrapper">
+        <!-- Sidebar mục lục -->
+        <aside class="service-toc">
+            <h5>Mục lục</h5>
+            <ul id="service-toc-list"></ul>
+        </aside>
 
-    <!-- Nội dung chính sách -->
-    <div class="service-content mb-4" id="service-content">
-        {!! $service->content_price !!}
+        <!-- Nội dung -->
+        <div class="service-content" id="service-content">
+            {!! $service->content_price !!}
+        </div>
     </div>
 </div>
 
@@ -111,22 +125,26 @@
 document.addEventListener("DOMContentLoaded", function () {
     const content = document.getElementById("service-content");
     const tocList = document.getElementById("service-toc-list");
-    const headings = content.querySelectorAll("h2, h3");
+
+    if (!content || !tocList) return;
+
+    const headings = content.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
     headings.forEach((heading, index) => {
-        const id = "section-" + index;
-        heading.id = id;
+        if (!heading.id) {
+            heading.id = "section-" + index;
+        }
 
         const li = document.createElement("li");
         const a = document.createElement("a");
-        a.href = "#" + id;
+        a.href = "#" + heading.id;
         a.textContent = heading.textContent;
         a.classList.add("toc-link");
 
-        if (heading.tagName.toLowerCase() === "h3") {
-            a.style.paddingLeft = "15px";
-            a.style.fontSize = "0.9rem";
-        }
+        // Padding theo cấp heading
+        const level = parseInt(heading.tagName.substring(1));
+        a.style.paddingLeft = `${(level - 1) * 15}px`;
+        a.style.fontSize = `${1 - (level - 1) * 0.05}rem`;
 
         li.appendChild(a);
         tocList.appendChild(li);
