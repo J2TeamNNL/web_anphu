@@ -91,7 +91,7 @@
                <div class="form-group">
                   <h5 for="title_1">Tiêu đề</h5>
                   <input type="text" name="title_1" id="title_1" class="form-control"
-                  value="{{ $service->title_1 }}" required>
+                  value="{{ $service->title_1 }}">
                </div>
                <div class="form-group">
                   <h5 for="icon_1">Icon hiện tại</h5>
@@ -134,7 +134,7 @@
                <div class="form-group">
                   <h5 for="title_2">Tiêu đề</h5>
                   <input type="text" name="title_2" id="title_2" class="form-control"
-                  value="{{ $service->title_2 }}" required>
+                  value="{{ $service->title_2 }}">
                </div>
                <div class="form-group">
                   <h5 for="icon_2">Icon hiện tại</h5>
@@ -177,7 +177,7 @@
                <div class="form-group">
                   <h5 for="title_3">Tiêu đề</h5>
                   <input type="text" name="title_3" id="title_3" class="form-control"
-                  value="{{ $service->title_3 }}" required>
+                  value="{{ $service->title_3 }}">
                </div>
                <div class="form-group">
                   <h5 for="icon_3">Icon hiện tại</h5>
@@ -221,7 +221,7 @@
                <div class="form-group">
                   <h5 for="title_4">Tiêu đề</h5>
                   <input type="text" name="title_4" id="title_4" class="form-control"
-                  value="{{ $service->title_4 }}" required>
+                  value="{{ $service->title_4 }}">
                </div>
                <div class="form-group">
                   <h5 for="icon_4">Icon hiện tại</h5>
