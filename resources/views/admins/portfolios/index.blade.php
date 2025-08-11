@@ -111,7 +111,7 @@
                     <tbody>
                         @forelse($portfolios as $portfolio)
                             <tr>
-                                <td>{{ $portfolio->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $portfolio->name }}</td>
                                 <td>{{ $portfolio->location }}</td>
                                 <td>{{ $portfolio->client }}</td>

@@ -78,7 +78,7 @@
                     <tbody>
                         @forelse($partners as $partner)
                             <tr>
-                                <td>{{ $partner->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $partner->name }}</td>
                                 <td>
                                     @if ($partner->logo)

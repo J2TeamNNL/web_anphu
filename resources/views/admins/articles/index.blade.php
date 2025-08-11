@@ -92,7 +92,7 @@
                     <tbody>
                         @forelse($articles as $article)
                             <tr>
-                                <td>{{ $article->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $article->name }}</td>
                                 <td>
                                     @if ($article->thumbnail)

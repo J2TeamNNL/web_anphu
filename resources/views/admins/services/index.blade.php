@@ -71,14 +71,13 @@
                             <th>Tên dịch vụ</th>
                             <th>Ảnh đại diện</th>
                             <th>Mô tả</th>
-                            <th>Chi tiết</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($services as $service)
                             <tr>
-                                <td>{{ $service->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $service->name }}</td>
                                 <td>
                                     @if ($service->image)
@@ -94,11 +93,6 @@
                                 </td>
                                 <td class="text-left" style="max-width: 200px;">
                                     {{ \Illuminate\Support\Str::limit($service->description, 100) }}
-                                </td>
-                                <td>
-                                    <a href="{{ route('admin.services.show', $service) }}">
-                                        Chi tiết
-                                    </a>
                                 </td>
                                 <td>
                                     <a

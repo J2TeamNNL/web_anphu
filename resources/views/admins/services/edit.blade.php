@@ -59,7 +59,7 @@
             </div>
 
             <div class="form-group">
-               <h5 for="description">Mô tả</h5>
+               <h5 for="description">Mô tả sơ bộ</h5>
                <textarea
                   name="description"
                   id="description"
@@ -70,190 +70,85 @@
                </textarea>
             </div>
             
-            {{-- NỘI DUNG 1 --}}
+
+            
+            {{-- NỘI DUNG TIÊU ĐỀ --}}
             <div class="form-group">
-               <h5 class="text-primary d-flex justify-content-between align-items-center">
-                  Nội dung tóm tắt 1
-                  <button
-                     class="btn btn-sm btn-outline-primary"
-                     type="button"
-                     data-toggle="collapse"
-                     data-target="#content1"
-                     aria-expanded="false"
-                     aria-controls="content1"
-                  >
-                        <i class="fas fa-chevron-down"></i>
+               <h5 class="d-flex justify-content-between align-items-center"
+                  style="color: #030a36; background-color: #73c595; padding: 4px 12px; border-radius: 5px;"
+                  style="cursor: pointer;"
+                  data-toggle="collapse"
+                  data-target="#collapseTitles"
+                  aria-expanded="false"
+                  aria-controls="collapseTitles"
+               >
+                  Chỉnh sửa Nội dung tiêu đề
+                  <button class="btn btn-sm btn-outline-primary" type="button">
+                     <i class="fas fa-chevron-down"></i>
                   </button>
                </h5>
             </div>
 
-            <div class="collapse" id="content1">
-               <div class="form-group">
-                  <h5 for="title_1">Tiêu đề</h5>
-                  <input type="text" name="title_1" id="title_1" class="form-control"
-                  value="{{ $service->title_1 }}">
-               </div>
-               <div class="form-group">
-                  <h5 for="icon_1">Icon hiện tại</h5>
-                  <img
-                     src="{{ $service->icon_1 }}"
-                     alt="{{ $service->title_1 }}"
-                     class="img-thumbnail"
-                  >
-               </div>
-               <div class="form-group">
-                  <h5 for="icon_1">Thay icon mới (tùy chọn)</h5>
-                  <input type="file" name="icon_1" id="icon_1" class="form-control-file">
-               </div>
-               <div class="form-group">
-                  <h5 for="content_1">Nội dung</h5>
-                  <textarea name="content_1" id="content_1" rows="6" class="form-control">
-                     {{ $service->content_1 }}
-                  </textarea>
-               </div>
-            </div>
-
-            {{-- NỘI DUNG 2 --}}
-            <div class="form-group">
-               <h5 class="text-primary d-flex justify-content-between align-items-center">
-                  Nội dung tóm tắt 2
-                  <button
-                     class="btn btn-sm btn-outline-primary"
-                     type="button"
-                     data-toggle="collapse"
-                     data-target="#content2"
-                     aria-expanded="false"
-                     aria-controls="content2"
-                  >
-                        <i class="fas fa-chevron-down"></i>
-                  </button>
-               </h5>
-            </div>
-
-            <div class="collapse" id="content2">
-               <div class="form-group">
-                  <h5 for="title_2">Tiêu đề</h5>
-                  <input type="text" name="title_2" id="title_2" class="form-control"
-                  value="{{ $service->title_2 }}">
-               </div>
-               <div class="form-group">
-                  <h5 for="icon_2">Icon hiện tại</h5>
-                  <img
-                     src="{{ $service->icon_2 }}"
-                     alt="{{ $service->title_2 }}"
-                     class="img-thumbnail"
-                  >
-               </div>
-               <div class="form-group">
-                  <h5 for="icon_2">Thay icon mới (tùy chọn)</h5>
-                  <input type="file" name="icon_2" id="icon_2" class="form-control-file">
-               </div>
-               <div class="form-group">
-                  <h5 for="content_2">Nội dung</h5>
-                  <textarea name="content_2" id="content_2" rows="6" class="form-control">
-                     {{ $service->content_2 }}
-                  </textarea>
+            <div class="collapse" id="collapseTitles">
+               <div class="row">
+                  @for ($i = 1; $i <= 4; $i++)
+                     <div class="col-md-6 mb-4"
+                        style="
+                           border: 1px solid #ccc;
+                           border-radius: 15px;
+                           padding: 20px;
+                           background-color: #fff;
+                           box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+                           height: 100%;
+                           transition: box-shadow 0.2s ease, transform 0.2s ease;
+                        ">
+                        <div class="border rounded p-3 h-100">
+                           {{-- Form chỉnh sửa --}}
+                           <div class="form-group">
+                              <h5 for="title_{{ $i }}" class="text-primary">
+                                 Tiêu đề {{ $i }}
+                              </h5>
+                           </div>
+                           <div class="form-group">
+                              <input type="text" name="title_{{ $i }}" id="title_{{ $i }}" 
+                                 class="form-control" 
+                                 value="{{ $service->{'title_'.$i} }}">
+                           </div>
+                           <div class="form-group">
+                              <h5>Icon hiện tại</h5>
+                              @if($service->{'icon_'.$i})
+                                 <img src="{{ $service->{'icon_'.$i} }}" alt="" class="img-thumbnail mb-2" style="max-width: 100px;">
+                              @else 
+                                 <p class="text-muted">Chưa có icon</p>
+                              @endif
+                              <input type="file" name="icon_{{ $i }}" id="icon_{{ $i }}" class="form-control-file">
+                           </div>
+                           <div class="form-group">
+                              <h5 for="content_{{ $i }}">Nội dung</h5>
+                              <textarea name="content_{{ $i }}" id="content_{{ $i }}" rows="3" class="form-control">{{ $service->{'content_'.$i} }}</textarea>
+                           </div>
+                        </div>
+                     </div>
+                  @endfor
                </div>
             </div>
 
-            {{-- NỘI DUNG 3 --}}
-            <div class="form-group">
-               <h5 class="text-primary d-flex justify-content-between align-items-center">
-                  Nội dung tóm tắt 3
-                  <button
-                     class="btn btn-sm btn-outline-primary"
-                     type="button"
-                     data-toggle="collapse"
-                     data-target="#content3"
-                     aria-expanded="false"
-                     aria-controls="content3"
-                  >
-                        <i class="fas fa-chevron-down"></i>
-                  </button>
-               </h5>
-            </div>
-
-            <div class="collapse" id="content3">
-               <div class="form-group">
-                  <h5 for="title_3">Tiêu đề</h5>
-                  <input type="text" name="title_3" id="title_3" class="form-control"
-                  value="{{ $service->title_3 }}">
-               </div>
-               <div class="form-group">
-                  <h5 for="icon_3">Icon hiện tại</h5>
-                  <img
-                     src="{{ $service->icon_3 }}"
-                     alt="{{ $service->title_3 }}"
-                     class="img-thumbnail"
-                  >
-               </div>
-               <div class="form-group">
-                  <h5 for="icon_3">Thay icon mới (tùy chọn)</h5>
-                  <input type="file" name="icon_3" id="icon_3" class="form-control-file">
-               </div>
-
-               <div class="form-group">
-                  <h5 for="content_3">Nội dung</h5>
-                  <textarea name="content_3" id="content_3" rows="6" class="form-control">
-                     {{ $service->content_2 }}
-                  </textarea>
-               </div>
-            </div>
-
-            {{-- NỘI DUNG 4 --}}
-            <div class="form-group">
-               <h5 class="text-primary d-flex justify-content-between align-items-center">
-                  Nội dung tóm tắt 4
-                  <button
-                     class="btn btn-sm btn-outline-primary"
-                     type="button"
-                     data-toggle="collapse"
-                     data-target="#content4"
-                     aria-expanded="false"
-                     aria-controls="content4"
-                  >
-                        <i class="fas fa-chevron-down"></i>
-                  </button>
-               </h5>
-            </div>
-
-            <div class="collapse" id="content4">
-               <div class="form-group">
-                  <h5 for="title_4">Tiêu đề</h5>
-                  <input type="text" name="title_4" id="title_4" class="form-control"
-                  value="{{ $service->title_4 }}">
-               </div>
-               <div class="form-group">
-                  <h5 for="icon_4">Icon hiện tại</h5>
-                  <img
-                     src="{{ $service->icon_4 }}"
-                     alt="{{ $service->title_4 }}"
-                     class="img-thumbnail"
-                  >
-               </div>
-               <div class="form-group">
-                  <h5 for="icon_4">Thay icon mới (tùy chọn)</h5>
-                  <input type="file" name="icon_4" id="icon_4" class="form-control-file">
-               </div>
-               <div class="form-group">
-                  <h5 for="content_4">Nội dung</h5>
-                  <textarea name="content_4" id="content_4" rows="6" class="form-control">
-                     {{ $service->content_2 }}
-                  </textarea>
-               </div>
-            </div>
 
             {{-- NỘI DUNG DỊCH VỤ --}}
             <div class="form-group">
-               <h5 class="text-primary d-flex justify-content-between align-items-center">
+               <h5
+                  class="d-flex justify-content-between align-items-center"
+                  style="color: #030a36; background-color: #73c595; padding: 4px 12px; border-radius: 5px; cursor: pointer;"
+                  data-toggle="collapse"
+                  data-target="#contentService"
+                  aria-expanded="false"
+                  aria-controls="contentService"
+               >
                   Nội dung dịch vụ (quy trình thực hiện)
                   <button
                         class="btn btn-sm btn-outline-primary"
                         type="button"
-                        data-toggle="collapse"
-                        data-target="#contentService"
-                        aria-expanded="false"
-                        aria-controls="contentService"
+                        aria-label="Toggle Nội dung dịch vụ"
                   >
                         <i class="fas fa-chevron-down"></i>
                   </button>
@@ -277,15 +172,19 @@
 
             {{-- NỘI DUNG BÁO GIÁ --}}
             <div class="form-group">
-               <h5 class="text-primary d-flex justify-content-between align-items-center">
+               <h5
+                  class="d-flex justify-content-between align-items-center"
+                  style="color: #030a36; background-color: #73c595; padding: 4px 12px; border-radius: 5px; cursor: pointer;"
+                  data-toggle="collapse"
+                  data-target="#contentPrice"
+                  aria-expanded="false"
+                  aria-controls="contentPrice"
+               >
                   Nội dung báo giá Dich vụ
                   <button
                         class="btn btn-sm btn-outline-primary"
                         type="button"
-                        data-toggle="collapse"
-                        data-target="#contentPrice"
-                        aria-expanded="false"
-                        aria-controls="contentPrice"
+                        aria-label="Toggle Nội dung báo giá"
                   >
                         <i class="fas fa-chevron-down"></i>
                   </button>

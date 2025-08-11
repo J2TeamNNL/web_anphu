@@ -48,7 +48,7 @@
                     <tbody>
                         @forelse($users as $user)
                             <tr>
-                                <td>{{ $user->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>
                                     @if ($user->avatar)

@@ -175,7 +175,7 @@ class ServiceController extends Controller
 
     public function show(Service $service)
     {   
-        return view('customers.partials.detail', compact('service'));
+        //
     }
 
     public function destroy(Service $service)
