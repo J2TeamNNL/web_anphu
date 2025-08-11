@@ -2,11 +2,10 @@
 
 @push('styles')
 <style>
-    /* Container bao ngoài giữ nội dung quill giữa */
     .service-wrapper {
         position: relative;
         display: grid;
-        grid-template-columns: 240px 1fr;
+        grid-template-columns: 220px 1fr;
         gap: 2rem;
         max-width: 1200px;
         margin: 0 auto;
@@ -15,7 +14,7 @@
     /* Sidebar mục lục sticky */
     .service-toc {
         position: sticky;
-        top: 100px; /* Khoảng cách từ trên khi bám */
+        top: 100px;
         background: #fff;
         padding: 0.75rem;
         border-radius: 6px;
@@ -49,12 +48,19 @@
         color: #333;
         font-size: 0.9rem;
         display: block;
-        transition: color 0.2s ease;
+        transition: color 0.2s ease, background-color 0.2s ease;
+        padding: 4px 6px;
+        border-radius: 4px;
     }
 
-    .service-toc a:hover,
-    .service-toc a.active {
+    .service-toc a:hover {
+        background-color: rgba(201,176,55,0.1);
         color: #C9B037;
+    }
+
+    .service-toc a.active {
+        background-color: #C9B037;
+        color: white;
         font-weight: 500;
     }
 
@@ -62,7 +68,7 @@
     .service-content {
         padding: 2rem;
         background-color: #fff;
-        border: 1px solid rgba(0,0,0,0.3);
+        border: 2px solid #C9B037;
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         border-radius: 6px;
         animation: fadeInUp 0.6s ease;
@@ -136,9 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const headings = content.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
     headings.forEach((heading, index) => {
-        if (!heading.id) {
-            heading.id = "section-" + index;
-        }
+        if (!heading.id) heading.id = "section-" + index;
 
         const li = document.createElement("li");
         const a = document.createElement("a");
@@ -154,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tocList.appendChild(li);
     });
 
-    // Scroll mượt khi click mục lục
+    // Smooth scroll
     document.querySelectorAll(".toc-link").forEach(link => {
         link.addEventListener("click", function (e) {
             e.preventDefault();
@@ -162,14 +166,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const targetEl = document.getElementById(targetId);
             if (targetEl) {
                 window.scrollTo({
-                    top: targetEl.offsetTop - 80, // chừa khoảng header
+                    top: targetEl.offsetTop - 80,
                     behavior: "smooth"
                 });
             }
         });
     });
 
-    // Highlight mục lục khi cuộn
+    // Highlight on scroll
     const tocLinks = document.querySelectorAll(".toc-link");
     window.addEventListener("scroll", () => {
         let fromTop = window.scrollY + 120;
@@ -179,9 +183,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 section.offsetTop <= fromTop &&
                 section.offsetTop + section.offsetHeight > fromTop
             ) {
+                tocLinks.forEach(l => l.classList.remove("active"));
                 link.classList.add("active");
-            } else {
-                link.classList.remove("active");
             }
         });
     });

@@ -27,28 +27,39 @@
         box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
     }
 
-    /* Container bao ngoài giữ nội dung quill giữa */
-    .service-wrapper {
-        position: relative;
-        max-width: 900px; /* bề rộng nội dung chính */
-        margin: 0 auto;   /* căn giữa */
+    .service-section-bg {
+        background-image: url("{{ asset('assets/img/gallery/background_construction_1.webp') }}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: #181f2f;
+        width: 100%;
+        padding: 1px 0;
     }
 
-    /* Sidebar mục lục tách hẳn sang trái */
+    .service-wrapper {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
     .service-toc {
-        position: absolute;
-        left: -260px; /* đẩy hẳn sang trái */
-        top: 0;
-        width: 220px;
+        position: sticky;
+        top: 100px; /* khoảng cách từ top khi sticky */
+        align-self: start;
         background: #fff;
         padding: 0.75rem;
         border-radius: 6px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         word-wrap: break-word;
         overflow-wrap: break-word;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
     }
 
-    .service-toc h5 {
+    .service-toc h4 {
         font-size: 0.95rem;
         margin-bottom: 0.5rem;
         font-weight: 600;
@@ -57,7 +68,7 @@
 
     .service-toc ul {
         list-style: none;
-        padding-left: 1rem;
+        padding-left: 0;
         margin: 0;
     }
 
@@ -70,65 +81,47 @@
         text-decoration: none;
         color: #333;
         font-size: 0.9rem;
-        display: inline-block; /* Cho phép wrap text */
-        white-space: normal;   /* Cho phép xuống dòng */
+        display: block;
+        transition: all 0.2s ease;
+        border-radius: 4px;
+        padding: 4px 6px;
     }
 
-    .service-toc a:hover,
-    .service-toc a.active {
+    .service-toc a:hover {
+        background-color: rgba(201, 176, 55, 0.15);
         color: #C9B037;
         font-weight: 500;
     }
 
-    /* Nội dung chi tiết */
-    .content-service-section {
-        padding: 2rem;
-        background-color: #fff;
-        border: 1px solid rgba(0,0,0,0.3); /* viền mờ cho cả 4 cạnh */
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* hiệu ứng nổi nhẹ */
-        border-radius: 6px; /* bo nhẹ cho mềm mại hơn */
-        animation: fadeInUp 0.6s ease;
-    }
-    .content-service-section p {
-        font-size: 1.05rem;
-        line-height: 1.75;
-        margin-bottom: 1rem;
-    }
-    .content-service-section h1,
-    .content-service-section h2,
-    .content-service-section h3 {
-        margin-top: 1.5rem;
-        color: #030a36;
+    .service-toc a.active {
+        background-color: #C9B037;
+        color: #fff !important;
         font-weight: 600;
     }
 
-    .content-service-section img {
-        max-width: 100% !important;;
-        height: auto !important;
-        display: block;
-        margin: 0 auto;
+    .content-service-section {
+        padding: 2rem;
+        background-color: #fff;
+        border: 2px solid #C9B037;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border-radius: 6px;
     }
 
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Responsive */
     @media (max-width: 1024px) {
+        .service-wrapper {
+            grid-template-columns: 1fr;
+        }
         .service-toc {
             position: static;
-            left: auto;
-            width: 100%;
+            max-height: none;
+            overflow-y: visible;
             margin-bottom: 1rem;
         }
     }
 </style>
 @endpush
 
-
 @section('content')
-
 <section class="bg-light py-5">
     <div class="container">
         <div class="text-center mb-5">
@@ -162,38 +155,56 @@
                 @endif
             @endforeach
         </div>
-
-        {{-- Nội dung chi tiết dịch vụ kèm mục lục --}}
-        @if (!empty($service->content_service))
-            <div class="service-wrapper mt-5">
-                <!-- Sidebar mục lục -->
-                <aside class="service-toc">
-                    <h4>Mục lục</h4>
-                    <ul id="service-toc-list"></ul>
-                </aside>
-
-                <!-- Nội dung -->
-                <div class="content-service-section" id="service-content">
-                    {!! $service->content_service !!}
-                </div>
-            </div>
-        @endif
-            
-        {{-- Nút báo giá --}}
-        <div class="row">
-            <div class="col-12 text-center mt-4">
-                <a href="{{ route('customers.service.price', $service->slug) }}" class="btn-outline-shadow">
-                    📄 Báo giá dịch vụ
-                </a>
-            </div>
-        </div>
     </div>
 </section>
+
+{{-- Phần content_service với mục lục sticky --}}
+@if (!empty($service->content_service))
+<div class="service-section-bg">
+<h3
+    style="
+        text-align: center;
+        font-weight: 700;
+        margin: 2rem 0;
+        font-family: 'Poppins', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        background: linear-gradient(45deg, #FFD700, #C9B037);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 10px rgba(201,176,55,0.6);
+    "
+>
+    Chi tiết dịch vụ {{ $service->name }}
+</h3>
+    <div class="service-wrapper mt-5">
+        <!-- Sidebar mục lục -->
+        <aside class="service-toc">
+            <h4>Mục lục</h4>
+            <ul id="service-toc-list"></ul>
+        </aside>
+
+        <!-- Nội dung dịch vụ -->
+        <div class="content-service-section" id="service-content">
+            {!! $service->content_service !!}
+        </div>
+    </div>
+</div>
+@endif
+
+{{-- Nút báo giá --}}
+<div class="row">
+    <div class="col-12 text-center mt-4">
+        <a href="{{ route('customers.service.price', $service->slug) }}" class="btn-outline-shadow">
+            📄 Báo giá dịch vụ
+        </a>
+        <hr>
+    </div>
+</div>
 
 @include('customers.partials.sign_up_1')
 @include('customers.partials.anphu.demo_projects')
 @include('customers.partials.anphu.partner')
-
 @endsection
 
 @push('scripts')
@@ -201,23 +212,21 @@
 document.addEventListener("DOMContentLoaded", function () {
     const content = document.getElementById("service-content");
     const tocList = document.getElementById("service-toc-list");
+
+    if (!content || !tocList) return;
+
     const headings = content.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
     headings.forEach((heading, index) => {
-        // Tạo id cho heading nếu chưa có
-        if (!heading.id) {
-            heading.id = "section-" + index;
-        }
+        if (!heading.id) heading.id = "section-" + index;
 
-        // Tạo mục trong TOC
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.href = "#" + heading.id;
         a.textContent = heading.textContent;
         a.classList.add("toc-link");
 
-        // Căn lề & font theo cấp độ heading
-        const level = parseInt(heading.tagName.substring(1)); // 1-6
+        const level = parseInt(heading.tagName.substring(1));
         a.style.paddingLeft = `${(level - 1) * 15}px`;
         a.style.fontSize = `${1 - (level - 1) * 0.05}rem`;
 
@@ -225,7 +234,22 @@ document.addEventListener("DOMContentLoaded", function () {
         tocList.appendChild(li);
     });
 
-    // Highlight mục lục khi cuộn
+    // Cuộn mượt khi click
+    document.querySelectorAll(".toc-link").forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href").substring(1);
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+                window.scrollTo({
+                    top: targetEl.offsetTop - 80, // chừa khoảng trống header
+                    behavior: "smooth"
+                });
+            }
+        });
+    });
+
+    // Highlight mục lục khi scroll
     const tocLinks = document.querySelectorAll(".toc-link");
     window.addEventListener("scroll", () => {
         let fromTop = window.scrollY + 120;
@@ -235,12 +259,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 section.offsetTop <= fromTop &&
                 section.offsetTop + section.offsetHeight > fromTop
             ) {
+                tocLinks.forEach(l => l.classList.remove("active"));
                 link.classList.add("active");
-            } else {
-                link.classList.remove("active");
             }
         });
     });
 });
+
 </script>
 @endpush
