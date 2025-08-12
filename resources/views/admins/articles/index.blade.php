@@ -51,17 +51,11 @@
                         >
                     </div>
 
-                    <div class="form-group">
-                        <select name="category_id" id="category_id" class="form-control">
-                            <option value="">-- Chọn danh mục --</option>
-                            @foreach ($categories as $cat)
-                                <option value="{{ $cat->id }}"
-                                    {{ old('category_id') == $cat->id ? 'selected' : '' }}>
-                                    {{ $cat->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    <x-category-select 
+                        :categories="$categories"
+                        :showChildren="false"
+                        :label="null"
+                    />
 
                     <div class="col-md-2 mb-2">
                         <button class="btn btn-primary w-100" type="submit">

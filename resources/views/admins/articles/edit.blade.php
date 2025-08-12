@@ -49,29 +49,12 @@
 
             <input type="hidden" name="type" value="article">
 
-            <div class="form-group">
-               <label for="category_id">Danh mục bài đăng</label>
-               <select name="category_id" id="category_id" class="form-control select2">
-                  <option value="">-- Chọn danh mục --</option>
-                  @foreach ($categories as $cat)
-                        {{-- Option cho cấp 1 --}}
-                        <option value="{{ $cat->id }}"
-                           {{ old('category_id', $article->category_id) == $cat->id ? 'selected' : '' }}>
-                           {{ $cat->name }}
-                        </option>
-
-                        {{-- Nếu có cấp con, hiển thị thêm --}}
-                        @if ($cat->children->isNotEmpty())
-                           @foreach ($cat->children as $child)
-                              <option value="{{ $child->id }}"
-                                 {{ (old('category_id', $article->category_id) == $child->id) ? 'selected' : '' }}>
-                                       {{ $child->name }}
-                                 </option>
-                           @endforeach
-                        @endif
-                  @endforeach
-               </select>
-            </div>
+            <x-category-select 
+                label="Danh mục bài đăng"
+                :categories="$categories"
+                :selected="$article->category_id"
+                class="form-control select2"
+            />
 
             <div class="form-group">
                <label>Ảnh đại diện hiện tại</label><br>

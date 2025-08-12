@@ -72,21 +72,12 @@
                 <input type="hidden" name="type" value="portfolio">
 
                 {{-- Danh mục --}}
-                <div class="form-group">
-                    <label for="category_id">Danh mục công trình</label>
-                    <select name="category_id" id="category_id" class="form-control select2">
-                        <option value="">-- Chọn danh mục --</option>
-                        @foreach ($categories as $cat)
-                            <optgroup label="{{ $cat->name }}">
-                                @foreach ($cat->children as $child)
-                                    <option value="{{ $child->id }}" {{ old('category_id') == $child->id ? 'selected' : '' }}>
-                                        — {{ $child->name }}
-                                    </option>
-                                @endforeach
-                            </optgroup>
-                        @endforeach
-                    </select>
-                </div>
+                <x-category-select 
+                    label="Danh mục công trình"
+                    :categories="$categories"
+                    :useOptgroup="true"
+                    class="form-control select2"
+                />
 
                 <div class="text-right">
                     <button type="submit" class="btn btn-warning font-weight-bold">
