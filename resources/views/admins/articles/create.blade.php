@@ -66,9 +66,7 @@
                   id="description"
                   rows="4"
                   class="form-control"
-               >
-                  {{ old('description') }}
-               </textarea>
+               >{{ old('description') }}</textarea>
             </div>
 
             {{-- Component Quill --}}
