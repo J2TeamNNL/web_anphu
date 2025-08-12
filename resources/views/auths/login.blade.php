@@ -1,7 +1,7 @@
 @extends('auths.layouts.master')
 
 @section('content')
-<form method="POST" action="{{ route('auths.process_login') }}">
+<form method="POST" action="{{ route('process_login') }}">
     @csrf
     
     <div class="form-group">
@@ -38,11 +38,5 @@
         <i class="fas fa-sign-in-alt me-2"></i>
         Đăng nhập vào hệ thống
     </button>
-    
-    <div class="text-center mt-3">
-        <p class="mb-0">Chưa có tài khoản? 
-            <a href="{{ route('auths.register') }}" class="auth-link">Đăng ký ngay</a>
-        </p>
-    </div>
 </form>
 @endsection

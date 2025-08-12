@@ -28,14 +28,14 @@ class AuthController extends Controller
             return redirect()->route('admin.portfolios.index');
         }
 
-        return redirect()->route('auths.login')
+        return redirect()->route('login')
             ->withErrors(['message' => 'Email hoặc mật khẩu không đúng.']);
     }
 
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('auths.login');
+        return redirect()->route('login');
     }
 
     public function register()
@@ -58,7 +58,7 @@ class AuthController extends Controller
         UserRegisteredEvent::dispatch($user);
         // Dispatch the event after user registration
 
-        return redirect()->route('auths.login')
+        return redirect()->route('login')
         ->with('success', 'Registration successful! Please log in.');
     }
 }

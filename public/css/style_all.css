@@ -68,7 +68,6 @@ body {
 .top-bar i {
     color: var(--color-white);
     transition: color 0.3s ease;
-    margin-right: 5px;
 }
 
 .top-bar a:hover,
