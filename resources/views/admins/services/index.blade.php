@@ -29,10 +29,6 @@
 @section('content')
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0">Xin chào {{ session('name')}}</h5>
-    </div>
-
-    <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0 text-primary">Danh sách Dịch vụ</h4>
         <a href="{{ route('admin.services.create') }}" class="btn btn-success">+ Thêm Dịch vụ</a>
     </div>

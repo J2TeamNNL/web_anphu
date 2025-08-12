@@ -4,10 +4,6 @@
 @section('content')
 <div class="container-fluid my-4">
       <div class="d-flex justify-content-between align-items-center mb-3">
-         <h5 class="mb-0">Xin chào {{ session('name') }}</h5>
-      </div>
-
-      <div class="d-flex justify-content-between align-items-center mb-3">
          <h4 class="mb-0 text-primary">Danh sách lịch tư vấn</h4>
          <div class="d-flex gap-2">
             <a href="#" class="btn btn-primary d-none" id="save-status-btn">Lưu trạng thái</a>
