@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Media;
+use App\Jobs\UploadImageToCloudinaryJob;
+use App\Services\MediaStorageService;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
@@ -10,8 +12,14 @@ use Exception;
 
 class ImageUploadService
 {
+    protected MediaStorageService $storageService;
+
+    public function __construct(MediaStorageService $storageService)
+    {
+        $this->storageService = $storageService;
+    }
     /**
-     * Upload image to Cloudinary and create media record.
+     * Upload image with async processing - save locally first, then upload to Cloudinary via job.
      *
      * @param UploadedFile $file
      * @param string $table
@@ -20,34 +28,33 @@ class ImageUploadService
     public function uploadImage(UploadedFile $file, string $table): Media
     {
         try {
-            // Upload to Cloudinary
-            $uploadResult = $this->uploadToCloudinary($file, $table);
+            // Save file to temporary storage using centralized service
+            $storageResult = $this->storageService->saveToTempStorage($file);
             
-            // Create media record
+            // Create media record with temporary local URL
             $media = $this->createMediaRecord(
-                $uploadResult['secure_url'],
-                $uploadResult['public_id'],
+                $storageResult['temp_url'],
+                'temp_' . uniqid(), // Temporary public_id
                 'image'
             );
+            
+            // Generate permanent proxy URL that will work with Quill
+            $permanentUrl = route('media.serve', $media);
+            
+            // Update media record with permanent URL
+            $media->update(['url' => $permanentUrl]);
 
-            // Log successful upload
+            // Dispatch job to upload to Cloudinary asynchronously
+            UploadImageToCloudinaryJob::dispatch($storageResult['local_path'], $media->id, $table);
+
+            Log::info('Image saved locally and job dispatched', [
+                'media_id' => $media->id,
+                'local_path' => $storageResult['local_path'],
+                'temp_url' => $storageResult['temp_url']
+            ]);
+
             return $media;
 
-        } catch (\CloudinaryLabs\CloudinaryLaravel\CloudinaryException $e) {
-            Log::error('Cloudinary upload failed', [
-                'error' => $e->getMessage(),
-                'original_name' => $file->getClientOriginalName(),
-                'size' => $file->getSize()
-            ]);
-            throw new Exception('Lỗi dịch vụ lưu trữ ảnh. Vui lòng thử lại sau.');
-            
-        } catch (\Illuminate\Database\QueryException $e) {
-            Log::error('Database error during media creation', [
-                'error' => $e->getMessage(),
-                'original_name' => $file->getClientOriginalName()
-            ]);
-            throw new Exception('Lỗi lưu thông tin ảnh. Vui lòng thử lại.');
-            
         } catch (\Exception $e) {
             Log::error('Unexpected error during image upload', [
                 'error' => $e->getMessage(),
@@ -58,6 +65,14 @@ class ImageUploadService
             ]);
             throw new Exception('Tải ảnh lên thất bại. Vui lòng thử lại.');
         }
+    }
+
+    /**
+     * Upload file to Cloudinary from job.
+     */
+    public function uploadToCloudinaryFromJob(UploadedFile $file, string $table): array
+    {
+        return $this->uploadToCloudinary($file, $table);
     }
 
     /**
