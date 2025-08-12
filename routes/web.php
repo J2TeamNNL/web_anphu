@@ -13,20 +13,14 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConsultingRequestController;
 use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CloudinaryDemoController;
+use App\Http\Controllers\MediaProxyController;
 use App\Http\Middleware\CheckSuperAdminMiddleware;
 
-// Cloudinary Demo Routes - Using Storage Disk
-Route::prefix('cloudinary-demo')->name('cloudinary-demo.')->group(function () {
-    Route::get('/', [CloudinaryDemoController::class, 'index'])->name('index');
-    Route::get('/create', [CloudinaryDemoController::class, 'create'])->name('create');
-    Route::post('/upload', [CloudinaryDemoController::class, 'store'])->name('store');
-    Route::get('/list', [CloudinaryDemoController::class, 'list'])->name('list');
-    Route::get('/show/{path}', [CloudinaryDemoController::class, 'show'])->name('show')->where('path', '.*');
-    Route::delete('/delete/{path}', [CloudinaryDemoController::class, 'destroy'])->name('destroy')->where('path', '.*');
-});
 
 Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index');
+
+// Media proxy route for serving images (local or Cloudinary)
+Route::get('/media/{media}', [MediaProxyController::class, 'serve'])->name('media.serve');
 
 Route::group(['prefix' => ''], function () {
     Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
@@ -53,10 +47,10 @@ Route::get('/consultant', [CustomerController::class, 'consultant'])->name('cust
 Route::get('/contact', [CustomerController::class, 'contact'])->name('customers.contact');
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', [AuthController::class, 'login'])->name('auths.login');
-    Route::post('/', [AuthController::class, 'processLogin'])->name('auths.process_login');
-    Route::get('/register', [AuthController::class, 'register'])->name('auths.register');
-    Route::post('/register', [AuthController::class, 'processRegister'])->name('auths.process_register');
+    Route::get('/', [AuthController::class, 'login'])->name('login');
+    Route::post('/', [AuthController::class, 'processLogin'])->name('process_login');
+    Route::get('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/register', [AuthController::class, 'processRegister'])->name('process_register');
 });
 
 Route::post('/consulting-requests/store', [ConsultingRequestController::class, 'store'])->name('consulting_requests.store');
@@ -77,7 +71,6 @@ Route::prefix('admin')->name('admin.')
    ]);
 
    Route::post('/media/upload-image', [MediaController::class, 'uploadImage'])
-      ->middleware(['throttle:10,1'])
       ->name('media.uploadImage');
 
 
