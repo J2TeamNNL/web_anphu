@@ -29,7 +29,6 @@ return [
         'address_2' => 'Thị trấn Hoàn Long, Hưng Yên',
         'email' => 'kientrucnoithat.anphu@gmail.com',
         'email_link' => 'mailto:kientrucnoithat.anphu@gmail.com',
-        'website' => 'https://anphudesign.vn',
     ],
 
     'business' => [
@@ -90,14 +89,7 @@ return [
         ],
     ],
 
-    'copyright' => [
-        'year' => '2025',
-        'text' => '© 2025 – Công Ty TNHH Tư vấn Thiết Kế Kiến trúc và Nội thất An Phú.',
-        'full_text' => '© 2025 Công Ty TNHH Tư vấn Thiết Kế Kiến trúc và Nội thất An Phú',
-    ],
-
     'privacy_policy' => [
-        'url' => '#',
         'text' => 'Chính Sách Công ty',
     ],
 
