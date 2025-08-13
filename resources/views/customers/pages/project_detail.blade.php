@@ -213,7 +213,7 @@
 
                 <div class="portfolio-extra">
                     <h5>Nội dung khác</h5>
-                    <p>DV có thể thêm thông tin bổ sung ở đây.</p>
+                    <p></p>
                 </div>
             </div>
         </div>

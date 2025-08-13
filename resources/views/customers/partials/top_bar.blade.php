@@ -19,14 +19,14 @@
                     <a href="{{ config('company.contact.phone_link_1') }}">
                         <i class="fa fa-phone-alt mr-1"></i>
                         Zalo:
-                        {{ $companySettings->company_phone_1 }}
+                        {{ $companySettings?->company_phone_1 }}
                     </a>
                 </div>
                 <div>
                     <a href="{{ config('company.contact.phone_link_2') }}">
                         <i class="fa fa-phone-alt mr-1"></i>
                         Hotline:
-                        {{ $companySettings->company_phone_2 }}
+                        {{ $companySettings?->company_phone_2 }}
                     </a>
                 </div>
                 <div>

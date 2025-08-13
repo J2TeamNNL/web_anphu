@@ -107,7 +107,7 @@
             <div class="text-center mb-4">
                 <a href="{{ route('blogs.index', $parentCategory->slug) }}"
                    class="btn btn-sm lux-btn active">
-                    Tất cả Video
+                    Tất cả
                 </a>
                 @foreach($childCategories as $child)
                     <a href="{{ route('blogs.index', ['slug' => $parentCategory->slug, 'child' => $child->slug]) }}"

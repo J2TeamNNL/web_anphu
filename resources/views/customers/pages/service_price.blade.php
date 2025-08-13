@@ -186,7 +186,7 @@
 
                 <div class="service-extra">
                     <h5>Nội dung khác</h5>
-                    <p>Đây là khu vực dự trữ để DV thêm thông tin sau này.</p>
+                    <p></p>
                 </div>
             </div>
         </div>
