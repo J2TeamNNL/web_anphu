@@ -142,7 +142,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="blogDropdown">
 
-                        @if($videoCategory->children->isNotEmpty())
+                        @if($videoCategory?->children?->isNotEmpty())
                             @foreach($videoCategory->children as $child)
                                 <a
                                     class="dropdown-item small ps-4 {{ request()->is('bai-dang/video/' . $child->slug) ? 'active' : '' }}"
