@@ -31,8 +31,7 @@
                   id="description"
                   rows="4"
                   class="form-control"
-               >
-                  {{ old('description', $article->description) }}
+               >{{ old('description', $article->description) }}
                </textarea>
             </div>
 
@@ -50,11 +49,19 @@
             <input type="hidden" name="type" value="article">
 
             <x-category-select 
-                label="Danh mục bài đăng"
-                :categories="$categories"
-                :selected="$article->category_id"
-                class="form-control select2"
+               label="Danh mục bài đăng"
+               :categories="$categories"
+               :selected="$article->category_id"
+               :useOptgroup="true"
+               class="form-control select2"
             />
+
+            {{-- <x-category-select 
+               label="Danh mục bài đăng"
+               :categories="$categories"
+               :useOptgroup="true"
+               class="form-control select2"
+            /> --}}
 
             <div class="form-group">
                <label>Ảnh đại diện hiện tại</label><br>

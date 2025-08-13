@@ -25,6 +25,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="location">Diện tích m2 (nếu có)</label>
+                    <input type="text" name="area" id="area" class="form-control" value="{{ old('area', $portfolio->area) }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Số tầng (nếu có)</label>
+                    <input type="text" name="story" id="story" class="form-control" value="{{ old('story', $portfolio->story) }}">
+                </div>
+
+                <div class="form-group">
                     <label for="client">Khách hàng</label>
                     <input type="text" name="client" id="client" class="form-control" value="{{ old('client', $portfolio->client) }}">
                 </div>
@@ -50,9 +60,7 @@
                         id="description"
                         rows="4"
                         class="form-control"
-                    >
-                        {{ old('description', $portfolio->description) }}
-                    </textarea>
+                    >{{ old('description', $portfolio->description) }}</textarea>
                 </div>
 
                 <div class="form-group">

@@ -77,7 +77,7 @@ return [
             'bocongthuong' => 'assets/img/logo/bocongthuong_thongbao.png',
         ],
         'background' => [
-            'footer' => 'assets/img/gallery/background_wooden_1.jpg',
+            'footer' => 'assets/img/gallery/background_danmask_1.jpg',
         ],
     ],
 
@@ -98,5 +98,9 @@ return [
         'saturday' => '8:00 - 12:00',
         'sunday' => 'Nghỉ',
         'text' => 'Thứ 2 - Thứ 6: 8:00 - 17:30 | Thứ 7: 8:00 - 12:00',
+    ],
+    
+    'copyright' => [
+        'text' => '© An Phú Build. All rights reserved.',
     ],
 ];

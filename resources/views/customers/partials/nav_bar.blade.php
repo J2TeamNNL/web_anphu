@@ -1,6 +1,9 @@
 @php
     $homeRoutes = ['customers.index'];
 
+    $videoCategory = $blogsCategories->firstWhere('name', 'Video');
+    $videoRoutes = ['customers.video.index'];
+
     $aboutRoutes = [
         'about.anphu',
         'about.open_letter',
@@ -85,7 +88,7 @@
                                 class="dropdown-item small {{ request()->is('du-an/danh-muc/' . $category->slug) ? 'active' : '' }}"
                                 href="{{ route('projects.byCategory', ['slug' => $category->slug]) }}"
                             >
-                                <i class="fa fa-folder me-2 icon-highlight"></i>
+                                <i class="fa fa-project-diagram icon-highlight"></i>
                                  {{ $category->name }}
                             </a>
                         @endforeach
@@ -102,27 +105,54 @@
                                 class="dropdown-item small {{ request()->is('bao-gia/' . $service->slug) ? 'active' : '' }}"
                                 href="{{ route('customers.service.price', $service->slug) }}"
                             >
-                                <i class="fa fa-tools me-2 icon-highlight"></i>
+                                <i class="fa fa-tags me-2 icon-highlight"></i>
                                 Báo giá {{ $service->name }}
                             </a>
                         @endforeach
                     </div>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('bai-dang/*') ? 'active' : '' }}">
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('bai-dang/danh-muc/*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="blogDropdown" data-toggle="dropdown">
                         <i class="fa fa-newspaper me-1"></i> Hoạt động
                     </a>
                     <div class="dropdown-menu" aria-labelledby="blogDropdown">
                         @foreach($blogsCategories as $category)
-                            <a
-                                class="dropdown-item small {{ request()->is('bai-dang/danh-muc/' . $category->slug) ? 'active' : '' }}"
-                                href="{{ route('blogs.index', ['slug' => $category->slug]) }}"
-                            >
-                                <i class="fa fa-bookmark me-2 icon-highlight"></i>
-                                 {{ $category->name }}
-                            </a>
+                            @if(strtolower($category->name) !== 'video') {{-- loại Video --}}
+                                <a
+                                    class="dropdown-item small {{ request()->is('bai-dang/danh-muc/' . $category->slug) ? 'active' : '' }}"
+                                    href="{{ route('blogs.index', ['slug' => $category->slug]) }}"
+                                >
+                                    <i class="fa fa-newspaper me-2 icon-highlight"></i>
+                                    {{ $category->name }}
+                                </a>
+                            @endif
                         @endforeach
+                    </div>
+                </li>
+
+                <li
+                    class="
+                    nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small
+                    {{ request()->is('bai-dang/video/*') ? 'active' : '' }}
+                    "
+                >
+                    <a class="nav-link dropdown-toggle text-center" href="#" id="blogDropdown" data-toggle="dropdown">
+                        <i class="fa fa-video me-1"></i> Video
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="blogDropdown">
+
+                        @if($videoCategory->children->isNotEmpty())
+                            @foreach($videoCategory->children as $child)
+                                <a
+                                    class="dropdown-item small ps-4 {{ request()->is('bai-dang/video/' . $child->slug) ? 'active' : '' }}"
+                                    href="{{ route('customers.video.index', ['slug' => $child->slug]) }}"
+                                >
+                                    <i class="fa fa-video me-2"></i>
+                                    {{ $child->name }}
+                                </a>
+                            @endforeach
+                        @endif
                     </div>
                 </li>
 

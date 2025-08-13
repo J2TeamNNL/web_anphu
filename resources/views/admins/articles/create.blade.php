@@ -30,10 +30,18 @@
 
             <input type="hidden" name="type" value="article">
 
-            <x-category-select 
+            {{-- <x-category-select 
                 label="Danh mục bài đăng"
                 :categories="$categories"
                 class="form-control select2"
+            /> --}}
+
+            {{-- Danh mục --}}
+            <x-category-select 
+               label="Danh mục bài đăng"
+               :categories="$categories"
+               :useOptgroup="true"
+               class="form-control select2"
             />
 
             <div class="form-group">

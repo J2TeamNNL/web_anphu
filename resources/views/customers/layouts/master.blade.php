@@ -24,6 +24,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/style_all.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style_side_panel.css') }}">
 
     @stack('styles')
     
@@ -34,6 +35,8 @@
     @include('customers.partials.nav_bar')
 
     @yield('content')
+
+    @include('customers.partials.side_panel')
 
     @include('customers.partials.footer')
 
@@ -59,6 +62,11 @@
             once: true
         });
         
+        // Side Panel
+        document.getElementById('toggleSidePanel').addEventListener('click', function() {
+            document.querySelector('.anphu-side-panel').classList.toggle('collapsed');
+        });
+
         // Initialize Select2
         $(document).ready(function() {
             if ($('.select2').length > 0) {

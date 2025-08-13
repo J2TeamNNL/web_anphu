@@ -1,148 +1,123 @@
 @extends('customers.layouts.master')
+
 @push('styles')
 <style>
-    .btn-outline-shadow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background-color: white;
-        color: #007bff;
-        font-size: 1.05rem;
-        font-weight: 600;
-        border: 2px solid #007bff;
-        border-radius: 50px;
-        padding: 12px 28px;
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.25);
-        transition: all 0.3s ease;
-        text-decoration: none;
-    }
-    .btn-outline-shadow:hover {
-        background-color: #007bff;
-        color: white;
-        box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
-        transform: translateY(-2px);
-    }
-    .btn-outline-shadow:active {
-        transform: translateY(0);
-        box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
+    /* ==== Luxury Gold on Dark theme ==== */
+    :root {
+        --gold: #C9B037;
+        --navy-dark: #0b1c2c;
+        --navy-medium: #142d4c;
+        --text-light: #fff;
     }
 
+    /* Background chính */
     .service-section-bg {
-        /* background-image: url("{{ asset('assets/img/gallery/background_construction_1.jpg') }}"); */
-        background-size: cover;
+        background-color: #0b1c2c; /* fallback */
+        background-image:
+            linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+            url('/assets/img/gallery/background_danmask_1.jpg');
         background-position: center;
-        background-repeat: no-repeat;
-        background-color: #2a3650;
-        width: 100%;
-        padding: 1px 0;
+        background-repeat: repeat;
+        background-size: auto;
+        background-attachment: fixed; /* parallax */
+        position: relative;
+        border-bottom: 3px solid var(--anphu-gold);
+    }
+        
+
+    /* Heading gradient vàng */
+    .heading-service-detail {
+        text-align: center;
+        font-weight: 700;
+        font-family: 'Poppins', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        background: linear-gradient(90deg, #eac976, #d4a537);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        text-shadow: 0 0 10px rgba(201,176,55,0.6);
     }
 
-    .service-wrapper {
-        display: grid;
-        grid-template-columns: 240px 1fr;
-        gap: 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
+    /* Card dịch vụ */
+    .card-service {
+        background-color: var(--navy-dark);
+        border: 2px solid var(--gold);
+        color: var(--text-light);
+        transition: all 0.3s ease;
+    }
+    .card-service:hover {
+        background: linear-gradient(135deg, #0c2b3a, #134e60);
+        color: var(--color-white);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(201,176,55,0.4);
+    }
+    .card-service h5 {
+        color: var(--anphu-light);
+        text-shadow: 0 1px 2px rgba(201,176,55,0.3);
+    }
+    .card-service:hover h5 {
+        color: var(--color-secondary);
+        text-shadow: none;
     }
 
+
+    /* Mục lục */
     .service-toc {
-        position: sticky;
-        top: 100px; /* khoảng cách từ top khi sticky */
-        align-self: start;
-        background: #fff;
+        background: var(--navy-dark);
+        border: 1px solid var(--gold);
+        border-radius: 6px;
         padding: 0.75rem;
-        border-radius: 6px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        max-height: calc(100vh - 120px);
-        overflow-y: auto;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-
     .service-toc h4 {
-        font-size: 0.95rem;
-        margin-bottom: 0.5rem;
-        font-weight: 600;
-        color: #0d6efd;
+        color: var(--gold);
     }
-
-    .service-toc ul {
-        list-style: none;
-        padding-left: 0;
-        margin: 0;
-    }
-
-    .service-toc li {
-        margin-bottom: 0.4rem;
-        line-height: 1.3;
-    }
-
     .service-toc a {
-        text-decoration: none;
-        color: #333;
-        font-size: 0.9rem;
-        display: block;
-        transition: all 0.2s ease;
-        border-radius: 4px;
-        padding: 4px 6px;
+        color: var(--text-light);
+        transition: 0.2s;
     }
-
     .service-toc a:hover {
-        background-color: rgba(201, 176, 55, 0.15);
-        color: #C9B037;
-        font-weight: 500;
+        background-color: rgba(201,176,55,0.15);
+        color: var(--gold);
     }
-
     .service-toc a.active {
-        background-color: #C9B037;
-        color: #fff !important;
+        background-color: var(--gold);
+        color: var(--navy-dark) !important;
         font-weight: 600;
     }
 
+    /* Nội dung dịch vụ */
     .content-service-section {
-        padding: 2rem;
-        background-color: #fff;
-        border: 2px solid #C9B037;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        background-color: var(--navy-dark);
+        color: var(--text-light);
+        border: 2px solid var(--gold);
         border-radius: 6px;
+        padding: 2rem;
     }
-
     .content-service-section img {
         max-width: 100%;
         height: auto;
         display: block;
+        border: 2px solid var(--gold);
     }
 
-    @media (max-width: 1024px) {
-        .service-wrapper {
-            grid-template-columns: 1fr;
-        }
-        .service-toc {
-            position: static;
-            max-height: none;
-            overflow-y: visible;
-            margin-bottom: 1rem;
-        }
-    }
-
+    /* Nút báo giá */
     .custom-price-btn {
         display: inline-block;
         padding: 12px 24px;
-        border: 2px solid #C9B037;
+        border: 2px solid var(--gold);
         border-radius: 6px;
         background: transparent;
-        color: #C9B037;
+        color: var(--gold);
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
         transition: all 0.3s ease;
     }
-
-    
-    /* Hover nổi bật */
     .custom-price-btn:hover {
-        background: #C9B037;
-        color: #fff;
+        background: var(--gold);
+        color: var(--navy-dark);
         box-shadow: 0 4px 15px rgba(201,176,55,0.4);
         transform: translateY(-2px);
     }
@@ -150,16 +125,14 @@
 @endpush
 
 @section('content')
-<section class="bg-light py-5">
+<section class="py-5 service-section-bg">
     <div class="container">
         <div class="text-center mb-5">
-            <h5 class="font-weight-bold" style="color: #030a36">
-                Dịch vụ
-                <span style="color: #C9B037">{{ $service->name }}</span>
-                của {{ $companySettings->company_brand }}
+            <h5 class="heading-service-detail">
+                Dịch vụ <span style="color: var(--gold)">{{ $service->name }}</span>
             </h5>
-            <h3 class="font-weight-bold">{{ $service->slogan }}</h3>
-            <p class="text-dark">{{ $service->description }}</p>
+            <h3 class="font-weight-bold" style="color: var(--gold)">{{ $service->slogan }}</h3>
+            <p style="color: var(--text-light)">{{ $service->description }}</p>
         </div>
 
         {{-- Cards dịch vụ --}}
@@ -174,60 +147,40 @@
                     <div class="col-lg-5 col-md-6 mb-5 d-flex">
                         <div class="card card-service shadow rounded p-4 position-relative d-flex flex-column w-100">
                             <div class="icon-circle-2 position-absolute d-flex align-items-center justify-content-center">
-                                <img src="{{ $service->$icon }}" alt="Icon" style="height: 50px;">
+                                <img src="{{ $service->$icon }}" alt="Icon">
                             </div>
-                            <h5 class="font-weight-bold mt-4 text-primary">{{ $service->$title }}</h5>
+                            <h5 class="font-weight-bold mt-4">{{ $service->$title }}</h5>
                             <p>{{ $service->$content }}</p>
                         </div>
                     </div>
                 @endif
             @endforeach
         </div>
+
+        {{-- Phần content_service với mục lục sticky --}}
+        @if (!empty($service->content_service))
+        <div class="service-wrapper mt-5">
+            <!-- Sidebar mục lục -->
+            <aside class="service-toc">
+                <h4>Mục lục</h4>
+                <ul id="service-toc-list"></ul>
+            </aside>
+
+            <!-- Nội dung dịch vụ -->
+            <div class="content-service-section" id="service-content">
+                {!! $service->content_service !!}
+            </div>
+        </div>
+
+        <!-- Nút báo giá -->
+        <div class="text-center mt-4">
+            <a href="{{ route('customers.service.price', $service->slug) }}" class="custom-price-btn">
+                📄 Báo giá dịch vụ
+            </a>
+        </div>
+        @endif
     </div>
 </section>
-
-{{-- Phần content_service với mục lục sticky --}}
-@if (!empty($service->content_service))
-<div class="service-section-bg">
-    <h3
-        style="
-            text-align: center;
-            font-weight: 700;
-            margin: 2rem 0;
-            font-family: 'Poppins', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            background: linear-gradient(45deg, #FFD700, #C9B037);
-            -webkit-background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 10px rgba(201,176,55,0.6);
-        "
-    >
-        Chi tiết dịch vụ {{ $service->name }}
-    </h3>
-    <div class="service-wrapper mt-5">
-        <!-- Sidebar mục lục -->
-        <aside class="service-toc">
-            <h4>Mục lục</h4>
-            <ul id="service-toc-list"></ul>
-        </aside>
-
-        <!-- Nội dung dịch vụ -->
-        <div class="content-service-section" id="service-content">
-            {!! $service->content_service !!}
-        </div>
-    </div>
-
-    <!-- Nút báo giá ra ngoài grid -->
-    <div class="text-center mt-4">
-        <a href="{{ route('customers.service.price', $service->slug) }}" class="btn-outline-shadow custom-price-btn">
-            📄 Báo giá dịch vụ
-        </a>
-    </div>
-    <hr>
-
-</div>
-@endif
 
 @include('customers.partials.anphu.demo_projects')
 @include('customers.partials.sign_up_1')
@@ -261,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tocList.appendChild(li);
     });
 
-    // Cuộn mượt khi click
+    // Cuộn mượt
     document.querySelectorAll(".toc-link").forEach(link => {
         link.addEventListener("click", function (e) {
             e.preventDefault();
@@ -269,14 +222,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const targetEl = document.getElementById(targetId);
             if (targetEl) {
                 window.scrollTo({
-                    top: targetEl.offsetTop - 80, // chừa khoảng trống header
+                    top: targetEl.offsetTop - 80,
                     behavior: "smooth"
                 });
             }
         });
     });
 
-    // Highlight mục lục khi scroll
+    // Highlight mục lục
     const tocLinks = document.querySelectorAll(".toc-link");
     window.addEventListener("scroll", () => {
         let fromTop = window.scrollY + 120;
@@ -292,6 +245,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
 </script>
 @endpush

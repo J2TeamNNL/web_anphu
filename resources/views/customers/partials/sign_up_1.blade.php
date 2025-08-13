@@ -1,4 +1,10 @@
-<section id="sign_up_1" class="py-5 position-relative" style="background-image: url('{{ asset('assets/img/gallery/form_background.webp') }}'); background-size: cover; background-attachment: fixed; background-position: center;">
+<section
+    id="sign_up_1"
+    class="py-5 position-relative section-bg-signup"
+    style="
+        background-image: url('{{ asset('assets/img/gallery/form_background.webp') }}'); background-size: cover; background-attachment: fixed; background-position: center;
+    "
+>
     <div class="container py-5">
         <div class="row">
             <!-- LEFT: Values -->

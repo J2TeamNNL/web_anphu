@@ -1,9 +1,9 @@
 @extends('customers.layouts.master')
 @section('content')
-    <section id="project" class="bg-white py-5 text-primary">
+    <section id="project" class="bg-white py-5 section-bg-project">
         <div class="container-fluid px-5">
 
-            <div class="text-center mb-4">
+            <div class="text-center mb-4 project-luxury-gold">
                 <h4 class="text-uppercase font-weight-bold" id="project-title">{{ $projectTitle }}</h4>
                 <hr class="border-warning">
             </div>
@@ -12,13 +12,16 @@
             @if($parentCategory)
                 <div class="text-center mb-4">
                     <a href="{{ route('projects.byCategory', $parentCategory->slug) }}"
-                    class="btn btn-sm btn-outline-primary {{ is_null($selectedChild) ? 'active' : '' }}">
+                    class="btn btn-sm btn-outline btn-luxury {{ is_null($selectedChild) ? 'active' : '' }}">
                         Tất cả
                     </a>
 
                     @foreach($childCategories as $child)
-                        <a href="{{ route('projects.byCategory', ['slug' => $parentCategory->slug, 'child' => $child->slug]) }}"
-                        class="btn btn-sm btn-outline-primary {{ ($selectedChild && $selectedChild->id === $child->id) ? 'active' : '' }}">
+                        <a 
+                            href="{{ 
+                                route('projects.byCategory', ['slug' => $parentCategory->slug, 'child' => $child->slug])
+                            }}"
+                            class="btn btn-sm btn-outline btn-luxury {{ ($selectedChild && $selectedChild->id === $child->id) ? 'active' : '' }}">
                             {{ $child->name }}
                         </a>
                     @endforeach
@@ -35,16 +38,29 @@
                                 <div class="project-overlay text-white">
                                     <h5 class="font-weight-bold text-warning">{{ $item->name }}</h5>
 
-                                    @if (!empty($item->location))
-                                        <p class="mb-1"><i class="fa fa-map-marker-alt mr-1"></i>{{ $item->location }}</p>
-                                    @endif
+                                    <p class="mb-1">
+                                        <i class="fa fa-map-marker-alt mr-2 text-warning"></i> Chủ đầu tư:
+                                        {{ $item->client }}
+                                    </p>
 
-                                    @if (!empty($item->client))
-                                        <p class="mb-1">Chủ đầu tư: {{ $item->client }}</p>
-                                    @endif
+                                    <p class="mb-1">
+                                        <i class="fa fa-map-marker-alt mr-2 text-warning"></i> Địa điểm:
+                                        {{ $item->location }}
+                                    </p>
+
+                                    <p class="mb-1">
+                                        <i class="fa fa-ruler-combined mr-2 text-warning"></i> Diện tích:
+                                        {{ $item->area }}
+                                    </p>
+
+                                    <p class="mb-1">
+                                        <i class="fa fa-building mr-2 text-warning"></i> Số tầng:
+                                        {{ $item->area }}
+                                    </p>
+                                    
 
                                     <p class="mb-0">
-                                        Phong cách:
+                                        <i class="fa fa-paint-brush mr-2 text-warning"></i> Phong cách:
                                         {{ $item->category?->name ?? 'Không rõ' }}
                                     </p>
                                 </div>

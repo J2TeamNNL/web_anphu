@@ -1,53 +1,144 @@
-<section class="py-5 bg-light">
+@push('styles')
+<style>
+    .project-desc {
+        height: 60px; /* cố định chiều cao */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Giới hạn 3 dòng */
+        -webkit-box-orient: vertical;
+    }
+
+    .heading-demo-project {
+        text-align: center;
+        font-weight: 720;
+        margin: 2rem 0;
+        font-family: 'Poppins', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        background: linear-gradient(90deg, #e6bf5f, #d4a537);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        text-shadow: 0 0 10px rgba(201,176,55,0.6);
+    }
+
+    .card-luxury-gold {
+        background: linear-gradient(135deg, #0b1c2c, #142d4c);
+        border: 2px solid var(--anphu-gold);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        color: #fff;
+    }
+
+    .card-luxury-gold .card-title {
+        color: #fff;
+        text-shadow: 0 1px 1px rgba(201, 176, 55, 0.7);
+        font-weight: bold;
+        min-height: 48px;
+    }
+
+    .card-luxury-gold .icon-wrapper {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 15px;
+        border-radius: 50%;
+        background: #15596e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card-luxury-gold .icon-wrapper i {
+        color: #fff;
+        font-size: 28px;
+    }
+
+    .card-luxury-gold:hover {
+        background: linear-gradient(135deg, #0c2b3a, #134e60);
+        border: 2px solid var(--color-secondary);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(201, 176, 55, 0.4);
+    }
+
+    .card-luxury-gold:hover .card-title {
+        color: #0b1c2c;
+        text-shadow: none;
+    }
+
+    .card-luxury-gold:hover .icon-wrapper {
+        background: #0b1c2c;
+    }
+
+    .card-luxury-gold:hover .icon-wrapper i {
+        color: #15596e;
+    }
+    
+    .btn-luxury {
+        border: 1px solid #C9B037;
+        color: #C9B037;
+        font-weight: bold;
+        background-color: transparent;
+        transition: all 0.3s ease;
+    }
+
+    .btn-luxury:hover {
+        background-color: #C9B037;
+        color: #0b1c2c;
+        border-color: #C9B037;
+    }
+
+</style>
+@endpush
+
+<section class="py-5 bg-light section-bg-demo">
     <div class="container">
-        <h4 class="text-center text-uppercase font-weight-bold mb-4">Sản phẩm kiến trúc</h4>
+        <h3 class="heading-demo-project">Sản phẩm kiến trúc</h3>
         <hr class="border-warning">
         <div class="row">
             @foreach ($otherProjects as $project)
-                <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="#">
-                    <div class="card h-100 shadow-sm">
-                        <img
-                            src="{{ $project->thumbnail }}"
-                            class="card-img-top object-cover"
-                            style="height: 200px; width: 100%; object-fit: cover;"
-                            alt="{{ $project->name }}"
-                        >
-                        <div class="card-body">
-                            <h6 class="card-title font-weight-bold">{{$project->name}}</h6>
-                            <p class="card-text text-muted small">Mẫu biệt thự theo xu hướng hiện đại, tiết kiệm diện tích và tối ưu công năng.</p>
-                            <a
-                                href="{{ route('customers.project.detail', ['slug' => $project->slug]) }}"
-                                class="btn btn-sm btn-outline-success"
-                            >
-                                Xem chi tiết
-                            </a>
+                <div class="col-md-3 mb-4" data-aos="fade-up">
+                    <div class="card card-luxury-gold h-100 shadow-sm">
+                        <img src="{{ $project->thumbnail }}"
+                             class="card-img-top object-cover"
+                             style="height: 200px; width: 100%; object-fit: cover;"
+                             alt="{{ $project->name }}">
+                        <div class="card-body d-flex flex-column">
+                            <p class="card-title" style="color: #C9B037">{{$project->name}}</p>
+                            <p class="card-text small project-desc">{{ $project->description }}</p>
+                            <div class="mt-auto">
+                                <a href="{{ route('customers.project.detail', ['slug' => $project->slug]) }}"
+                                class="btn btn-sm w-100 btn-luxury">
+                                    Xem chi tiết
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
-        
-        <h4 class="text-center text-uppercase font-weight-bold mb-4">Sản phẩm nội thất</h4>
+
+        <h3 class="heading-demo-project">Sản phẩm nội thất</h3>
         <hr class="border-warning">
         <div class="row">
             @foreach ($interiorProjects as $project)
-                <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="#">
-                    <div class="card h-100 shadow-sm">
-                        <img
-                            src="{{ $project->thumbnail }}"
-                            class="card-img-top object-cover"
-                            style="height: 200px; width: 100%; object-fit: cover;"
-                            alt="{{ $project->name }}"
-                        >
-                        <div class="card-body">
-                            <h6 class="card-title font-weight-bold">{{$project->name}}</h6>
-                            <p class="card-text text-muted small">Mẫu biệt thự theo xu hướng hiện đại, tiết kiệm diện tích và tối ưu công năng.</p>
-                            <a
-                                href="{{ route('customers.project.detail', ['slug' => $project->slug]) }}"
-                                class="btn btn-sm btn-outline-success"
-                            >
-                                Xem chi tiết
-                            </a>
+                <div class="col-md-3 mb-4" data-aos="fade-up">
+                    <div class="card card-luxury-gold h-100 shadow-sm">
+                        <img src="{{ $project->thumbnail }}"
+                             class="card-img-top object-cover"
+                             style="height: 200px; width: 100%; object-fit: cover;"
+                             alt="{{ $project->name }}">
+                        <div class="card-body d-flex flex-column">
+                            <p class="card-title" style="color: #C9B037">{{$project->name}}</p>
+                            <p class="card-text small project-desc">{{ $project->description }}</p>
+                            <div class="mt-auto">
+                                <a href="{{ route('customers.project.detail', ['slug' => $project->slug]) }}"
+                                class="btn btn-sm w-100 btn-luxury">
+                                    Xem chi tiết
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

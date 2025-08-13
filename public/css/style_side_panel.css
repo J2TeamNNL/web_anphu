@@ -1,0 +1,140 @@
+/*   ROOT VARIABLES & GLOBALS
+--------------------------- */
+:root {
+    --color-primary: #030a36;    
+    /* --color-secondary: #e2b605; */
+    --color-secondary: #C9B037;
+    --color-dark: #181f2f;            
+    --color-white: #ffffff;
+    --color-gray: #f7f7fda6;
+    --color-text: #444;
+    --color-muted: #666;
+    --color-hover: rgba(240, 240, 240, 0.137);
+
+    --anphu-gold: #d6b162;
+    --anphu-bg: #0d2135;
+    --anphu-dark: #081522;
+}
+
+.anphu-side-panel {
+  position: fixed;
+  top: 36%;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  z-index: 9999;
+}
+
+/* Nhóm nút chính */
+.side-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* sát nhau */
+  transition: transform 0.3s ease;
+}
+
+/* Khi thu gọn -> dịch nút ra ngoài */
+.anphu-side-panel.collapsed .side-buttons {
+  transform: translateX(110px);
+}
+
+/* Nút chung */
+.panel-btn,
+.toggle-btn {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--anphu-bg);
+  border: 1px solid var(--anphu-gold);
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  cursor: pointer;
+}
+
+.panel-btn:hover,
+.toggle-btn:hover {
+  background: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+.toggle-icon {
+  font-weight: bold;
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+/* Xoay icon khi thu gọn */
+.anphu-side-panel.collapsed .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.panel-btn .icon-img {
+    width: 35px;       /* kích thước ngang */
+    height: 35px;      /* kích thước dọc */
+    object-fit: contain; /* giữ nguyên tỉ lệ */
+    background: transparent; /* nền trong suốt */
+    display: block;
+    pointer-events: none; /* tránh click vào ảnh thay vì nút */
+}
+
+/* Nút chữ xoay 90° */
+.side-label-btn {
+    position: fixed;
+    top: 240px;
+    right: -40px; /* nằm gần mép phải, chỉ hiện 1 phần */
+    height: 46px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    background: var(--anphu-bg);
+    color: var(--anphu-gold);
+    border: 1px solid var(--anphu-gold);
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    transition: right 0.3s ease;
+}
+
+.side-label-btn:hover {
+    background: var(--color-secondary);
+    color: var(--color-primary);
+}
+
+.side-label-btn i {
+    font-size: 18px;
+}
+
+.side-label-btn span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.anphu-side-panel.collapsed .side-label-btn {
+    right: -110px; /* dịch nút sang bên ngoài view */
+}
+
+@media (max-width: 768px) {
+  .anphu-side-panel .btn {
+    display: inline-block;
+    width: auto;
+    margin-right: 10px;
+  }
+  .anphu-side-panel .btn-icon-only {
+    display: inline-block;
+    width: 40px; /* độ rộng của nút icon */
+    text-align: center;
+  }
+  .anphu-side-panel .btn-text {
+    display: none;
+  }
+}

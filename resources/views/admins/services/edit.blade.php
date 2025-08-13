@@ -7,7 +7,7 @@
       <a
          href="{{ route('admin.services.index') }}"
          class="btn btn-sm btn-primary"
-      >← Quản lý Đối tác</a>
+      >← Quản lý Dịch vụ</a>
    </div>
 
    <div class="card shadow-sm">
@@ -65,9 +65,7 @@
                   id="description"
                   rows="6"
                   class="form-control"
-               >
-                  {{ $service->description }}
-               </textarea>
+               >{{ $service->description }}</textarea>
             </div>
             
 

@@ -23,6 +23,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="location">Diện tích m2 (nếu có)</label>
+                    <input type="text" name="area" id="area" class="form-control" value="{{ old('area') }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Số tầng (nếu có)</label>
+                    <input type="text" name="story" id="location" class="form-control" value="{{ old('story') }}">
+                </div>
+
+                <div class="form-group">
                     <label for="client">Khách hàng</label>
                     <input type="text" name="client" id="client" class="form-control" value="{{ old('client') }}">
                 </div>

@@ -1,7 +1,7 @@
 /*   ROOT VARIABLES & GLOBALS
 --------------------------- */
 :root {
-    --color-primary: #030a36;    
+    --color-primary: #070f47;    
     /* --color-secondary: #e2b605; */
     --color-secondary: #C9B037;
     --color-dark: #181f2f;            
@@ -9,8 +9,13 @@
     --color-gray: #f7f7fda6;
     --color-text: #444;
     --color-muted: #666;
-    --color-hover: rgba(240, 240, 240, 0.137)
+    --color-hover: rgba(240, 240, 240, 0.137);
+
+    --anphu-gold: #d6b162;
+    --anphu-bg: #0d2135;
+    --anphu-dark: #081522;
 }
+
 
 body {
     font-family: 'Segoe UI', sans-serif;
@@ -54,6 +59,7 @@ body {
     color: var(--color-white);
     font-size: 14px;
     padding: 5px 0;
+    border-bottom: 1px solid #d6b162;
 }
 
 .top-bar .row > div {
@@ -169,6 +175,11 @@ body {
     width: auto;
     object-fit: contain;
     filter: brightness(1.1);
+}
+
+.footer-copyright {
+    font-size: 0.8rem;
+    color: var(--anphu-gold);
 }
 
 /* Footer Titles */
@@ -662,6 +673,155 @@ body {
 }
 
 /* --------------------------
+   SIGNUP FORM
+--------------------------- */
+
+.section-bg-signup {
+    background-color: #0b1c2c; /* fallback */
+    background-image:
+        linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+        url('/assets/img/gallery/background_danmask_1.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: auto;
+    background-attachment: fixed; /* parallax */
+    position: relative;
+    border-bottom: 3px solid var(--anphu-gold);
+}
+
+/* --------------------------
+   PAGES SOLUTION
+--------------------------- */
+
+.section-bg-solution {
+    background-color: #0b1c2c; /* fallback */
+    background-image:
+        linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+        url('/assets/img/gallery/background_danmask_1.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: auto;
+    background-attachment: fixed; /* parallax */
+    position: relative;
+    border-bottom: 3px solid var(--anphu-gold);
+}
+
+/* Đảm bảo nội dung nổi trên overlay */
+.section-bg-solution .container {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* --------------------------
+   VIDEOS
+--------------------------- */
+
+.section-bg-video {
+    background-color: #0b1c2c;
+    background-image:
+        linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+        url('/assets/img/gallery/background_danmask_1.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: auto;
+    background-attachment: fixed;
+    position: relative;
+    border-bottom: 3px solid var(--anphu-gold) !important;
+}
+
+.btn-luxury {
+    border: 1px solid #C9B037;
+    font-size: 16px;
+    color: white;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.video-luxury-gold h4 {
+
+    font-weight: bold;
+    color: #C9B037;
+    text-shadow: 0 1px 0px rgba(201,176,55,0.8);
+}
+
+.btn-luxury:hover {
+    background-color: #C9B037;
+    color: #0b1c2c;
+    border-color: #C9B037;
+}
+
+/* --------------------------
+   PROJECT - DEMO PROJECTS
+--------------------------- */
+
+.section-bg-project {
+    background-color: #0b1c2c;
+    background-image:
+        linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+        url('/assets/img/gallery/background_danmask_1.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: auto;
+    background-attachment: fixed;
+    position: relative;
+    border-bottom: 3px solid var(--anphu-gold) !important;
+}
+
+.btn-luxury {
+    border: 1px solid #C9B037;
+    font-size: 16px;
+    color: white;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.project-luxury-gold h4 {
+
+    font-weight: bold;
+    color: #C9B037;
+    text-shadow: 0 1px 0px rgba(201,176,55,0.8);
+}
+
+.btn-luxury:hover {
+    background-color: #C9B037;
+    color: #0b1c2c;
+    border-color: #C9B037;
+}
+
+.section-bg-demo {
+    background-color: #0b1c2c;
+    background-image:
+        linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+        url('/assets/img/gallery/background_danmask_1.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: auto;
+    background-attachment: fixed;
+    position: relative;
+    border-bottom: 3px solid var(--anphu-gold) !important;
+}
+
+/* --------------------------
+   PARTNER
+--------------------------- */
+
+.section-bg-partner {
+    margin-top: 0;
+    background-color: #0b1c2c;
+    background-image:
+        linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+        url('/assets/img/gallery/background_danmask_1.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: auto;
+    background-attachment: fixed;
+    position: relative;
+    border-top: 1px solid var(--anphu-gold) !important;
+    border-bottom: 1px solid var(--anphu-gold) !important;
+}
+
+/* --------------------------
    HERO SLIDER (Static Background + Centered Content)
 --------------------------- */
 .hero-static-slider {
@@ -676,6 +836,7 @@ body {
     overflow-wrap: break-word;
     word-wrap: break-word;
     box-sizing: border-box;
+    border-bottom: 2px solid var(--color-secondary);
 }
 
 
@@ -724,6 +885,25 @@ BUTTONS
     background-color: var(--color-secondary);
 }
 
+
+
+/* --------------------------
+   SERVICE
+--------------------------- */
+.section-bg-service-detail {
+    background-color: #0b1c2c; /* fallback */
+    background-image:
+        linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+        url('/assets/img/gallery/background_danmask_1.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: auto;
+    background-attachment: fixed; /* parallax */
+    position: relative;
+    border-bottom: 2px solid var(--anphu-gold);
+}
+
+
 /* --------------------------
    FOOTER
 --------------------------- */
@@ -731,6 +911,24 @@ BUTTONS
 .footer-info {
     background-color: var(--color-dark);
     color: var(--color-white);
+    width: 100%;
+}
+
+.section-bg-footer {
+    background-color: #0b1c2c; /* fallback */
+    background-image:
+        linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+        url('/assets/img/gallery/background_danmask_1.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: auto;
+    background-attachment: fixed; /* parallax */
+    position: relative;
+    border-bottom: 2px solid var(--anphu-gold);
+}
+
+.footer-wrapper {
+    width: 100%;
 }
 
 .footer-info a {
@@ -745,9 +943,15 @@ BUTTONS
 }
 
 .footer-copyright {
-    color: var(--color-white);
-    font-size: 14px;
-    background-color: var(--color-primary);
+    color: var(--anphu-gold);
+    font-size: 16px;
+
+    font-family: 'Brush Script MT', cursive;
+
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 
@@ -844,17 +1048,26 @@ BUTTONS
 }
 
 .icon-circle-2 {
-    top: -1%;
-    left: 15%;
+    position: absolute;
+    top: 0;
+    left: 50%;
     transform: translate(-50%, -50%);
     width: 70px;
     height: 70px;
-    background-color: #fff;
-    border: 3px solid var(--color-primary); 
+    background-color: var(--anphu-gold);
+    border: 3px solid var(--color-primary);
     border-radius: 50%;
     z-index: 10;
+    
 }
 
+/* Icon vòng tròn */
+.card-service:hover .icon-circle-2 {
+    background: var(--anphu-gold);
+}
+.icon-circle-2 img {
+    height: 50%;
+}
 
 /* PORTFOLIO */
 #project .btn-outline-warning {
@@ -878,6 +1091,7 @@ BUTTONS
     position: relative;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--color-secondary);
 }
 
 .card-project:hover {

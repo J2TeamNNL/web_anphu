@@ -1,7 +1,7 @@
 @props([
     'name' => 'category_id',
     'id' => 'category_id',
-    'label' => 'Danh mục',
+    'label' => '',
     'placeholder' => '-- Chọn danh mục --',
     'categories' => [],
     'selected' => null,

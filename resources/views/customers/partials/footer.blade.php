@@ -1,5 +1,5 @@
-<footer class="footer-info pt-5 border-top" style="background-image: url('{{ asset(config('company.assets.background.footer')) }}');">
-    <div class="container">
+<footer class="footer-info pt-5 section-bg-footer">
+    <div class="container footer-wrapper">
         <div class="row">
             <div class="col-md-4 mb-4">
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Thông Tin Liên Hệ</h5>
@@ -9,7 +9,7 @@
                     <span style="font-weight: bold" class="text-warning">
                         VPGD 1:
                     </span>
-                    {{ config('company.contact.address_1') }}
+                    {{ $companySettings->company_address_1 }}
                 </p>
 
                 <p>
@@ -17,7 +17,7 @@
                     <span style="font-weight: bold" class="text-warning">
                         VPGD 2:
                     </span>
-                    {{ config('company.contact.address_2') }}
+                    {{ $companySettings->company_address_2 }}
                 </p>
 
                 <p>
@@ -26,7 +26,7 @@
                         <span style="font-weight: bold" class="text-warning">
                             Zalo:
                         </span>
-                        {{ config('company.contact.phone_1') }}
+                        {{ $companySettings->company_phone_1 }}
                     </a>
                     
                 </p>
@@ -37,7 +37,7 @@
                         <span style="font-weight: bold" class="text-warning">
                             Hotline:
                         </span>
-                        {{ config('company.contact.phone_2') }}
+                        {{ $companySettings->company_phone_2 }}
                     </a>
                 </p>
 
@@ -47,7 +47,7 @@
                         <span style="font-weight: bold" class="text-warning">
                             Email:
                         </span>
-                        {{ config('company.contact.email') }}
+                        {{ $companySettings->company_email }}
                     </a>
                 </p>
 
@@ -129,35 +129,37 @@
 
             <!-- OVERLAY -->
             <div id="thank-you-overlay" class="thank-you-overlay d-none">
-               <div class="thank-you-popup">
-                  <div class="checkmark-wrapper mb-3">
-                     <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <div class="thank-you-popup">
+                <div class="checkmark-wrapper mb-3">
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                         <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
                         <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16"/>
-                     </svg>
-                  </div>
-                  <h5 class="text-success">Đã gửi thành công!</h5>
-                  <p class="text-muted mb-3">Cảm ơn bạn đã để lại thông tin, chúng tôi sẽ liên hệ sớm nhất.</p>
-                  <button id="back-button" class="btn btn-back">← Xem tiếp</button>
-               </div>
+                    </svg>
+                </div>
+                <h5 class="text-success">Đã gửi thành công!</h5>
+                <p class="text-muted mb-3">Cảm ơn bạn đã để lại thông tin, chúng tôi sẽ liên hệ sớm nhất.</p>
+                <button id="back-button" class="btn btn-back">← Xem tiếp</button>
+            </div>
             </div>
 
             <div id="error-overlay" class="error-overlay d-none">
-               <div class="error-popup bg-white text-center">
-                  <div class="checkmark-wrapper mb-3">
-                     <svg class="checkmark error" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <div class="error-popup bg-white text-center">
+                <div class="checkmark-wrapper mb-3">
+                    <svg class="checkmark error" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                         <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
                         <path class="checkmark-x" fill="none" d="M16 16 36 36 M36 16 16 36"/>
-                     </svg>
-                  </div>
-                  <h5 class="text-danger font-weight-bold">Bạn đã đăng ký hôm nay!</h5>
-                  <p class="text-muted mb-3">Chúng tôi đã nhận được thông tin của bạn hôm nay. Vui lòng quay lại sau.</p>
-                  <button class="btn btn-back btn-outline-danger mt-2" onclick="document.getElementById('error-overlay').classList.add('d-none')">← Quay lại</button>
-               </div>
+                    </svg>
+                </div>
+                <h5 class="text-danger font-weight-bold">Bạn đã đăng ký hôm nay!</h5>
+                <p class="text-muted mb-3">Chúng tôi đã nhận được thông tin của bạn hôm nay. Vui lòng quay lại sau.</p>
+                <button class="btn btn-back btn-outline-danger mt-2" onclick="document.getElementById('error-overlay').classList.add('d-none')">← Quay lại</button>
+            </div>
             </div>
         </div>
-        <div class="footer-copyright text-center py-3 mt-4 border-top">
-            <small class="text-muted">{{ config('company.copyright.text') }}</small>
-        </div>
+    </div>
+    <div class="footer-copyright text-center py-3 mt-4" style="border-top: 1px solid #C9B037">
+        <p
+            style="font-family: 'Great Vibes', cursive"
+        >{{ config('company.copyright.text') }}</p>
     </div>
 </footer>

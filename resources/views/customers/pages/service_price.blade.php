@@ -2,34 +2,96 @@
 
 @push('styles')
 <style>
-    .service-wrapper {
-        position: relative;
-        display: grid;
-        grid-template-columns: 220px 1fr;
-        gap: 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
+    :root {
+        --lux-dark: #0b1c2c;
+        --lux-dark-2: #081420;
+        --lux-gold: #C9B037;
+        --lux-gold-light: #e4c465;
+        --lux-text-light: #f5f2e7;
     }
 
-    /* Sidebar mục lục sticky */
-    .service-toc {
+    .section-bg-service-detail {
+        background-color: var(--lux-dark);
+        background-image:
+            linear-gradient(rgba(11, 28, 44, 0.85), rgba(11, 28, 44, 0.85)),
+            url('/assets/img/gallery/background_danmask_1.jpg');
+        background-position: center;
+        background-repeat: repeat;
+        background-size: auto;
+        background-attachment: fixed;
+        position: relative;
+        border-bottom: 2px solid var(--lux-gold);
+        width: 100%;
+    }
+
+    .service-wrapper {
+        display: flex;
+        gap: 1rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        align-items: flex-start;
+    }
+
+    /* Nội dung chính */
+    .service-content {
+        flex: 1;
+        padding: 2rem;
+        background-color: var(--lux-dark-2);
+        border: 1px solid var(--lux-gold);
+        border-radius: 8px;
+        color: var(--lux-text-light);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        animation: fadeInUp 0.6s ease;
+    }
+
+    .service-content p {
+        font-size: 1.05rem;
+        line-height: 1.75;
+        margin-bottom: 1rem;
+    }
+
+    .service-content h1,
+    .service-content h2,
+    .service-content h3 {
+        margin-top: 1.5rem;
+        color: var(--lux-gold-light);
+        font-weight: 600;
+    }
+
+    .service-content img {
+        max-width: 100% !important;
+        height: auto !important;
+        display: block;
+        margin: 0 auto;
+        border-radius: 6px;
+        border: 1px solid var(--lux-gold);
+    }
+
+    /* Bên phải: TOC + specials */
+    .service-right {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
         position: sticky;
         top: 100px;
-        background: #fff;
-        padding: 0.75rem;
-        border-radius: 6px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        max-height: calc(100vh - 120px);
-        overflow-y: auto;
+        align-self: flex-start;
+    }
+
+    .service-toc {
+        background: var(--lux-dark-2);
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--lux-gold);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        color: var(--lux-text-light);
     }
 
     .service-toc h5 {
-        font-size: 0.95rem;
-        margin-bottom: 0.5rem;
+        font-size: 1rem;
         font-weight: 600;
-        color: #0d6efd;
+        margin-bottom: 0.5rem;
+        color: var(--lux-gold);
     }
 
     .service-toc ul {
@@ -40,56 +102,49 @@
 
     .service-toc li {
         margin-bottom: 0.4rem;
-        line-height: 1.3;
+        line-height: 1.4;
     }
 
     .service-toc a {
         text-decoration: none;
-        color: #333;
+        color: var(--lux-text-light);
         font-size: 0.9rem;
         display: block;
-        transition: color 0.2s ease, background-color 0.2s ease;
-        padding: 4px 6px;
+        padding: 6px 8px;
         border-radius: 4px;
+        transition: all 0.3s ease;
     }
 
     .service-toc a:hover {
-        background-color: rgba(201,176,55,0.1);
-        color: #C9B037;
+        background-color: rgba(201,176,55,0.15);
+        color: var(--lux-gold-light);
     }
 
     .service-toc a.active {
-        background-color: #C9B037;
-        color: white;
+        background-color: var(--lux-gold);
+        color: var(--lux-dark);
         font-weight: 500;
     }
 
-    /* Nội dung dịch vụ */
-    .service-content {
-        padding: 2rem;
-        background-color: #fff;
-        border: 2px solid #C9B037;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        border-radius: 6px;
-        animation: fadeInUp 0.6s ease;
+    .service-extra {
+        background: var(--lux-dark-2);
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--lux-gold);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        color: var(--lux-text-light);
     }
-    .service-content p {
-        font-size: 1.05rem;
-        line-height: 1.75;
-        margin-bottom: 1rem;
-    }
-    .service-content h1,
-    .service-content h2,
-    .service-content h3 {
-        margin-top: 1.5rem;
-        color: #030a36;
+
+    .service-extra h5 {
+        font-size: 1rem;
         font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--lux-gold);
     }
-    .service-content img {
-        max-width: 100% !important;
-        height: auto !important;
-        display: block;
-        margin: 0 auto;
+
+    .service-extra p {
+        font-size: 0.9rem;
+        line-height: 1.5;
     }
 
     @keyframes fadeInUp {
@@ -100,34 +155,43 @@
     /* Responsive */
     @media (max-width: 1024px) {
         .service-wrapper {
-            grid-template-columns: 1fr;
+            flex-direction: column;
         }
-        .service-toc {
+        .service-right {
+            width: 100%;
             position: static;
-            max-height: none;
-            overflow-y: visible;
-            margin-bottom: 1rem;
+        }
+        .service-extra {
+            margin-top: 1rem;
         }
     }
 </style>
 @endpush
 
 @section('content')
-<div class="container my-4">
-    <div class="service-wrapper">
-        <!-- Sidebar mục lục -->
-        <aside class="service-toc">
-            <h5>Mục lục</h5>
-            <ul id="service-toc-list"></ul>
-        </aside>
+<section class="py-4 section-bg-service-detail">
+    <div class="container my-4">
+        <div class="service-wrapper">
+            <!-- Nội dung chính -->
+            <div class="service-content" id="service-content">
+                {!! $service->content_price !!}
+            </div>
 
-        <!-- Nội dung -->
-        <div class="service-content" id="service-content">
-            {!! $service->content_price !!}
+            <!-- Bên phải: TOC + special contents -->
+            <div class="service-right">
+                <aside class="service-toc">
+                    <h5>Mục lục</h5>
+                    <ul id="service-toc-list"></ul>
+                </aside>
+
+                <div class="service-extra">
+                    <h5>Nội dung khác</h5>
+                    <p>Đây là khu vực dự trữ để DV thêm thông tin sau này.</p>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
+</section>
 @include('customers.partials.anphu.partner')
 @endsection
 

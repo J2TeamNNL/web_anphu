@@ -19,20 +19,20 @@
                     <a href="{{ config('company.contact.phone_link_1') }}">
                         <i class="fa fa-phone-alt mr-1"></i>
                         Zalo:
-                        {{ config('company.contact.phone_1') }}
+                        {{ $companySettings->company_phone_1 }}
                     </a>
                 </div>
                 <div>
                     <a href="{{ config('company.contact.phone_link_2') }}">
                         <i class="fa fa-phone-alt mr-1"></i>
                         Hotline:
-                        {{ config('company.contact.phone_2') }}
+                        {{ $companySettings->company_phone_2 }}
                     </a>
                 </div>
                 <div>
                     <a href="{{ config('company.contact.email_link') }}">
                         <i class="fa fa-envelope mr-1"></i>
-                        {{ config('company.contact.email') }}
+                        {{ $companySettings->company_email }}
                     </a>
                 </div>
                 <div>
@@ -48,14 +48,20 @@
                     <span style="font-weight: bold">
                         Địa chỉ VPGD 1:
                     </span>
-                    <br>{{ config('company.contact.address_1') }}
+                    <br>
+                    <span style="color: #C9B037">
+                        {{ $companySettings->company_address_1 }}   
+                    </span>
                 </div>
                 <div>
                     <i class="fa fa-home mr-1"></i>
                     <span style="font-weight: bold">
                         Địa chỉ VPGD 2:
                     </span>
-                    <br>{{ config('company.contact.address_2') }}
+                    <br>
+                    <span style="color: #C9B037">
+                        {{ $companySettings->company_address_1 }}   
+                    </span>
                 </div>
             </div>
 
