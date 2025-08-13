@@ -28,6 +28,8 @@ class UpdatePortfolioRequest extends FormRequest
             'location' => ['required', 'string'],
             'client' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
+            'area' => 'nullable|string|max:255',
+            'story' => 'nullable|string|max:255',
             'type' => 'nullable',
             'category_id' => ['required', 'exists:categories,id'],
             'year' => ['nullable', 'integer'],

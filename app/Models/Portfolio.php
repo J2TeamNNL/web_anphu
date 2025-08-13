@@ -15,6 +15,8 @@ class Portfolio extends Model
         'name',
         'slug',
         'location',
+        'area',
+        'story',
         'client',
         'description',
         'year',        

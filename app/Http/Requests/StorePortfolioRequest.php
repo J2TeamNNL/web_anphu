@@ -24,6 +24,8 @@ class StorePortfolioRequest extends FormRequest
         return [
             'name' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
+            'area' => 'nullable|string|max:255',
+            'story' => 'nullable|string|max:255',
             'client' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
