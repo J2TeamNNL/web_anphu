@@ -43,7 +43,16 @@ class ArticleController extends Controller
         }
 
         if ($request->filled('category_id')) {
-            $query->where('category_id', $request->category_id);
+            $category = Category::find($request->category_id);
+            if ($category) {
+                // Lấy tất cả các id của category này và con cháu 3 cấp
+                $categoryIds = collect([$category->id])
+                    ->merge($category->childrenRecursive()->pluck('id'))
+                    ->flatten()
+                    ->toArray();
+
+                $query->whereIn('category_id', $categoryIds);
+            }
         }
 
         $articles = $query

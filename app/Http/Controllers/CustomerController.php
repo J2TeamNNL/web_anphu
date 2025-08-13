@@ -146,26 +146,69 @@ class CustomerController extends Controller
     // BLOGS
 
     public function blogIndex(Request $request, string $slug)
-    {
-        $category = Category::where('slug', $slug)
+    {   
+        $parentCategory = Category::where('slug', $slug)
             ->where('type', CategoryType::ARTICLE->value)
             ->whereNull('parent_id')
+            ->with('children')
             ->firstOrFail();
 
-        $articles = Article::query()
-            ->where('category_id', $category->id)
-            ->with('category')
-            ->latest()
-            ->paginate(9);
+        $childCategories = $parentCategory->children;
 
-        $articleTitle = 'Hoạt động - ' . $category->name;
+        $childCategoryIds = $childCategories->pluck('id')->toArray();
+
+        $selectedChildSlug = $request->query('child');
+        $selectedChild = null;
+
+        $query = Article::query()->with('category');
+
+        if ($selectedChildSlug) {
+            $selectedChild = $childCategories->firstWhere('slug', $selectedChildSlug);
+
+            if ($selectedChild) {
+                $query->where('category_id', $selectedChild->id);
+            } else {
+                $query->whereIn('category_id', $childCategoryIds);
+            }
+        } else {
+            $query->whereIn('category_id', $childCategoryIds);
+        }
+
+        $articles = $query->latest()->paginate(9);
+
+        $articleTitle = $selectedChild
+        ? 'Bài đăng - ' . $selectedChild->name
+        : 'Bài đăng - ' . $parentCategory->name;
 
         return view('customers.pages.blogs', [
             'articles' => $articles,
-            'parentCategory' => $category,
-            'childCategories' => collect(),
-            'selectedChild' => null,
+            'parentCategory' => $parentCategory,
+            'childCategories' => $childCategories,
+            'selectedChild' => $selectedChild,
             'articleTitle' => $articleTitle,
+        ]);
+    }
+
+    public function videoIndex($slug)
+    {   
+        $videoCategory = Category::where('type', CategoryType::ARTICLE)
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $childCategories = $videoCategory->children;
+
+        $categoryIds = $childCategories->pluck('id')->toArray();
+
+        $articlesByCategory = Article::with('category')
+            ->whereIn('category_id', $categoryIds)
+            ->orderByDesc('created_at')
+            ->get()
+            ->groupBy('category_id'); // Gom theo category_id
+
+        return view('customers.pages.videos', [
+            'videoCategory' => $videoCategory,
+            'childCategories' => $childCategories,
+            'articlesByCategory' => $articlesByCategory,
         ]);
     }
 
