@@ -20,7 +20,7 @@
         background-size: auto;
         background-attachment: fixed;
         position: relative;
-        border-bottom: 2px solid var(--lux-gold);
+        /* border-bottom: 2px solid var(--lux-gold); */
         width: 100%;
     }
 
@@ -185,18 +185,18 @@
     .custom-price-btn {
         display: inline-block;
         padding: 12px 24px;
-        border: 2px solid var(--gold);
+        border: 2px solid var(--lux-gold);
         border-radius: 6px;
         background: transparent;
-        color: var(--gold);
+        color: var(--lux-gold);
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
         transition: all 0.3s ease;
     }
     .custom-price-btn:hover {
-        background: var(--gold);
-        color: var(--navy-dark);
+        background: var(--lux-gold);
+        color: var(--lux-dark);
         box-shadow: 0 4px 15px rgba(201,176,55,0.4);
         transform: translateY(-2px);
     }
