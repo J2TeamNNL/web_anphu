@@ -2,239 +2,218 @@
 
 @push('styles')
 <style>
-    :root {
-        --lux-dark: #0b1c2c;
-        --lux-dark-2: #081420;
-        --lux-gold: #C9B037;
-        --lux-gold-light: #e4c465;
-        --lux-text-light: #f5f2e7;
-    }
+:root {
+    --lux-dark: #0b1c2c;
+    --lux-dark-2: #081420;
+    --lux-gold: #C9B037;
+    --lux-gold-light: #e4c465;
+    --lux-text-light: #f5f2e7;
+}
 
-    body {
-        background-color: var(--lux-dark);
-        color: var(--lux-text-light);
-    }
+.section-bg-blog-detail {
+    background-color: var(--lux-dark);
+    background-image:
+        linear-gradient(rgba(11, 28, 44, 0.85), rgba(11, 28, 44, 0.85)),
+        url('/assets/img/gallery/background_danmask_1.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: auto;
+    background-attachment: fixed;
+    position: relative;
+    /* border-bottom: 2px solid var(--lux-gold); */
+    width: 100%;
+}
 
-    .section-bg-blog-detail {
-        background-color: var(--lux-dark);
-        padding: 2rem 0;
-        border-bottom: 2px solid var(--lux-gold);
-    }
+.blog-wrapper {
+    display: flex;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
 
-    .blog-wrapper {
-        display: flex;
-        gap: 1rem;
-        max-width: 1200px;
-        margin: 0 auto;
-        align-items: flex-start;
-    }
+/* Cột trái: bài viết */
+.blog-content {
+    flex: 1;
+    padding: 2rem;
+    background-color: var(--lux-dark-2);
+    border: 1px solid var(--lux-gold);
+    border-radius: 8px;
+    color: var(--lux-text-light);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+}
 
-    /* Cột trái: nội dung bài viết */
-    .blog-content {
-        flex: 1;
-        padding: 2rem;
-        background-color: var(--lux-dark-2);
-        border: 1px solid var(--lux-gold);
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-    }
+.blog-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
+    border-radius: 6px;
+    border: 1px solid var(--lux-gold);
+}
 
-    .blog-content h1,
-    .blog-content h2,
-    .blog-content h3 {
-        color: var(--lux-gold-light);
-        margin-top: 1.5rem;
-        font-weight: 600;
-    }
+/* Cột phải: TOC + extra */
+.blog-right {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+}
 
-    .blog-content p {
-        line-height: 1.75;
-        margin-bottom: 1rem;
-        color: var(--lux-text-light);
-    }
+/* TOC */
+.blog-toc {
+    background: var(--lux-dark-2);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--lux-gold);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    color: var(--lux-text-light);
+}
+.blog-toc h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--lux-gold);
+}
+.blog-toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.blog-toc li {
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+}
+.blog-toc a {
+    text-decoration: none;
+    color: var(--lux-text-light);
+    font-size: 0.9rem;
+    display: block;
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+.blog-toc a:hover {
+    background-color: rgba(201,176,55,0.15);
+    color: var(--lux-gold-light);
+}
+.blog-toc a.active {
+    background-color: var(--lux-gold);
+    color: var(--lux-dark);
+    font-weight: 500;
+}
 
-    .blog-content img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 1rem auto;
-        border-radius: 6px;
-        border: 1px solid var(--lux-gold);
-    }
+/* Extra content */
+.blog-extra {
+    background: var(--lux-dark-2);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--lux-gold);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    color: var(--lux-text-light);
+}
+.blog-extra h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--lux-gold);
+}
+.blog-extra p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
 
-    .img-wrapper {
-        width: 100%;
-        height: 300px;
-        overflow: hidden;
-        border: 1px solid var(--lux-gold);
-        border-radius: 6px;
-    }
+/* Media gallery */
+.img-wrapper {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 6px;
+}
+.img-wrapper img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--lux-gold);
+}
 
-    .img-wrapper img {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-        transition: transform 0.3s ease;
-    }
-
-    .img-wrapper img:hover {
-        transform: scale(1.05);
-    }
-
-    /* Cột phải: TOC + extra */
-    .blog-right {
-        width: 300px;
-        display: flex;
+/* Responsive */
+@media (max-width:1024px){
+    .blog-wrapper{
         flex-direction: column;
-        gap: 1rem;
-        position: sticky;
-        top: 100px;
-        align-self: flex-start;
     }
-
-    .blog-toc {
-        background: var(--lux-dark-2);
-        padding: 1rem;
-        border-radius: 8px;
-        border: 1px solid var(--lux-gold);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        color: var(--lux-text-light);
+    .blog-right{
+        width: 100%;
+        position: static;
     }
-
-    .blog-toc h5 {
-        font-size: 1rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        color: var(--lux-gold);
-    }
-
-    .blog-toc ul {
-        list-style: none;
-        padding-left: 0;
-        margin: 0;
-    }
-
-    .blog-toc li {
-        margin-bottom: 0.4rem;
-        line-height: 1.4;
-    }
-
-    .blog-toc a {
-        text-decoration: none;
-        color: var(--lux-text-light);
-        font-size: 0.9rem;
-        display: block;
-        padding: 6px 8px;
-        border-radius: 4px;
-        transition: all 0.3s ease;
-    }
-
-    .blog-toc a:hover {
-        background-color: rgba(201,176,55,0.15);
-        color: var(--lux-gold-light);
-    }
-
-    .blog-toc a.active {
-        background-color: var(--lux-gold);
-        color: var(--lux-dark);
-        font-weight: 500;
-    }
-
-    .blog-extra {
-        background: var(--lux-dark-2);
-        padding: 1rem;
-        border-radius: 8px;
-        border: 1px solid var(--lux-gold);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        color: var(--lux-text-light);
-    }
-
-    .blog-extra h5 {
-        font-size: 1rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        color: var(--lux-gold);
-    }
-
-    .blog-extra p {
-        font-size: 0.9rem;
-        line-height: 1.5;
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-        .blog-wrapper {
-            flex-direction: column;
-        }
-        .blog-right {
-            width: 100%;
-            position: static;
-        }
-        .blog-extra {
-            margin-top: 1rem;
-        }
-    }
+}
 </style>
 @endpush
 
 @section('content')
-<section class="section-bg-blog-detail">
-    <div class="container">
-        <div class="blog-wrapper">
-            <!-- Cột trái: nội dung bài viết -->
-            <div class="blog-content" id="blog-content">
-                <h2>{{ $article->name }}</h2>
-                <p class="text-muted small">Đăng ngày {{ $article->created_at->format('d/m/Y') }}</p>
-                {!! $article->content !!}
 
-                @if ($article->media->count())
-                    <div class="media-gallery mt-4">
-                        <div class="row">
-                            @foreach ($article->media as $media)
-                                <div class="col-md-4 mb-4 d-flex align-items-stretch">
-                                    <div class="card shadow-sm w-100" style="background: var(--lux-dark-2); border:1px solid var(--lux-gold);">
-                                        @if(Str::contains($media->type, 'image'))
-                                            <div class="text-center p-2">
-                                                <div class="img-wrapper">
-                                                    <img src="{{ asset('storage/' . $media->file_path) }}" alt="media">
-                                                </div>
-                                            </div>
-                                        @elseif(Str::contains($media->type, 'youtube'))
-                                            <div class="embed-responsive embed-responsive-16by9">
-                                                <iframe class="embed-responsive-item" src="{{ $media->file_path }}" allowfullscreen style="border:1px solid var(--lux-gold); border-radius:6px;"></iframe>
-                                            </div>
-                                        @endif
+@php
+use Illuminate\Support\Str;
+@endphp
+<section class="py-5 section-bg-blog-detail">
+<div class="container my-4">
+    <div class="blog-wrapper">
+        <!-- Cột trái: nội dung bài viết -->
+        <div class="blog-content" id="blog-content">
+            <h2>{{ $article->name }}</h2>
+            <p class="text-muted small">Đăng ngày {{ $article->created_at->format('d/m/Y') }}</p>
+            {!! $article->content !!}
 
-                                        @if ($media->caption)
-                                            <div class="card-body p-2">
-                                                <p class="card-text small">{{ $media->caption }}</p>
-                                            </div>
-                                        @endif
+            @if ($article->media->count())
+            <div class="media-gallery mt-4">
+                <div class="row">
+                    @foreach ($article->media as $media)
+                        <div class="col-md-4 mb-4 d-flex align-items-stretch">
+                            <div class="card shadow-sm w-100" style="background: var(--lux-dark-2); border:1px solid var(--lux-gold);">
+                                @if(Str::contains($media->type, 'image'))
+                                    <div class="text-center p-2">
+                                        <div class="img-wrapper">
+                                            <img src="{{ asset('storage/' . $media->file_path) }}" alt="media">
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @elseif(Str::contains($media->type, 'youtube'))
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="{{ $media->file_path }}" allowfullscreen style="border:1px solid var(--lux-gold); border-radius:6px;"></iframe>
+                                    </div>
+                                @endif
+
+                                @if ($media->caption)
+                                    <div class="card-body p-2">
+                                        <p class="card-text small">{{ $media->caption }}</p>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                @endif
-            </div>
-
-            <!-- Cột phải: TOC + nội dung extra -->
-            <div class="blog-right">
-                <aside class="blog-toc">
-                    <h5>Mục lục</h5>
-                    <ul id="blog-toc-list"></ul>
-                </aside>
-
-                <div class="blog-extra">
-                    <h5>Nội dung khác</h5>
-                    <p></p>
+                    @endforeach
                 </div>
+            </div>
+            @endif
+        </div>
+
+        <!-- Cột phải: TOC + extra -->
+        <div class="blog-right">
+            <aside class="blog-toc">
+                <h5>Mục lục</h5>
+                <ul id="blog-toc-list"></ul>
+            </aside>
+
+            <div class="blog-extra">
+                <h5>Nội dung khác</h5>
+                <p></p>
             </div>
         </div>
     </div>
+</div>
 </section>
 
-@include('customers.partials.sign_up_1')
 @include('customers.partials.anphu.partner')
 @endsection
 
