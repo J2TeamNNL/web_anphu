@@ -44,14 +44,14 @@
    </div>
 </div>
 
-<div id="callback-popup" class="popup-form" style="display:none;">
+{{-- <div id="callback-popup" class="popup-form" style="display:none;">
     <h4>Để lại số điện thoại để được gọi lại:</h4>
     <form id="callbackForm">
         <input type="text" name="phone" placeholder="Nhập số điện thoại" required>
         <input type="text" name="captcha" placeholder="mã bảo vệ" required>
         <button type="submit">Gửi yêu cầu</button>
     </form>
-</div>
+</div> --}}
 
 @push('scripts')
 <script>
