@@ -93,4 +93,25 @@ class ConsultingRequestController extends Controller
         return redirect()->route('admin.consulting_requests.index')
         ->with('success', 'Xóa giá thành công');
     }
+
+    public function callbackRequest(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|string|max:20',
+            'captcha' => 'required|string'
+        ]);
+
+        // Tạo record với name mặc định
+        $consulting = ConsultingRequest::create([
+            'name' => 'Khách Gọi Lại 1',
+            'phone' => $request->phone,
+            'note' => $request->note ?? '',
+            'status' => 'new', // nếu bạn có cột status
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Yêu cầu gọi lại đã được gửi thành công!'
+        ]);
+    }
 }

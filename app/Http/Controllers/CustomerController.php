@@ -146,78 +146,56 @@ class CustomerController extends Controller
     // BLOGS
 
     public function blogIndex(Request $request, string $slug)
-    {   
-        $parentCategory = Category::where('slug', $slug)
-            ->where('type', CategoryType::ARTICLE->value)
+    {
+        // Lấy tất cả danh mục cha cấp 1 (loại ARTICLE)
+        $rootCategories = Category::where('type', CategoryType::ARTICLE->value)
             ->whereNull('parent_id')
-            ->with('children')
+            ->get();
+
+        // Tìm category hiện tại (cha hoặc con)
+        $currentCategory = Category::where('slug', $slug)
+            ->where('type', CategoryType::ARTICLE->value)
             ->firstOrFail();
 
-        $childCategories = $parentCategory->children;
-
-        $childCategoryIds = $childCategories->pluck('id')->toArray();
-
-        $selectedChildSlug = $request->query('child');
-        $selectedChild = null;
-
-        $query = Article::query()->with('category');
-
-        if ($selectedChildSlug) {
-            $selectedChild = $childCategories->firstWhere('slug', $selectedChildSlug);
-
-            if ($selectedChild) {
-                $query->where('category_id', $selectedChild->id);
-            } else {
-                $query->whereIn('category_id', $childCategoryIds);
-            }
+        // Nếu là con → lấy cha làm danh mục active filter
+        if ($currentCategory->parent_id) {
+            $activeCategory = Category::findOrFail($currentCategory->parent_id);
         } else {
-            $query->whereIn('category_id', $childCategoryIds);
+            $activeCategory = $currentCategory;
         }
 
-        $articles = $query->latest()->paginate(9);
+        // Query bài viết theo danh mục hiện tại
+        $articles = Article::query()
+            ->with('category')
+            ->where('category_id', $currentCategory->id)
+            ->latest()
+            ->paginate(9);
 
-        $articleTitle = $selectedChild
-        ? 'Bài đăng - ' . $selectedChild->name
-        : 'Bài đăng - ' . $parentCategory->name;
+        // Tiêu đề
+        $articleTitle = 'Bài đăng - ' . $currentCategory->name;
 
         return view('customers.pages.blogs', [
-            'articles' => $articles,
-            'parentCategory' => $parentCategory,
-            'childCategories' => $childCategories,
-            'selectedChild' => $selectedChild,
-            'articleTitle' => $articleTitle,
+            'articles'        => $articles,
+            'rootCategories'  => $rootCategories,   // tất cả danh mục cha
+            'currentCategory' => $currentCategory,  // đang xem
+            'activeCategory'  => $activeCategory,   // cha để active filter
+            'articleTitle'    => $articleTitle,
         ]);
     }
 
-    public function videoIndex($slug)
-    {   
-        $videoCategory = Category::where('type', CategoryType::ARTICLE)
+    public function blogDetail(string $slug)
+    {
+        // Lấy bài viết kèm category
+        $article = Article::with('category')
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $childCategories = $videoCategory->children;
-
-        $categoryIds = $childCategories->pluck('id')->toArray();
-
-        $articlesByCategory = Article::with('category')
-            ->whereIn('category_id', $categoryIds)
-            ->orderByDesc('created_at')
-            ->get()
-            ->groupBy('category_id'); // Gom theo category_id
-
-        return view('customers.pages.videos', [
-            'videoCategory' => $videoCategory,
-            'childCategories' => $childCategories,
-            'articlesByCategory' => $articlesByCategory,
-        ]);
-    }
-
-    public function blogDetail($slug)
-    {
-        $article = Article::where('slug', $slug)->firstOrFail();
+        // SEO Title
+        $articleTitle = $article->name;
 
         return view('customers.pages.blog_detail', [
-            'article' => $article
+            'article' => $article,
+            'articleTitle' => $articleTitle,
         ]);
     }
 

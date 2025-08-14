@@ -34,15 +34,13 @@ Route::get('/chinh-sach', [CustomerController::class, 'policyDetail'])->name('cu
 
 Route::get('/du-an/danh-muc/{slug}', [CustomerController::class, 'projectByCategory'])
     ->name('projects.byCategory');
-
 Route::get('/du-an/{slug}', [CustomerController::class, 'projectDetail'])
 ->name('customers.project.detail');
 
 Route::get('/bai-dang/danh-muc/{slug}', [CustomerController::class, 'blogIndex'])
-->name('blogs.index');
-
-Route::get('/bai-dang/video/{slug}', [CustomerController::class, 'videoIndex'])
-->name('customers.video.index');
+->name('customers.blog.index');
+Route::get('/bai-dang/{slug}', [CustomerController::class, 'blogDetail'])
+->name('customers.blog.detail');
 
 Route::get('/consultant', [CustomerController::class, 'consultant'])
 ->name('customers.consultant');
@@ -58,6 +56,9 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 Route::post('/consulting-requests/store', [ConsultingRequestController::class, 'store'])->name('consulting_requests.store');
+Route::post('/consulting-request/callback', [ConsultingRequestController::class, 'callbackRequest'])
+   ->name('consulting_requests.callback');
+
 
 //Admin
 Route::prefix('admin')->name('admin.')

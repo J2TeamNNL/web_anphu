@@ -12,7 +12,6 @@
     --color-hover: rgba(240, 240, 240, 0.137);
 
     --anphu-gold: #d6b162;
-    --anphu-bg: #0d2135;
     --anphu-dark: #081522;
 }
 
@@ -49,8 +48,8 @@
   align-items: center;
   justify-content: center;
   background: var(--anphu-bg);
-  border: 1px solid var(--anphu-gold);
-  color: white;
+  border: 1.5px solid var(--anphu-gold);
+  color: var(--anphu-gold);
   text-decoration: none;
   box-shadow: 0 4px 10px rgba(0,0,0,0.25);
   cursor: pointer;
@@ -58,8 +57,10 @@
 
 .panel-btn:hover,
 .toggle-btn:hover {
-  background: var(--color-secondary);
-  color: var(--color-primary);
+  background: var(--anphu-gold);
+  color: var(--anphu-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
 }
 
 .toggle-icon {
@@ -123,18 +124,109 @@
     right: -110px; /* dịch nút sang bên ngoài view */
 }
 
+
+.desktop-only {
+  display: block;
+}
+.mobile-only {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .anphu-side-panel .btn {
-    display: inline-block;
-    width: auto;
-    margin-right: 10px;
+  body {
+    padding-bottom: 58px; /* đúng chiều cao thanh nút dưới */
   }
-  .anphu-side-panel .btn-icon-only {
-    display: inline-block;
-    width: 40px; /* độ rộng của nút icon */
-    text-align: center;
+
+  .desktop-only {
+    display: none !important;
   }
-  .anphu-side-panel .btn-text {
+
+  .mobile-only {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 58px; /* Giới hạn chiều cao thanh nút */
+    justify-content: space-around;
+    align-items: center;
+    background: #C9B037;
+    border-top: 1px solid #b79a2d;
+    padding: 0;
+    z-index: 9999;
+  }
+
+  .mobile-only .panel-btn {
+    flex: 1;
+    height: 58px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #000;
+    font-size: 12px;
+  }
+
+  .anphu-side-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    height: 58px; /* Chỉ cao bằng thanh nút */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background: #C9B037; /* màu vàng thương hiệu */
+    border-top: 1px solid #b79a2d;
+    z-index: 9999;
+    padding: 0;
+  }
+
+  .side-buttons {
+    flex-direction: row;
+    gap: 0;
+    width: 100%;
+    justify-content: space-around;
+    height: 100%; /* Không vượt quá thanh nút */
+  }
+
+  .panel-btn {
+    flex: 1;
+    height: 58px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #000; /* icon và chữ màu đen */
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 12px;
+  }
+
+  /* Đường ngăn giữa các nút */
+  .panel-btn:not(:last-child) {
+    border-right: 1px solid #b79a2d;
+  }
+
+  .panel-btn i {
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+
+  .panel-btn .icon-img {
+    margin-bottom: 2px;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  .toggle-btn {
     display: none;
   }
 }

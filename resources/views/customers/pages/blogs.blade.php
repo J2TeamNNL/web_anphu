@@ -103,38 +103,34 @@
         </div>
 
         <!-- FILTER DANH MỤC -->
-        @if($parentCategory)
+        {{-- @if(!empty($rootCategories))
             <div class="text-center mb-4">
-                <a href="{{ route('blogs.index', $parentCategory->slug) }}"
-                   class="btn btn-sm lux-btn active">
-                    Tất cả
-                </a>
-                @foreach($childCategories as $child)
-                    <a href="{{ route('blogs.index', ['slug' => $parentCategory->slug, 'child' => $child->slug]) }}"
-                       class="btn btn-sm lux-btn">
-                        {{ $child->name }}
+                @foreach($rootCategories as $cat)
+                    <a href="{{ route('customers.blog.index', $cat->slug) }}"
+                    class="btn btn-sm lux-btn {{ $activeCategory->id === $cat->id ? 'active' : '' }}">
+                        {{ $cat->name }}
                     </a>
                 @endforeach
             </div>
-        @endif
+        @endif --}}
 
         <!-- BLOG GRID -->
         <div class="row blog-grid">
-            @foreach ($articles as $item)
+            @foreach ($articles as $article)
                 <div class="col-md-4 mb-4 blog-item">
-                    <a href="{{ route('customers.blog.detail', $item->slug) }}" class="text-decoration-none">
+                    <a href="{{ route('customers.blog.detail', $article->slug) }}" class="text-decoration-none">
                         <div class="card card-blog"
-                             style="background-image: url('{{ $item->thumbnail }}'); background-size: cover; background-position: center;">
+                             style="background-image: url('{{ $article->thumbnail }}'); background-size: cover; background-position: center;">
                             <div class="blog-overlay p-3">
-                                <h5 class="font-weight-bold">{{ $item->name }}</h5>
+                                <h5 class="font-weight-bold">{{ $article->name }}</h5>
 
-                                @if (!empty($item->category))
-                                    <p class="mb-0 font-weight-bold">Chủ đề: {{ $item->category->name }}</p>
+                                @if (!empty($article->category))
+                                    <p class="mb-0 font-weight-bold">Chủ đề: {{ $article->category->name }}</p>
                                 @endif
 
-                                @if (!empty($item->category))
+                                @if (!empty($article->category))
                                     <p class="mb-0 font-weight-bold small">
-                                        Đăng ngày {{ $item->created_at->format('d/m/Y') }}
+                                        Đăng ngày {{ $article->created_at->format('d/m/Y') }}
                                     </p>
                                 @endif
                             </div>

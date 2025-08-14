@@ -1,23 +1,3 @@
-@php
-    $homeRoutes = ['customers.index'];
-
-    $videoCategory = $blogsCategories->firstWhere('name', 'Video');
-    $videoRoutes = ['customers.video.index'];
-
-    $aboutRoutes = [
-        'about.anphu',
-        'about.open_letter',
-        'about.cultural_values'
-    ];
-
-    $consultantRoutes = ['customers.consultant'];
-
-    $blogRoutes = ['customer.blog.index'];
-    
-    $contactRoutes = ['customers.contact'];
-@endphp
-
-<!-- Navigation bar -->
 <nav class="navbar main-nav navbar-expand-lg navbar-light sticky-top">
     <div class="container">
         <button
@@ -35,132 +15,102 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto flex-column flex-lg-row">
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ isActive($homeRoutes) }}">
+                {{-- Trang chủ --}}
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ request()->is('/') ? 'active' : '' }}">
                     <a class="nav-link text-center" href="{{ route('customers.index') }}">
                         <i class="fa fa-home mr-1"></i> Trang Chủ
                     </a>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ isActive($aboutRoutes) }}">
+                {{-- Về An Phú --}}
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small 
+                    {{ request()->is('ve-an-phu*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="aboutDropdown" data-toggle="dropdown">
                         <i class="fa fa-building me-1"></i> Về An Phú
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item small {{ isActive('about.anphu') }}" href="{{ route('about.anphu') }}">
-                            <i class="fa fa-info-circle me-2 icon-highlight"></i>
-                             Giới thiệu
+                        <a class="dropdown-item small {{ request()->is('ve-an-phu/gioi-thieu') ? 'active' : '' }}"
+                           href="{{ route('about.anphu') }}">
+                            <i class="fa fa-info-circle me-2 icon-highlight"></i> Giới thiệu
                         </a>
-                        <a class="dropdown-item small {{ isActive('about.open_letter') }}" href="{{ route('about.open_letter') }}">
-                            <i class="fa fa-envelope-open me-2 icon-highlight"></i>
-                             Thư ngỏ
+                        <a class="dropdown-item small {{ request()->is('ve-an-phu/thu-ngo') ? 'active' : '' }}"
+                           href="{{ route('about.open_letter') }}">
+                            <i class="fa fa-envelope-open me-2 icon-highlight"></i> Thư ngỏ
                         </a>
-                        <a class="dropdown-item small {{ isActive('about.cultural_values') }}" href="{{ route('about.cultural_values') }}">
-                            <i class="fa fa-heart me-2 icon-highlight"></i>
-                             Giá trị văn hóa
+                        <a class="dropdown-item small {{ request()->is('ve-an-phu/gia-tri-van-hoa') ? 'active' : '' }}"
+                           href="{{ route('about.cultural_values') }}">
+                            <i class="fa fa-heart me-2 icon-highlight"></i> Giá trị văn hóa
                         </a>
                     </div>
                 </li>
-                
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('dich-vu/*') ? 'active' : '' }}">
+
+                {{-- Dịch vụ --}}
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('dich-vu*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="serviceDropdown" data-toggle="dropdown">
                         <i class="fa fa-tools me-1"></i> Dịch Vụ
                     </a>
                     <div class="dropdown-menu">
                         @foreach($services as $service)
-                            <a
-                                class="dropdown-item small {{ request()->is('dich-vu/' . $service->slug) ? 'active' : '' }}"
-                                href="{{ route('customers.service.detail', $service->slug) }}"
-                            >
-                                <i class="fa fa-tools me-2 icon-highlight"></i>
-                                {{ $service->name }}
+                            <a class="dropdown-item small {{ request()->is('dich-vu/' . $service->slug) ? 'active' : '' }}"
+                               href="{{ route('customers.service.detail', $service->slug) }}">
+                                <i class="fa fa-tools me-2 icon-highlight"></i> {{ $service->name }}
                             </a>
                         @endforeach
                     </div>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('du-an/*') ? 'active' : '' }}">
+                {{-- Dự án --}}
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('du-an*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="projectDropdown" data-toggle="dropdown">
                         <i class="fa fa-project-diagram me-1"></i> Dự án
                     </a>
                     <div class="dropdown-menu" aria-labelledby="projectDropdown">
                         @foreach($portfoliosCategories as $category)
-                            <a
-                                class="dropdown-item small {{ request()->is('du-an/danh-muc/' . $category->slug) ? 'active' : '' }}"
-                                href="{{ route('projects.byCategory', ['slug' => $category->slug]) }}"
-                            >
-                                <i class="fa fa-project-diagram icon-highlight"></i>
-                                 {{ $category->name }}
+                            <a class="dropdown-item small {{ request()->is('du-an/danh-muc/' . $category->slug) ? 'active' : '' }}"
+                               href="{{ route('projects.byCategory', ['slug' => $category->slug]) }}">
+                                <i class="fa fa-project-diagram icon-highlight"></i> {{ $category->name }}
                             </a>
                         @endforeach
                     </div>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('bao-gia/*') ? 'active' : '' }}">
+                {{-- Báo giá --}}
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('bao-gia*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="priceDropdown" data-toggle="dropdown">
                         <i class="fa fa-tags me-1"></i> Báo Giá
                     </a>
                     <div class="dropdown-menu">
                         @foreach($services as $service)
-                            <a
-                                class="dropdown-item small {{ request()->is('bao-gia/' . $service->slug) ? 'active' : '' }}"
-                                href="{{ route('customers.service.price', $service->slug) }}"
-                            >
-                                <i class="fa fa-tags me-2 icon-highlight"></i>
-                                Báo giá {{ $service->name }}
+                            <a class="dropdown-item small {{ request()->is('bao-gia/' . $service->slug) ? 'active' : '' }}"
+                               href="{{ route('customers.service.price', $service->slug) }}">
+                                <i class="fa fa-tags me-2 icon-highlight"></i> Báo giá {{ $service->name }}
                             </a>
                         @endforeach
                     </div>
                 </li>
 
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('bai-dang/danh-muc/*') ? 'active' : '' }}">
+                {{-- Hoạt động / Blog --}}
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('bai-dang*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="blogDropdown" data-toggle="dropdown">
                         <i class="fa fa-newspaper me-1"></i> Hoạt động
                     </a>
                     <div class="dropdown-menu" aria-labelledby="blogDropdown">
                         @foreach($blogsCategories as $category)
-                            @if(strtolower($category->name) !== 'video') {{-- loại Video --}}
-                                <a
-                                    class="dropdown-item small {{ request()->is('bai-dang/danh-muc/' . $category->slug) ? 'active' : '' }}"
-                                    href="{{ route('blogs.index', ['slug' => $category->slug]) }}"
-                                >
-                                    <i class="fa fa-newspaper me-2 icon-highlight"></i>
-                                    {{ $category->name }}
-                                </a>
-                            @endif
+                            <a class="dropdown-item small {{ request()->is('bai-dang/danh-muc/' . $category->slug) ? 'active' : '' }}"
+                               href="{{ route('customers.blog.index', ['slug' => $category->slug]) }}">
+                                <i class="fa fa-newspaper me-2 icon-highlight"></i> {{ $category->name }}
+                            </a>
                         @endforeach
                     </div>
                 </li>
 
-                <li
-                    class="
-                    nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small
-                    {{ request()->is('bai-dang/video/*') ? 'active' : '' }}
-                    "
-                >
-                    <a class="nav-link dropdown-toggle text-center" href="#" id="blogDropdown" data-toggle="dropdown">
-                        <i class="fa fa-video me-1"></i> Video
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="blogDropdown">
-
-                        @if($videoCategory?->children?->isNotEmpty())
-                            @foreach($videoCategory->children as $child)
-                                <a
-                                    class="dropdown-item small ps-4 {{ request()->is('bai-dang/video/' . $child->slug) ? 'active' : '' }}"
-                                    href="{{ route('customers.video.index', ['slug' => $child->slug]) }}"
-                                >
-                                    <i class="fa fa-video me-2"></i>
-                                    {{ $child->name }}
-                                </a>
-                            @endforeach
-                        @endif
-                    </div>
-                </li>
-
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ isActive($contactRoutes) }}">
+                {{-- Liên hệ --}}
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ request()->is('lien-he') ? 'active' : '' }}">
                     <a class="nav-link text-center" href="{{ route('customers.contact') }}">
                         <i class="fa fa-phone me-1"></i> Liên hệ
                     </a>
                 </li>
+
             </ul>
         </div>
     </div>
