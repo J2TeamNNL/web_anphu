@@ -60,35 +60,6 @@
 </textarea>
 
 
-{{-- @push('scripts')
-    @once
-        <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/quill-image-uploader@1.2.3/dist/quill.imageUploader.min.js"></script>
-        <script src="{{ asset('js/quill-editor.js') }}"></script>
-    @endonce
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Register the image uploader module
-            Quill.register("modules/imageUploader", window.ImageUploader);
-            
-            // Initialize Quill editor with our custom manager
-            const quillManager = new QuillEditorManager({
-                selector: '#{{ $elementId }}',
-                uploadUrl: @json($uploadRoute),
-                uploadTable: @json($uploadTable),
-                height: @json($height),
-                placeholder: @json($placeholder),
-                readonly: @json($readonly),
-                toolbar: @json($toolbar)
-            });
-            
-            // Store manager instance for potential cleanup
-            window.quillManagers = window.quillManagers || {};
-            window.quillManagers['{{ $elementId }}'] = quillManager;
-        });
-    </script>
-@endpush --}}
 
 @push('scripts')
     @once

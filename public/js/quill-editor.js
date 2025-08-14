@@ -143,42 +143,27 @@ class QuillEditorManager {
 
             // Show loading state
             const range = this.quill.getSelection(true);
-            this.insertLoadingImage(range.index);
 
             // Upload file
             const imageUrl = await this.uploadToServer(file);
             
             // Replace loading with actual image
-            this.replaceLoadingWithImage(range.index, imageUrl);
+
+            // this.replaceLoadingWithImage(range.index, imageUrl);
+
+            this.quill.insertEmbed(range.index, 'image', imageUrl);
             
             return imageUrl;
 
         } catch (error) {
-            console.error('Image upload failed:', error);
-            this.handleUploadError(error.message);
-            throw error;
+            // console.error('Image upload failed:', error);
+            // this.handleUploadError(error.message);
+            // throw error;
+            return null;
         }
     }
 
-    /**
-     * Insert loading placeholder
-     */
-    insertLoadingImage(index) {
-        const loadingGif = '/images/loading.gif';
-        this.quill.insertEmbed(index, 'image', loadingGif);
-        this.loadingPosition = index;
-    }
 
-    /**
-     * Replace loading image with uploaded image
-     */
-    replaceLoadingWithImage(index, imageUrl) {
-        if (this.loadingPosition !== undefined) {
-            this.quill.deleteText(this.loadingPosition, 1);
-            this.quill.insertEmbed(this.loadingPosition, 'image', imageUrl);
-            this.loadingPosition = undefined;
-        }
-    }
 
     /**
      * Upload file to server
@@ -221,13 +206,6 @@ class QuillEditorManager {
      * Handle upload errors
      */
     handleUploadError(message) {
-        // Remove loading image if exists
-        if (this.loadingPosition !== undefined) {
-            this.quill.deleteText(this.loadingPosition, 1);
-            this.loadingPosition = undefined;
-        }
-
-        // Show user-friendly error message
         this.showErrorMessage(message);
     }
 
