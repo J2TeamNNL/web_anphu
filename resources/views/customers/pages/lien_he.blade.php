@@ -130,6 +130,42 @@
             padding: 1rem;
         }
     }
+
+    /* Carousel indicators tụt hẳn xuống dưới */
+    .carousel-indicators.custom-indicators {
+        position: absolute;
+        bottom: -48px; /* -25px trước + -30px nữa = -55px */
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        padding-left: 0;
+        margin: 0;
+        list-style: none;
+        z-index: 10;
+    }
+
+    .carousel-indicators.custom-indicators li {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        margin: 0 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .carousel-indicators.custom-indicators li.active,
+    .carousel-indicators.custom-indicators li:hover {
+        background-color: var(--anphu-gold);
+        transform: scale(1.4);
+    }
+
+    /* Hiệu ứng slide ảnh nhẹ */
+    .carousel-inner .carousel-item {
+        transition: transform 0.8s ease, opacity 0.8s ease;
+    }
+
 </style>
 @endpush
 
@@ -140,10 +176,9 @@
     <h4 class="heading-contact">Liên hệ với chúng tôi</h4>
     <hr class="border-warning">
 
-    {{-- PHẦN SLIDER ẢNH --}}
     @php
         preg_match_all('/<img[^>]+src="([^">]+)"/i', $page->custom_content_1 ?? '', $matches);
-        $images = $matches[1] ?? [];
+        $images = array_unique($matches[1] ?? []); // loại bỏ ảnh trùng
     @endphp
 
     @if(count($images) > 0)
@@ -155,6 +190,14 @@
                     </div>
                 @endforeach
             </div>
+
+            {{-- 3 chấm dưới carousel --}}
+            <ol class="carousel-indicators custom-indicators">
+                @foreach($images as $index => $img)
+                    <li data-target="#contactImageCarousel" data-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"></li>
+                @endforeach
+            </ol>
+
             <a class="carousel-control-prev" href="#contactImageCarousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             </a>
@@ -165,7 +208,8 @@
     @else
         <p class="text-center">Chưa có hình ảnh liên hệ nào.</p>
     @endif
-
+    
+    <hr>
 
     <div class="container">
         {{-- PHẦN MAP --}}
