@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row text-center text-md-left align-items-center justify-content-between">
             <!-- Logo -->
-            <div class="col-12 col-md-3 d-flex flex-column align-items-center justify-content-center mb-3 mb-md-0 border-divider">
+            <div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-center mb-3 mb-md-0 border-divider">
                 <a href="{{ route('customers.index')}}" class="logo-link">
                     <img
                         class="anphu-logo"

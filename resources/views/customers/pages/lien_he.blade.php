@@ -101,6 +101,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
+        border: 1px solid var(--lux-text-light);
     }
     .blog-overlay h5 {
         color: var(--anphu-gold);

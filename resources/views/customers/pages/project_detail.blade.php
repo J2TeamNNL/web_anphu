@@ -147,6 +147,22 @@
         line-height: 1.5;
     }
 
+    .blog-overlay {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.685).404), rgba(0, 0, 0, 0.822);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        border: 1px solid var(--lux-text-light);
+    }
+    .blog-overlay h5 {
+        color: var(--lux-gold-light);
+        font-weight: 600;
+    }
+    .blog-overlay p {
+        color: var(--lux-text-light);
+    }
+
     /* Responsive */
     @media (max-width: 1024px) {
         .portfolio-wrapper {
@@ -212,8 +228,56 @@
                 </aside>
 
                 <div class="portfolio-extra">
-                    <h5>Nội dung khác</h5>
-                    <p></p>
+                    <h5 class="mb-3">Xem thêm</h5>
+                    <h6 class="mb-3">Dự án thi công</h6>
+                    <hr class="border-warning">
+                    @foreach ($congTrinhArticles as $article)
+                        <div class="col-md-12 mb-4 blog-item">
+                            <a href="{{ route('customers.blog.detail', $article->slug) }}" class="text-decoration-none">
+                                <div class="card card-blog"
+                                    style="background-image: url('{{ $article->thumbnail }}'); background-size: cover; background-position: center;">
+                                    <div class="blog-overlay p-3">
+                                        <h5 class="font-weight-bold">{{ $article->name }}</h5>
+
+                                        @if (!empty($article->category))
+                                            <p class="mb-0 font-weight-bold">Chủ đề: {{ $article->category->name }}</p>
+                                        @endif
+
+                                        @if (!empty($article->category))
+                                            <p class="mb-0 font-weight-bold small">
+                                                Đăng ngày {{ $article->created_at->format('d/m/Y') }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+
+                    <h6 class="mb-3">Cảm nhận khách hàng</h6>
+                    <hr class="border-warning">
+                    @foreach ($camNhanArticles as $article)
+                        <div class="col-md-12 mb-4 blog-item">
+                            <a href="{{ route('customers.blog.detail', $article->slug) }}" class="text-decoration-none">
+                                <div class="card card-blog"
+                                    style="background-image: url('{{ $article->thumbnail }}'); background-size: cover; background-position: center;">
+                                    <div class="blog-overlay p-3">
+                                        <h5 class="font-weight-bold">{{ $article->name }}</h5>
+
+                                        @if (!empty($article->category))
+                                            <p class="mb-0 font-weight-bold">Chủ đề: {{ $article->category->name }}</p>
+                                        @endif
+
+                                        @if (!empty($article->category))
+                                            <p class="mb-0 font-weight-bold small">
+                                                Đăng ngày {{ $article->created_at->format('d/m/Y') }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
