@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\CustomerHomeController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\CustomPageController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
@@ -17,16 +17,13 @@ use App\Http\Controllers\MediaProxyController;
 use App\Http\Middleware\CheckSuperAdminMiddleware;
 
 
-Route::get('/', [CustomerHomeController::class, 'index'])->name('customers.index');
+Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
 
 // Media proxy route for serving images (local or Cloudinary)
 Route::get('/media/{media}', [MediaProxyController::class, 'serve'])->name('media.serve');
 
-Route::group(['prefix' => ''], function () {
-    Route::get('/anphu', [CustomerController::class, 'aboutAnphu'])->name('about.anphu');
-    Route::get('/thu-ngo', [CustomerController::class, 'aboutOpenLetter'])->name('about.open_letter');
-    Route::get('/gia-tri-van-hoa', [CustomerController::class, 'aboutCulturalValues'])->name('about.cultural_values');
-});
+Route::get('/about/{slug}', [CustomerController::class, 'showCustomPage'])
+    ->name('customers.custom_page');
 
 Route::get('/dich-vu/{slug}', [CustomerController::class, 'serviceDetail'])->name('customers.service.detail');
 Route::get('/bao-gia/{slug}', [CustomerController::class, 'servicePrice'])->name('customers.service.price');
@@ -42,11 +39,14 @@ Route::get('/bai-dang/danh-muc/{slug}', [CustomerController::class, 'blogIndex']
 Route::get('/bai-dang/{slug}', [CustomerController::class, 'blogDetail'])
 ->name('customers.blog.detail');
 
-Route::get('/consultant', [CustomerController::class, 'consultant'])
+Route::get('/tu-van', [CustomerController::class, 'consultant'])
 ->name('customers.consultant');
 
-Route::get('/contact', [CustomerController::class, 'contact'])
+Route::get('/lien-he', [CustomerController::class, 'contact'])
 ->name('customers.contact');
+
+Route::get('/uu-dai', [CustomerController::class, 'voucher'])
+->name('customers.voucher');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [AuthController::class, 'login'])->name('login');
@@ -55,7 +55,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/register', [AuthController::class, 'processRegister'])->name('process_register');
 });
 
-Route::post('/consulting-requests/store', [ConsultingRequestController::class, 'store'])->name('consulting_requests.store');
+Route::post('/consulting-requests/store', [ConsultingRequestController::class, 'store'])
+   ->name('consulting_requests.store');
+
 Route::post('/consulting-request/callback', [ConsultingRequestController::class, 'callbackRequest'])
    ->name('consulting_requests.callback');
 
@@ -91,6 +93,10 @@ Route::prefix('admin')->name('admin.')
       'destroy'
    ]);
 
+   Route::resource('custom_pages', CustomPageController::class)->except([
+      'destroy'
+   ]);
+
    Route::get('consulting-requests/index', [ConsultingRequestController::class, 'index'])
    ->name('consulting_requests.index');
 
@@ -117,6 +123,7 @@ Route::prefix('admin')->name('admin.')
       Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
       Route::delete('partners/{partner}', [PartnerController::class, 'destroy'])->name('partners.destroy');
       Route::delete('services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
+      Route::delete('custom_pages/{custom_page}', [CustomPageController::class, 'destroy'])->name('custom_pages.destroy');
 
       Route::resource('users', UserController::class);
 
