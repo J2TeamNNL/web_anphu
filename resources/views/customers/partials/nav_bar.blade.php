@@ -30,7 +30,7 @@
                     </a>
                     <div class="dropdown-menu">
                         @foreach($custom_pages as $page)
-                            @if($page->slug !== 'index' && $page->slug !== 'uu_dai' && $page->slug !== 'lien_he')
+                            @if($page->slug !== 'index' && $page->slug !== 'uu-dai' && $page->slug !== 'lien-he')
                                 <a class="dropdown-item small {{ request()->is('about/' . $page->slug) ? 'active' : '' }}"
                                 href="{{ route('customers.custom_page', $page->slug) }}">
                                     <i class="fa fa-building me-2 icon-highlight"></i>
