@@ -7,6 +7,7 @@ use App\Models\Portfolio;
 use App\Models\Article;
 use App\Models\Service;
 use App\Models\Category;
+use App\Models\CustomPage;
 use Illuminate\Http\Request;
 use App\Models\CompanySetting;
 
@@ -22,23 +23,7 @@ class CustomerController extends Controller
      */
     public function index()
     {   
-        $portfolios = Portfolio::query()
-            ->limit(4)
-            ->get();
-
-        return view('customers.pages.index', [
-            'portfolios' => $portfolios
-        ]);
-    }
-    
-    public function consultant()
-    {
-        return view('customers.pages.consultant');
-    }
-
-    public function blog()
-    {
-        return view('customers.pages.blog');
+        return view('customers.pages.index');
     }
 
     public function contact()
@@ -46,22 +31,21 @@ class CustomerController extends Controller
         return view('customers.pages.contact');
     }
     
-    // ABOUT
-    public function aboutAnphu()
-    {   
-        return view('customers.pages.about_anphu');
-    }
 
-    public function aboutOpenLetter()
+    //CUSTOM PAGES
+    public function showCustomPage($slug)
     {
-        return view('customers.pages.about_open_letter');
-    }
+        $page = CustomPage::where('slug', $slug)->firstOrFail();
 
-    public function aboutCulturalValues()
-    {
-        return view('customers.pages.about_cultural_values');
-    }
+        // 1 slug load view riêng
+        $viewPath = 'customers.pages.' . str_replace('-', '_', $slug);
+        if (view()->exists($viewPath)) {
+            return view($viewPath, compact('page'));
+        }
 
+        // 1 view chung để hiển thị toàn bộ custom_pages
+        // return view('customers.pages.custom_page', compact('page'));
+    }
 
     // SERVICES
 
@@ -79,12 +63,20 @@ class CustomerController extends Controller
         return view('customers.pages.service_price', compact('service'));
     }
 
+
+    // POLICY
     public function policyDetail()
     {
         $policyContent = CompanySetting::value('policy_content') ?? '';
 
         return view('customers.pages.policy', [
             'policyContent' => $policyContent,
+        ]);
+    }
+
+    public function voucher(){
+        return view('customers.pages.voucher', [
+            
         ]);
     }
 
@@ -197,24 +189,6 @@ class CustomerController extends Controller
             'article' => $article,
             'articleTitle' => $articleTitle,
         ]);
-    }
-
-    //PRICE
-    public function priceFull()
-    {
-        return view('customers.pages.price_full');
-    }
-    public function priceRaw()
-    {
-        return view('customers.pages.price_raw');
-    }
-    public function priceDesign()
-    {
-        return view('customers.pages.price_design');
-    }
-    public function pricePermit()
-    {
-        return view('customers.pages.price_permit');
     }
 
 }

@@ -32,7 +32,7 @@ class UploadImageRequest extends FormRequest
             'table' => [
                 'sometimes',
                 'string',
-                'in:articles,portfolios,partners,services,company_settings_policies'
+                'in:articles,portfolios,partners,services,company_settings_policies,custom_pages'
             ],
 
             'file' => [

@@ -11,6 +11,7 @@ use App\Models\Portfolio;
 use App\Models\Category;
 use App\Models\CompanySetting;
 use App\Models\Service;
+use App\Models\CustomPage;
 
 use App\Enums\CategoryType;
 use Illuminate\Support\Facades\Log;
@@ -64,12 +65,15 @@ class ViewServiceProvider extends ServiceProvider
                 $services = Service::all();
             }
 
+            $custom_pages = CustomPage::all();
+
             View::share([
                 'interiorProjects' => $interiorProjects,
                 'otherProjects' => $otherProjects,
                 'partners' => $partners,
                 'companySettings' => $companySettings,
                 'services' => $services,
+                'custom_pages' => $custom_pages
             ]);
 
         } catch (\Throwable $e) {
