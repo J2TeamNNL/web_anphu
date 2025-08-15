@@ -41,6 +41,7 @@
                         <th>Số điện thoại</th>
                         <th>Email</th>
                         <th>Địa điểm xây dựng</th>
+                        <th>Lời nhắn</th>
                         <th>Gửi lúc</th>
                         <th>Duyệt</th>
                         <th>Xóa</th>
@@ -54,6 +55,7 @@
                               <td>{{ $item->phone }}</td>
                               <td>{{ $item->email }}</td>
                               <td>{{ $item->location }}</td>
+                              <td>{{ $item->note }}</td>
                               <td>{{ $item->created_at }}</td>
                               <td>
                                  <span id="status-badge-{{ $item->id }}" class="badge bg-{{ $item->status->color() }}">
