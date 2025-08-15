@@ -19,7 +19,7 @@
 
 <div class="form-group">
     @if($label)
-        <label for="{{ $id }}">{{ $label }}</label>
+        <h5 for="{{ $id }}">{{ $label }}</h5>
     @endif
     
     <select 

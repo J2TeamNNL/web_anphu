@@ -61,7 +61,7 @@
 
                 {{-- Component Quill --}}
                 <div class="form-group">
-                    <label for="content">Nội dung chi tiết</label>
+                    <h5 for="content">Nội dung chi tiết</h5>
                     <x-editor 
                         selector="#quill-editor"
                         uploadTable="portfolios"
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="year">Năm thực hiện</label>
+                    <h5 for="year">Năm thực hiện</h5>
                     <input type="number" name="year" id="year" class="form-control" value="{{ old('year') }}">
                 </div>
 

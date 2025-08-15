@@ -146,7 +146,10 @@
          </div>
 
          <div class="form-group text-center">
-            <button type="submit" class="btn btn-submit btn-block">GỬI YÊU CẦU</button>
+            <button
+               type="submit"
+               class="btn btn-submit btn-block"
+            >GỬI YÊU CẦU</button>
          </div>
 
          <p class="small mb-1">
