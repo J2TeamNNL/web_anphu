@@ -40,14 +40,14 @@
                 {{-- Dịch vụ --}}
                 <li class="nav-item mx-2 {{ request()->routeIs('admin.services.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('admin.services.index') }}">
-                        <i class="fa fa-newspaper me-1"></i> Dịch vụ
+                        <i class="fa fa-circle-check"></i> Dịch vụ
                     </a>
                 </li>
 
                 {{-- Custom Pages --}}
                 <li class="nav-item mx-2 {{ request()->routeIs('admin.custom_pages.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('admin.custom_pages.index') }}">
-                        <i class="fa fa-page"></i> Quản lý trang
+                        <i class="fa fa-newspaper me-1"></i> Quản lý trang
                     </a>
                 </li>
 
