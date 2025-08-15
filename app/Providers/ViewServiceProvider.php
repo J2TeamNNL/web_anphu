@@ -78,7 +78,7 @@ class ViewServiceProvider extends ServiceProvider
                 $congTrinhArticles = Article::with('category') // <-- thêm with('category') ở đây
                     ->where('category_id', $congTrinhCategory->id)
                     ->latest()
-                    ->take(3)
+                    ->take(1)
                     ->get();
             }
 
@@ -86,7 +86,7 @@ class ViewServiceProvider extends ServiceProvider
                 $camNhanArticles = Article::with('category') // <-- thêm with('category') ở đây
                     ->where('category_id', $camNhanCategory->id)
                     ->latest()
-                    ->take(3)
+                    ->take(1)
                     ->get();
             }
 
