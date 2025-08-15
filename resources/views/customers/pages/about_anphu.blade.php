@@ -49,8 +49,8 @@
 
     <section class="py-5 about-section-bg">
         <div class="col-md-12 about-img" data-aos="fade-left">
-                    <img src="{{ $page->image_1 }}" class="img-fluid mb-4 rounded shadow-sm" alt="anphu_crew">
-                </div>
+            <img src="{{ $page->image_1 }}" class="img-fluid mb-4 rounded shadow-sm" alt="anphu_crew">
+        </div>
         <div class="container ">
             <div class="row">
 

@@ -82,7 +82,7 @@ class CustomerController extends Controller
 
     public function voucher(){
 
-        $page = CustomPage::where('slug', 'uu_dai')->firstOrFail();
+        $page = CustomPage::where('slug', 'uu-dai')->firstOrFail();
 
         return view('customers.pages.uu_dai', compact('page'));
     }
