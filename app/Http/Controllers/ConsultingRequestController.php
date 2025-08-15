@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\ConsultingRequest;
 use App\Http\Requests\StoreConsultingRequest;
-use Illuminate\Contracts\Cache\Store;
+use App\Http\Requests\StoreCallbackRequest;
 
 class ConsultingRequestController extends Controller
 {   
@@ -94,24 +94,20 @@ class ConsultingRequestController extends Controller
         ->with('success', 'Xóa giá thành công');
     }
 
-    public function callbackRequest(Request $request)
+    public function callbackRequest(StoreCallbackRequest $request)
     {
-        $request->validate([
-            'phone' => 'required|string|max:20',
-            'captcha' => 'required|string'
-        ]);
+        $validated = $request->validated();
 
-        // Tạo record với name mặc định
-        $consulting = ConsultingRequest::create([
-            'name' => 'Khách Gọi Lại 1',
-            'phone' => $request->phone,
-            'note' => $request->note ?? '',
-            'status' => 'new', // nếu bạn có cột status
-        ]);
+        $validated['location'] = $validated['location'] ?? '';
+        $validated['status'] = 0;
+        $validated['note'] = 'Khách gọi lại';
+
+        $consulting = $this->model->create($validated);
 
         return response()->json([
-            'success' => true,
-            'message' => 'Yêu cầu gọi lại đã được gửi thành công!'
-        ]);
+            'message' => 'Đăng ký thành công',
+            'data' => $consulting
+        ], 201);
     }
+
 }
