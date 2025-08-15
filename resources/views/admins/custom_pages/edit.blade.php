@@ -22,7 +22,7 @@
                {{-- Slug --}}
                <div class="form-group">
                   <h5>Slug</h5>
-                  <input type="text" name="slug" class="form-control" value="{{ old('slug', $page->slug ?? '') }}" required disabled>
+                  <input type="text" name="slug" class="form-control" value="{{ old('slug', $page->slug ?? '') }}" required>
                </div>
 
                {{-- Các block nội dung --}}
