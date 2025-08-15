@@ -75,14 +75,16 @@ class ViewServiceProvider extends ServiceProvider
             $camNhanArticles = collect();
 
             if ($congTrinhCategory) {
-                $congTrinhArticles = Article::where('category_id', $congTrinhCategory->id)
+                $congTrinhArticles = Article::with('category') // <-- thêm with('category') ở đây
+                    ->where('category_id', $congTrinhCategory->id)
                     ->latest()
-                    ->take(3) // số lượng tùy chỉnh
+                    ->take(3)
                     ->get();
             }
 
             if ($camNhanCategory) {
-                $camNhanArticles = Article::where('category_id', $camNhanCategory->id)
+                $camNhanArticles = Article::with('category') // <-- thêm with('category') ở đây
+                    ->where('category_id', $camNhanCategory->id)
                     ->latest()
                     ->take(3)
                     ->get();
