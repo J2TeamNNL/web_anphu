@@ -25,7 +25,8 @@ class StoreConsultingRequest extends FormRequest
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20|unique:consulting_requests,phone',
             'email' => 'nullable|email|max:255',
-            'location' => 'required|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'note' => 'nullable|string|max:255',
         ];
     }
 }
