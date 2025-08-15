@@ -65,8 +65,21 @@
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Bản Đồ</h5>
                 <div class="embed-responsive embed-responsive-4by3 border rounded">
                     <iframe
-                        src="{{ config('company.map.embed_url') }}"
-                        width="600"
+                        src="{{ config('company.map_1.embed_url') }}"
+                        width="500"
+                        height="450"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                    >
+                    </iframe>
+                </div>
+                <hr>
+                <div class="embed-responsive embed-responsive-4by3 border rounded">
+                    <iframe
+                        src="{{ config('company.map_2.embed_url') }}"
+                        width="500"
                         height="450"
                         style="border:0;"
                         allowfullscreen=""
