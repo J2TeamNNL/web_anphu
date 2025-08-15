@@ -121,6 +121,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border: 1px solid var(--anphu-gold);
     }
 
     /* Responsive fix */
@@ -146,8 +147,8 @@
     }
 
     .carousel-indicators.custom-indicators li {
-        width: 14px;
-        height: 14px;
+        width: 12px;
+        height: 12px;
         border-radius: 50%;
         background-color: rgba(255, 255, 255, 0.5);
         margin: 0 6px;
@@ -158,7 +159,7 @@
     .carousel-indicators.custom-indicators li.active,
     .carousel-indicators.custom-indicators li:hover {
         background-color: var(--anphu-gold);
-        transform: scale(1.4);
+        transform: scale(1.2);
     }
 
     /* Hiệu ứng slide ảnh nhẹ */
@@ -174,7 +175,6 @@
 <section class="py-5 section-bg-contact">
 
     <h4 class="heading-contact">Liên hệ với chúng tôi</h4>
-    <hr class="border-warning">
 
     @php
         preg_match_all('/<img[^>]+src="([^">]+)"/i', $page->custom_content_1 ?? '', $matches);

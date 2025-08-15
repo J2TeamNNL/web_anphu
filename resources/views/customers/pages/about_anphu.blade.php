@@ -53,6 +53,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border: 1px solid var(--anphu-gold);
     }
 
     /* Slide mượt */
@@ -76,8 +77,8 @@
     }
 
     .carousel-indicators.custom-indicators li {
-        width: 14px;
-        height: 14px;
+        width: 12px;
+        height: 12px;
         border-radius: 50%;
         background-color: rgba(255,255,255,0.5);
         margin: 0 6px;
@@ -88,7 +89,7 @@
     .carousel-indicators.custom-indicators li.active,
     .carousel-indicators.custom-indicators li:hover {
         background-color: var(--anphu-gold);
-        transform: scale(1.4);
+        transform: scale(1.2);
     }
 </style>
 @endpush
