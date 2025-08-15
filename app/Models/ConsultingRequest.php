@@ -12,6 +12,7 @@ class ConsultingRequest extends Model
         'phone',
         'email',
         'location',
+        'note',
         'status',
     ];
 
