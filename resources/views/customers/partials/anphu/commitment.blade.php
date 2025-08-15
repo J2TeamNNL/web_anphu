@@ -7,6 +7,7 @@
                 <div class="slide-content-box p-3 p-md-4 rounded" style="background-color: rgba(0,0,0,0.7);">
                     <div class="text-content">
                         <h2 class="h5 h4-md h3-lg mb-3 text-center text-md-left">
+                            {{ $custom_page }}
                             Thương hiệu toàn dân/ An Phú Build - dựng xây ngôi nhà Việt
                         </h2>
                         <ul class="list-unstyled pl-0 pl-md-2">

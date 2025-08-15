@@ -29,18 +29,13 @@
                         <i class="fa fa-building me-1"></i> Về An Phú
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item small {{ request()->is('ve-an-phu/gioi-thieu') ? 'active' : '' }}"
-                           href="{{ route('about.anphu') }}">
-                            <i class="fa fa-info-circle me-2 icon-highlight"></i> Giới thiệu
-                        </a>
-                        <a class="dropdown-item small {{ request()->is('ve-an-phu/thu-ngo') ? 'active' : '' }}"
-                           href="{{ route('about.open_letter') }}">
-                            <i class="fa fa-envelope-open me-2 icon-highlight"></i> Thư ngỏ
-                        </a>
-                        <a class="dropdown-item small {{ request()->is('ve-an-phu/gia-tri-van-hoa') ? 'active' : '' }}"
-                           href="{{ route('about.cultural_values') }}">
-                            <i class="fa fa-heart me-2 icon-highlight"></i> Giá trị văn hóa
-                        </a>
+                        @foreach($custom_pages as $page)
+                            <a class="dropdown-item small {{ request()->is('about/' . $page->slug) ? 'active' : '' }}"
+                               href="{{ route('customers.custom_page', $page->slug) }}">
+                                <i class="fa fa-building me-2 icon-highlight"></i>
+                                {{ $page->name }}
+                            </a>
+                        @endforeach
                     </div>
                 </li>
 

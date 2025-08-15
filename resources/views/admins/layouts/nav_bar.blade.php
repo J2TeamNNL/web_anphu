@@ -44,14 +44,12 @@
                     </a>
                 </li>
 
-                {{-- Người quản lý (chỉ hiển thị nếu là admin cấp cao) --}}
-                @if(session()->get('level') == 1)
-                    <li class="nav-item mx-2 {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.users.index') }}">
-                            <i class="fa fa-users-cog mr-1"></i> Người quản lý
-                        </a>
-                    </li>
-                @endif
+                {{-- Custom Pages --}}
+                <li class="nav-item mx-2 {{ request()->routeIs('admin.custom_pages.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.custom_pages.index') }}">
+                        <i class="fa fa-page"></i> Quản lý trang
+                    </a>
+                </li>
 
                 {{-- Dropdown: Cài đặt --}}
                 <li
@@ -98,6 +96,11 @@
                     </div>
                 </li>
 
+                <li class="nav-item mx-2 {{ request()->routeIs('admin.custom_pages.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.auths.logout') }}" class="btn btn-danger px-4">
+                        <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
