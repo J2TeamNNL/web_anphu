@@ -103,7 +103,7 @@
 
                 {{-- Liên hệ --}}
                 <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ request()->is('lien-he') ? 'active' : '' }}">
-                    <a class="nav-link text-center" href="{{ route('customers.contact', ['slug' => 'lien-he']) }}">
+                    <a class="nav-link text-center" href="{{ route('customers.contact') }}">
                         <i class="fa fa-phone me-1"></i> Liên hệ
                     </a>
                 </li>
