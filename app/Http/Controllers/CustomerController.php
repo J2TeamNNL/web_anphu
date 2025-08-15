@@ -22,13 +22,19 @@ class CustomerController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
-        return view('customers.pages.index');
+    {
+        $page = CustomPage::where('slug', 'index')->first();
+
+        return view('customers.pages.index', compact('page'));
     }
 
     public function contact()
-    {
-        return view('customers.pages.contact');
+    {   
+        $page = CustomPage::where('slug', 'lien-he')->firstOrFail();
+
+        return view('customers.pages.lien_he',[
+            'page' => $page
+        ]);
     }
     
 
@@ -44,7 +50,7 @@ class CustomerController extends Controller
         }
 
         // 1 view chung để hiển thị toàn bộ custom_pages
-        // return view('customers.pages.custom_page', compact('page'));
+        return view('customers.pages.index', compact('page'));
     }
 
     // SERVICES
@@ -75,9 +81,10 @@ class CustomerController extends Controller
     }
 
     public function voucher(){
-        return view('customers.pages.voucher', [
-            
-        ]);
+
+        $page = CustomPage::where('slug', 'uu_dai')->firstOrFail();
+
+        return view('customers.pages.uu_dai', compact('page'));
     }
 
     // PORTFOLIOS

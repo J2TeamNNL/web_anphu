@@ -45,6 +45,8 @@ class ConsultingRequestController extends Controller
     {
         $validated = $request->validated();
 
+        $validated['location'] = $validated['location'] ?? '';
+
         $alreadySubmitted = $this->model::whereDate('created_at', Carbon::today())
             ->where(function ($query) use ($validated) {
                 $query->where('phone', $validated['phone']);

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
 
 use App\Models\Partner;
+use App\Models\Article;
 use App\Models\Portfolio;
 use App\Models\Category;
 use App\Models\CompanySetting;
@@ -66,6 +67,26 @@ class ViewServiceProvider extends ServiceProvider
             }
 
             $custom_pages = CustomPage::all();
+            
+            $congTrinhCategory = Category::where('slug', 'cong-trinh')->first();
+            $camNhanCategory = Category::where('slug', 'cam-nhan-khach-hang')->first();
+
+            $congTrinhArticles = collect();
+            $camNhanArticles = collect();
+
+            if ($congTrinhCategory) {
+                $congTrinhArticles = Article::where('category_id', $congTrinhCategory->id)
+                    ->latest()
+                    ->take(3) // số lượng tùy chỉnh
+                    ->get();
+            }
+
+            if ($camNhanCategory) {
+                $camNhanArticles = Article::where('category_id', $camNhanCategory->id)
+                    ->latest()
+                    ->take(3)
+                    ->get();
+            }
 
             View::share([
                 'interiorProjects' => $interiorProjects,
@@ -73,7 +94,9 @@ class ViewServiceProvider extends ServiceProvider
                 'partners' => $partners,
                 'companySettings' => $companySettings,
                 'services' => $services,
-                'custom_pages' => $custom_pages
+                'custom_pages' => $custom_pages,
+                'congTrinhArticles' => $congTrinhArticles,
+                'camNhanArticles' => $camNhanArticles,
             ]);
 
         } catch (\Throwable $e) {

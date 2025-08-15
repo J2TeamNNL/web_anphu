@@ -60,7 +60,7 @@
                     </span>
                     <br>
                     <span style="color: #C9B037">
-                        {{ $companySettings->company_address_1 }}   
+                        {{ $companySettings->company_address_2 }}   
                     </span>
                 </div>
             </div>

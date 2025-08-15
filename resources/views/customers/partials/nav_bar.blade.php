@@ -30,11 +30,13 @@
                     </a>
                     <div class="dropdown-menu">
                         @foreach($custom_pages as $page)
-                            <a class="dropdown-item small {{ request()->is('about/' . $page->slug) ? 'active' : '' }}"
-                               href="{{ route('customers.custom_page', $page->slug) }}">
-                                <i class="fa fa-building me-2 icon-highlight"></i>
-                                {{ $page->name }}
-                            </a>
+                            @if($page->slug !== 'index' && $page->slug !== 'uu_dai' && $page->slug !== 'lien_he')
+                                <a class="dropdown-item small {{ request()->is('about/' . $page->slug) ? 'active' : '' }}"
+                                href="{{ route('customers.custom_page', $page->slug) }}">
+                                    <i class="fa fa-building me-2 icon-highlight"></i>
+                                    {{ $page->name }}
+                                </a>
+                            @endif
                         @endforeach
                     </div>
                 </li>
@@ -101,7 +103,7 @@
 
                 {{-- Liên hệ --}}
                 <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 small {{ request()->is('lien-he') ? 'active' : '' }}">
-                    <a class="nav-link text-center" href="{{ route('customers.contact') }}">
+                    <a class="nav-link text-center" href="{{ route('customers.contact', ['slug' => 'lien-he']) }}">
                         <i class="fa fa-phone me-1"></i> Liên hệ
                     </a>
                 </li>

@@ -14,9 +14,10 @@
                 <thead style="background-color: #242323c0; color: #C9B037">
                     <tr>
                         <th>#</th>
+                        <th>Tên trang</th>
                         <th>Slug</th>
                         @for($i=1; $i<=4; $i++)
-                            <th>Mô tả {{ $i }}</th>
+                            <th>Đoạn Mô tả {{ $i }}</th>
                         @endfor
                         <th>Thao tác</th>
                     </tr>
@@ -25,11 +26,12 @@
                     @forelse($pages as $page)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td><strong>{{ $page->name }}</strong></td>
                             <td>{{ $page->slug }}</td>
                             @for($i=1; $i<=4; $i++)
                                 <td style="max-width:200px; text-align:left;">
                                     @if($page['title_'.$i])
-                                        <img src="{{ $page['image_'.$i] }}" class="img-fluid" alt="image_{{ $i }}">
+                                        {{ $page['title_'.$i] }}
                                     @endif
                                     
                                 </td>

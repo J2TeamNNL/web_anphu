@@ -33,6 +33,9 @@
         color: white;
         padding: 2rem;
         text-align: center;
+        font-size: 1.05rem;
+        line-height: 1.75;
+        margin-bottom: 1rem;
     }
 
     .about-img {
@@ -46,7 +49,7 @@
 
     <section class="py-5 about-section-bg">
         <div class="col-md-12 about-img" data-aos="fade-left">
-                    <img src="{{ asset('assets/img/gallery/anphu_crew.jpg') }}" class="img-fluid mb-4 rounded shadow-sm" alt="anphu_crew">
+                    <img src="{{ $page->image_1 }}" class="img-fluid mb-4 rounded shadow-sm" alt="anphu_crew">
                 </div>
         <div class="container ">
             <div class="row">
@@ -84,23 +87,10 @@
 
                 {{-- LỊCH SỬ HÌNH THÀNH --}}
                 <div class="col-md-12 about-content" data-aos="fade-right">
-                    <h4 class="heading-about">Lịch sử hình thành</h4>
+                    <h4 class="heading-about">{{ $page->title_2 }}</h4>
                     <hr class="border-warning">
                     <p>
-                        Bắt đầu thành lập công ty ngày <span class="font-weight-bold">{{ $companySettings->established_date->format('d/m/Y') }}</span>
-                        với tên gọi <span class="font-weight-bold">{{ $companySettings->company_name }}</span>.
-                        Với mong muốn, những ngôi nhà nhỏ được xây lên phải xinh xắn, đầy đủ tiện nghi, đáp ứng mọi công năng sinh hoạt, đem lại cảm giác thoải mái cho gia chủ.
-                    </p>
-                    <p>
-                        <span class="font-weight-bold">
-                            {{ $companySettings->company_brand ?? 'Chưa cập nhật' }}
-                        </span>
-                        đại diện cho Bình an và Phú quý.
-                        Đó là kim chỉ nam cho đội ngũ của
-                         <span class="font-weight-bold">
-                            {{ $companySettings->company_brand ?? 'Chưa cập nhật' }}
-                        </span>
-                        , nhằm đem lại cho khách hàng một ấm hiện đại, công năng cao.
+                        {!! $page->custom_content_2 !!}
                     </p>
                 </div>
 

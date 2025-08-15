@@ -16,16 +16,15 @@
         font-family: 'Poppins', sans-serif;
         text-transform: uppercase;
         letter-spacing: 1.5px;
-        background: linear-gradient(90deg, #e6bf5f, #d4a537);
+        background: #d4a537;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         color: transparent;
-        text-shadow: 0 0 10px rgba(201,176,55,0.6);
     }
 
     .card-luxury-gold {
         background: linear-gradient(135deg, #0b1c2c, #142d4c);
-        border: 2px solid var(--anphu-gold);
+        border: 1.5px solid var(--anphu-gold);
         border-radius: 12px;
         padding: 20px;
         text-align: center;
@@ -96,7 +95,6 @@
 <section class="py-5 bg-light section-bg-demo">
     <div class="container">
         <h3 class="heading-demo-project">Sản phẩm kiến trúc</h3>
-        <hr class="border-warning">
         <div class="row">
             @foreach ($otherProjects as $project)
                 <div class="col-md-3 mb-4" data-aos="fade-up">
@@ -121,7 +119,6 @@
         </div>
 
         <h3 class="heading-demo-project">Sản phẩm nội thất</h3>
-        <hr class="border-warning">
         <div class="row">
             @foreach ($interiorProjects as $project)
                 <div class="col-md-3 mb-4" data-aos="fade-up">

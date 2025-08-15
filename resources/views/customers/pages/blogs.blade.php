@@ -102,18 +102,6 @@
             <hr>
         </div>
 
-        <!-- FILTER DANH MỤC -->
-        {{-- @if(!empty($rootCategories))
-            <div class="text-center mb-4">
-                @foreach($rootCategories as $cat)
-                    <a href="{{ route('customers.blog.index', $cat->slug) }}"
-                    class="btn btn-sm lux-btn {{ $activeCategory->id === $cat->id ? 'active' : '' }}">
-                        {{ $cat->name }}
-                    </a>
-                @endforeach
-            </div>
-        @endif --}}
-
         <!-- BLOG GRID -->
         <div class="row blog-grid">
             @foreach ($articles as $article)
