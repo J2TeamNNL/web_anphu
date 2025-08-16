@@ -94,52 +94,32 @@
 
 <section class="py-5 bg-light section-bg-demo">
     <div class="container">
-        <h3 class="heading-demo-project">Sản phẩm kiến trúc</h3>
-        <div class="row">
-            @foreach ($otherProjects as $project)
-                <div class="col-md-3 mb-4" data-aos="fade-up">
-                    <div class="card card-luxury-gold h-100 shadow-sm">
-                        <img src="{{ $project->thumbnail }}"
-                             class="card-img-top object-cover"
-                             style="height: 200px; width: 100%; object-fit: cover;"
-                             alt="{{ $project->name }}">
-                        <div class="card-body d-flex flex-column">
-                            <p class="card-title" style="color: #C9B037">{{$project->name}}</p>
-                            <p class="card-text small project-desc">{{ $project->description }}</p>
-                            <div class="mt-auto">
-                                <a href="{{ route('customers.project.detail', ['slug' => $project->slug]) }}"
-                                class="btn btn-sm w-100 btn-luxury">
-                                    Xem chi tiết
-                                </a>
+        @foreach ($portfolioByCategories as $item)
+            <h3 class="heading-demo-project">{{ $item['category']->name }}</h3>
+            <hr class="border-warning">
+            <div class="row">
+                @foreach ($item['projects'] as $portfolio)
+                    <div class="col-md-3 mb-4" data-aos="fade-up">
+                        <div class="card card-luxury-gold h-100 shadow-sm">
+                            <img src="{{ $portfolio->thumbnail }}"
+                                class="card-img-top object-cover"
+                                style="height: 200px; width: 100%; object-fit: cover;"
+                                alt="{{ $portfolio->name }}">
+                            <div class="card-body d-flex flex-column">
+                                <p class="card-title" style="color: #C9B037">{{ $portfolio->name }}</p>
+                                <p class="card-text small portfolio-desc">{{ $portfolio->description }}</p>
+                                <div class="mt-auto">
+                                    <a href="{{ route('customers.project.detail', ['slug' => $portfolio->slug]) }}"
+                                    class="btn btn-sm w-100 btn-luxury">
+                                        Xem chi tiết
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
-
-        <h3 class="heading-demo-project">Sản phẩm nội thất</h3>
-        <div class="row">
-            @foreach ($interiorProjects as $project)
-                <div class="col-md-3 mb-4" data-aos="fade-up">
-                    <div class="card card-luxury-gold h-100 shadow-sm">
-                        <img src="{{ $project->thumbnail }}"
-                             class="card-img-top object-cover"
-                             style="height: 200px; width: 100%; object-fit: cover;"
-                             alt="{{ $project->name }}">
-                        <div class="card-body d-flex flex-column">
-                            <p class="card-title" style="color: #C9B037">{{$project->name}}</p>
-                            <p class="card-text small project-desc">{{ $project->description }}</p>
-                            <div class="mt-auto">
-                                <a href="{{ route('customers.project.detail', ['slug' => $project->slug]) }}"
-                                class="btn btn-sm w-100 btn-luxury">
-                                    Xem chi tiết
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
+        @endforeach
     </div>
 </section>
+

@@ -16,99 +16,85 @@ use App\Models\CustomPage;
 
 use App\Enums\CategoryType;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ViewServiceProvider extends ServiceProvider
 {
     public function boot()
     {   
-
-        try {
-            $interiorCategory = Category::with('children')
-            ->where('slug', 'noi-that')
+        $portfolioCategories = Category::whereNull('parent_id')
             ->where('type', CategoryType::PORTFOLIO->value)
-            ->first();
+            ->get();
 
-            $interiorCategoryIds = collect();
+        $portfolioByCategories = [];
 
-            if ($interiorCategory) {
-                $interiorCategoryIds = collect([$interiorCategory->id])
-                    ->merge($interiorCategory->children->pluck('id'));
-            }
+        foreach ($portfolioCategories as $category) {
+            // gom id cha + con (nếu có)
+            $categoryIds = collect([$category->id])
+                ->merge($category->children()->pluck('id'));
 
-            $interiorProjects = collect();
-            $otherProjects = collect();
+            $projects = Portfolio::with('category')
+                ->whereIn('category_id', $categoryIds)
+                ->latest()
+                ->take(4)
+                ->get();
 
-            if ($interiorCategoryIds->isNotEmpty()) {
-                $interiorProjects = Portfolio::with('category')
-                    ->whereIn('category_id', $interiorCategoryIds)
-                    ->latest()
-                    ->take(4)
-                    ->get();
-
-                $otherProjects = Portfolio::with('category')
-                    ->whereNotIn('category_id', $interiorCategoryIds)
-                    ->latest()
-                    ->take(4)
-                    ->get();
-            }
-
-            $partners = collect();
-
-            if (Schema::hasTable('partners')) {
-                $partners = Partner::get();
-            }
-
-            $companySettings = CompanySetting::first();
-
-            $services = collect();
-
-            if (class_exists(Service::class) && Schema::hasTable('services')) {
-                $services = Service::all();
-            }
-
-            $custom_pages = CustomPage::all();
-            
-            $congTrinhCategory = Category::where('slug', 'cong-trinh')->first();
-            $camNhanCategory = Category::where('slug', 'cam-nhan-khach-hang')->first();
-
-            $congTrinhArticles = collect();
-            $camNhanArticles = collect();
-
-            if ($congTrinhCategory) {
-                $congTrinhArticles = Article::with('category') // <-- thêm with('category') ở đây
-                    ->where('category_id', $congTrinhCategory->id)
-                    ->latest()
-                    ->take(1)
-                    ->get();
-            }
-
-            if ($camNhanCategory) {
-                $camNhanArticles = Article::with('category') // <-- thêm with('category') ở đây
-                    ->where('category_id', $camNhanCategory->id)
-                    ->latest()
-                    ->take(1)
-                    ->get();
-            }
-
-            View::share([
-                'interiorProjects' => $interiorProjects,
-                'otherProjects' => $otherProjects,
-                'partners' => $partners,
-                'companySettings' => $companySettings,
-                'services' => $services,
-                'custom_pages' => $custom_pages,
-                'congTrinhArticles' => $congTrinhArticles,
-                'camNhanArticles' => $camNhanArticles,
-            ]);
-
-        } catch (\Throwable $e) {
-            Log::error('ViewServiceProvider Error: ' . $e->getMessage(), [
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
-            ]);
+            $portfolioByCategories[] = [
+                'category' => $category,
+                'projects' => $projects
+            ];
         }
-    
+
+
+        $partners = collect();
+
+        if (Schema::hasTable('partners')) {
+            $partners = Partner::get();
+        }
+
+        $companySettings = CompanySetting::first();
+
+        $services = collect();
+
+        if (class_exists(Service::class) && Schema::hasTable('services')) {
+            $services = Service::all();
+        }
+
+        $custom_pages = CustomPage::all();
+        
+        $congTrinhCategory = Category::where('slug', 'cong-trinh')->first();
+        $camNhanCategory = Category::where('slug', 'cam-nhan-khach-hang')->first();
+
+        $congTrinhArticles = collect();
+        $camNhanArticles = collect();
+
+
+        // EXTRA VIEW CONTENT
+        if ($congTrinhCategory) {
+            $congTrinhArticles = Article::with('category') // <-- thêm with('category') ở đây
+                ->where('category_id', $congTrinhCategory->id)
+                ->latest()
+                ->take(1)
+                ->get();
+        }
+
+        if ($camNhanCategory) {
+            $camNhanArticles = Article::with('category') // <-- thêm with('category') ở đây
+                ->where('category_id', $camNhanCategory->id)
+                ->latest()
+                ->take(1)
+                ->get();
+        }
+
+        View::share([
+            'portfolioByCategories' => $portfolioByCategories,
+            'partners' => $partners,
+            'companySettings' => $companySettings,
+            'services' => $services,
+            'custom_pages' => $custom_pages,
+            'congTrinhArticles' => $congTrinhArticles,
+            'camNhanArticles' => $camNhanArticles,
+        ]);
         
     }
     

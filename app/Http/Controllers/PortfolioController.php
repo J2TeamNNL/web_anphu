@@ -81,11 +81,10 @@ class PortfolioController extends Controller
 
     public function create()
     {
-        $categories = Category::with('children')
-            ->where('type', CategoryType::PORTFOLIO->value)
-            ->whereNull('parent_id')
-            ->orderBy('name')
-            ->get();
+        $categories = Category::portfolio()
+        ->whereNull('parent_id')
+        ->with('children')
+        ->get();
 
         return view('admins.portfolios.create', compact('categories'));
     }

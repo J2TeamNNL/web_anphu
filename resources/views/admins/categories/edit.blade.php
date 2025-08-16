@@ -19,7 +19,7 @@
             <select name="type" id="type" class="form-control" required>
                 @foreach ($types as $type)
                     <option value="{{ $type->value }}"
-                        {{ old('type', $category->type) === $type->value ? 'selected' : '' }}>
+                        {{ old('type', $category->type->value ?? $category->type) == $type->value ? 'selected' : '' }}>
                         {{ $type->label() }}
                     </option>
                 @endforeach
@@ -29,27 +29,15 @@
         {{-- Parent category --}}
         <div class="form-group">
             <label for="parent_id">Danh mục cha (nếu có)</label>
-            <select name="parent_id" id="parent_id" class="form-control">
-                <option value="">Không có</option>
+            <select name="parent_id" id="parent_id" class="form-control font-weight-bold">
+                <option class="font-weight-bold" value="">Không có</option>
                 @foreach($parentCategories as $parent)
-                    @if($parent->id !== $category->id)
-                        <option value="{{ $parent->id }}"
-                            {{ old('parent_id', $category->parent_id) == $parent->id ? 'selected' : '' }}>
-                            {{ $parent->name }}
-                        </option>
-                    @endif
+                    <option class="font-weight-bold" value="{{ $parent->id }}"
+                        {{ old('parent_id', $category->parent_id) == $parent->id ? 'selected' : '' }}>
+                        {{ $parent->name }}
+                    </option>
                 @endforeach
             </select>
-        </div>
-
-        {{-- Slug --}}
-        <div class="form-group">
-            <label for="slug">Slug (URL)</label>
-            <input type="text" name="slug" id="slug" value="{{ old('slug', $category->slug) }}" class="form-control">
-            <span class="form-text text-muted">
-                Slug chỉ chứa chữ thường không dấu, không khoảng trắng, dùng dấu gạch ngang (-) để ngăn cách. <br>
-                Ví dụ: <code>villa</code>, <code>daily-news</code>, <code>service-1</code>
-            </span>
         </div>
 
         <button type="submit" class="btn btn-primary">Cập nhật</button>

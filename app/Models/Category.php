@@ -15,7 +15,7 @@ class Category extends Model
     use HasFactory;
     use HasRecursiveRelationships;
 
-    public $timestamps = false;
+    public $timestamps = true; 
     
     protected $fillable = [
         'name',
@@ -47,6 +47,15 @@ class Category extends Model
             });
     }
 
+    protected static function booted()
+    {
+        static::deleting(function ($category) {
+            $category->children()->each(function ($child) {
+                $child->delete();
+            });
+        });
+    }
+
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
@@ -67,13 +76,18 @@ class Category extends Model
         return $this->hasMany(Portfolio::class);
     }
 
+    public function scopePortfolio($query)
+    {
+        return $query->where('type', CategoryType::PORTFOLIO->value);
+    }
+
     public function articles()
     {
         return $this->hasMany(Article::class);
     }
-
-    public function prices()
+    
+    public function scopeArticle($query)
     {
-        return $this->hasMany(Price::class);
+        return $query->where('type', CategoryType::ARTICLE->value);
     }
 }

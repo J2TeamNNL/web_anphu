@@ -1,7 +1,7 @@
 @extends('admins.layouts.master')
 
 @section('content')
-<div class="container">
+<div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="mb-0">Cài đặt danh mục</h4>
         <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">+ Thêm danh mục</a>
@@ -11,6 +11,26 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    <!-- Bộ lọc -->
+    <form method="GET" action="{{ route('admin.categories.index') }}" class="col-md-2 mb-2">
+        <div class="row g-2 align-items-center">
+            <div class="col-auto">
+                <select name="type" class="form-select">
+                    <option value="">-- Tất cả loại --</option>
+                    <option value="portfolio" {{ request('type') == 'portfolio' ? 'selected' : '' }}>
+                        Dự án
+                    </option>
+                    <option value="article" {{ request('type') == 'article' ? 'selected' : '' }}>
+                        Bài đăng
+                    </option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-secondary">Lọc</button>
+            </div>
+        </div>
+    </form>
+    <hr>
     <h5>Danh sách danh mục</h5>
     <table class="table table-bordered table-hover">
         <thead class="thead-light">
@@ -87,5 +107,11 @@
             @endforelse
         </tbody>
     </table>
+
+    <!-- Phân trang -->
+    <div class="d-flex justify-content-center">
+        {{ $categories->links() }}
+    </div>
+
 </div>
 @endsection

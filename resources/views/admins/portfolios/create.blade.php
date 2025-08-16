@@ -80,7 +80,6 @@
                 </div>
 
                 <input type="hidden" name="type" value="portfolio">
-
                 {{-- Danh mục --}}
                 <x-category-select 
                     label="Danh mục công trình"
@@ -88,7 +87,6 @@
                     :useOptgroup="true"
                     class="form-control select2"
                 />
-
                 <div class="text-right">
                     <button type="submit" class="btn btn-warning font-weight-bold">
                         <i class="fas fa-plus-circle mr-1"></i> Thêm Dự Án

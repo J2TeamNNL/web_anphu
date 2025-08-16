@@ -6,7 +6,7 @@ enum CategoryType: string
 {
     case PORTFOLIO = 'portfolio';
     case ARTICLE = 'article';
-    case PRICE = 'price';
+
 
     public static function values(): array
     {
@@ -18,7 +18,6 @@ enum CategoryType: string
         return match($this) {
             self::PORTFOLIO => 'Dự án',
             self::ARTICLE   => 'Bài viết',
-            self::PRICE     => 'Bảng giá',
         };
     }
 

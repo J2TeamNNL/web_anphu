@@ -3,6 +3,17 @@
 @section('content')
 <div class="container mt-4">
     <h2>Thêm danh mục mới</h2>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('admin.categories.store') }}" method="POST">
         @csrf
 
@@ -36,16 +47,6 @@
                     </option>
                 @endforeach
             </select>
-        </div>
-
-        {{-- Slug --}}
-        <div class="form-group">
-            <label for="slug">Slug (URL)</label>
-            <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="form-control">
-            <span class="form-text text-muted">
-                Slug chỉ chứa chữ thường không dấu, không khoảng trắng, dùng dấu gạch ngang (-) để ngăn cách. <br>
-                Ví dụ: <code>villa</code>, <code>daily-news</code>, <code>service-1</code>
-            </span>
         </div>
 
         <button type="submit" class="btn btn-primary">Tạo mới</button>
