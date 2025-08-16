@@ -25,7 +25,7 @@ class UpdatePortfolioRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'location' => ['required', 'string'],
+            'location' => ['nullable', 'string'],
             'client' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'area' => 'nullable|string|max:255',

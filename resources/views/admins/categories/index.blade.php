@@ -46,7 +46,7 @@
         <tbody>
             @forelse ($categories as $parent)
                 <tr class="table-primary font-weight-bold">
-                    <td>{{ $parent->id }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $parent->name }}</td>
                     <td>{{ $parent->slug }}</td>
                     <td>{{ $parent->type->label() ?? '-' }}</td>
