@@ -72,7 +72,7 @@
 
                 @foreach ($parent->children as $child)
                     <tr>
-                        <td>{{ $child->id }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>
                             ↳
                             {{ $child->name }}
