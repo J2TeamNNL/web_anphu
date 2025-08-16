@@ -13,7 +13,7 @@
             @csrf
 
             <div class="form-group">
-               <label for="name">Tên bài đăng</label>
+               <h5 for="name">Tên bài đăng</h5>
                <input
                   type="text"
                   name="name"
@@ -24,7 +24,7 @@
             </div>
 
             <div class="form-group">
-               <label for="link">Link</label>
+               <h5 for="link">Link</h5>
                <input type="text" name="link" id="link" class="form-control">
             </div>
 
@@ -39,12 +39,12 @@
             />
 
             <div class="form-group">
-               <label for="thumbnail">Ảnh mô tả <span class="text-danger">*</span></label>
+               <h5 for="thumbnail">Ảnh mô tả <span class="text-danger">*</span></h5>
                <input type="file" name="thumbnail" id="thumbnail" class="form-control-file">
             </div>
 
             <div class="form-group">
-               <label for="description">Mô tả</label>
+               <h5 for="description">Mô tả</h5>
                <textarea
                   name="description"
                   id="description"
@@ -55,7 +55,8 @@
 
             {{-- Component Quill --}}
             <div class="form-group">
-               <label for="content">Nội dung chi tiết</label>
+               <h5 for="content">Nội dung chi tiết</h5>
+               <p claas="text-muted">(Video hợp lệ để nhúng: Youtube, Facebook, Tiktok)</p>
                <x-editor 
                   selector="#quill-editor"
                   uploadTable="articles"

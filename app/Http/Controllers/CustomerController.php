@@ -98,7 +98,6 @@ class CustomerController extends Controller
             ->firstOrFail();
 
         $childCategories = $parentCategory->children;
-
         $childCategoryIds = $childCategories->pluck('id')->toArray();
 
         $selectedChildSlug = $request->query('child');
@@ -107,22 +106,30 @@ class CustomerController extends Controller
         $query = Portfolio::query()->with('category');
 
         if ($selectedChildSlug) {
+            // Nếu người dùng chọn 1 child cụ thể
             $selectedChild = $childCategories->firstWhere('slug', $selectedChildSlug);
 
             if ($selectedChild) {
                 $query->where('category_id', $selectedChild->id);
             } else {
+                // Nếu slug con không tồn tại → lấy tất cả child
                 $query->whereIn('category_id', $childCategoryIds);
             }
         } else {
-            $query->whereIn('category_id', $childCategoryIds);
+            if (!empty($childCategoryIds)) {
+                // Nếu có child → lấy dự án thuộc các child
+                $query->whereIn('category_id', $childCategoryIds);
+            } else {
+                // Nếu KHÔNG có child → lấy dự án thuộc chính cha
+                $query->where('category_id', $parentCategory->id);
+            }
         }
 
         $portfolios = $query->latest()->paginate(9);
 
         $projectTitle = $selectedChild
-        ? 'Dự án - ' . $selectedChild->name
-        : 'Dự án - ' . $parentCategory->name;
+            ? 'Dự án - ' . $selectedChild->name
+            : 'Dự án - ' . $parentCategory->name;
 
         return view('customers.pages.projects', [
             'portfolios' => $portfolios,
@@ -156,29 +163,48 @@ class CustomerController extends Controller
             ->where('type', CategoryType::ARTICLE->value)
             ->firstOrFail();
 
-        // Nếu là con → lấy cha làm danh mục active filter
+        // Nếu là con → lấy cha làm activeCategory
+        $activeCategory = $currentCategory->parent_id
+            ? Category::findOrFail($currentCategory->parent_id)
+            : $currentCategory;
+
+        // Lấy danh sách con của cha (nếu có)
+        $childCategories = Category::where('parent_id', $activeCategory->id)->get();
+
+        // Query articles
+        $articlesQuery = Article::query()->with('category');
+
         if ($currentCategory->parent_id) {
-            $activeCategory = Category::findOrFail($currentCategory->parent_id);
+            // Nếu đang ở con → chỉ lấy bài trong con
+            $articlesQuery->where('category_id', $currentCategory->id);
         } else {
-            $activeCategory = $currentCategory;
+            if ($childCategories->count()) {
+                // Nếu là cha có con → filter theo request con
+                $childId = $request->get('child_id');
+
+                if ($childId) {
+                    $articlesQuery->where('category_id', $childId);
+                } else {
+                    // chưa chọn con → mặc định lấy tất cả bài của các con
+                    $articlesQuery->whereIn('category_id', $childCategories->pluck('id'));
+                }
+            } else {
+                // cha không có con → lấy tất cả bài thuộc cha
+                $articlesQuery->where('category_id', $currentCategory->id);
+            }
         }
 
-        // Query bài viết theo danh mục hiện tại
-        $articles = Article::query()
-            ->with('category')
-            ->where('category_id', $currentCategory->id)
-            ->latest()
-            ->paginate(9);
+        $articles = $articlesQuery->latest()->paginate(9);
 
-        // Tiêu đề
-        $articleTitle = 'Bài đăng - ' . $currentCategory->name;
+        $articleTitle = $currentCategory->name;
 
         return view('customers.pages.blogs', [
-            'articles'        => $articles,
-            'rootCategories'  => $rootCategories,   // tất cả danh mục cha
-            'currentCategory' => $currentCategory,  // đang xem
-            'activeCategory'  => $activeCategory,   // cha để active filter
-            'articleTitle'    => $articleTitle,
+            'articles'         => $articles,
+            'rootCategories'   => $rootCategories,
+            'currentCategory'  => $currentCategory,
+            'activeCategory'   => $activeCategory,
+            'childCategories'  => $childCategories,
+            'articleTitle'     => $articleTitle,
         ]);
     }
 

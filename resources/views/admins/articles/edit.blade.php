@@ -14,7 +14,7 @@
             @method('PUT')
 
             <div class="form-group">
-               <label for="name">Tên bài đăng</label>
+               <h5 for="name">Tên bài đăng</h5>
                <input
                   type="text"
                   name="name"
@@ -25,7 +25,7 @@
             </div>
 
             <div class="form-group">
-               <label for="description">Mô tả</label>
+               <h5 for="description">Mô tả</h5>
                <textarea
                   name="description"
                   id="description"
@@ -36,7 +36,7 @@
             </div>
 
             <div class="form-group">
-               <label for="link">Link</label>
+               <h5 for="link">Link</h5>
                <input
                   type="text"
                   name="link"
@@ -56,15 +56,8 @@
                class="form-control select2"
             />
 
-            {{-- <x-category-select 
-               label="Danh mục bài đăng"
-               :categories="$categories"
-               :useOptgroup="true"
-               class="form-control select2"
-            /> --}}
-
             <div class="form-group">
-               <label>Ảnh đại diện hiện tại</label><br>
+               <h5>Ảnh đại diện hiện tại</h5><br>
                   @if ($article->thumbnail)
                         <img
                            src="{{ $article->thumbnail }}"
@@ -84,7 +77,8 @@
 
             {{-- Component Quill --}}
             <div class="form-group">
-               <label for="content">Nội dung chi tiết</label>
+               <h5 for="content">Nội dung chi tiết</h5>.
+               <p claas="text-muted">(Video hợp lệ để nhúng: Youtube, Facebook, Tiktok)</p>
                <x-editor 
                   selector="#quill-editor"
                   uploadTable="articles"

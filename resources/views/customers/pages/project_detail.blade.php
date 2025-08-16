@@ -173,6 +173,19 @@
             position: static;
         }
     }
+
+    .ql-editor .ql-video,
+    .portfolio-content-wrapper .ql-video {
+        display: block;
+        max-width: 100%;
+        width: 100%;
+        aspect-ratio: 16 / 9; /* giữ tỉ lệ 16:9 */
+        height: auto;
+        border: 1px solid var(--lux-text-light);
+        border-radius: 10px;
+        margin: 1.5rem 0;
+    }
+
 </style>
 @endpush
 

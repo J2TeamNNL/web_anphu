@@ -1,5 +1,4 @@
 @extends('admins.layouts.master')
-
 @section('content')
 <div class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -62,6 +61,7 @@
                 {{-- Component Quill --}}
                 <div class="form-group">
                     <h5 for="content">Nội dung chi tiết</h5>
+                    <p claas="text-muted">(Video hợp lệ để nhúng: Youtube, Facebook, Tiktok)</p>
                     <x-editor 
                         selector="#quill-editor"
                         uploadTable="portfolios"

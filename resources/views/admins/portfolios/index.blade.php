@@ -82,7 +82,7 @@
                             <th>Mô tả</th>
                             <th>Năm</th>
                             <th>Loại dự án</th>
-                            <th>Loại hình</th>
+                            <th>Danh mục</th>
                             <th>Chi tiết</th>
                             <th>Thao tác</th>
                         </tr>
@@ -105,8 +105,13 @@
                                     {{ \Illuminate\Support\Str::limit($portfolio->description, 100) }}
                                 </td>
                                 <td>{{ $portfolio->year }}</td>
-                                <td>{{ $portfolio->getParentCategoryNameAttribute() }}</td>
-                                <td>{{ $portfolio->getCategoryNameAttribute() }}</td>
+                                <td>
+                                    <span class="text-primary font-weight-bold">
+                                        {{ $portfolio->getParentCategoryNameAttribute() ?? $portfolio->getCategoryNameAttribute() }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {{ $portfolio->getCategoryNameAttribute() }}</td>
                                 <td>
                                     <a href="{{ route('admin.portfolios.show', $portfolio)}}">Xem chi tiết</a>
                                 </td>

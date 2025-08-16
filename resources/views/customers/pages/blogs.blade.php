@@ -25,23 +25,27 @@
         margin: 0 auto;
     }
 
-    /* Buttons */
-    .lux-btn {
+    /* Filter Buttons */
+    .btn-luxury {
         color: var(--lux-gold);
         border: 1px solid var(--lux-gold);
         background-color: transparent;
         font-weight: 600;
+        font-size: 0.9rem;
+        padding: 6px 14px;
+        margin: 0 4px;
+        border-radius: 10px;
         transition: all 0.3s ease;
     }
-    .lux-btn:hover,
-    .lux-btn.active {
+    .btn-luxury:hover,
+    .btn-luxury.active {
         background-color: var(--lux-gold);
         color: var(--lux-dark);
     }
 
     /* Blog Card */
     .card-blog {
-        border: 1px solid #C9B037;
+        border: 1px solid var(--lux-gold);
         border-radius: 8px;
         overflow: hidden;
         position: relative;
@@ -101,6 +105,25 @@
             <h4 class="text-uppercase font-weight-bold" id="blog-title">{{ $articleTitle }}</h4>
             <hr>
         </div>
+
+        {{-- Child category filter --}}
+        @if ($childCategories->count())
+            <div class="text-center mb-4">
+                {{-- Nút Tất cả --}}
+                <a href="{{ route('customers.blog.index', ['slug' => $activeCategory->slug]) }}"
+                class="btn btn-sm btn-luxury {{ request('child_id') ? '' : 'active' }}">
+                    Tất cả
+                </a>
+
+                {{-- Các danh mục con --}}
+                @foreach ($childCategories as $child)
+                    <a href="{{ route('customers.blog.index', ['slug' => $activeCategory->slug, 'child_id' => $child->id]) }}"
+                    class="btn btn-sm btn-luxury {{ request('child_id') == $child->id ? 'active' : '' }}">
+                        {{ $child->name }}
+                    </a>
+                @endforeach
+            </div>
+        @endif
 
         <!-- BLOG GRID -->
         <div class="row blog-grid">

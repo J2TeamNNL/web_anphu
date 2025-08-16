@@ -73,8 +73,8 @@
                             <th>Tên bài</th>
                             <th>Ảnh mô tả</th>
                             <th>Mô tả</th>
-                            <th>Danh mục</th>
                             <th>Loại bài viết</th>
+                            <th>Danh mục</th>
                             <th>Chi tiết</th>
                             <th>Thao tác</th>
                         </tr>
@@ -83,7 +83,7 @@
                         @forelse($articles as $article)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $article->name }}</td>
+                                <td class="text-left">{{ $article->name }}</td>
                                 <td>
                                     @if ($article->thumbnail)
                                         <img src="{{ $article->thumbnail }}" alt="{{ $article->name }}" width="100" class="img-thumbnail">
@@ -95,11 +95,10 @@
                                     {{ \Illuminate\Support\Str::limit($article->description, 100) }}
                                 </td>
                                 <td>
-                                    <span class="badge badge-info">
-                                        {{ $types[$article->type] ?? ucfirst($article->type) }}
+                                    <span class="text-primary font-weight-bold">
+                                        {{ $article->getParentCategoryNameAttribute()?? $article->category->name }}
                                     </span>
                                 </td>
-
                                 <td>{{ $article->category->name ?? '-' }}</td>
                                 <td>
                                     <a href="{{ route('admin.articles.show', $article)}}">Xem chi tiết</a>
