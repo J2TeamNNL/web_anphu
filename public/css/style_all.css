@@ -1606,3 +1606,12 @@ BUTTONS
         font-size: 1.75rem !important;
     }
 }
+
+
+.ql-editor .ql-video {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9; /* Giữ tỉ lệ 16:9 */
+}

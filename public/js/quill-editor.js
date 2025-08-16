@@ -1,6 +1,7 @@
 /**
  * Quill Editor Module with Image Upload
  * Handles Quill editor initialization and image upload functionality
+ * Auto Video Embedding
  */
 class QuillEditorManager {
     constructor(options = {}) {
@@ -56,6 +57,11 @@ class QuillEditorManager {
             }
         });
 
+        // ✅ auto embed video link
+        if (!this.options.readonly) {
+            this.setupAutoEmbedHandler();
+        }
+
         // Set editor height
         editorElem.style.height = this.options.height;
         
@@ -91,6 +97,73 @@ class QuillEditorManager {
 
         return toolbars[this.options.toolbar] || toolbars.default;
     }
+
+    /**
+     * Auto convert YouTube / Facebook / TikTok links to embed video
+     */
+    setupAutoEmbedHandler() {
+        this.quill.clipboard.addMatcher(Node.TEXT_NODE, (node, delta) => {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            let ops = [];
+            delta.ops.forEach(op => {
+                if (typeof op.insert === 'string') {
+                    let str = op.insert;
+                    let match;
+                    let lastIndex = 0;
+
+                    while ((match = urlRegex.exec(str)) !== null) {
+                        if (match.index > lastIndex) {
+                            ops.push({ insert: str.slice(lastIndex, match.index) });
+                        }
+
+                        const embedUrl = this.convertToEmbedUrl(match[0]);
+                        if (embedUrl) {
+                            ops.push({ insert: { video: embedUrl } });
+                        } else {
+                            ops.push({ insert: match[0] });
+                        }
+
+                        lastIndex = urlRegex.lastIndex;
+                    }
+
+                    if (lastIndex < str.length) {
+                        ops.push({ insert: str.slice(lastIndex) });
+                    }
+                } else {
+                    ops.push(op);
+                }
+            });
+
+            delta.ops = ops;
+            return delta;
+        });
+    }
+
+    /**
+     * Detect and convert link to embed url
+     */
+    convertToEmbedUrl(url) {
+        // YouTube
+        const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/);
+        if (ytMatch) {
+            return `https://www.youtube.com/embed/${ytMatch[1]}`;
+        }
+
+        // Facebook
+        const fbMatch = url.match(/facebook\.com\/.*\/videos\/(\d+)/);
+        if (fbMatch) {
+            return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=0&width=560`;
+        }
+
+        // TikTok
+        const tiktokMatch = url.match(/tiktok\.com\/@[A-Za-z0-9._]+\/video\/(\d+)/);
+        if (tiktokMatch) {
+            return `https://www.tiktok.com/embed/v2/${tiktokMatch[1]}`;
+        }
+
+        return null;
+    }
+
 
     /**
      * Setup textarea synchronization
