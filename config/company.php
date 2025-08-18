@@ -47,7 +47,7 @@ return [
             'color' => '#0068ff',
         ],
         'facebook' => [
-            'url' => 'https://www.facebook.com/anphudesign',
+            'url' => 'https://www.facebook.com/share/16aNn1KZ37/?mibextid=wwXIfr',
             'icon' => 'fab fa-facebook-f',
             'name' => 'Facebook',
             'color' => '#1877f2',
