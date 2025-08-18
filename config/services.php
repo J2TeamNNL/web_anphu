@@ -39,4 +39,9 @@ return [
         'license_key' => env('CKEDITOR_LICENSE_KEY', 'GPL'),
     ],
 
+    'facebook' => [
+        'user_token' => env('FACEBOOK_USER_TOKEN'),
+        'page_id' => env('FACEBOOK_PAGE_ID'),
+        'admin_token' => env('FACEBOOK_ADMIN_TOKEN'),
+    ],
 ];

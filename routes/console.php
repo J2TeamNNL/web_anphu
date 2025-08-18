@@ -1,8 +1,11 @@
 <?php
 
+use App\Services\FacebookApiService;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 
 Artisan::command('debug', function () {
-    Log::error('🚨 This is an ERROR message - should go to Discord!');
+    $facebookService = FacebookApiService::make();
+    $pages = $facebookService->getPagePostsWithCursor(1);
+    dd($pages);
 });
