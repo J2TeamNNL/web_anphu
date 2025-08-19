@@ -103,6 +103,7 @@ Route::prefix('admin')->name('admin.')
 
    Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])
       ->name('users.resetPassword');
+      
    
    Route::get('consulting-requests/index', [ConsultingRequestController::class, 'index'])
    ->name('consulting_requests.index');
