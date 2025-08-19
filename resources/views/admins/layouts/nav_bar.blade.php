@@ -51,6 +51,15 @@
                     </a>
                 </li>
 
+                {{-- Admins --}}
+                @if(auth()->user()->level == 1)
+                <li class="nav-item mx-2 {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.users.index') }}">
+                        <i class="fa fa-users"></i> Quản lý Admin
+                    </a>
+                </li>
+                @endif
+
                 {{-- Dropdown: Cài đặt --}}
                 <li
                     class="nav-item dropdown mx-2 mx-lg-3 my-1 my-lg-0 small
@@ -67,19 +76,20 @@
                         <i class="fa fa-cogs mr-1"></i> Cài đặt
                     </a>
                     <div class="dropdown-menu" aria-labelledby="settingsDropdown">
-                        <a
-                            class="dropdown-item small {{ request()->routeIs('admin.settings.company.edit') ? 'active' : '' }}"
-                            href="{{ route('admin.settings.company.edit') }}"
-                        >
-                            <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt thông tin công ty
-                        </a>
-                        <a
-                            class="dropdown-item small {{ request()->routeIs('admin.settings.company.editPolicy') ? 'active' : '' }}"
-                            href="{{ route('admin.settings.company.editPolicy') }}"
-                        >
-                            <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt chính sách công ty
-                        </a>
-
+                        @if(auth()->user()->level == 1)
+                            <a
+                                class="dropdown-item small {{ request()->routeIs('admin.settings.company.edit') ? 'active' : '' }}"
+                                href="{{ route('admin.settings.company.edit') }}"
+                            >
+                                <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt thông tin công ty
+                            </a>
+                            <a
+                                class="dropdown-item small {{ request()->routeIs('admin.settings.company.editPolicy') ? 'active' : '' }}"
+                                href="{{ route('admin.settings.company.editPolicy') }}"
+                            >
+                                <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt chính sách công ty
+                            </a>
+                        @endif
                         <a
                             class="dropdown-item small {{ request()->routeIs('admin.partners.index') ? 'active' : '' }}"
                             href="{{ route('admin.partners.index') }}"

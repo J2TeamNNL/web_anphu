@@ -38,11 +38,18 @@
                             @endfor
                             <td>
                                 <a href="{{ route('admin.custom_pages.edit', $page) }}" class="btn btn-sm btn-primary mb-1">Sửa</a>
-                                <form action="{{ route('admin.custom_pages.destroy', $page) }}" method="POST" class="d-inline" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
-                                </form>
+                                @if(auth()->user()->level == 1)
+                                    <form
+                                        action="{{ route('admin.custom_pages.destroy', $page) }}"
+                                        method="POST"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Bạn chắc chắn muốn xoá?')"
+                                    >
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @empty

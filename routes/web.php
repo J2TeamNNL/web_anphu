@@ -97,6 +97,13 @@ Route::prefix('admin')->name('admin.')
       'destroy'
    ]);
 
+   Route::resource('users', UserController::class)->except([
+      'destroy'
+   ]);
+
+   Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])
+      ->name('users.resetPassword');
+   
    Route::get('consulting-requests/index', [ConsultingRequestController::class, 'index'])
    ->name('consulting_requests.index');
 
@@ -124,10 +131,8 @@ Route::prefix('admin')->name('admin.')
       Route::delete('partners/{partner}', [PartnerController::class, 'destroy'])->name('partners.destroy');
       Route::delete('services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
       Route::delete('custom_pages/{custom_page}', [CustomPageController::class, 'destroy'])->name('custom_pages.destroy');
+      Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
-      Route::resource('users', UserController::class);
-
-      // Route::resource('prices', PriceController::class);
    });
 
 });

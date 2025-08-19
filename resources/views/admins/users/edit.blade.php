@@ -17,14 +17,8 @@
                   </div>
 
                   <div class="form-group">
-                     <label>Ảnh hiện tại</label><br>
-                     <img src="{{ asset('storage/' . $user->avatar) }}" width="200" class="img-thumbnail mb-2">
-                     <input type="hidden" name="avatar_old" value="{{ $user->avatar }}">
-                  </div>
-
-                  <div class="form-group">
-                     <label for="avatar_new">Thay ảnh mới (tùy chọn)</label>
-                     <input type="file" name="avatar_new" id="avatar_new" class="form-control-file">
+                     <label for="email">Email</label>
+                     <input type="email" class="form-control" value="{{ $user->email }}" name="email">
                   </div>
 
                   <div class="form-group">
@@ -38,11 +32,6 @@
                         </option>
                         @endforeach
                      </select>
-                  </div>
-
-                  <div class="form-group">
-                     <label for="email">Email</label>
-                     <input type="email" class="form-control" value="{{ $user->email }}" name="email">
                   </div>
 
                   <div class="form-group">
