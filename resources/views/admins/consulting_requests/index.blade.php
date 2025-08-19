@@ -4,7 +4,7 @@
 @section('content')
 <div class="container-fluid my-4">
       <div class="d-flex justify-content-between align-items-center mb-3">
-         <h4 class="mb-0 text-primary">Danh sách lịch tư vấn</h4>
+         <h4 class="mb-0 text-primary">Danh sách Lịch tư vấn</h4>
          <div class="d-flex gap-2">
             <a href="#" class="btn btn-primary d-none" id="save-status-btn">Lưu trạng thái</a>
             <a href="#" class="btn btn-success">Thống kê khách hàng</a>
@@ -44,7 +44,9 @@
                         <th>Lời nhắn</th>
                         <th>Gửi lúc</th>
                         <th>Duyệt</th>
-                        <th>Xóa</th>
+                        @if(auth()->user()->level == 1)
+                           <th>Xóa</th>
+                        @endif
                      </tr>
                   </thead>
                   <tbody>
@@ -86,15 +88,17 @@
                                  </div>
                               </td>
                               <td>
-                                 <form
-                                    action="{{ route('admin.consulting_requests.destroy', $item->id) }}"
-                                    method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')"
-                                    class="d-inline"
-                                 >
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
-                                 </form>
+                                 @if(auth()->user()->level == 1)
+                                    <form
+                                       action="{{ route('admin.consulting_requests.destroy', $item->id) }}"
+                                       method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')"
+                                       class="d-inline"
+                                    >
+                                       @csrf
+                                       @method('DELETE')
+                                       <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                                    </form>
+                                 @endif
                               </td>
                            </tr>
                      @empty

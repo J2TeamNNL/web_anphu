@@ -16,8 +16,8 @@
                   </div>
 
                   <div class="form-group">
-                     <label for="name">Avatar</label>
-                     <input type="file" class="form-control" name="avatar">
+                     <label for="email">Email</label>
+                     <input type="email" class="form-control" name="email">
                   </div>
 
                   <div class="form-group">
@@ -27,11 +27,6 @@
                            <option value="{{ $key }}">{{ $label }}</option>
                         @endforeach
                      </select>
-                  </div>
-
-                  <div class="form-group">
-                     <label for="email">Email</label>
-                     <input type="email" class="form-control" name="email">
                   </div>
 
                   <div class="form-group">

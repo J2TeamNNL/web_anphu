@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-
+use App\Models\Media;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
+use App\Services\CloudinaryService;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {   
@@ -42,7 +47,10 @@ class UserController extends Controller
             });
         }
 
-        $users = $query->orderByDesc('created_at')->paginate(self::PER_PAGE)->appends($request->query());
+        $users = $query
+        ->orderByDesc('created_at')
+        ->paginate(self::PER_PAGE)
+        ->appends($request->query());
 
         return view('admins.users.index', [
             'users' => $users,
@@ -63,19 +71,15 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request, CloudinaryService $cloudinaryService)
     {
         $validated = $request->validated();
-
         $validated['password'] = Hash::make($validated['password']);
 
-        if ($request->hasFile('avatar')) {
-            $validated['avatar'] = $request->file('avatar')->store('avatar', 'public');
-        }
+        $user = $this->model::create($validated);
 
-        $this->model::create($validated);
-
-        return redirect()->route('users.index')->with('success', 'Tạo thành công');
+        return redirect()->route('admin.users.index')
+        ->with('success', 'Thêm người dùng thành công!');
     }
 
     /**
@@ -92,41 +96,42 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, $id)
+    public function update(UpdateUserRequest $request, User $user, CloudinaryService $cloudinaryService)
     {
-        $user = $this->model::findOrFail($id);
+        $data = $request->validated();
 
-        $validated = $request->validated();
-
-        if (!empty($validated['password'])) {
-            $user->password = Hash::make($validated['password']);
-        }
-
-        if ($request->hasFile('avatar_new')) {
-            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
-                Storage::disk('public')->delete($user->avatar);
-            }
-            $user->avatar = $request->file('avatar_new')->store('avatar', 'public');
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
         } else {
-            $user->avatar = $validated['avatar_old'] ?? $user->avatar;
+            unset($data['password']);
         }
 
-        $user->save();
+        $user->update($data);
 
-        return redirect()->route('users.index')->with('success', 'Cập nhật thành công!');
+        return redirect()->route('admin.users.index')
+            ->with('success', 'Cập nhật thành công!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
+    public function destroy(User $user, CloudinaryService $cloudinaryService)
     {
-        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
-            Storage::disk('public')->delete($user->avatar);
-        }
-
         $user->delete();
 
-        return response()->json(['message' => 'Đã xóa người dùng']);
+        return redirect()->route('admin.users.index')
+            ->with('success', 'Xóa người dùng thành công.');
+    }
+
+    public function resetPassword(User $user)
+    {
+        if (!Auth::check() || Auth::user()->level != 1) {
+            abort(403, 'Bạn không có quyền thực hiện thao tác này.');
+        }
+
+        $newPassword = Str::random(10);
+
+        $user->update([
+            'password' => Hash::make($newPassword),
+        ]);
+
+        return back()->with('success', "Mật khẩu mới cho {$user->name} là: {$newPassword}");
     }
 }

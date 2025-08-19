@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0 text-primary">Danh sách Dự án</h4>
+        <h4 class="mb-0 text-primary">Danh sách Người quản lý</h4>
         <a href="{{ route('admin.users.create') }}" class="btn btn-success">+ Thêm người quản lý</a>
     </div>
 
@@ -13,7 +13,13 @@
             <form class="mb-3" method="GET">
                 <div class="form-row">
                     <div class="col-md-4 mb-2">
-                        <input type="text" name="q" value="{{ old('q', $search ?? '') }}" class="form-control" placeholder="Tìm theo Tên, Email">
+                        <input
+                            type="text"
+                            name="q"
+                            value="{{ old('q', $search ?? '') }}"
+                            class="form-control"
+                            placeholder="Tìm theo Tên, Email"
+                        >
                     </div>
 
                     <div class="col-md-2 mb-2">
@@ -34,7 +40,6 @@
                         <tr>
                             <th>#</th>
                             <th>Tên người quản lý</th>
-                            <th>Avatar</th>
                             <th>Cấp độ</th>
                             <th>Email</th>
                             <th>Password</th>
@@ -46,26 +51,33 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->name }}</td>
-                                <td>
-                                    @if ($user->avatar)
-                                        <img src="{{ asset('storage/' . $user->avatar) }}" width="100" class="img-thumbnail mb-2">
-                                    @else
-                                        NA
-                                    @endif
-                                </td>
                                 <td>{{ $user->level }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary toggle-password" data-user-id="{{ $user->id }}">
-                                        Hiện mật khẩu
-                                    </button>
-                                    <input type="text" class="form-control form-control-sm mt-1 d-none password-field" id="password-{{ $user->id }}" value="******" readonly>
+                                    @if(auth()->user()->level == 1) 
+                                        <form action="{{ route('admin.users.resetPassword', $user) }}" 
+                                            method="POST" 
+                                            class="d-inline"
+                                            onsubmit="return confirm('Bạn có chắc muốn reset mật khẩu cho {{ $user->name }}?')">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-warning">
+                                                Reset mật khẩu
+                                            </button>
+                                        </form>
+                                    @else
+                                        <span class="text-muted">Ẩn vì bảo mật</span>
+                                    @endif
                                 </td>
                                 <td>
                                     <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-primary mb-1">Sửa</a>
                                     
-                                    @if(session('level') == 1)
-                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xoá?')" class="d-inline">
+                                    @if(auth()->user()->level == 1)
+                                    <form
+                                        action="{{ route('admin.users.destroy', $user) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Bạn chắc chắn muốn xoá?')"
+                                        class="d-inline"
+                                    >
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
@@ -93,3 +105,26 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".toggle-password").forEach(button => {
+            button.addEventListener("click", function () {
+                const userId = this.getAttribute("data-user-id");
+                const passwordField = document.getElementById("password-" + userId);
+
+                if (passwordField.classList.contains("d-none")) {
+                    // Hiện mật khẩu (ở đây bạn chưa có dữ liệu mật khẩu thật, nên tạm hiển thị placeholder)
+                    passwordField.classList.remove("d-none");
+                    this.textContent = "Ẩn mật khẩu";
+                } else {
+                    // Ẩn mật khẩu
+                    passwordField.classList.add("d-none");
+                    this.textContent = "Hiện mật khẩu";
+                }
+            });
+        });
+    });
+</script>
+@endpush

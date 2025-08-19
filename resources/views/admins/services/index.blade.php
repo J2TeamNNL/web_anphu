@@ -90,25 +90,27 @@
                                 <td class="text-left" style="max-width: 200px;">
                                     {{ \Illuminate\Support\Str::limit($service->description, 100) }}
                                 </td>
-                                <td>
-                                    <a
-                                        href="{{ route('admin.services.edit', $service) }}"
-                                        class="btn btn-sm btn-primary mb-1"
-                                    >
-                                        Sửa
-                                    </a>
-                                    
-                                    <form
-                                        action="{{ route('admin.services.destroy', $service) }}"
-                                        method="POST"
-                                        onsubmit="return confirm('Bạn chắc chắn muốn xoá?')"
-                                        class="d-inline"
-                                    >
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
-                                    </form>
-                                </td>
+                                
+                                    <td>
+                                        <a
+                                            href="{{ route('admin.services.edit', $service) }}"
+                                            class="btn btn-sm btn-primary mb-1"
+                                        >
+                                            Sửa
+                                        </a>
+                                        @if(auth()->user()->level == 1)
+                                        <form
+                                            action="{{ route('admin.services.destroy', $service) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('Bạn chắc chắn muốn xoá?')"
+                                            class="d-inline"
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
+                                        </form>
+                                        @endif
+                                    </td>
                             </tr>
                         @empty
                             <tr>

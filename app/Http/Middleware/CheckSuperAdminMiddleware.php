@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckSuperAdminMiddleware
@@ -14,11 +15,15 @@ class CheckSuperAdminMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {
-        if(session()->get('level') === 0)
-        {
-            throw new \Exception('You are not authorized');
+    {   
+        if (!Auth::check()) {
+            return redirect()->route('login')->withErrors('Vui lòng đăng nhập');
         }
-            return $next($request);
+
+        if (Auth::user()->level != 1) {
+            abort(403, 'Bạn không có quyền truy cập vào trang này.');
+        }
+
+        return $next($request);
     }
 }
