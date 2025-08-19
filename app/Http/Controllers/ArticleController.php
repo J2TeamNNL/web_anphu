@@ -45,7 +45,6 @@ class ArticleController extends Controller
         if ($request->filled('category_id')) {
             $category = Category::find($request->category_id);
             if ($category) {
-                // Lấy tất cả các id của category này và con cháu 3 cấp
                 $categoryIds = collect([$category->id])
                     ->merge($category->childrenRecursive()->pluck('id'))
                     ->flatten()
