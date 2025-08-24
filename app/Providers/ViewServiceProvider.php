@@ -16,7 +16,6 @@ use App\View\Composers\PartnerComposer;
 use App\View\Composers\NavbarComposer;
 use App\View\Composers\CustomPageComposer;
 
-
 class ViewServiceProvider extends ServiceProvider
 {
     public function boot()
@@ -58,7 +57,7 @@ class ViewServiceProvider extends ServiceProvider
 
         $companySettings = CompanySetting::first();
         View::share('companySettings', $companySettings);
-        
+
     }
     
     public function register(): void
