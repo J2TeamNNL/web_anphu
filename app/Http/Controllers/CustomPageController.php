@@ -98,10 +98,6 @@ class CustomPageController extends Controller
     {
         $data = $request->validated();
 
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title_1'] ?? $customPage->title_1);
-        }
-
         for ($i = 1; $i <= 4; $i++) {
             $imageKey = "image_{$i}";
             $imagePublicKey = "image_{$i}_public_id";
