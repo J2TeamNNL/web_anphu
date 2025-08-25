@@ -23,7 +23,7 @@
                     <div class="slide-content-box p-3 p-md-4 rounded" style="background-color: rgba(0,0,0,0.7);">
                         <div class="text-content">
                             <h2 class="h5 h4-md h3-lg mb-3 text-center text-align-center text-warning">
-                                {{ $page->title_1 }}
+                                {{ $page->title_1 ?? ''}}
                             </h2>
                             {!! $page->custom_content_1 !!}
                         </div>
