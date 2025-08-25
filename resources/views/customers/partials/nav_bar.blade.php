@@ -1,10 +1,3 @@
-@php
-    $custom_pages = $custom_pages ?? collect();
-    $services = $services ?? collect();
-    $portfoliosCategories = $portfoliosCategories ?? collect();
-    $blogsCategories = $blogsCategories ?? collect();
-@endphp
-
 <nav class="navbar main-nav navbar-expand-lg navbar-light sticky-top">
     <div class="container">
         <button

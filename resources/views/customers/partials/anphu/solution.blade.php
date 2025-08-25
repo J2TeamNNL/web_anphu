@@ -96,40 +96,40 @@
 
 <section class="bg-light py-5 section-bg-solution">
    <div class="container">
-        <div class="text-center mb-5">
-                <h3 class="text-warning font-weight-bold">GIẢI PHÁP TOÀN DIỆN</h3>
-                <h4 class="font-weight-bold text-white">Quy trình nhanh chóng, dịch vụ chuyên nghiệp tận tình</h4>
-                <h4 class="font-weight-bold text-white">Đồng bộ Thiết kế và Thi công</h4>
-        </div>
+      <div class="text-center mb-5">
+            <h3 class="text-warning font-weight-bold">GIẢI PHÁP TOÀN DIỆN</h3>
+            <h4 class="font-weight-bold text-white">Quy trình nhanh chóng, dịch vụ chuyên nghiệp tận tình</h4>
+            <h4 class="font-weight-bold text-white">Đồng bộ Thiết kế và Thi công</h4>
+      </div>
 
-        <div class="row justify-content-center">
+      <div class="row justify-content-center">
             @foreach ($services as $service)
             <div class="col-lg-5 col-md-6 mb-5 d-flex">
-                <div class="card-luxury-gold d-flex flex-column w-100">
-                    <!-- Icon -->
-                    <div class="icon-circle">
+               <div class="card-luxury-gold d-flex flex-column w-100">
+                  <!-- Icon -->
+                  <div class="icon-circle">
                         <img 
                            src="{{ $service->image }}"
                            alt="{{ $service->name ?? 'Service logo' }}"
                         >
-                    </div>
+                  </div>
 
-                    <!-- Tiêu đề & mô tả -->
-                    <h5>{{ $service['name'] }}</h5>
-                    <p class="flex-grow-1">
-                            {{ $service['description'] }}
-                    </p>
+                  <!-- Tiêu đề & mô tả -->
+                  <h5>{{ $service['name'] }}</h5>
+                  <p class="flex-grow-1">
+                        {{ $service['description'] }}
+                  </p>
 
                   <!-- Nút Xem thêm -->
-                    <div class="mt-auto pt-3">
+                  <div class="mt-auto pt-3">
                         <a
-                        href="{{ route('customers.service.detail', $service->slug) }}"
-                        class="btn btn-outline-light btn-sm w-100 btn-luxury"
+                           href="{{ route('customers.service.detail', $service->slug) }}"
+                           class="btn btn-outline-light btn-sm w-100 btn-luxury"
                         >Xem thêm</a>
-                    </div>
+                  </div>
                </div>
             </div>
             @endforeach
-        </div>
+      </div>
    </div>
 </section>
