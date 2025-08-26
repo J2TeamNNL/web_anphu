@@ -22,6 +22,7 @@ class ViewServiceProvider extends ServiceProvider
 {
     public function boot()
     {   
+        return;
         $portfolioCategories = Category::whereNull('parent_id')
             ->where('type', CategoryType::PORTFOLIO->value)
             ->get();
