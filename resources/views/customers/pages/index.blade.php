@@ -25,7 +25,7 @@
                             <h2 class="h5 h4-md h3-lg mb-3 text-center text-align-center text-warning">
                                 {{ $page->title_1 ?? ''}}
                             </h2>
-                            {!! $page->custom_content_1 >> ''!!}
+                            {!! $page->custom_content_1 ?? ''!!}
                         </div>
                     </div>
                 </div>
