@@ -181,7 +181,9 @@ use Illuminate\Support\Str;
         <div class="blog-content" id="blog-content">
             <h2>{{ $article->name }}</h2>
             <p class="text-muted small">Đăng ngày {{ $article->created_at->format('d/m/Y') }}</p>
-            {!! $article->content !!}
+            <div class="ql-editor">
+                {!! $article->content !!}
+            </div>
 
             @if ($article->media->count())
             <div class="media-gallery mt-4">
