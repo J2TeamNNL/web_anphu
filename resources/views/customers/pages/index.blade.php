@@ -20,12 +20,15 @@
         <div class="container text-white">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10 col-lg-8 col-xl-6">
-                    <div class="slide-content-box p-3 p-md-4 rounded" style="background-color: rgba(0,0,0,0.7);padding-left: 30px; padding-right: 30px;">
+                    <div 
+                        class="slide-content-box p-3 p-md-4 rounded" 
+                        style="background-color: rgba(0,0,0,0.7);padding-left: 30px; padding-right: 30px;"
+                    >
                         <div class="text-content">
                             <h2 class="h5 h4-md h3-lg mb-3 text-center text-align-center text-warning">
-                                {{ $page->title_1 ?? ''}}
+                                {{ $page?->title_1}}
                             </h2>
-                            {!! $page->custom_content_1 ?? ''!!}
+                            {!! $page?->custom_content_1 !!}
                         </div>
                     </div>
                 </div>
