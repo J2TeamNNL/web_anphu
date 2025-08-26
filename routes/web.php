@@ -80,6 +80,10 @@ Route::prefix('admin')->name('admin.')
    Route::post('/media/upload-image', [MediaController::class, 'uploadImage'])
       ->name('media.uploadImage');
 
+   // Fetch remote image via server-side to bypass browser CORS and return stable proxy URL
+   Route::post('/media/fetch-remote', [MediaController::class, 'fetchRemote'])
+      ->name('media.fetchRemote');
+
 
    Route::resource('categories', CategoryController::class)->except([
       'destroy'

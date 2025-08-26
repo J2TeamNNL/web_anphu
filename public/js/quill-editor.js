@@ -100,8 +100,10 @@ class QuillEditorManager {
 
     /**
      * Auto convert YouTube / Facebook / TikTok links to embed video
+     * Also handle external images through proxy
      */
     setupAutoEmbedHandler() {
+        // Handle text nodes for video embedding
         this.quill.clipboard.addMatcher(Node.TEXT_NODE, (node, delta) => {
             const urlRegex = /(https?:\/\/[^\s]+)/g;
             let ops = [];
@@ -137,6 +139,32 @@ class QuillEditorManager {
             delta.ops = ops;
             return delta;
         });
+
+        // Handle external images by converting to base64
+        this.quill.clipboard.addMatcher('IMG', (node, delta) => {
+            const src = node.getAttribute('src');
+            if (src && this.isExternalImage(src)) {
+                // Tạo placeholder ngay lập tức
+                const placeholder = this.createPlaceholder();
+                delta.ops = [{ insert: { image: placeholder } }];
+                
+                // Convert image to base64 trong background
+                this.convertImageToBase64(src).then(base64 => {
+                    if (base64) {
+                        this.replaceImageInEditor(placeholder, base64);
+                    }
+                }).catch(async (err) => {
+                    // Fallback: gọi server để fetch ảnh, lưu qua pipeline, trả URL proxy ổn định
+                    const proxyUrl = await this.fetchAndUploadToServer(src);
+                    if (proxyUrl) {
+                        this.replaceImageInEditor(placeholder, proxyUrl);
+                    } else {
+                        this.showErrorMessage('Không thể chèn ảnh do CORS. Vui lòng thử lại hoặc tải ảnh thủ công.');
+                    }
+                });
+            }
+            return delta;
+        });
     }
 
     /**
@@ -162,6 +190,102 @@ class QuillEditorManager {
         }
 
         return null;
+    }
+
+    /**
+     * Check if image URL is external (not from current domain)
+     */
+    isExternalImage(url) {
+        try {
+            const imageUrl = new URL(url);
+            const currentHost = window.location.host;
+            
+            // Check if it's from a different domain
+            return imageUrl.host !== currentHost && 
+                   !url.startsWith('/') && 
+                   !url.startsWith('./') &&
+                   !url.startsWith('../');
+        } catch (e) {
+            return false;
+        }
+    }
+
+    /**
+     * Create placeholder image
+     */
+    createPlaceholder() {
+        const svg = `
+            <svg width="300" height="150" xmlns="http://www.w3.org/2000/svg">
+                <rect width="300" height="150" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2"/>
+                <text x="150" y="75" text-anchor="middle" fill="#6c757d" font-family="Arial" font-size="14">
+                    Đang tải hình ảnh...
+                </text>
+            </svg>
+        `;
+        // Use UTF-8 data URL to avoid btoa Latin1 limitations
+        return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+
+    /**
+     * Convert external image to base64 data URL
+     */
+    async convertImageToBase64(imageUrl) {
+        try {
+            // Tạo canvas để convert image
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            return new Promise((resolve, reject) => {
+                img.onload = () => {
+                    // Set canvas size to image size
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    // Draw image to canvas
+                    ctx.drawImage(img, 0, 0);
+                    
+                    // Convert to base64
+                    try {
+                        const base64 = canvas.toDataURL('image/jpeg', 0.8);
+                        resolve(base64);
+                    } catch (e) {
+                        reject(e);
+                    }
+                };
+                
+                img.onerror = () => {
+                    reject(new Error('Failed to load image'));
+                };
+                
+                // Set crossOrigin to try to avoid CORS issues
+                img.crossOrigin = 'anonymous';
+                img.src = imageUrl;
+            });
+            
+        } catch (error) {
+            console.warn('Failed to convert image to base64:', error);
+            return null;
+        }
+    }
+
+    /**
+     * Replace image in editor content
+     */
+    replaceImageInEditor(oldSrc, newSrc) {
+        const delta = this.quill.getContents();
+        let changed = false;
+
+        delta.ops.forEach(op => {
+            if (op.insert && op.insert.image === oldSrc) {
+                op.insert.image = newSrc;
+                changed = true;
+            }
+        });
+
+        if (changed) {
+            this.quill.setContents(delta);
+        }
     }
 
 
@@ -273,6 +397,45 @@ class QuillEditorManager {
         }
 
         return result.url;
+    }
+
+    /**
+     * Server-side fallback: fetch remote image and return stable proxy URL
+     */
+    async fetchAndUploadToServer(imageUrl) {
+        try {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            if (!csrfToken) throw new Error('CSRF token not found');
+
+            const response = await fetch('/admin/media/fetch-remote', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    url: imageUrl,
+                    table: this.options.uploadTable || 'articles'
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            if (result.success && result.url) {
+                return result.url;
+            }
+            throw new Error(result.message || 'Fetch remote failed');
+
+        } catch (error) {
+            console.warn('fetchAndUploadToServer error:', error);
+            return null;
+        }
     }
 
     /**
