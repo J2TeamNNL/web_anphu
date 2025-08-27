@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Log;
 
+use App\Http\Controllers\MenuController;
 use Illuminate\Pagination\Paginator;
 
 
@@ -27,5 +28,19 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         Model::shouldBeStrict();
+
+        // WIP
+        try {
+            view()->composer('customers.partials.nav_bar', function ($view) {
+                $view->with(MenuController::portfolioNavbarData());
+                $view->with(MenuController::articleNavbarData());
+            });
+        } catch (\Throwable $e) {
+            Log::error('AppServiceProvider Error: ' . $e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+        }
     }
 }
