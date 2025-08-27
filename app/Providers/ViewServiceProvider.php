@@ -4,97 +4,60 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Schema;
 
-use App\Models\Partner;
-use App\Models\Article;
-use App\Models\Portfolio;
-use App\Models\Category;
 use App\Models\CompanySetting;
-use App\Models\Service;
-use App\Models\CustomPage;
 
-use App\Enums\CategoryType;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
+use App\View\Composers\ServiceComposer;
+use App\View\Composers\PortfolioCategoryComposer;
+
+use App\View\Composers\ExtraContentComposer;
+use App\View\Composers\PartnerComposer;
+
+use App\View\Composers\NavbarComposer;
+use App\View\Composers\CustomPageComposer;
+
 
 class ViewServiceProvider extends ServiceProvider
 {
     public function boot()
     {   
-        $portfolioCategories = Category::whereNull('parent_id')
-            ->where('type', CategoryType::PORTFOLIO->value)
-            ->get();
+        View::composer([
+            'customers.partials.nav_bar',
+        ], NavbarComposer::class);
 
-        $portfolioByCategories = [];
+        View::composer([
+            'customers.partials.nav_bar',
+        ], ServiceComposer::class);
 
-        foreach ($portfolioCategories as $category) {
-            // gom id cha + con (nếu có)
-            $categoryIds = collect([$category->id])
-                ->merge($category->children()->pluck('id'));
+        View::composer([
+            'customers.partials.nav_bar',
+        ], CustomPageComposer::class);
 
-            $projects = Portfolio::with('category')
-                ->whereIn('category_id', $categoryIds)
-                ->latest()
-                ->take(4)
-                ->get();
+        View::composer(
+            ['customers.partials.anphu.partner'],
+            PartnerComposer::class
+        );
 
-            $portfolioByCategories[] = [
-                'category' => $category,
-                'projects' => $projects
-            ];
-        }
+        View::composer([
+            'customers.partials.anphu.solution',
+        ], ServiceComposer::class);
 
+        View::composer([
+            'customers.partials.anphu.demo_projects',
 
-        $partners = collect();
+        ], PortfolioCategoryComposer::class);
 
-        if (Schema::hasTable('partners')) {
-            $partners = Partner::get();
-        }
+        View::composer([
+            'customers.pages.project_detail',
+            'customers.pages.service_detail',
+            'customers.pages.service_price',
+            'customers.pages.uu_dai',
+            'customers.pages.lien_he',
+            'customers.pages.blog_detail',
+        ], ExtraContentComposer::class);
 
         $companySettings = CompanySetting::first();
-
-        $services = collect();
-
-        if (class_exists(Service::class) && Schema::hasTable('services')) {
-            $services = Service::all();
-        }
-
-        $custom_pages = CustomPage::all();
-        
-        $congTrinhCategory = Category::where('slug', 'cong-trinh')->first();
-        $camNhanCategory = Category::where('slug', 'cam-nhan-khach-hang')->first();
-
-        $congTrinhArticles = collect();
-        $camNhanArticles = collect();
-
-
-        // EXTRA VIEW CONTENT
-        if ($congTrinhCategory) {
-            $congTrinhArticles = Article::with('category') // <-- thêm with('category') ở đây
-                ->where('category_id', $congTrinhCategory->id)
-                ->latest()
-                ->take(1)
-                ->get();
-        }
-
-        if ($camNhanCategory) {
-            $camNhanArticles = Article::with('category') // <-- thêm with('category') ở đây
-                ->where('category_id', $camNhanCategory->id)
-                ->latest()
-                ->take(1)
-                ->get();
-        }
-
-        View::share([
-            'portfolioByCategories' => $portfolioByCategories,
-            'partners' => $partners,
-            'companySettings' => $companySettings,
-            'services' => $services,
-            'custom_pages' => $custom_pages,
-            'congTrinhArticles' => $congTrinhArticles,
-            'camNhanArticles' => $camNhanArticles,
-        ]);
+        View::share('companySettings', $companySettings);
         
     }
     
