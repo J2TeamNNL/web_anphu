@@ -3,37 +3,6 @@
  * Handles Quill editor initialization and image upload functionality
  * Auto Video Embedding
  */
-
-const BlockEmbed = Quill.import('blots/block/embed');
-
-class FacebookVideoBlot extends BlockEmbed {
-  static create(value) {
-    let node = super.create();
-    node.setAttribute('src', value);
-    node.setAttribute('frameborder', '0');
-    node.setAttribute('allowfullscreen', true);
-
-    // ✅ thêm cho đúng với plugin của Facebook
-    node.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share');
-
-    // ✅ responsive thay vì fix height = 400px
-    node.style.width = '100%';
-    node.style.aspectRatio = '16/9';   // hiện đại, tự scale
-    node.style.height = 'auto';
-
-    return node;
-  }
-
-  static value(node) {
-    return node.getAttribute('src');
-  }
-}
-
-FacebookVideoBlot.blotName = 'fbvideo';
-FacebookVideoBlot.tagName = 'iframe';
-
-Quill.register(FacebookVideoBlot);
-
 class QuillEditorManager {
     constructor(options = {}) {
         this.options = {
@@ -41,17 +10,17 @@ class QuillEditorManager {
             uploadUrl: '/admin/media/upload-image',
             uploadTable: 'articles',
             height: '400px',
-            placeholder: 'Nhập nội dung...',
+            placeholder: 'Nh   p n  ^yi dung...',
             readonly: false,
             toolbar: 'default',
             ...options
         };
-        
+
         this.quill = null;
         this.textarea = null;
         this.form = null;
         this.syncInterval = null;
-        
+
         this.init();
     }
 
@@ -70,12 +39,12 @@ class QuillEditorManager {
         this.setupFormSubmission();
     }
 
-    /**
+/**
      * Setup Quill editor with configuration
      */
     setupQuillEditor(editorElem) {
         const toolbarOptions = this.getToolbarOptions();
-        
+
         this.quill = new Quill(editorElem, {
             theme: 'snow',
             placeholder: this.options.placeholder,
@@ -88,22 +57,21 @@ class QuillEditorManager {
             }
         });
 
-        // ✅ auto embed video link
+        //  ^|^e auto embed video link
         if (!this.options.readonly) {
             this.setupAutoEmbedHandler();
-            setTimeout(() => this.normalizeExistingContent(), 50);
         }
 
         // Set editor height
         editorElem.style.height = this.options.height;
-        
+
         // Add error handling for editor
         this.quill.on('text-change', () => {
             this.syncTextarea();
         });
     }
 
-    /**
+/**
      * Get toolbar configuration based on type
      */
     getToolbarOptions() {
@@ -130,10 +98,12 @@ class QuillEditorManager {
         return toolbars[this.options.toolbar] || toolbars.default;
     }
 
-    /**
+ /**
      * Auto convert YouTube / Facebook / TikTok links to embed video
+     * Also handle external images through proxy
      */
     setupAutoEmbedHandler() {
+        // Handle text nodes for video embedding
         this.quill.clipboard.addMatcher(Node.TEXT_NODE, (node, delta) => {
             const urlRegex = /(https?:\/\/[^\s]+)/g;
             let ops = [];
@@ -149,18 +119,8 @@ class QuillEditorManager {
                         }
 
                         const embedUrl = this.convertToEmbedUrl(match[0]);
-                        // if (embedUrl) {
-                        //     ops.push({ insert: { video: embedUrl } });
-                        // } else {
-                        //     ops.push({ insert: match[0] });
-                        // }
-
                         if (embedUrl) {
-                            if (embedUrl.includes('facebook.com/plugins/video.php')) {
-                                ops.push({ insert: { fbvideo: embedUrl } });
-                            } else {
-                                ops.push({ insert: { video: embedUrl } });
-                            }
+                            ops.push({ insert: { video: embedUrl } });
                         } else {
                             ops.push({ insert: match[0] });
                         }
@@ -179,51 +139,51 @@ class QuillEditorManager {
             delta.ops = ops;
             return delta;
         });
+        // Handle external images by converting to base64
+        this.quill.clipboard.addMatcher('IMG', (node, delta) => {
+            const src = node.getAttribute('src');
+            if (src && this.isExternalImage(src)) {
+                // T   o placeholder ngay l   p t   c
+                const placeholder = this.createPlaceholder();
+                delta.ops = [{ insert: { image: placeholder } }];
+
+                // Convert image to base64 trong background
+                this.convertImageToBase64(src).then(base64 => {
+                    if (base64) {
+                        this.replaceImageInEditor(placeholder, base64);
+                    }
+                }).catch(async (err) => {
+                    // Fallback: g  ^mi server  ^q  ^c fetch    nh, l  u qua pipeline, tr    URL proxy   ^un  ^q  ^knh
+                    const proxyUrl = await this.fetchAndUploadToServer(src);
+                    if (proxyUrl) {
+                        this.replaceImageInEditor(placeholder, proxyUrl);
+                    } else {
+                        this.showErrorMessage('Kh  ng th  ^c ch  n    nh do CORS. Vui l  ng th    l   i ho   c t   i    nh th    c  ng.');
+                    }
+                });
+            }
+            return delta;
+        });
     }
 
-    /**
+/**
      * Detect and convert link to embed url
      */
     convertToEmbedUrl(url) {
-        if (!url || typeof url !== 'string') return null;
-        const raw = url.trim();
-
         // YouTube
-        const ytMatch = raw.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/);
+        const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/);
         if (ytMatch) {
             return `https://www.youtube.com/embed/${ytMatch[1]}`;
         }
 
-        // Try to parse as URL (robust)
-        try {
-            const parsed = new URL(raw, window.location.origin);
-            const host = parsed.hostname.toLowerCase();
-            const pathname = parsed.pathname || '';
-            const search = parsed.search || '';
-
-            // Facebook cases: watch?v=, /videos/{id}, /v/{id}, /share/v/{id}, fb.watch
-            if (host.includes('facebook.com') || host.includes('fb.watch')) {
-                const vParam = parsed.searchParams.get('v');
-                if (vParam
-                    || /\/videos\/\d+/.test(pathname)
-                    || /(^|\/)(v|reel|watch|share\/v)(\/|$)/i.test(pathname)
-                    || host.includes('fb.watch')
-                ) {
-                    return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(raw)}&show_text=0&width=560`;
-                }
-            }
-        } catch(e) {
-            // ignore parse error and fallback to regex
-        }
-
-        // Fallback regex for facebook variants (covers watch?v= and others)
-        const fbRegex = /(facebook\.com\/watch\/\?v=|facebook\.com\/.*\/videos\/|fb\.watch\/|facebook\.com\/v\/|facebook\.com\/share\/v\/|facebook\.com\/reel\/)/i;
-        if (fbRegex.test(raw)) {
-            return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(raw)}&show_text=0&width=560`;
+        // Facebook
+        const fbMatch = url.match(/facebook\.com\/.*\/videos\/(\d+)/);
+        if (fbMatch) {
+            return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=0&width=560`;
         }
 
         // TikTok
-        const tiktokMatch = raw.match(/tiktok\.com\/@[A-Za-z0-9._]+\/video\/(\d+)/);
+        const tiktokMatch = url.match(/tiktok\.com\/@[A-Za-z0-9._]+\/video\/(\d+)/);
         if (tiktokMatch) {
             return `https://www.tiktok.com/embed/v2/${tiktokMatch[1]}`;
         }
@@ -231,100 +191,100 @@ class QuillEditorManager {
         return null;
     }
 
-    /**
-     * Normalize existing HTML content (server-side) into Quill embeds
-     * - Replace plain facebook links (in paragraphs/divs) with fbvideo/video embed
-     * - Replace existing facebook iframe tags with fbvideo embed
+/**
+     * Check if image URL is external (not from current domain)
      */
-    normalizeExistingContent() {
-        if (!this.quill) return;
-        const root = this.quill.root;
+    isExternalImage(url) {
+        try {
+            const imageUrl = new URL(url);
+            const currentHost = window.location.host;
 
-        console.log('[Quill] normalizeExistingContent start');
-        console.log('[Quill] current innerHTML:', root.innerHTML);
-
-if (!/facebook\.com|fb\.watch/i.test(root.innerHTML)) {
-    // 👉 check thêm plain text từ getText()
-    const plainText = this.quill.getText();
-    console.log('[Quill] fallback plain text:', plainText);
-    if (!/facebook\.com|fb\.watch/i.test(plainText)) {
-        console.log('[Quill] no facebook links/iframes found in content');
-        return;
-    }
-}
-
-        // 0) Quick check: if no facebook string anywhere, skip
-        if (!/facebook\.com|fb\.watch/i.test(root.innerHTML)) {
-            console.log('[Quill] no facebook links/iframes found in content');
-            return;
+            // Check if it's from a different domain
+            return imageUrl.host !== currentHost &&
+                   !url.startsWith('/') &&
+                   !url.startsWith('./') &&
+                   !url.startsWith('../');
+        } catch (e) {
+            return false;
         }
-
-        // 1) Handle anchor links <a href="...">...</a>
-        const anchors = Array.from(root.querySelectorAll('a[href]'));
-        anchors.forEach(a => {
-            const href = a.getAttribute('href') || '';
-            if (!href) return;
-            if (/facebook\.com|fb\.watch/i.test(href)) {
-                console.log('[Quill] Found anchor facebook link:', href);
-                const embedUrl = this.convertToEmbedUrl(href);
-                if (embedUrl) {
-                    const parentBlock = a.closest('p, div') || a.parentNode;
-                    let parentBlot = null;
-                    try { parentBlot = Quill.find(parentBlock); } catch(e) { parentBlot = null; }
-                    const index = parentBlot ? this.quill.getIndex(parentBlot) : (this.quill.getLength() - 1);
-                    const len = parentBlock && parentBlock.innerText ? parentBlock.innerText.length : 1;
-                    this.quill.deleteText(index, len);
-                    this.quill.insertEmbed(index, 'fbvideo', embedUrl);
-                }
-            }
-        });
-
-        // 2) Handle plain text blocks that contain facebook links
-        const fbLinkRegex = /https?:\/\/(www\.)?facebook\.com[^\s"'<>]*/i;
-        const blocks = Array.from(root.querySelectorAll('p, div'));
-        blocks.forEach(block => {
-            const text = block.textContent ? block.textContent.trim() : '';
-            if (!text) return;
-
-            const match = text.match(fbLinkRegex);
-            if (match) {
-                const url = match[0];
-                console.log('[Quill] Found plain facebook url in block:', url);
-                const embedUrl = this.convertToEmbedUrl(url);
-                if (embedUrl) {
-                    let blot = null;
-                    try { blot = Quill.find(block); } catch (e) { blot = null; }
-                    const index = blot ? this.quill.getIndex(blot) : (this.quill.getLength() - 1);
-                    const len = block.innerText ? block.innerText.length : url.length;
-                    this.quill.deleteText(index, len);
-                    this.quill.insertEmbed(index, 'fbvideo', embedUrl);
-                }
-            }
-        });
-
-        // 3) Replace any existing facebook plugin iframes into fbvideo blot (if present)
-        const iframes = Array.from(root.querySelectorAll('iframe'));
-        iframes.forEach(iframe => {
-            const src = iframe.getAttribute('src') || '';
-            if (!src) return;
-            if (src.includes('facebook.com/plugins/video.php')) {
-                console.log('[Quill] Found existing fb plugin iframe, converting to blot:', src);
-                const parentBlock = iframe.closest('p, div') || iframe.parentNode;
-                let blot = null;
-                try { blot = Quill.find(parentBlock); } catch (e) { blot = null; }
-                const index = blot ? this.quill.getIndex(blot) : (this.quill.getLength() - 1);
-                const len = parentBlock && parentBlock.innerText ? parentBlock.innerText.length : 1;
-                this.quill.deleteText(index, len);
-                this.quill.insertEmbed(index, 'fbvideo', src);
-            }
-        });
-
-        console.log('[Quill] normalizeExistingContent end');
     }
 
-    
+    /**
+     * Create placeholder image
+     */
+    createPlaceholder() {
+        const svg = `
+            <svg width="300" height="150" xmlns="http://www.w3.org/2000/svg">
+                <rect width="300" height="150" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2"/>
+                <text x="150" y="75" text-anchor="middle" fill="#6c757d" font-family="Arial" font-size="14">
+                     ^pang t   i h  nh    nh...
+                </text>
+            </svg>
+        `;
+        // Use UTF-8 data URL to avoid btoa Latin1 limitations
+        return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
 
-    
+/**
+     * Convert external image to base64 data URL
+     */
+    async convertImageToBase64(imageUrl) {
+        try {
+            // T   o canvas  ^q  ^c convert image
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+
+            return new Promise((resolve, reject) => {
+                img.onload = () => {
+                    // Set canvas size to image size
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    // Draw image to canvas
+                    ctx.drawImage(img, 0, 0);
+
+                    // Convert to base64
+                    try {
+                        const base64 = canvas.toDataURL('image/jpeg', 0.8);
+                        resolve(base64);
+                    } catch (e) {
+                        reject(e);
+                    }
+                };
+
+                img.onerror = () => {
+                    reject(new Error('Failed to load image'));
+                };
+                // Set crossOrigin to try to avoid CORS issues
+                img.crossOrigin = 'anonymous';
+                img.src = imageUrl;
+            });
+
+        } catch (error) {
+            console.warn('Failed to convert image to base64:', error);
+            return null;
+        }
+    }
+    /**
+     * Replace image in editor content
+     */
+    replaceImageInEditor(oldSrc, newSrc) {
+        const delta = this.quill.getContents();
+        let changed = false;
+
+        delta.ops.forEach(op => {
+            if (op.insert && op.insert.image === oldSrc) {
+                op.insert.image = newSrc;
+                changed = true;
+            }
+        });
+
+        if (changed) {
+            this.quill.setContents(delta);
+        }
+    }
+
 
     /**
      * Setup textarea synchronization
@@ -344,7 +304,7 @@ if (!/facebook\.com|fb\.watch/i.test(root.innerHTML)) {
         }
     }
 
-    /**
+/**
      * Setup form submission handling
      */
     setupFormSubmission() {
@@ -363,8 +323,7 @@ if (!/facebook\.com|fb\.watch/i.test(root.innerHTML)) {
             this.textarea.value = this.quill.root.innerHTML;
         }
     }
-
-    /**
+/**
      * Upload image with proper error handling and loading states
      */
     async uploadImage(file) {
@@ -372,7 +331,7 @@ if (!/facebook\.com|fb\.watch/i.test(root.innerHTML)) {
             // Validate file size (5MB limit)
             const maxSize = 5 * 1024 * 1024;
             if (file.size > maxSize) {
-                throw new Error('Ảnh quá lớn. Vui lòng chọn ảnh nhỏ hơn 5MB.');
+                throw new Error('   nh qu   l  ^{n. Vui l  ng ch  ^mn    nh nh  ^o h  n 5MB.');
             }
 
             // Show loading state
@@ -380,13 +339,13 @@ if (!/facebook\.com|fb\.watch/i.test(root.innerHTML)) {
 
             // Upload file
             const imageUrl = await this.uploadToServer(file);
-            
+
             // Replace loading with actual image
 
             // this.replaceLoadingWithImage(range.index, imageUrl);
 
             this.quill.insertEmbed(range.index, 'image', imageUrl);
-            
+
             return imageUrl;
 
         } catch (error) {
@@ -396,10 +355,7 @@ if (!/facebook\.com|fb\.watch/i.test(root.innerHTML)) {
             return null;
         }
     }
-
-
-
-    /**
+/**
      * Upload file to server
      */
     async uploadToServer(file) {
@@ -428,7 +384,7 @@ if (!/facebook\.com|fb\.watch/i.test(root.innerHTML)) {
         }
 
         const result = await response.json();
-        
+
         if (!result.success || !result.url) {
             throw new Error(result.message || 'Upload failed - no URL returned');
         }
@@ -436,7 +392,47 @@ if (!/facebook\.com|fb\.watch/i.test(root.innerHTML)) {
         return result.url;
     }
 
-    /**
+ /**
+     * Server-side fallback: fetch remote image and return stable proxy URL
+     */
+    async fetchAndUploadToServer(imageUrl) {
+        try {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            if (!csrfToken) throw new Error('CSRF token not found');
+
+            const response = await fetch('/admin/media/fetch-remote', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    url: imageUrl,
+                    table: this.options.uploadTable || 'articles'
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            if (result.success && result.url) {
+                return result.url;
+            }
+            throw new Error(result.message || 'Fetch remote failed');
+
+        } catch (error) {
+            console.warn('fetchAndUploadToServer error:', error);
+            return null;
+        }
+    }
+
+
+ /**
      * Handle upload errors
      */
     handleUploadError(message) {
@@ -451,7 +447,7 @@ if (!/facebook\.com|fb\.watch/i.test(root.innerHTML)) {
         if (typeof toastr !== 'undefined') {
             toastr.error(message);
         } else if (typeof Swal !== 'undefined') {
-            Swal.fire('Lỗi', message, 'error');
+            Swal.fire('L  ^wi', message, 'error');
         } else {
             alert(message);
         }
@@ -473,18 +469,18 @@ if (!/facebook\.com|fb\.watch/i.test(root.innerHTML)) {
         }
     }
 
-    /**
+/**
      * Destroy editor and cleanup
      */
     destroy() {
         if (this.syncInterval) {
             clearInterval(this.syncInterval);
         }
-        
+
         if (this.form) {
             this.form.removeEventListener('submit', this.syncTextarea);
         }
-        
+
         this.quill = null;
         this.textarea = null;
         this.form = null;
