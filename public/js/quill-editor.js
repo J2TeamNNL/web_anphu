@@ -201,49 +201,6 @@ class QuillEditorManager {
     }
 
     /**
-     * Convert external image to base64 data URL
-     */
-    async convertImageToBase64(imageUrl) {
-        try {
-            // Tạo canvas để convert image
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const img = new Image();
-            
-            return new Promise((resolve, reject) => {
-                img.onload = () => {
-                    // Set canvas size to image size
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    
-                    // Draw image to canvas
-                    ctx.drawImage(img, 0, 0);
-                    
-                    // Convert to base64
-                    try {
-                        const base64 = canvas.toDataURL('image/jpeg', 0.8);
-                        resolve(base64);
-                    } catch (e) {
-                        reject(e);
-                    }
-                };
-                
-                img.onerror = () => {
-                    reject(new Error('Failed to load image'));
-                };
-                
-                // Set crossOrigin to try to avoid CORS issues
-                img.crossOrigin = 'anonymous';
-                img.src = imageUrl;
-            });
-            
-        } catch (error) {
-            console.warn('Failed to convert image to base64:', error);
-            return null;
-        }
-    }
-
-    /**
      * Replace image in editor content
      */
     replaceImageInEditor(oldSrc, newSrc) {
