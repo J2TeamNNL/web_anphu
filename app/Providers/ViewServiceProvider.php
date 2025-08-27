@@ -19,42 +19,26 @@ class ViewServiceProvider extends ServiceProvider
 {
     public function boot()
     {   
-        View::composer([
-            'customers.partials.nav_bar',
-        ], NavbarComposer::class);
+        $view = $this->app->make('view');
 
-        View::composer([
-            'customers.partials.nav_bar',
-        ], ServiceComposer::class);
+    $view->composer(['customers.partials.nav_bar'], NavbarComposer::class);
+    $view->composer(['customers.partials.nav_bar'], ServiceComposer::class);
+    $view->composer(['customers.partials.nav_bar'], CustomPageComposer::class);
 
-        View::composer([
-            'customers.partials.nav_bar',
-        ], CustomPageComposer::class);
+    $view->composer(['customers.partials.anphu.partner'], PartnerComposer::class);
+    $view->composer(['customers.partials.anphu.solution'], ServiceComposer::class);
+    $view->composer(['customers.partials.anphu.demo_projects'], PortfolioCategoryComposer::class);
 
-        View::composer(
-            ['customers.partials.anphu.partner'],
-            PartnerComposer::class
-        );
+    $view->composer([
+        'customers.pages.project_detail',
+        'customers.pages.service_detail',
+        'customers.pages.service_price',
+        'customers.pages.uu_dai',
+        'customers.pages.lien_he',
+        'customers.pages.blog_detail',
+    ], ExtraContentComposer::class);
 
-        View::composer([
-            'customers.partials.anphu.solution',
-        ], ServiceComposer::class);
-
-        View::composer([
-            'customers.partials.anphu.demo_projects',
-
-        ], PortfolioCategoryComposer::class);
-
-        View::composer([
-            'customers.pages.project_detail',
-            'customers.pages.service_detail',
-            'customers.pages.service_price',
-            'customers.pages.uu_dai',
-            'customers.pages.lien_he',
-            'customers.pages.blog_detail',
-        ], ExtraContentComposer::class);
-
-        View::composer('*', CompanySettingComposer::class);
+    $view->composer('*', CompanySettingComposer::class);
 
     }
     
