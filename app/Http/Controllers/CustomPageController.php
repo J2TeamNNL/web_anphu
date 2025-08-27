@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreCustomPageRequest;
 use App\Http\Requests\UpdateCustomPageRequest;
 use App\Services\CloudinaryService;
-use App\Models\Media;
 use Illuminate\Support\Str;
 
 class CustomPageController extends Controller
@@ -57,7 +56,6 @@ class CustomPageController extends Controller
             }
         }
 
-        // Xử lý custom_content_X → chỉ giữ URL, bỏ hoàn toàn base64
         for ($i = 1; $i <= 4; $i++) {
             $contentKey = "custom_content_{$i}";
             $data[$contentKey] = $data[$contentKey] ?? null;
@@ -97,7 +95,6 @@ class CustomPageController extends Controller
             }
         }
 
-        // Cập nhật custom_content_X → giữ nguyên URL, bỏ base64
         for ($i = 1; $i <= 4; $i++) {
             $contentKey = "custom_content_{$i}";
             $data[$contentKey] = $data[$contentKey] ?? $customPage->$contentKey;
@@ -121,7 +118,6 @@ class CustomPageController extends Controller
             }
         }
 
-        // Xóa ảnh trong custom_content_X → chỉ xóa URL đã upload, không parse base64
         for ($i = 1; $i <= 4; $i++) {
             $contentKey = "custom_content_{$i}";
             if (!empty($customPage->$contentKey)) {
