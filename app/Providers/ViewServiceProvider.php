@@ -5,10 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
-use App\Models\CompanySetting;
-
 use App\View\Composers\ServiceComposer;
 use App\View\Composers\PortfolioCategoryComposer;
+use App\View\Composers\CompanySettingComposer;
 
 use App\View\Composers\ExtraContentComposer;
 use App\View\Composers\PartnerComposer;
@@ -55,8 +54,7 @@ class ViewServiceProvider extends ServiceProvider
             'customers.pages.blog_detail',
         ], ExtraContentComposer::class);
 
-        $companySettings = CompanySetting::first();
-        View::share('companySettings', $companySettings);
+        View::composer('*', CompanySettingComposer::class);
 
     }
     
