@@ -110,17 +110,17 @@ class PortfolioController extends Controller
         }
 
 
-        if ($request->filled('facebook_post')) {
-            $postData = $request->input('facebook_post');
-            $postData['related_type'] = Portfolio::class;
-            $postData['related_id']   = $portfolio->id;
+        // if ($request->filled('facebook_post')) {
+        //     $postData = $request->input('facebook_post');
+        //     $postData['related_type'] = Portfolio::class;
+        //     $postData['related_id']   = $portfolio->id;
 
-            $fbPost = $fbService->sync($postData);
+        //     $fbPost = $fbService->sync($postData);
 
-            $portfolio->update([
-                'fb_post_id' => $fbPost->fb_post_id,
-            ]);
-        }
+        //     $portfolio->update([
+        //         'fb_post_id' => $fbPost->fb_post_id,
+        //     ]);
+        // }
 
         return redirect()->route('admin.portfolios.index');
     }
@@ -187,9 +187,9 @@ class PortfolioController extends Controller
             Cloudinary::destroy($portfolio->thumbnail_public_id);
         }
 
-        if ($portfolio->facebookPost) {
-            $portfolio->facebookPost->delete();
-        }
+        // if ($portfolio->facebookPost) {
+        //     $portfolio->facebookPost->delete();
+        // }
 
         $portfolio->delete();
 
