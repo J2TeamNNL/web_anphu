@@ -5,18 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Enums\CategoryType;
 use App\Models\Category;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
-
-use App\Models\Media;
-use App\Helpers\ImageHelper;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
-
 use App\Services\CloudinaryService;
+use App\Services\FacebookPostSyncService;
 
 class ArticleController extends Controller
 {
@@ -78,17 +73,23 @@ class ArticleController extends Controller
         return view('admins.articles.create', compact('categories'));
     }
 
-    public function store(StoreArticleRequest $request, CloudinaryService $cloudinaryService)
+    public function store(StoreArticleRequest $request, CloudinaryService $cloudinaryService, FacebookPostSyncService $fbService)
     {
         $validated = $request->validated();
         $validated['slug'] = Str::slug($validated['name']);
 
         if ($request->hasFile('thumbnail')) {
-            $uploadResult = $cloudinaryService->upload($request
-                ->file('thumbnail'), 'articles');
+            $uploadResult = $cloudinaryService->upload(
+                $request->file('thumbnail'),
+                'articles'
+            );
 
             $validated['thumbnail'] = $uploadResult['url'];
+        } elseif ($request->filled('thumbnail_fb')) {
+            $validated['thumbnail'] = $request->input('thumbnail_fb');
         }
+
+        $validated['content'] = $validated['content'] ?? '';
 
         $article = $this->model::create($validated);
 
@@ -96,20 +97,21 @@ class ArticleController extends Controller
             $article->categories()->sync($validated['category_ids']);
         }
 
-        $result = ImageHelper::extractAndUploadBase64Images($validated['content'] ?? '');
-        $validated['content'] = $result['content'];
-        $usedPaths = $result['paths'];
+        if ($request->filled('facebook_post')) {
+            $postData = $request->input('facebook_post');
+            $postData['related_type'] = Article::class;
+            $postData['related_id']   = $article->id;
 
-        Media::whereNull('mediaable_id')
-            ->where('type', 'image')
-            ->whereIn('file_path', $usedPaths)
-            ->update([
-                'mediaable_id' => $article->id,
-                'mediaable_type' => Article::class,
+            $fbPost = $fbService->sync($postData);
+
+            $article->update([
+                'fb_post_id' => $fbPost->fb_post_id,
             ]);
+        }
 
         return redirect()->route('admin.articles.index');
     }
+
 
     public function edit($id)
     {
@@ -136,32 +138,21 @@ class ArticleController extends Controller
             }
 
             $uploadResult = $cloudinaryService->upload($request->file('thumbnail'), 'articles');
-
-            $data['thumbnail'] = $uploadResult['url'] ?? null; // Đảm bảo đúng key như store()
+            $data['thumbnail'] = $uploadResult['url'] ?? null;
             $data['thumbnail_public_id'] = $uploadResult['public_id'] ?? null;
         } else {
-            // Rất quan trọng: giữ nguyên ảnh cũ nếu không upload ảnh mới
             $data['thumbnail'] = $article->thumbnail;
             $data['thumbnail_public_id'] = $article->thumbnail_public_id;
         }
 
-        $result = ImageHelper::extractAndUploadBase64Images($data['content'] ?? '');
-        $data['content'] = $result['content'];
-        $usedPaths = $result['paths'];
-
-        Media::whereNull('mediaable_id')
-            ->where('type', 'image')
-            ->whereIn('file_path', $usedPaths)
-            ->update([
-                'mediaable_id' => $article->id,
-                'mediaable_type' => Article::class,
-            ]);
+        $data['content'] = $data['content'] ?? $article->content;
 
         $article->update($data);
 
         return redirect()->route('admin.articles.index')
             ->with('success', 'Cập nhật thành công!');
     }
+
 
     public function show(Article $article)
     {
@@ -176,6 +167,10 @@ class ArticleController extends Controller
             Cloudinary::destroy($article->thumbnail_public_id);
         }
 
+        if ($article->facebookPost) {
+            $article->facebookPost->delete();
+        }
+            
         $article->delete();
 
         return redirect()->route('admin.articles.index')
