@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use App\Enums\CategoryType;
 
 class Portfolio extends Model
@@ -24,7 +23,8 @@ class Portfolio extends Model
         'thumbnail_public_id',
         'category_id',
         'type',
-        'content'
+        'content',
+        'fb_post_id',
     ];
 
     public function category()
@@ -46,6 +46,11 @@ class Portfolio extends Model
     public function media()
     {
         return $this->morphMany(Media::class, 'mediaable');
+    }
+
+    public function facebookPost()
+    {
+        return $this->morphOne(FacebookPost::class, 'related');
     }
 }
 
