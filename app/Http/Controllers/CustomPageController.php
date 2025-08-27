@@ -8,7 +8,6 @@ use App\Http\Requests\StoreCustomPageRequest;
 use App\Http\Requests\UpdateCustomPageRequest;
 use App\Services\CloudinaryService;
 use App\Models\Media;
-use App\Helpers\ImageHelper;
 use Illuminate\Support\Str;
 
 class CustomPageController extends Controller
@@ -26,15 +25,11 @@ class CustomPageController extends Controller
         $search = $request->input('q');
 
         $pages = $this->model->query()
-            ->when($search, fn($query) => $query
-                ->where('name', 'like', "%{$search}%"))
+            ->when($search, fn($query) => $query->where('name', 'like', "%{$search}%"))
             ->orderBy('id', 'desc')
             ->paginate(self::PER_PAGE);
 
-        return view('admins.custom_pages.index', compact(
-            'pages', 
-            'search'
-        ));
+        return view('admins.custom_pages.index', compact('pages', 'search'));
     }
 
     public function create()
@@ -50,39 +45,25 @@ class CustomPageController extends Controller
             $data['slug'] = Str::slug($data['title_1'] ?? 'page');
         }
 
+        // Xử lý image_1 → image_4
         for ($i = 1; $i <= 4; $i++) {
             $imageKey = "image_{$i}";
             $imagePublicKey = "image_{$i}_public_id";
 
             if ($request->hasFile($imageKey)) {
-                $uploadResult = $cloudinaryService
-                    ->upload($request->file($imageKey), 'custom_pages');
+                $uploadResult = $cloudinaryService->upload($request->file($imageKey), 'custom_pages');
                 $data[$imageKey] = $uploadResult['url'] ?? null;
                 $data[$imagePublicKey] = $uploadResult['path'] ?? null;
             }
         }
 
-        // Xử lý custom_content (có thể có base64 image)
-        $usedPaths = [];
+        // Xử lý custom_content_X → chỉ giữ URL, bỏ hoàn toàn base64
         for ($i = 1; $i <= 4; $i++) {
             $contentKey = "custom_content_{$i}";
-            if (!empty($data[$contentKey])) {
-                $result = ImageHelper::extractAndUploadBase64Images($data[$contentKey]);
-                $data[$contentKey] = $result['content'];
-                $usedPaths = array_merge($usedPaths, $result['paths']);
-            }
+            $data[$contentKey] = $data[$contentKey] ?? null;
         }
 
         $page = $this->model::create($data);
-
-        // Cập nhật Media
-        Media::whereNull('mediaable_id')
-            ->where('type', 'image')
-            ->whereIn('file_path', $usedPaths)
-            ->update([
-                'mediaable_id' => $page->id,
-                'mediaable_type' => CustomPage::class,
-            ]);
 
         return redirect()->route('admin.custom_pages.index')
             ->with('success', 'Tạo trang thành công!');
@@ -98,6 +79,7 @@ class CustomPageController extends Controller
     {
         $data = $request->validated();
 
+        // Cập nhật image_1 → image_4
         for ($i = 1; $i <= 4; $i++) {
             $imageKey = "image_{$i}";
             $imagePublicKey = "image_{$i}_public_id";
@@ -115,27 +97,11 @@ class CustomPageController extends Controller
             }
         }
 
-        // Xử lý custom_content
-        $usedPaths = [];
+        // Cập nhật custom_content_X → giữ nguyên URL, bỏ base64
         for ($i = 1; $i <= 4; $i++) {
             $contentKey = "custom_content_{$i}";
-            if (!empty($data[$contentKey])) {
-                $result = ImageHelper::extractAndUploadBase64Images($data[$contentKey]);
-                $data[$contentKey] = $result['content'];
-                $usedPaths = array_merge($usedPaths, $result['paths']);
-            } else {
-                $data[$contentKey] = $customPage->$contentKey;
-            }
+            $data[$contentKey] = $data[$contentKey] ?? $customPage->$contentKey;
         }
-
-        // Cập nhật Media
-        Media::whereNull('mediaable_id')
-            ->where('type', 'image')
-            ->whereIn('file_path', $usedPaths)
-            ->update([
-                'mediaable_id' => $customPage->id,
-                'mediaable_type' => CustomPage::class,
-            ]);
 
         $customPage->update($data);
 
@@ -147,7 +113,7 @@ class CustomPageController extends Controller
     {
         $cloudinaryService = app(CloudinaryService::class);
 
-        // Xóa ảnh image_1_public_id → image_4_public_id
+        // Xóa ảnh image_1 → image_4
         for ($i = 1; $i <= 4; $i++) {
             $imagePublicIdKey = "image_{$i}_public_id";
             if (!empty($customPage->$imagePublicIdKey)) {
@@ -155,11 +121,10 @@ class CustomPageController extends Controller
             }
         }
 
-        // Xóa ảnh trong custom_content_1 → custom_content_4
+        // Xóa ảnh trong custom_content_X → chỉ xóa URL đã upload, không parse base64
         for ($i = 1; $i <= 4; $i++) {
             $contentKey = "custom_content_{$i}";
             if (!empty($customPage->$contentKey)) {
-                // Lấy tất cả public_id từ HTML
                 preg_match_all('/upload\/(?:v\d+\/)?([^\.]+)\.[a-zA-Z0-9]+/', $customPage->$contentKey, $matches);
                 if (!empty($matches[1])) {
                     foreach ($matches[1] as $publicId) {
