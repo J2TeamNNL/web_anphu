@@ -85,7 +85,8 @@ class PortfolioController extends Controller
     }
 
 
-    public function store(StorePortfolioRequest $request, CloudinaryService $cloudinaryService, FacebookPostSyncService $fbService)
+    // public function store(StorePortfolioRequest $request, CloudinaryService $cloudinaryService, FacebookPostSyncService $fbService)
+    public function store(StorePortfolioRequest $request, CloudinaryService $cloudinaryService)
     {
         $validated = $request->validated();
         $validated['slug'] = Str::slug($validated['name']);

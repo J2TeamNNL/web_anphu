@@ -73,7 +73,8 @@ class ArticleController extends Controller
         return view('admins.articles.create', compact('categories'));
     }
 
-    public function store(StoreArticleRequest $request, CloudinaryService $cloudinaryService, FacebookPostSyncService $fbService)
+    // public function store(StoreArticleRequest $request, CloudinaryService $cloudinaryService, FacebookPostSyncService $fbService)
+    public function store(StoreArticleRequest $request, CloudinaryService $cloudinaryService)
     {
         $validated = $request->validated();
         $validated['slug'] = Str::slug($validated['name']);
