@@ -31,6 +31,14 @@
             margin: 0 auto;
         }
 
+        .culture-wrapper img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1rem auto;
+            border-radius: 6px;
+        }
+
         /* Nội dung */
         .culture-content {
             flex: 1;
