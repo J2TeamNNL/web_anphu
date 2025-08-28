@@ -1615,3 +1615,14 @@ BUTTONS
     height: auto;
     aspect-ratio: 16 / 9; /* Giữ tỉ lệ 16:9 */
 }
+
+/* Quill text alignment */
+.ql-align-center {
+  text-align: center;
+}
+.ql-align-right {
+  text-align: right;
+}
+.ql-align-justify {
+  text-align: justify;
+}
