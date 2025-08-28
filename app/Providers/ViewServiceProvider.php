@@ -66,7 +66,6 @@ class ViewServiceProvider extends ServiceProvider
         $congTrinhArticles = collect();
         $camNhanArticles = collect();
 
-
         // EXTRA VIEW CONTENT
         if ($congTrinhCategory) {
             $congTrinhArticles = Article::with('category') // <-- thêm with('category') ở đây
@@ -91,7 +90,9 @@ class ViewServiceProvider extends ServiceProvider
             'services' => $services,
             'custom_pages' => $custom_pages,
             'congTrinhArticles' => $congTrinhArticles,
+            'congTrinhCategory' => $congTrinhCategory,
             'camNhanArticles' => $camNhanArticles,
+            'camNhanCategory' => $camNhanCategory
         ]);
         
     }
