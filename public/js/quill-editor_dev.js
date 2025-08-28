@@ -10,17 +10,17 @@ class QuillEditorManager {
             uploadUrl: '/admin/media/upload-image',
             uploadTable: 'articles',
             height: '400px',
-            placeholder: 'Nhập nội dung...',
+            placeholder: 'Nh   p n  ^yi dung...',
             readonly: false,
             toolbar: 'default',
             ...options
         };
-        
+
         this.quill = null;
         this.textarea = null;
         this.form = null;
         this.syncInterval = null;
-        
+
         this.init();
     }
 
@@ -39,12 +39,12 @@ class QuillEditorManager {
         this.setupFormSubmission();
     }
 
-    /**
+/**
      * Setup Quill editor with configuration
      */
     setupQuillEditor(editorElem) {
         const toolbarOptions = this.getToolbarOptions();
-        
+
         this.quill = new Quill(editorElem, {
             theme: 'snow',
             placeholder: this.options.placeholder,
@@ -57,21 +57,21 @@ class QuillEditorManager {
             }
         });
 
-        // ✅ auto embed video link
+        //  ^|^e auto embed video link
         if (!this.options.readonly) {
             this.setupAutoEmbedHandler();
         }
 
         // Set editor height
         editorElem.style.height = this.options.height;
-        
+
         // Add error handling for editor
         this.quill.on('text-change', () => {
             this.syncTextarea();
         });
     }
 
-    /**
+/**
      * Get toolbar configuration based on type
      */
     getToolbarOptions() {
@@ -98,7 +98,7 @@ class QuillEditorManager {
         return toolbars[this.options.toolbar] || toolbars.default;
     }
 
-    /**
+ /**
      * Auto convert YouTube / Facebook / TikTok links to embed video
      * Also handle external images through proxy
      */
@@ -139,9 +139,34 @@ class QuillEditorManager {
             delta.ops = ops;
             return delta;
         });
+        // Handle external images by converting to base64
+        this.quill.clipboard.addMatcher('IMG', (node, delta) => {
+            const src = node.getAttribute('src');
+            if (src && this.isExternalImage(src)) {
+                // T   o placeholder ngay l   p t   c
+                const placeholder = this.createPlaceholder();
+                delta.ops = [{ insert: { image: placeholder } }];
+
+                // Convert image to base64 trong background
+                this.convertImageToBase64(src).then(base64 => {
+                    if (base64) {
+                        this.replaceImageInEditor(placeholder, base64);
+                    }
+                }).catch(async (err) => {
+                    // Fallback: g  ^mi server  ^q  ^c fetch    nh, l  u qua pipeline, tr    URL proxy   ^un  ^q  ^knh
+                    const proxyUrl = await this.fetchAndUploadToServer(src);
+                    if (proxyUrl) {
+                        this.replaceImageInEditor(placeholder, proxyUrl);
+                    } else {
+                        this.showErrorMessage('Kh  ng th  ^c ch  n    nh do CORS. Vui l  ng th    l   i ho   c t   i    nh th    c  ng.');
+                    }
+                });
+            }
+            return delta;
+        });
     }
 
-    /**
+/**
      * Detect and convert link to embed url
      */
     convertToEmbedUrl(url) {
@@ -166,17 +191,17 @@ class QuillEditorManager {
         return null;
     }
 
-    /**
+/**
      * Check if image URL is external (not from current domain)
      */
     isExternalImage(url) {
         try {
             const imageUrl = new URL(url);
             const currentHost = window.location.host;
-            
+
             // Check if it's from a different domain
-            return imageUrl.host !== currentHost && 
-                   !url.startsWith('/') && 
+            return imageUrl.host !== currentHost &&
+                   !url.startsWith('/') &&
                    !url.startsWith('./') &&
                    !url.startsWith('../');
         } catch (e) {
@@ -192,7 +217,7 @@ class QuillEditorManager {
             <svg width="300" height="150" xmlns="http://www.w3.org/2000/svg">
                 <rect width="300" height="150" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2"/>
                 <text x="150" y="75" text-anchor="middle" fill="#6c757d" font-family="Arial" font-size="14">
-                    Đang tải hình ảnh...
+                     ^pang t   i h  nh    nh...
                 </text>
             </svg>
         `;
@@ -200,6 +225,47 @@ class QuillEditorManager {
         return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
     }
 
+/**
+     * Convert external image to base64 data URL
+     */
+    async convertImageToBase64(imageUrl) {
+        try {
+            // T   o canvas  ^q  ^c convert image
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+
+            return new Promise((resolve, reject) => {
+                img.onload = () => {
+                    // Set canvas size to image size
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    // Draw image to canvas
+                    ctx.drawImage(img, 0, 0);
+
+                    // Convert to base64
+                    try {
+                        const base64 = canvas.toDataURL('image/jpeg', 0.8);
+                        resolve(base64);
+                    } catch (e) {
+                        reject(e);
+                    }
+                };
+
+                img.onerror = () => {
+                    reject(new Error('Failed to load image'));
+                };
+                // Set crossOrigin to try to avoid CORS issues
+                img.crossOrigin = 'anonymous';
+                img.src = imageUrl;
+            });
+
+        } catch (error) {
+            console.warn('Failed to convert image to base64:', error);
+            return null;
+        }
+    }
     /**
      * Replace image in editor content
      */
@@ -238,7 +304,7 @@ class QuillEditorManager {
         }
     }
 
-    /**
+/**
      * Setup form submission handling
      */
     setupFormSubmission() {
@@ -257,8 +323,7 @@ class QuillEditorManager {
             this.textarea.value = this.quill.root.innerHTML;
         }
     }
-
-    /**
+/**
      * Upload image with proper error handling and loading states
      */
     async uploadImage(file) {
@@ -266,7 +331,7 @@ class QuillEditorManager {
             // Validate file size (5MB limit)
             const maxSize = 5 * 1024 * 1024;
             if (file.size > maxSize) {
-                throw new Error('Ảnh quá lớn. Vui lòng chọn ảnh nhỏ hơn 5MB.');
+                throw new Error('   nh qu   l  ^{n. Vui l  ng ch  ^mn    nh nh  ^o h  n 5MB.');
             }
 
             // Show loading state
@@ -274,13 +339,13 @@ class QuillEditorManager {
 
             // Upload file
             const imageUrl = await this.uploadToServer(file);
-            
+
             // Replace loading with actual image
 
             // this.replaceLoadingWithImage(range.index, imageUrl);
 
             this.quill.insertEmbed(range.index, 'image', imageUrl);
-            
+
             return imageUrl;
 
         } catch (error) {
@@ -290,10 +355,7 @@ class QuillEditorManager {
             return null;
         }
     }
-
-
-
-    /**
+/**
      * Upload file to server
      */
     async uploadToServer(file) {
@@ -322,7 +384,7 @@ class QuillEditorManager {
         }
 
         const result = await response.json();
-        
+
         if (!result.success || !result.url) {
             throw new Error(result.message || 'Upload failed - no URL returned');
         }
@@ -330,7 +392,7 @@ class QuillEditorManager {
         return result.url;
     }
 
-    /**
+ /**
      * Server-side fallback: fetch remote image and return stable proxy URL
      */
     async fetchAndUploadToServer(imageUrl) {
@@ -369,7 +431,8 @@ class QuillEditorManager {
         }
     }
 
-    /**
+
+ /**
      * Handle upload errors
      */
     handleUploadError(message) {
@@ -384,7 +447,7 @@ class QuillEditorManager {
         if (typeof toastr !== 'undefined') {
             toastr.error(message);
         } else if (typeof Swal !== 'undefined') {
-            Swal.fire('Lỗi', message, 'error');
+            Swal.fire('L  ^wi', message, 'error');
         } else {
             alert(message);
         }
@@ -406,18 +469,18 @@ class QuillEditorManager {
         }
     }
 
-    /**
+/**
      * Destroy editor and cleanup
      */
     destroy() {
         if (this.syncInterval) {
             clearInterval(this.syncInterval);
         }
-        
+
         if (this.form) {
             this.form.removeEventListener('submit', this.syncTextarea);
         }
-        
+
         this.quill = null;
         this.textarea = null;
         this.form = null;

@@ -15,8 +15,6 @@ use App\Models\Service;
 use App\Models\CustomPage;
 
 use App\Enums\CategoryType;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class ViewServiceProvider extends ServiceProvider
 {

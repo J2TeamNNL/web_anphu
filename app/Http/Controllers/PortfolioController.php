@@ -5,18 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Portfolio;
 use App\Enums\CategoryType;
 use App\Models\Category;
-
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-
 use App\Http\Requests\StorePortfolioRequest;
 use App\Http\Requests\UpdatePortfolioRequest;
-
-use App\Models\Media;
-use App\Helpers\ImageHelper;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
-
 use App\Services\CloudinaryService;
+use App\Services\FacebookPostSyncService;
 
 
 class PortfolioController extends Controller
@@ -90,17 +85,24 @@ class PortfolioController extends Controller
     }
 
 
+    // public function store(StorePortfolioRequest $request, CloudinaryService $cloudinaryService, FacebookPostSyncService $fbService)
     public function store(StorePortfolioRequest $request, CloudinaryService $cloudinaryService)
     {
         $validated = $request->validated();
         $validated['slug'] = Str::slug($validated['name']);
 
         if ($request->hasFile('thumbnail')) {
-            $uploadResult = $cloudinaryService
-                ->upload($request->file('thumbnail'), 'portfolios');
+            $uploadResult = $cloudinaryService->upload(
+                $request->file('thumbnail'),
+                'portfolios'
+            );
 
             $validated['thumbnail'] = $uploadResult['url'];
+        } elseif ($request->filled('thumbnail_fb')) {
+            $validated['thumbnail'] = $request->input('thumbnail_fb');
         }
+
+        $validated['content'] = $validated['content'] ?? '';
 
         $portfolio = $this->model::create($validated);
 
@@ -108,21 +110,22 @@ class PortfolioController extends Controller
             $portfolio->categories()->sync($validated['category_ids']);
         }
 
-        $result = ImageHelper::extractAndUploadBase64Images($validated['content'] ?? '');
-        $validated['content'] = $result['content'];
-        $usedPaths = $result['paths'];
 
-        Media::whereNull('mediaable_id')
-            ->where('type', 'image')
-            ->whereIn('file_path', $usedPaths)
-            ->update([
-                'mediaable_id' => $portfolio->id,
-                'mediaable_type' => Portfolio::class,
-            ]);
+        // if ($request->filled('facebook_post')) {
+        //     $postData = $request->input('facebook_post');
+        //     $postData['related_type'] = Portfolio::class;
+        //     $postData['related_id']   = $portfolio->id;
 
-            
+        //     $fbPost = $fbService->sync($postData);
+
+        //     $portfolio->update([
+        //         'fb_post_id' => $fbPost->fb_post_id,
+        //     ]);
+        // }
+
         return redirect()->route('admin.portfolios.index');
     }
+
 
     public function edit($id)
     {
@@ -154,32 +157,20 @@ class PortfolioController extends Controller
                 'portfolios'
             );
 
-            $data['thumbnail'] = $uploadResult['url'] ?? null; // Đảm bảo đúng key như store()
+            $data['thumbnail'] = $uploadResult['url'] ?? null;
             $data['thumbnail_public_id'] = $uploadResult['public_id'] ?? null;
         } else {
-            // Rất quan trọng: giữ nguyên ảnh cũ nếu không upload ảnh mới
             $data['thumbnail'] = $portfolio->thumbnail;
             $data['thumbnail_public_id'] = $portfolio->thumbnail_public_id;
         }
 
-        $result = ImageHelper::extractAndUploadBase64Images($data['content'] ?? '');
-        $data['content'] = $result['content'];
-        $usedPaths = $result['paths'];
-
-        Media::whereNull('mediaable_id')
-            ->where('type', 'image')
-            ->whereIn('file_path', $usedPaths)
-            ->update([
-                'mediaable_id' => $portfolio->id,
-                'mediaable_type' => Portfolio::class,
-            ]);
+        $data['content'] = $data['content'] ?? $portfolio->content;
 
         $portfolio->update($data);
 
         return redirect()->route('admin.portfolios.index')
             ->with('success', 'Cập nhật thành công!');
     }
-
 
     public function show(Portfolio $portfolio)
     {
@@ -196,6 +187,10 @@ class PortfolioController extends Controller
         if ($portfolio->thumbnail_public_id) {
             Cloudinary::destroy($portfolio->thumbnail_public_id);
         }
+
+        // if ($portfolio->facebookPost) {
+        //     $portfolio->facebookPost->delete();
+        // }
 
         $portfolio->delete();
 

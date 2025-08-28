@@ -11,10 +11,6 @@ use App\Models\CustomPage;
 use Illuminate\Http\Request;
 use App\Models\CompanySetting;
 
-use App\Http\Requests\StoreCustomerRequest;
-use App\Http\Requests\UpdateCustomerRequest;
-
-
 class CustomerController extends Controller
 {       
     

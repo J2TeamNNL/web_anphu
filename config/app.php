@@ -167,7 +167,7 @@ return [
     */
 
     App\Providers\AppServiceProvider::class,
-    App\Providers\ViewServiceProvider::class,
+    // App\Providers\ViewServiceProvider::class,
     App\Providers\CloudinaryServiceProvider::class,
     MarvinLabs\DiscordLogger\ServiceProvider::class,
     

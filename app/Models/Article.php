@@ -21,7 +21,8 @@ class Article extends Model
         'description',
         'category_id',
         'type',
-        'content'
+        'content',
+        'fb_post_id',
     ];
 
     public function category()
@@ -43,5 +44,10 @@ class Article extends Model
     public function media()
     {
         return $this->morphMany(Media::class, 'mediaable');
+    }
+    
+    public function facebookPost()
+    {
+        return $this->morphOne(FacebookPost::class, 'related');
     }
 }
