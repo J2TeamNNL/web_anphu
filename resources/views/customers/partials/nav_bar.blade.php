@@ -3,6 +3,8 @@
     $services = $services ?? collect();
     $portfoliosCategories = $portfoliosCategories ?? collect();
     $blogsCategories = $blogsCategories ?? collect();
+
+    $menuSlugs = ['about-anphu', 'gia-tri-van-hoa', 'thu-ngo'];
 @endphp
 
 <nav class="navbar main-nav navbar-expand-lg navbar-light sticky-top">
@@ -30,7 +32,7 @@
                 </li>
 
                 {{-- Về An Phú --}}
-                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small 
+                <!-- <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small 
                     {{ request()->is('ve-an-phu*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle text-center" href="#" id="aboutDropdown" data-toggle="dropdown">
                         <i class="fa fa-building me-1"></i> Về An Phú
@@ -46,7 +48,28 @@
                             @endif
                         @endforeach
                     </div>
-                </li>
+                </li> -->
+
+                <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small 
+    {{ request()->is('ve-an-phu*') ? 'active' : '' }}">
+    <a class="nav-link dropdown-toggle text-center" href="#" id="aboutDropdown" data-toggle="dropdown">
+        <i class="fa fa-building me-1"></i> Về An Phú
+    </a>
+    <div class="dropdown-menu">
+        @foreach($menuSlugs as $slug)
+            @php
+                $page = $custom_pages->firstWhere('slug', $slug);
+            @endphp
+            @if($page)
+                <a class="dropdown-item small {{ request()->is('about/' . $page->slug) ? 'active' : '' }}"
+                   href="{{ route('customers.custom_page', $page->slug) }}">
+                    <i class="fa fa-building me-2 icon-highlight"></i>
+                    {{ $page->name }}
+                </a>
+            @endif
+        @endforeach
+    </div>
+</li>
 
                 {{-- Dịch vụ --}}
                 <li class="nav-item mx-2 mx-lg-3 my-1 my-lg-0 dropdown small {{ request()->is('dich-vu*') ? 'active' : '' }}">
