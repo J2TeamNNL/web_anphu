@@ -205,6 +205,7 @@
 document.querySelectorAll('.consulting-form').forEach(form => {
     form.addEventListener('submit', function (e) {
         e.preventDefault();
+
         let formData = new FormData(form);
 
         fetch(form.action, {
@@ -223,24 +224,48 @@ document.querySelectorAll('.consulting-form').forEach(form => {
             form.reset();
             document.getElementById('thank-you-overlay').classList.remove('d-none');
         })
+        
         .catch(async error => {
+            let errorText = 'Đã có lỗi xảy ra. Vui lòng thử lại!';
+
+            // (429) Too Many Requests
             if (error.status === 429) {
                 document.getElementById('error-signup-overlay').classList.remove('d-none');
                 return;
             }
-            let errorText = 'Đã có lỗi xảy ra. Vui lòng thử lại!';
+
+            // Validation
             if (error.json) {
                 const err = await error.json();
-                if (err.errors) errorText = Object.values(err.errors).flat().join('<br>');
+                if (err.errors) {
+                    // kiểm tra riêng lỗi phone
+                    if (err.errors.phone && err.errors.phone.some(msg => msg.includes('taken'))) {
+                        document.getElementById('error-signup-overlay').classList.remove('d-none');
+                        return;
+                    }
+
+                    // nếu không phải phone thì hiện ra alert mặc định
+                    errorText = Object.values(err.errors).flat().join('<br>');
+                }
             }
+
+            // Fallback alert
             alert(errorText);
         });
+
     });
 });
 
 document.getElementById('back-button').addEventListener('click', function () {
     document.getElementById('thank-you-overlay').classList.add('d-none');
 });
+
+const errorSignupOverlay = document.getElementById('error-overlay');
+if (errorSignupOverlay) {
+    errorSignupOverlay.querySelector('.btn-back')?.addEventListener('click', () => {
+        errorSignupOverlay.classList.add('d-none');
+    });
+}
 </script>
 @endpush
 @endonce

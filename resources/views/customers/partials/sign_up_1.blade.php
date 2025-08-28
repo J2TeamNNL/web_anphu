@@ -1,3 +1,30 @@
+<style>
+    .thank-you-overlay,
+    .error-signup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1050;
+    }
+
+    .thank-you-popup,
+    .error-popup {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        max-width: 400px;
+        width: 90%;
+        animation: fadeInScale 0.3s ease;
+    }
+</style>
+
 <section
     id="sign_up_1"
     class="py-5 position-relative section-bg-signup"
@@ -26,7 +53,9 @@
             <div class="col-lg-6">
             <h4 class="text-warning font-weight-bold text-center" >ĐĂNG KÝ TƯ VẤN</h4>
             <div id="consulting-form-wrapper">
-                <form class="consulting-form text-dark p-4 rounded" method="post" action="{{ route('consulting_requests.store') }}">
+                <form class="consulting-form text-dark p-4 rounded"
+                method="post"
+                action="{{ route('consulting_requests.store') }}">
                     @csrf
                     <div class="form-group">
                         <input type="text" class="form-control" name="name" placeholder="Họ Tên *" required>
@@ -66,31 +95,31 @@
 
             <!-- OVERLAY -->
             <div id="thank-you-overlay" class="thank-you-overlay d-none">
-            <div class="thank-you-popup">
-                <div class="checkmark-wrapper mb-3">
-                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
-                        <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16"/>
-                    </svg>
+                <div class="thank-you-popup">
+                    <div class="checkmark-wrapper mb-3">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16"/>
+                        </svg>
+                    </div>
+                    <h5 class="text-success">Đã gửi thành công!</h5>
+                    <p class="text-muted mb-3">Cảm ơn bạn đã để lại thông tin, chúng tôi sẽ liên hệ sớm nhất.</p>
+                    <button id="back-button" class="btn btn-back">← Xem tiếp</button>
                 </div>
-                <h5 class="text-success">Đã gửi thành công!</h5>
-                <p class="text-muted mb-3">Cảm ơn bạn đã để lại thông tin, chúng tôi sẽ liên hệ sớm nhất.</p>
-                <button id="back-button" class="btn btn-back">← Xem tiếp</button>
-            </div>
             </div>
 
             <div id="error-signup-overlay" class="error-signup-overlay d-none">
-            <div class="error-popup bg-white text-center">
-                <div class="checkmark-wrapper mb-3">
-                    <svg class="checkmark error" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
-                        <path class="checkmark-x" fill="none" d="M16 16 36 36 M36 16 16 36"/>
-                    </svg>
+                <div class="error-popup bg-white text-center">
+                    <div class="checkmark-wrapper mb-3">
+                        <svg class="checkmark error" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark-x" fill="none" d="M16 16 36 36 M36 16 16 36"/>
+                        </svg>
+                    </div>
+                    <h5 class="text-danger font-weight-bold">Bạn đã đăng ký hôm nay!</h5>
+                    <p class="text-muted mb-3">Chúng tôi đã nhận được thông tin của bạn hôm nay. Vui lòng quay lại sau.</p>
+                    <button class="btn btn-back btn-outline-danger mt-2" onclick="document.getElementById('error-signup-overlay').classList.add('d-none')">← Quay lại</button>
                 </div>
-                <h5 class="text-danger font-weight-bold">Bạn đã đăng ký hôm nay!</h5>
-                <p class="text-muted mb-3">Chúng tôi đã nhận được thông tin của bạn hôm nay. Vui lòng quay lại sau.</p>
-                <button class="btn btn-back btn-outline-danger mt-2" onclick="document.getElementById('error-signup-overlay').classList.add('d-none')">← Quay lại</button>
-            </div>
             </div>
         </div>
     </div>
@@ -121,19 +150,27 @@ document.querySelectorAll('.consulting-form').forEach(form => {
             form.reset();
             document.getElementById('thank-you-overlay').classList.remove('d-none');
         })
+        
         .catch(async error => {
             let errorText = 'Đã có lỗi xảy ra. Vui lòng thử lại!';
 
-            // (429)
+            // (429) Too Many Requests
             if (error.status === 429) {
                 document.getElementById('error-signup-overlay').classList.remove('d-none');
                 return;
             }
 
-            // validation
+            // Validation
             if (error.json) {
                 const err = await error.json();
                 if (err.errors) {
+                    // kiểm tra riêng lỗi phone
+                    if (err.errors.phone && err.errors.phone.some(msg => msg.includes('taken'))) {
+                        document.getElementById('error-signup-overlay').classList.remove('d-none');
+                        return;
+                    }
+
+                    // nếu không phải phone thì hiện ra alert mặc định
                     errorText = Object.values(err.errors).flat().join('<br>');
                 }
             }
@@ -141,6 +178,7 @@ document.querySelectorAll('.consulting-form').forEach(form => {
             // Fallback alert
             alert(errorText);
         });
+
     });
 });
 
