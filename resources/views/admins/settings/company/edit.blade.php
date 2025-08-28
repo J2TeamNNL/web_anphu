@@ -155,16 +155,13 @@
 
         <div class="form-group">
             <label class="font-weight-bold">Địa chỉ 1</label>
-            <textarea name="company_address_1" class="form-control">
-                {{ old('company_address_1', $setting->company_address_1) }}
-                
+            <textarea name="company_address_1" class="form-control">{{ old('company_address_1', $setting->company_address_1) }}
             </textarea>
         </div>
 
         <div class="form-group">
             <label class="font-weight-bold">Địa chỉ 2</label>
-            <textarea name="company_address_2" class="form-control">
-                {{ old('company_address_2', $setting->company_address_2) }}
+            <textarea name="company_address_2" class="form-control">{{ old('company_address_2', $setting->company_address_2) }}
             </textarea>
         </div>
 
@@ -179,14 +176,22 @@
         </div>
 
         <div class="form-group">
-            <label class="font-weight-bold">
-                Google Map
-            </label>
+            <label class="font-weight-bold">Google Map 1</label>
             <input
                 type="text"
-                name="google_map"
+                name="google_map[map_1][embed_url]"
                 class="form-control"
-                value="{{ old('google_map', $setting->google_map) }}"
+                value="{{ old('google_map.map_1.embed_url', $setting->google_map['map_1']['embed_url'] ?? '') }}"
+            >
+        </div>
+
+        <div class="form-group">
+            <label class="font-weight-bold">Google Map 2</label>
+            <input
+                type="text"
+                name="google_map[map_2][embed_url]"
+                class="form-control"
+                value="{{ old('google_map.map_2.embed_url', $setting->google_map['map_2']['embed_url'] ?? '') }}"
             >
         </div>
 
@@ -217,12 +222,31 @@
         </div>
 
         <div class="form-group">
-            <label class="font-weight-bold">
-                Social Links (JSON format)
-            </label>
-            <textarea name="social_links" class="form-control" rows="4">
-                {{ old('social_links', json_encode($setting->social_links)) }}
-            </textarea>
+            <label class="font-weight-bold">Facebook Link</label>
+            <input type="url" name="facebook_link" class="form-control" 
+                value="{{ old('facebook_link', $setting->social_links['facebook'] ?? '') }}" 
+                placeholder="https://www.facebook.com/share/16aNn1KZ37/?mibextid=wwXIfr">
+        </div>
+
+        <div class="form-group">
+            <label class="font-weight-bold">YouTube Link</label>
+            <input type="url" name="youtube_link" class="form-control" 
+                value="{{ old('youtube_link', $setting->social_links['youtube'] ?? '') }}" 
+                placeholder="https://www.youtube.com/channel/xxxx">
+        </div>
+
+        <div class="form-group">
+            <label class="font-weight-bold">TikTok Link</label>
+            <input type="url" name="tiktok_link" class="form-control" 
+                value="{{ old('tiktok_link', $setting->social_links['tiktok'] ?? '') }}" 
+                placeholder="https://www.tiktok.com/@anphudesign">
+        </div>
+
+        <div class="form-group">
+            <label class="font-weight-bold">Instagram Link</label>
+            <input type="url" name="instagram_link" class="form-control" 
+                value="{{ old('instagram_link', $setting->social_links['instagram'] ?? '') }}" 
+                placeholder="https://www.instagram.com/@xxxx">
         </div>
 
         <button type="submit" class="btn btn-primary">Cập nhật</button>

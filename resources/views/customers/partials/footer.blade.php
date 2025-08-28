@@ -36,7 +36,7 @@
                     <span style="font-weight: bold" class="text-warning">
                         VPGD 1:
                     </span>
-                    {{ $companySettings->company_address_1 }}
+                    {{ $companySettings?->company_address_1 ?? ''}}
                 </p>
 
                 <p>
@@ -44,37 +44,37 @@
                     <span style="font-weight: bold" class="text-warning">
                         VPGD 2:
                     </span>
-                    {{ $companySettings->company_address_2 }}
+                    {{ $companySettings?->company_address_2 ?? ''}}
                 </p>
 
                 <p>
-                    <a href="{{ config('company.contact.phone_link_1') }}">
+                    <a href="tel:{{ $companySettings?->company_phone_1 ?? ''}}">
                         <i class="fas fa-phone me-2 text-warning"></i>
                         <span style="font-weight: bold" class="text-warning">
                             Zalo:
                         </span>
-                        {{ $companySettings->company_phone_1 }}
+                        {{ $companySettings?->company_phone_1 ?? ''}}
                     </a>
                     
                 </p>
 
                 <p>
-                    <a href="{{ config('company.contact.phone_link_2') }}">
+                    <a href="tel:{{ $companySettings?->company_phone_2 ?? ''}}">
                         <i class="fas fa-phone me-2 text-warning"></i>
                         <span style="font-weight: bold" class="text-warning">
                             Hotline:
                         </span>
-                        {{ $companySettings->company_phone_2 }}
+                        {{ $companySettings?->company_phone_2 ?? ''}}
                     </a>
                 </p>
 
                 <p>
-                    <a href="{{ config('company.contact.email_link') }}">
+                    <a href="mailto:{{ $companySettings?->company_email ?? ''}}">
                         <i class="fa fa-envelope me-2 text-warning"></i>
                         <span style="font-weight: bold" class="text-warning">
                             Email:
                         </span>
-                        {{ $companySettings->company_email }}
+                        {{ $companySettings?->company_email ?? ''}}
                     </a>
                 </p>
 
@@ -90,9 +90,10 @@
 
             <div class="col-md-4 mb-4">
                 <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Bản Đồ</h5>
+
                 <div class="embed-responsive embed-responsive-4by3 border rounded">
                     <iframe
-                        src="{{ config('company.map_1.embed_url') }}"
+                        src="{{ $maps['map_1']['embed_url'] ?? '' }}"
                         width="500"
                         height="450"
                         style="border:0;"
@@ -105,7 +106,7 @@
                 <hr>
                 <div class="embed-responsive embed-responsive-4by3 border rounded">
                     <iframe
-                        src="{{ config('company.map_2.embed_url') }}"
+                        src="{{ $maps['map_2']['embed_url'] ?? '' }}"
                         width="500"
                         height="450"
                         style="border:0;"
@@ -116,6 +117,7 @@
                     </iframe>
                 </div>
             </div>
+
 
             <div class="col-md-4">
                 <h5 class="text-warning font-weight-bold text-center">ĐĂNG KÝ TƯ VẤN</h5>

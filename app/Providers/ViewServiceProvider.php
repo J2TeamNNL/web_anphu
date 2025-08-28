@@ -51,6 +51,11 @@ class ViewServiceProvider extends ServiceProvider
         }
 
         $companySettings = CompanySetting::first();
+        $socialLinks = $companySettings->social_links ?? [];
+        $maps = $companySettings->google_map ?? [
+            'map_1' => ['embed_url' => ''],
+            'map_2' => ['embed_url' => '']
+        ];
 
         $services = collect();
 
@@ -92,7 +97,9 @@ class ViewServiceProvider extends ServiceProvider
             'congTrinhArticles' => $congTrinhArticles,
             'congTrinhCategory' => $congTrinhCategory,
             'camNhanArticles' => $camNhanArticles,
-            'camNhanCategory' => $camNhanCategory
+            'camNhanCategory' => $camNhanCategory,
+            'socialLinks' => $socialLinks,
+            'maps' => $maps
         ]);
         
     }

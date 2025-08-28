@@ -3,16 +3,16 @@
       <a href="{{ route('customers.voucher') }}" class="panel-btn" aria-label="Gọi điện">
          <i class="fas fa-gift"></i>
       </a>
-      <a href="{{ config('company.social_media.facebook.url') }}" class="panel-btn" target="_blank" aria-label="Facebook">
+      <a href="{{ $socialLinks['facebook'] }}" class="panel-btn" target="_blank" aria-label="Facebook">
          <i class="fab fa-facebook-f"></i>
       </a>
-      <a href="{{ config('company.social_media.youtube.url') }}" class="panel-btn" target="_blank" aria-label="YouTube">
+      <a href="{{ $socialLinks['youtube'] }}" class="panel-btn" target="_blank" aria-label="YouTube">
          <i class="fab fa-youtube"></i>
       </a>
-      <a href="{{ config('company.social_media.tiktok.url') }}" class="panel-btn" target="_blank" aria-label="Messenger">
+      <a href="{{ $socialLinks['tiktok'] }}" class="panel-btn" target="_blank" aria-label="Messenger">
          <i class="fa-brands fa-tiktok"></i>
       </a>
-      <a href="{{ config('company.contact.phone_link_1') }}" class="panel-btn" target="_blank" aria-label="Zalo">
+      <a href="{{ $company_settings?->company_phone_1 ?? ''}}" class="panel-btn" target="_blank" aria-label="Zalo">
          <img src="{{ asset('assets/img/logo/logo_zalo.png') }}" alt="Zalo" class="icon-img">
       </a>
    </div>
@@ -23,16 +23,16 @@
 
 <div class="anphu-side-panel-mobile mobile-only">
    <div class="side-buttons">
-      <a href="{{ config('company.social_media.tiktok.url') }}" class="panel-btn" aria-label="Zalo">
+      <a href="{{ $socialLinks['youtube'] }}" class="panel-btn" aria-label="Zalo">
          <i class="fa-brands fa-tiktok"></i>
          <span>Tiktok</span>
       </a>
-      <a href="{{ config('company.social_media.zalo.url') }}" class="panel-btn" aria-label="Zalo">
+      <a href="https://zalo.me/{{ $company_settings?->company_phone_1 ?? '' }}" class="panel-btn" aria-label="Zalo">
          <i class="fas fa-comment-dots"></i>
          <span>Zalo</span>
       </a>
       
-      <a href="tel:{{ config('company.contact.phone_2') }}" class="panel-btn" aria-label="Gọi điện">
+      <a href="tel:{{ $company_settings?->company_phone_2 ?? '' }}" class="panel-btn" aria-label="Gọi điện">
          <i class="fas fa-phone-alt"></i>
          <span>Hotline</span>
       </a>
