@@ -17,7 +17,7 @@ enum CategoryType: string
     {
         return match($this) {
             self::PORTFOLIO => 'Dự án',
-            self::ARTICLE   => 'Bài viết',
+            self::ARTICLE   => 'Bài đăng',
         };
     }
 
