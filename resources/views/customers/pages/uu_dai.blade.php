@@ -24,6 +24,14 @@
         border-bottom: 3px solid var(--anphu-gold);
     }
 
+    .voucher-section-bg img{
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 1rem auto;
+        border-radius: 6px;
+    }
+
     /* Tiêu đề vàng luxury */
     .heading-voucher {
         text-align: center;
@@ -185,4 +193,3 @@
     
     @include('customers.partials.anphu.partner')
 @endsection
-
