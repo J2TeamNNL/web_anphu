@@ -39,6 +39,7 @@ class QuillEditorManager {
         this.setupFormSubmission();
     }
 
+    
     /**
      * Setup Quill editor with configuration
      */
@@ -56,6 +57,13 @@ class QuillEditorManager {
                 }
             }
         });
+
+        const Font = Quill.import('formats/font');
+        Font.whitelist = [
+        'arial', 'helvetica', 'open-sans', 'roboto', 'montserrat',
+        'times-new-roman', 'georgia', 'merriweather', 'playfair-display'
+        ];
+        Quill.register(Font, true);
 
         // ✅ auto embed video link
         if (!this.options.readonly) {
@@ -83,7 +91,11 @@ class QuillEditorManager {
                 ['image']
             ],
             full: [
-                [{ 'font': [] }, { 'size': [] }],
+                [{ 'font': [
+                    'arial', 'helvetica', 'open-sans', 'roboto', 'montserrat',
+                    'times-new-roman', 'georgia', 'merriweather', 'playfair-display'
+                ] }],
+                [{ 'size': [] }],
                 ['bold', 'italic', 'underline', 'strike'],
                 [{ 'color': [] }, { 'background': [] }],
                 [{ 'script': 'sub' }, { 'script': 'super' }],
