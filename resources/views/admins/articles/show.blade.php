@@ -38,6 +38,25 @@
         word-break: break-word;
         line-height: 1.6;
     }
+
+    /* YOUTUBE VIDEO */
+    .youtube-video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* tỉ lệ 16:9 */
+        height: 0;
+        overflow: hidden;
+        margin: 10px 0; /* giống fb-video-wrapper */
+    }
+
+    .youtube-video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
 </style>
 @endpush
 
@@ -84,10 +103,12 @@
                                     </div>
                                 </div>
                             @elseif(Str::contains($media->type, 'youtube'))
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item"
-                                            src="{{ $media->file_path }}"
-                                            allowfullscreen></iframe>
+                                <div class="youtube-video-wrapper mb-4">
+                                    <iframe src="{{ $media->file_path }}"
+                                            frameborder="0"
+                                            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                                            allowfullscreen>
+                                    </iframe>
                                 </div>
                             @endif
 

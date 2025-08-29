@@ -42,8 +42,8 @@
 /* Nút chung */
 .panel-btn,
 .toggle-btn {
-  width: 46px;
-  height: 46px;
+  width: 56px;
+  height: 56px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -75,8 +75,8 @@
 }
 
 .panel-btn .icon-img {
-    width: 35px;       /* kích thước ngang */
-    height: 35px;      /* kích thước dọc */
+    width: 45px;       /* kích thước ngang */
+    height: 45px;      /* kích thước dọc */
     object-fit: contain; /* giữ nguyên tỉ lệ */
     background: transparent; /* nền trong suốt */
     display: block;

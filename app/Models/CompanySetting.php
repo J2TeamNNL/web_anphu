@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Carbon\Carbon;
 
 class CompanySetting extends Model
 {   
@@ -15,12 +13,9 @@ class CompanySetting extends Model
         'company_name',
         'company_brand',
         'international_name',
-
         'director',
         'company_logo',
         'company_logo_public_id',
-
-        'director',
         'company_email',
         'company_phone_1',
         'company_phone_2',
@@ -30,10 +25,8 @@ class CompanySetting extends Model
         'working_hours',
         'policy_content',
         'google_map',
-
         'established_date',
         'tax_code',
-
         'certificates',
         'certificates_public_ids',
     ];
@@ -41,6 +34,7 @@ class CompanySetting extends Model
     protected $casts = [
         'established_date' => 'date',
         'social_links' => 'array',
+        'google_map' => 'array',
         'certificates' => 'array',
         'certificates_public_ids' => 'array',
     ];

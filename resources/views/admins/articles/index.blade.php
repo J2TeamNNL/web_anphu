@@ -96,7 +96,7 @@
                                 </td>
                                 <td>
                                     <span class="text-primary font-weight-bold">
-                                        {{ $article->getParentCategoryNameAttribute()?? $article->category->name }}
+                                        {{ $article->getParentCategoryNameAttribute()?? $article->category->name ?? '-' }}
                                     </span>
                                 </td>
                                 <td>{{ $article->category->name ?? '-' }}</td>

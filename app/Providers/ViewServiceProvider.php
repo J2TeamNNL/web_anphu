@@ -51,6 +51,11 @@ class ViewServiceProvider extends ServiceProvider
         }
 
         $companySettings = CompanySetting::first();
+        $socialLinks = $companySettings->social_links ?? [];
+        $maps = $companySettings->google_map ?? [
+            'map_1' => ['embed_url' => ''],
+            'map_2' => ['embed_url' => '']
+        ];
 
         $services = collect();
 
@@ -65,7 +70,6 @@ class ViewServiceProvider extends ServiceProvider
 
         $congTrinhArticles = collect();
         $camNhanArticles = collect();
-
 
         // EXTRA VIEW CONTENT
         if ($congTrinhCategory) {
@@ -91,7 +95,11 @@ class ViewServiceProvider extends ServiceProvider
             'services' => $services,
             'custom_pages' => $custom_pages,
             'congTrinhArticles' => $congTrinhArticles,
+            'congTrinhCategory' => $congTrinhCategory,
             'camNhanArticles' => $camNhanArticles,
+            'camNhanCategory' => $camNhanCategory,
+            'socialLinks' => $socialLinks,
+            'maps' => $maps
         ]);
         
     }

@@ -35,16 +35,14 @@
                </textarea>
             </div>
 
-            <div class="form-group">
-               <h5 for="link">Link</h5>
+            <!-- <div class="form-group"> -->
                <input
-                  type="text"
+                  type="hidden"
                   name="link"
                   id="link"
-                  class="form-control"
                   value="{{ $article->link }}"
                >
-            </div>
+            <!-- </div> -->
 
             <input type="hidden" name="type" value="article">
 

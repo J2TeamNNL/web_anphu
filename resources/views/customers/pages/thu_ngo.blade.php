@@ -15,6 +15,14 @@
         border-bottom: 3px solid var(--anphu-gold);
     }
 
+    .letter-section-bg img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 1rem auto;
+        border-radius: 6px;
+    }
+
     .heading-letter {
         text-align: left;
         font-weight: 700;
@@ -34,6 +42,7 @@
         padding: 2rem;
         text-align: left;
     }
+    
 </style>
 
 @endpush

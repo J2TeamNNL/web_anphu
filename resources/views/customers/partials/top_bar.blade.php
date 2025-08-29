@@ -7,7 +7,7 @@
                 <a href="{{ route('customers.index')}}" class="logo-link">
                     <img
                         class="anphu-logo"
-                        src="{{ asset(config('company.assets.logo.main')) }}"
+                        src="{{ $companySettings?->company_logo ?? '' }}"
                         alt="{{ config('company.name.brand') }} Logo"
                     >
                 </a>
@@ -16,28 +16,26 @@
             <!-- Điện thoại & Email -->
             <div class="col-12 col-md-3 d-flex flex-column align-items-left justify-content-center mb-3 mb-md-0 border-divider">
                 <div>
-                    <a href="{{ config('company.contact.phone_link_1') }}">
+                    <a href="tel:{{ $companySettings?->company_phone_1 ?? '' }}">
                         <i class="fa fa-phone-alt mr-1"></i>
-                        Zalo:
-                        {{ $companySettings?->company_phone_1 }}
+                        Zalo: {{ $companySettings?->company_phone_1 ?? '' }}
                     </a>
                 </div>
                 <div>
-                    <a href="{{ config('company.contact.phone_link_2') }}">
+                    <a href="tel:{{ $companySettings?->company_phone_2 ?? '' }}">
                         <i class="fa fa-phone-alt mr-1"></i>
-                        Hotline:
-                        {{ $companySettings?->company_phone_2 }}
+                        Hotline: {{ $companySettings?->company_phone_2 ?? '' }}
                     </a>
                 </div>
                 <div>
-                    <a href="{{ config('company.contact.email_link') }}">
+                    <a href="mailto:{{ $companySettings?->company_email ?? '' }}">
                         <i class="fa fa-envelope mr-1"></i>
-                        {{ $companySettings->company_email }}
+                        {{ $companySettings?->company_email ?? '' }}
                     </a>
                 </div>
                 <div>
                     <i class="fa fa-clock mr-1"></i>
-                    {{ config('company.working_hours.text') }}
+                    {{ $companySettings?->working_hours ?? '' }}
                 </div>
             </div>
 
@@ -50,7 +48,7 @@
                     </span>
                     <br>
                     <span style="color: #C9B037">
-                        {{ $companySettings->company_address_1 }}   
+                        {{ $companySettings?->company_address_1 ?? '' }}   
                     </span>
                 </div>
                 <div>
@@ -60,7 +58,7 @@
                     </span>
                     <br>
                     <span style="color: #C9B037">
-                        {{ $companySettings->company_address_2 }}   
+                        {{ $companySettings?->company_address_2 ?? '' }}   
                     </span>
                 </div>
             </div>
@@ -70,7 +68,7 @@
                 <x-social-media 
                     size="small" 
                     style="minimal" 
-                    class="d-flex justify-content-center" 
+                    class="d-flex justify-content-center"
                 />
             </div>
         </div>
