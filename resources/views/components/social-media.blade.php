@@ -9,13 +9,8 @@
 
 @php
     // Load from database with fallback to config
-    $companySetting = \App\Models\CompanySetting::first();
+    $companySetting = company();
     $socialMedia = $companySetting?->social_links ?? [];
-    
-    // Fallback to config if database is empty
-    if (empty($socialMedia)) {
-        $socialMedia = config('company.social_media', []);
-    }
     
     // Định nghĩa danh sách đầy đủ các social media có thể có
     $availableSocialMedia = [
@@ -58,13 +53,6 @@
         ]
     ];
     
-    // Merge database data with default settings
-    foreach ($socialMedia as $platform => $data) {
-        if (isset($availableSocialMedia[$platform])) {
-            $socialMedia[$platform] = array_merge($availableSocialMedia[$platform], $data);
-        }
-    }
-    
     // Filter platforms if specified
     if ($platforms && is_array($platforms)) {
         $socialMedia = array_intersect_key($socialMedia, array_flip($platforms));
@@ -93,28 +81,30 @@
 @endphp
 
 <div class="{{ $containerClass }}">
-    @foreach($socialMedia as $platform => $social)
-        <a href="{{ $social['url'] }}" 
-           class="social-link social-{{ $platform }}" 
-           target="_blank" 
-           title="{{ $social['name'] }}"
-           data-platform="{{ $platform }}">
-            
-            <span class="social-icon">
-                @if($social['icon'])
-                    <i class="{{ $social['icon'] }}"></i>
-                @else
-                    <img
-                        src="{{ asset($social['logo']) }}"
-                        alt="{{ $social['name'] }}"
-                        style="height: 40px;"
-                    >
+    @foreach($availableSocialMedia as $platform => $social)
+        @if(isset($socialMedia[$platform]))
+            <a href="{{ $socialMedia[$platform] }}" 
+            class="social-link social-{{ $platform }}" 
+            target="_blank" 
+            title="{{ $social['name'] }}"
+            data-platform="{{ $platform }}">
+                
+                <span class="social-icon">
+                    @if($social['icon'])
+                        <i class="{{ $social['icon'] }}"></i>
+                    @else
+                        <img
+                            src="{{ asset($social['logo']) }}"
+                            alt="{{ $social['name'] }}"
+                            style="height: 40px;"
+                        >
+                    @endif
+                </span>
+                
+                @if($showLabels)
+                    <span class="social-label">{{ $social['name'] }}</span>
                 @endif
-            </span>
-            
-            @if($showLabels)
-                <span class="social-label">{{ $social['name'] }}</span>
-            @endif
-        </a>
+            </a>
+        @endif
     @endforeach
 </div>

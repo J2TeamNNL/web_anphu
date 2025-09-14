@@ -85,7 +85,7 @@
                 <p>
                     <a href="{{ route('customers.policy.detail')}}" class="text-white">▶ Chính Sách Công Ty</a>
                 </p>
-                <img src="{{ asset(company()->certification_bocongthuong) }}" alt="Thông báo Bộ Công Thương" style="height: 150px;">
+                <img src="{{ asset('assets/img/logo/bocongthuong_thongbao.png') }}" alt="Thông báo Bộ Công Thương" style="height: 150px;">
             </div>
 
             <div class="col-md-6 mb-4">

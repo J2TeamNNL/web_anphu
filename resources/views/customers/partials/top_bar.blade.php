@@ -7,7 +7,7 @@
                 <a href="{{ route('customers.index')}}" class="logo-link">
                     <img
                         class="anphu-logo"
-                        src="{{ company()->company_logo ?? '' }}"
+                        src="{{ asset(company()->logo_main) }}"
                         alt="{{ company()->company_brand }} Logo"
                     >
                 </a>
@@ -28,9 +28,9 @@
                     </a>
                 </div>
                 <div>
-                    <a href="mailto:{{ company()->email ?? '' }}">
+                    <a href="mailto:{{ company()->company_email ?? '' }}">
                         <i class="fa fa-envelope mr-1"></i>
-                        {{ company()->email ?? '' }}
+                        {{ company()->company_email ?? '' }}
                     </a>
                 </div>
                 <div>
