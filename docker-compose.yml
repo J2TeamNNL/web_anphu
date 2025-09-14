@@ -1,0 +1,56 @@
+services:
+  app:
+    build: .
+    container_name: anphu_app
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/html
+    networks:
+      - anphu_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  webserver:
+    image: nginx:alpine
+    container_name: anphu_webserver
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - anphu_network
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: anphu_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: anphu
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: laravel_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - anphu_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+networks:
+  anphu_network:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local
