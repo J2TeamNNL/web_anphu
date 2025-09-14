@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset(company()->logo_favicon) }}">
-    <link href="{{ asset(company()->logo_favicon) }}" rel="apple-touch-icon" sizes="180x180" />
-    <link href="{{ asset(company()->logo_favicon) }}" rel="icon" sizes="32x32" type="image/png" />
-    <link href="{{ asset(company()->logo_favicon) }}" rel="icon" sizes="16x16" type="image/png" />
-    <link href="{{ asset(company()->logo_favicon) }}" rel="shortcut icon" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/logo/favicon.ico') }}">
     <title>AnPhuBuild</title>
     
     <!-- Bootstrap 4 CSS -->
