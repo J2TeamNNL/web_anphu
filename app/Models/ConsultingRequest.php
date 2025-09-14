@@ -7,14 +7,7 @@ use App\Enums\ConsultingRequestStatus;
 
 class ConsultingRequest extends Model
 {
-    protected $fillable = [
-        'name',
-        'phone',
-        'email',
-        'location',
-        'note',
-        'status',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'status' => ConsultingRequestStatus::class,
