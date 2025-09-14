@@ -242,48 +242,9 @@
         {{-- LOGO & HÌNH ẢNH --}}
         <div class="card mb-4">
             <div class="card-header bg-secondary text-white">
-                <h5 class="mb-0"><i class="fas fa-image"></i> Logo & Hình ảnh</h5>
+                <h5 class="mb-0"><i class="fas fa-image"></i> Hình ảnh</h5>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="font-weight-bold">Logo chính</label>
-                            <input type="file" name="logo_main" class="form-control-file" accept="image/*">
-                            @if (!empty($setting->logo_main))
-                                <div class="mt-2">
-                                    <img src="{{ asset($setting->logo_main) }}" alt="Logo chính" style="max-height: 60px;">
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="font-weight-bold">Logo footer</label>
-                            <input type="file" name="logo_footer" class="form-control-file" accept="image/*">
-                            @if (!empty($setting->logo_footer))
-                                <div class="mt-2">
-                                    <img src="{{ asset($setting->logo_footer) }}" alt="Logo footer" style="max-height: 60px;">
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="font-weight-bold">Favicon</label>
-                            <input type="file" name="logo_favicon" class="form-control-file" accept="image/*">
-                            @if (!empty($setting->logo_favicon))
-                                <div class="mt-2">
-                                    <img src="{{ asset($setting->logo_favicon) }}" alt="Favicon" style="max-height: 32px;">
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <label class="font-weight-bold">Ảnh chứng chỉ</label>
                     <input type="file" name="certificates[]" class="form-control" multiple accept="image/*">

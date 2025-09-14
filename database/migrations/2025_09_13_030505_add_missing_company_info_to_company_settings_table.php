@@ -20,7 +20,6 @@ return new class extends Migration
             // Asset paths
             $table->string('logo_main')->nullable();
             $table->string('logo_favicon')->nullable();
-            $table->string('logo_footer')->nullable();
             
             // Map information for second location
             $table->json('google_map_2')->nullable();

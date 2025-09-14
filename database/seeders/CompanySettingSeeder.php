@@ -38,7 +38,7 @@ class CompanySettingSeeder extends Seeder
             ],
             'assets' => [
                 'logo' => [
-                    'main' => 'assets/img/logo/banner.jpg',
+                    'main' => 'assets/img/logo/logob.png',
                     'favicon' => 'assets/img/logo/favicon.ico',
                     'footer' => 'assets/img/logo/banner.jpg',
                 ],
@@ -95,7 +95,6 @@ class CompanySettingSeeder extends Seeder
             // Assets
             'logo_main' => $companyConfig['assets']['logo']['main'],
             'logo_favicon' => $companyConfig['assets']['logo']['favicon'],
-            'logo_footer' => $companyConfig['assets']['logo']['footer'],
             
             // Maps
             'google_map' => $companyConfig['map_1'],

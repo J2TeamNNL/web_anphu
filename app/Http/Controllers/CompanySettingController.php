@@ -22,25 +22,13 @@ class CompanySettingController extends Controller
     {
         $companySetting = CompanySetting::firstOrFail();
 
-        $data = $request->all();
-
-        // Xử lý upload logo chính
-        if ($request->hasFile('logo_main')) {
-            $logoPath = $request->file('logo_main')->store('assets/img/logo', 'public');
-            $data['logo_main'] = $logoPath;
-        }
-
-        // Xử lý upload logo footer
-        if ($request->hasFile('logo_footer')) {
-            $logoPath = $request->file('logo_footer')->store('assets/img/logo', 'public');
-            $data['logo_footer'] = $logoPath;
-        }
-
-        // Xử lý upload favicon
-        if ($request->hasFile('logo_favicon')) {
-            $faviconPath = $request->file('logo_favicon')->store('assets/img/logo', 'public');
-            $data['logo_favicon'] = $faviconPath;
-        }
+        $data = $request->except([
+            '_token',
+            '_method',
+            'logo_main',
+            'logo_favicon',
+            'certificates',
+        ]);
 
         // Xử lý certificates
         if ($request->hasFile('certificates')) {
