@@ -40,9 +40,29 @@ class CloudinaryService
         }
 
         // Check file type
-        $allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
-        if (!in_array($file->getMimeType(), $allowedMimes)) {
-            throw new InvalidArgumentException('File type not allowed. Only JPEG, PNG, GIF, and WebP are supported');
+        $allowedMimes = [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/webp',
+            'image/svg+xml',
+            'image/svg',  // Some systems may use this MIME type for SVG
+            'text/plain'  // SVG files sometimes detected as text/plain
+        ];
+
+        $fileMimeType = $file->getMimeType();
+
+        // Additional check for SVG files detected as text/plain
+        $isValidFile = in_array($fileMimeType, $allowedMimes);
+
+        // If it's text/plain, verify it's actually an SVG by checking file extension
+        if ($fileMimeType === 'text/plain') {
+            $extension = strtolower($file->getClientOriginalExtension());
+            $isValidFile = in_array($extension, ['svg']);
+        }
+
+        if (!$isValidFile) {
+            throw new InvalidArgumentException("File type not allowed. Uploaded file has MIME type: {$fileMimeType}. Only JPEG, PNG, GIF, WebP, and SVG are supported");
         }
 
         // Generate unique filename
