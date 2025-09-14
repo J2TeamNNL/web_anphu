@@ -25,7 +25,7 @@ class StoreServiceRequest extends FormRequest
             'name'=> 'required|string|max:255',
             'slogan'=> 'nullable|string|max:255',
             'slug'=> 'nullable|string|unique:services,slug',
-            'image'=> 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
+            'image'=> 'nullable|file|mimes:jpg,jpeg,png,webp,svg|max:2048',
             'description'=> 'nullable|string',
             'image_public_id'=> 'nullable|string',
 
