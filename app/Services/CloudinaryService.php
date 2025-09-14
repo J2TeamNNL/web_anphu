@@ -33,28 +33,48 @@ class CloudinaryService
         if (!$file->isValid()) {
             throw new InvalidArgumentException('Invalid file upload: ' . $file->getErrorMessage());
         }
-        
+
         // Check file size (max 10MB)
         if ($file->getSize() > 10 * 1024 * 1024) {
             throw new InvalidArgumentException('File size exceeds 10MB limit');
         }
-        
+
         // Check file type
-        $allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        if (!in_array($file->getMimeType(), $allowedMimes)) {
-            throw new InvalidArgumentException('File type not allowed. Only JPEG, PNG, GIF, and WebP are supported');
+        $allowedMimes = [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/webp',
+            'image/svg+xml',
+            'image/svg',  // Some systems may use this MIME type for SVG
+            'text/plain'  // SVG files sometimes detected as text/plain
+        ];
+
+        $fileMimeType = $file->getMimeType();
+
+        // Additional check for SVG files detected as text/plain
+        $isValidFile = in_array($fileMimeType, $allowedMimes);
+
+        // If it's text/plain, verify it's actually an SVG by checking file extension
+        if ($fileMimeType === 'text/plain') {
+            $extension = strtolower($file->getClientOriginalExtension());
+            $isValidFile = in_array($extension, ['svg']);
         }
-        
+
+        if (!$isValidFile) {
+            throw new InvalidArgumentException("File type not allowed. Uploaded file has MIME type: {$fileMimeType}. Only JPEG, PNG, GIF, WebP, and SVG are supported");
+        }
+
         // Generate unique filename
         $filename = $this->generateFilename($file, $folder);
-        
+
         // Upload to Cloudinary using Storage disk
         $path = Storage::disk('cloudinary')->putFileAs('', $file, $filename);
-        
+
         if (!$path) {
             throw new RuntimeException('Failed to upload file to Cloudinary storage');
         }
-        
+
         return [
             'success' => true,
             'path' => $path,
@@ -78,7 +98,7 @@ class CloudinaryService
         if (empty($path)) {
             throw new InvalidArgumentException('File path cannot be empty');
         }
-        
+
         return Storage::disk('cloudinary')->delete($path);
     }
 
@@ -93,7 +113,7 @@ class CloudinaryService
         if (empty($path)) {
             return false;
         }
-        
+
         return Storage::disk('cloudinary')->exists($path);
     }
 
@@ -129,7 +149,7 @@ class CloudinaryService
     {
         $disk = Storage::disk('cloudinary');
         $files = $disk->allFiles($directory);
-        
+
         $fileList = [];
         foreach ($files as $file) {
             $fileList[] = [
@@ -140,7 +160,7 @@ class CloudinaryService
                 'last_modified' => $disk->lastModified($file)
             ];
         }
-        
+
         return $fileList;
     }
 
@@ -156,16 +176,16 @@ class CloudinaryService
         if (empty($path)) {
             throw new InvalidArgumentException('File path cannot be empty');
         }
-        
+
         $disk = Storage::disk('cloudinary');
-        
+
         if (!$disk->exists($path)) {
             return [
                 'exists' => false,
                 'path' => $path
             ];
         }
-        
+
         return [
             'exists' => true,
             'path' => $path,
@@ -191,7 +211,7 @@ class CloudinaryService
         }
 
         $transformString = $this->buildTransformationString($transformations);
-        
+
         return $this->baseUrl . $transformString . '/' . ltrim($path, '/');
     }
 
@@ -210,7 +230,7 @@ class CloudinaryService
         ];
 
         $transforms = array_merge($defaultTransforms, $additionalTransforms);
-        
+
         return $this->getUrl($path, $transforms);
     }
 
@@ -268,7 +288,7 @@ class CloudinaryService
     public function getEffectUrl(string $path, string $effect, array $additionalTransforms = []): string
     {
         $transforms = array_merge(['effect' => $effect], $additionalTransforms);
-        
+
         return $this->getUrl($path, $transforms);
     }
 
@@ -306,7 +326,7 @@ class CloudinaryService
         $timestamp = time();
         $uniqueId = uniqid();
         $extension = $file->getClientOriginalExtension();
-        
+
         return "{$folder}/{$prefix}_{$timestamp}_{$uniqueId}.{$extension}";
     }
 
