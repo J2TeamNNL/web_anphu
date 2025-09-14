@@ -79,7 +79,7 @@
                 </p>
 
                 <p class="small text-white">
-                    Giấy chứng nhận ĐKKD số {{ company()->license_number }} do {{ company()->license_authority }} cấp ngày {{ company()->license_date->format('d/m/Y') }}
+                    Giấy chứng nhận ĐKKD số {{ company()->license_number }} do {{ company()->license_authority }} cấp ngày {{ company()->license_date?->format('d/m/Y') }}
                 </p>
 
                 <p>

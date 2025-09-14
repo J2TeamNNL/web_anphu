@@ -115,7 +115,7 @@
                                 type="date"
                                 name="license_date"
                                 class="form-control"
-                                value="{{ old('license_date', $setting->license_date->toDateString()) }}"
+                                value="{{ old('license_date', $setting->license_date?->toDateString()) }}"
                                 placeholder="dd/mm/yyyy"
                             >
                         </div>
