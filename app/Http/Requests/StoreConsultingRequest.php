@@ -22,11 +22,12 @@ class StoreConsultingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20|unique:consulting_requests,phone',
+            'name' => 'nullable|string|max:255',
+            'phone' => 'required|string|max:20',
             'email' => 'nullable|email|max:255',
             'location' => 'nullable|string|max:255',
             'note' => 'nullable|string|max:255',
+            'requirements' => 'nullable|string|max:1000',
         ];
     }
 }

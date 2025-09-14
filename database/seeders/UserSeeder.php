@@ -15,6 +15,8 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        User::truncate();
+        
         User::create([
             'name' => 'An Phu',
             'email' => 'admin@gmail.com',
@@ -23,7 +25,5 @@ class UserSeeder extends Seeder
             'level' => 1,
             'remember_token' => Str::random(10),
         ]);
-
-        User::factory()->count(1)->create();
     }
 }

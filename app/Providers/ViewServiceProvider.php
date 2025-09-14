@@ -10,7 +10,6 @@ use App\Models\Partner;
 use App\Models\Article;
 use App\Models\Portfolio;
 use App\Models\Category;
-use App\Models\CompanySetting;
 use App\Models\Service;
 use App\Models\CustomPage;
 
@@ -44,24 +43,9 @@ class ViewServiceProvider extends ServiceProvider
         }
 
 
-        $partners = collect();
+        $partners = Partner::get();
 
-        if (Schema::hasTable('partners')) {
-            $partners = Partner::get();
-        }
-
-        $companySettings = CompanySetting::first();
-        $socialLinks = $companySettings->social_links ?? [];
-        $maps = $companySettings->google_map ?? [
-            'map_1' => ['embed_url' => ''],
-            'map_2' => ['embed_url' => '']
-        ];
-
-        $services = collect();
-
-        if (class_exists(Service::class) && Schema::hasTable('services')) {
-            $services = Service::all();
-        }
+        $services = Service::all();
 
         $custom_pages = CustomPage::all();
         
@@ -91,15 +75,12 @@ class ViewServiceProvider extends ServiceProvider
         View::share([
             'portfolioByCategories' => $portfolioByCategories,
             'partners' => $partners,
-            'companySettings' => $companySettings,
             'services' => $services,
             'custom_pages' => $custom_pages,
             'congTrinhArticles' => $congTrinhArticles,
             'congTrinhCategory' => $congTrinhCategory,
             'camNhanArticles' => $camNhanArticles,
             'camNhanCategory' => $camNhanCategory,
-            'socialLinks' => $socialLinks,
-            'maps' => $maps
         ]);
         
     }
