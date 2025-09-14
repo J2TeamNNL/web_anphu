@@ -69,12 +69,12 @@
                 </p>
 
                 <p>
-                    <a href="mailto:{{ company()->email ?? ''}}">
+                    <a href="mailto:{{ company()->company_email ?? ''}}">
                         <i class="fa fa-envelope me-2 text-warning"></i>
                         <span style="font-weight: bold" class="text-warning">
                             Email:
                         </span>
-                        {{ company()->email ?? ''}}
+                        {{ company()->company_email ?? ''}}
                     </a>
                 </p>
 
