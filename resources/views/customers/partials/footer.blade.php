@@ -69,23 +69,23 @@
                 </p>
 
                 <p>
-                    <a href="mailto:{{ company()->email ?? ''}}">
+                    <a href="mailto:{{ company()->company_email ?? ''}}">
                         <i class="fa fa-envelope me-2 text-warning"></i>
                         <span style="font-weight: bold" class="text-warning">
                             Email:
                         </span>
-                        {{ company()->email ?? ''}}
+                        {{ company()->company_email ?? ''}}
                     </a>
                 </p>
 
                 <p class="small text-white">
-                    Giấy chứng nhận ĐKKD số {{ company()->license_number }} do {{ company()->license_authority }} cấp ngày {{ company()->license_date }}
+                    Giấy chứng nhận ĐKKD số {{ company()->license_number }} do {{ company()->license_authority }} cấp ngày {{ company()->license_date?->format('d/m/Y') }}
                 </p>
 
                 <p>
                     <a href="{{ route('customers.policy.detail')}}" class="text-white">▶ Chính Sách Công Ty</a>
                 </p>
-                <img src="{{ asset(company()->certification_bocongthuong) }}" alt="Thông báo Bộ Công Thương" style="height: 150px;">
+                <img src="{{ asset('assets/img/logo/bocongthuong_thongbao.png') }}" alt="Thông báo Bộ Công Thương" style="height: 150px;">
             </div>
 
             <div class="col-md-6 mb-4">
@@ -127,72 +127,4 @@
 </footer>
 
 @once
-@push('scripts')
-<script>
-document.querySelectorAll('.consulting-form').forEach(form => {
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        let formData = new FormData(form);
-
-        fetch(form.action, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
-                'Accept': 'application/json',
-            },
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) throw response;
-            return response.json();
-        })
-        .then(data => {
-            form.reset();
-            document.getElementById('thank-you-overlay').classList.remove('d-none');
-        })
-        
-        .catch(async error => {
-            let errorText = 'Đã có lỗi xảy ra. Vui lòng thử lại!';
-
-            // (429) Too Many Requests
-            if (error.status === 429) {
-                document.getElementById('error-signup-overlay').classList.remove('d-none');
-                return;
-            }
-
-            // Validation
-            if (error.json) {
-                const err = await error.json();
-                if (err.errors) {
-                    // kiểm tra riêng lỗi phone
-                    if (err.errors.phone && err.errors.phone.some(msg => msg.includes('taken'))) {
-                        document.getElementById('error-signup-overlay').classList.remove('d-none');
-                        return;
-                    }
-
-                    // nếu không phải phone thì hiện ra alert mặc định
-                    errorText = Object.values(err.errors).flat().join('<br>');
-                }
-            }
-
-            // Fallback alert
-            alert(errorText);
-        });
-
-    });
-});
-
-document.getElementById('back-button').addEventListener('click', function () {
-    document.getElementById('thank-you-overlay').classList.add('d-none');
-});
-
-const errorSignupOverlay = document.getElementById('error-overlay');
-if (errorSignupOverlay) {
-    errorSignupOverlay.querySelector('.btn-back')?.addEventListener('click', () => {
-        errorSignupOverlay.classList.add('d-none');
-    });
-}
-</script>
-@endpush
 @endonce

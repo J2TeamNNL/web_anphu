@@ -43,18 +43,9 @@ class ViewServiceProvider extends ServiceProvider
         }
 
 
-        $partners = collect();
+        $partners = Partner::get();
 
-        if (Schema::hasTable('partners')) {
-            $partners = Partner::get();
-        }
-
-
-        $services = collect();
-
-        if (class_exists(Service::class) && Schema::hasTable('services')) {
-            $services = Service::all();
-        }
+        $services = Service::all();
 
         $custom_pages = CustomPage::all();
         

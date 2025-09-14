@@ -9,11 +9,12 @@ class CompanySetting extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'social_links' => 'array',
-        'google_map' => 'array',
-        'google_map_2' => 'array',
-        'certificates' => 'array',
-        'certificates_public_ids' => 'array',
+        'social_links' => 'json',
+        'google_map' => 'json',
+        'google_map_2' => 'json',
+        'certificates' => 'json',
+        'certificates_public_ids' => 'json',
+        'license_date' => 'date',
     ];
 
 }

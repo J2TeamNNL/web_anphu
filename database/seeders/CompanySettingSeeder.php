@@ -9,8 +9,10 @@ class CompanySettingSeeder extends Seeder
 {
     public function run()
     {
+        CompanySetting::truncate();
         // Dữ liệu mẫu thay thế config
         $companyConfig = [
+            'director' => 'Phạm Đăng Thu',
             'name' => [
                 'full' => 'Công ty TNHH Tư vấn Thiết kế Kiến trúc và Nội thất An Phú',
                 'brand' => 'An Phú',
@@ -18,55 +20,27 @@ class CompanySettingSeeder extends Seeder
             ],
             'contact' => [
                 'email' => 'kientrucnoithat.anphu@gmail.com',
-                'phone_1' => '0949 453 283',
-                'phone_2' => '0969 317 331',
+                'phone_1' => '0949453283',
+                'phone_2' => '0969317331',
                 'address_1' => 'Số 01, liền kề 18, KĐT Văn Khê',
                 'address_2' => 'Thị trấn Hoàn Long, Hưng Yên',
             ],
             'business' => [
                 'license_number' => '0108588362',
                 'license_authority' => 'Sở KHĐT T.P. Hà Nội',
-                'license_date' => '15/01/2019',
+                'license_date' => '2019-01-15',
             ],
             'social_media' => [
-                'facebook' => [
-                    'url' => 'https://www.facebook.com/share/16aNn1KZ37/?mibextid=wwXIfr',
-                    'icon' => 'fab fa-facebook-f',
-                    'name' => 'Facebook',
-                    'color' => '#1877f2',
-                ],
-                'tiktok' => [
-                    'url' => 'https://www.tiktok.com/@anphudesign',
-                    'icon' => 'fab fa-tiktok',
-                    'name' => 'TikTok',
-                    'logo' => 'assets/img/logo/logo_tiktok.png',
-                    'color' => '#000000',
-                ],
-                'youtube' => [
-                    'url' => 'https://www.youtube.com/@anphudesign',
-                    'icon' => 'fab fa-youtube',
-                    'name' => 'YouTube',
-                    'color' => '#ff0000',
-                ],
-                'zalo' => [
-                    'url' => 'https://zalo.me/0969317331',
-                    'icon' => null,
-                    'name' => 'Zalo',
-                    'logo' => 'assets/img/logo/logo_zalo.png',
-                    'color' => '#0068ff',
-                ],
+                'facebook' => 'https://www.facebook.com/share/16aNn1KZ37/?mibextid=wwXIfr',
+                'tiktok' => 'https://www.tiktok.com/@anphudesign',
+                'youtube' => 'https://www.youtube.com/@anphudesign',
+                'zalo' => 'https://zalo.me/0969317331',
             ],
             'assets' => [
                 'logo' => [
-                    'main' => 'assets/img/logo/banner.jpg',
+                    'main' => 'assets/img/logo/logob.png',
                     'favicon' => 'assets/img/logo/favicon.ico',
                     'footer' => 'assets/img/logo/banner.jpg',
-                ],
-                'certification' => [
-                    'bocongthuong' => 'assets/img/logo/bocongthuong_thongbao.png',
-                ],
-                'background' => [
-                    'footer' => 'assets/img/gallery/background_danmask_1.jpg',
                 ],
             ],
             'map_1' => [
@@ -91,13 +65,15 @@ class CompanySettingSeeder extends Seeder
         CompanySetting::truncate();
 
         CompanySetting::create([
+            'director' => $companyConfig['director'],
+            
             // Company names
             'company_name' => $companyConfig['name']['full'],
             'company_brand' => $companyConfig['name']['brand'],
             'international_name' => $companyConfig['name']['international'],
             
             // Contact information
-            'email' => $companyConfig['contact']['email'],
+            'company_email' => $companyConfig['contact']['email'],
             'company_phone_1' => $companyConfig['contact']['phone_1'],
             'company_phone_2' => $companyConfig['contact']['phone_2'],
             'company_address_1' => $companyConfig['contact']['address_1'],
@@ -110,40 +86,15 @@ class CompanySettingSeeder extends Seeder
             
             // Social media - chuyển đổi format
             'social_links' => [
-                'facebook' => [
-                    'url' => $companyConfig['social_media']['facebook']['url'],
-                    'icon' => $companyConfig['social_media']['facebook']['icon'],
-                    'name' => $companyConfig['social_media']['facebook']['name'],
-                    'color' => $companyConfig['social_media']['facebook']['color'],
-                ],
-                'tiktok' => [
-                    'url' => $companyConfig['social_media']['tiktok']['url'],
-                    'icon' => $companyConfig['social_media']['tiktok']['icon'],
-                    'name' => $companyConfig['social_media']['tiktok']['name'],
-                    'logo' => $companyConfig['social_media']['tiktok']['logo'],
-                    'color' => $companyConfig['social_media']['tiktok']['color'],
-                ],
-                'youtube' => [
-                    'url' => $companyConfig['social_media']['youtube']['url'],
-                    'icon' => $companyConfig['social_media']['youtube']['icon'],
-                    'name' => $companyConfig['social_media']['youtube']['name'],
-                    'color' => $companyConfig['social_media']['youtube']['color'],
-                ],
-                'zalo' => [
-                    'url' => $companyConfig['social_media']['zalo']['url'],
-                    'icon' => $companyConfig['social_media']['zalo']['icon'],
-                    'name' => $companyConfig['social_media']['zalo']['name'],
-                    'logo' => $companyConfig['social_media']['zalo']['logo'],
-                    'color' => $companyConfig['social_media']['zalo']['color'],
-                ],
+                'facebook' => $companyConfig['social_media']['facebook'],
+                'tiktok' => $companyConfig['social_media']['tiktok'],
+                'youtube' => $companyConfig['social_media']['youtube'],
+                'zalo' => $companyConfig['social_media']['zalo'],
             ],
             
             // Assets
             'logo_main' => $companyConfig['assets']['logo']['main'],
             'logo_favicon' => $companyConfig['assets']['logo']['favicon'],
-            'logo_footer' => $companyConfig['assets']['logo']['footer'],
-            'certification_bocongthuong' => $companyConfig['assets']['certification']['bocongthuong'],
-            'background_footer' => $companyConfig['assets']['background']['footer'],
             
             // Maps
             'google_map' => $companyConfig['map_1'],

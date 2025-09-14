@@ -52,7 +52,7 @@
                 </li>
 
                 {{-- Admins --}}
-                @if(auth()->user()->level == 1)
+                @if(auth()->check() && auth()->user()->level == 1)
                 <li class="nav-item mx-2 {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('admin.users.index') }}">
                         <i class="fa fa-users"></i> Quản lý Admin
@@ -76,7 +76,7 @@
                         <i class="fa fa-cogs mr-1"></i> Cài đặt
                     </a>
                     <div class="dropdown-menu" aria-labelledby="settingsDropdown">
-                        @if(auth()->user()->level == 1)
+                        @if(auth()->check() && auth()->user()->level == 1)
                             <a
                                 class="dropdown-item small {{ request()->routeIs('admin.settings.company.edit') ? 'active' : '' }}"
                                 href="{{ route('admin.settings.company.edit') }}"

@@ -223,59 +223,12 @@ use Illuminate\Support\Str;
                 <ul id="blog-toc-list"></ul>
             </aside>
 
-            <div class="blog-extra">
-                <h5>Xem thêm</h5>
-                <h6 class="mb-3">Dự án thi công</h6>
-                <hr class="border-warning">
-                @foreach ($congTrinhArticles as $article)
-                    <div class="col-md-12 mb-4 blog-item">
-                        <a href="{{ route('customers.blog.detail', $article->slug) }}" class="text-decoration-none">
-                            <div class="card card-blog"
-                                style="background-image: url('{{ $article->thumbnail }}'); background-size: cover; background-position: center;">
-                                <div class="blog-overlay p-3">
-                                    <h5 class="font-weight-bold">{{ $article->name }}</h5>
-
-                                    @if (!empty($article->category))
-                                        <p class="mb-0 font-weight-bold">Chủ đề: {{ $article->category->name }}</p>
-                                    @endif
-
-                                    @if (!empty($article->category))
-                                        <p class="mb-0 font-weight-bold small">
-                                            Đăng ngày {{ $article->created_at->format('d/m/Y') }}
-                                        </p>
-                                    @endif
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
-
-                
-                <h6 class="mb-3">Cảm nhận khách hàng</h6>
-                <hr class="border-warning">
-                @foreach ($camNhanArticles as $article)
-                    <div class="col-md-12 mb-4 blog-item">
-                        <a href="{{ route('customers.blog.detail', $article->slug) }}" class="text-decoration-none">
-                            <div class="card card-blog"
-                                style="background-image: url('{{ $article->thumbnail }}'); background-size: cover; background-position: center;">
-                                <div class="blog-overlay p-3">
-                                    <h5 class="font-weight-bold">{{ $article->name }}</h5>
-
-                                    @if (!empty($article->category))
-                                        <p class="mb-0 font-weight-bold">Chủ đề: {{ $article->category->name }}</p>
-                                    @endif
-
-                                    @if (!empty($article->category))
-                                        <p class="mb-0 font-weight-bold small">
-                                            Đăng ngày {{ $article->created_at->format('d/m/Y') }}
-                                        </p>
-                                    @endif
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
-            </div>
+            <x-sidebar-articles 
+                :cong-trinh-articles="$congTrinhArticles"
+                :cam-nhan-articles="$camNhanArticles"
+                :show-category="true"
+                :show-date="true" 
+                class="blog-extra" />
         </div>
     </div>
 </div>

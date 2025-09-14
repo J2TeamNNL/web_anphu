@@ -59,6 +59,7 @@
 </style>
 @endpush
 
+@if ($partners->isNotEmpty())
 <!-- ĐỐI TÁC TIN CẬY -->
 <section class="py-4 section-bg-partner">
   <div class="container">
@@ -90,3 +91,4 @@
     </div>
   </div>
 </section>
+@endif

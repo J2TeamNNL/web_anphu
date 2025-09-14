@@ -95,30 +95,32 @@
 <section class="py-5 bg-light section-bg-demo">
     <div class="container">
         @foreach ($portfolioByCategories as $item)
-            <h3 class="heading-demo-project">{{ $item['category']->name }}</h3>
-            <hr class="border-warning">
-            <div class="row">
-                @foreach ($item['projects'] as $portfolio)
-                    <div class="col-md-3 mb-4" data-aos="fade-up">
-                        <div class="card card-luxury-gold h-100 shadow-sm">
-                            <img src="{{ $portfolio->thumbnail }}"
-                                class="card-img-top object-cover"
-                                style="height: 200px; width: 100%; object-fit: cover;"
-                                alt="{{ $portfolio->name }}">
-                            <div class="card-body d-flex flex-column">
-                                <p class="card-title" style="color: #C9B037">{{ $portfolio->name }}</p>
-                                <p class="card-text small portfolio-desc">{{ $portfolio->description }}</p>
-                                <div class="mt-auto">
-                                    <a href="{{ route('customers.project.detail', ['slug' => $portfolio->slug]) }}"
-                                    class="btn btn-sm w-100 btn-luxury">
-                                        Xem chi tiết
-                                    </a>
+            @if (isset($item['projects']) && count($item['projects']) > 0)
+                <h3 class="heading-demo-project">{{ $item['category']->name }}</h3>
+                <hr class="border-warning">
+                <div class="row">
+                    @foreach ($item['projects'] as $portfolio)
+                        <div class="col-md-3 mb-4" data-aos="fade-up">
+                            <div class="card card-luxury-gold h-100 shadow-sm">
+                                <img src="{{ $portfolio->thumbnail }}"
+                                    class="card-img-top object-cover"
+                                    style="height: 200px; width: 100%; object-fit: cover;"
+                                    alt="{{ $portfolio->name }}">
+                                <div class="card-body d-flex flex-column">
+                                    <p class="card-title" style="color: #C9B037">{{ $portfolio->name }}</p>
+                                    <p class="card-text small portfolio-desc">{{ $portfolio->description }}</p>
+                                    <div class="mt-auto">
+                                        <a href="{{ route('customers.project.detail', ['slug' => $portfolio->slug]) }}"
+                                        class="btn btn-sm w-100 btn-luxury">
+                                            Xem chi tiết
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
+            @endif
         @endforeach
     </div>
 </section>

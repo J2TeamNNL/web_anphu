@@ -132,58 +132,17 @@
                 </div>
             </div>
             <div class="row mt-4 voucher-extra-content" data-aos="fade-up">
-                <!-- Cột trái -->
-                <div class="col-md-6">
-                    <h3 class="mb-3">Dự án thi công</h3>
-                    @foreach ($congTrinhArticles as $article)
-                        <div class="col-md-12 mb-4 blog-item">
-                            <a href="{{ route('customers.blog.detail', $article->slug) }}" class="text-decoration-none">
-                                <div class="card card-blog"
-                                    style="background-image: url('{{ $article->thumbnail }}'); background-size: cover; background-position: center;">
-                                    <div class="blog-overlay p-3">
-                                        <h5 class="font-weight-bold">{{ $article->name }}</h5>
-
-                                        @if (!empty($article->category))
-                                            <p class="mb-0 font-weight-bold">Chủ đề: {{ $article->category->name }}</p>
-                                        @endif
-
-                                        @if (!empty($article->category))
-                                            <p class="mb-0 font-weight-bold small">
-                                                Đăng ngày {{ $article->created_at->format('d/m/Y') }}
-                                            </p>
-                                        @endif
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
-                <!-- Cột phải -->
-                <div class="col-md-6">
-                    <h3 class="mb-3">Cảm nhận khách hàng</h3>
-                    @foreach ($camNhanArticles as $article)
-                        <div class="col-md-12 mb-4 blog-item">
-                            <a href="{{ route('customers.blog.detail', $article->slug) }}" class="text-decoration-none">
-                                <div class="card card-blog"
-                                    style="background-image: url('{{ $article->thumbnail }}'); background-size: cover; background-position: center;">
-                                    <div class="blog-overlay p-3">
-                                        <h5 class="font-weight-bold">{{ $article->name }}</h5>
-
-                                        @if (!empty($article->category))
-                                            <p class="mb-0 font-weight-bold">Chủ đề: {{ $article->category->name }}</p>
-                                        @endif
-
-                                        @if (!empty($article->category))
-                                            <p class="mb-0 font-weight-bold small">
-                                                Đăng ngày {{ $article->created_at->format('d/m/Y') }}
-                                            </p>
-                                        @endif
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
+                <x-article-list 
+                    :articles="$congTrinhArticles" 
+                    title="Dự án thi công"
+                    :show-category="true"
+                    :show-date="true" />
+                
+                <x-customer-feedback 
+                    :articles="$camNhanArticles" 
+                    title="Cảm nhận khách hàng"
+                    :show-category="true"
+                    :show-date="true" />
             </div>
         </div>
     </section>

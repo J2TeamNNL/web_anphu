@@ -12,7 +12,7 @@ class ConsultingRequestController extends Controller
 {   
     private ConsultingRequest $model;
 
-    const PER_PAGE = 5;
+    const PER_PAGE = 20;
 
     public function __construct()
     {
