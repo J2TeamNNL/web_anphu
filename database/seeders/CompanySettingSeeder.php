@@ -94,7 +94,6 @@ class CompanySettingSeeder extends Seeder
             
             // Assets
             'logo_main' => $companyConfig['assets']['logo']['main'],
-            'logo_favicon' => $companyConfig['assets']['logo']['favicon'],
             
             // Maps
             'google_map' => $companyConfig['map_1'],

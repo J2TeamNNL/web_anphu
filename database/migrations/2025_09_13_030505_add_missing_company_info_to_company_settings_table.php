@@ -19,7 +19,6 @@ return new class extends Migration
             
             // Asset paths
             $table->string('logo_main')->nullable();
-            $table->string('logo_favicon')->nullable();
             
             // Map information for second location
             $table->json('google_map_2')->nullable();
@@ -36,9 +35,6 @@ return new class extends Migration
                 'license_number',
                 'license_authority', 
                 'license_date',
-                'logo_main',
-                'logo_favicon',
-                'logo_footer',
                 'google_map_2',
             ]);
         });

@@ -25,8 +25,6 @@ class CompanySettingController extends Controller
         $data = $request->except([
             '_token',
             '_method',
-            'logo_main',
-            'logo_favicon',
             'certificates',
         ]);
 
