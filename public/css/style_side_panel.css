@@ -1,10 +1,10 @@
 /*   ROOT VARIABLES & GLOBALS
 --------------------------- */
 :root {
-    --color-primary: #030a36;    
+    --color-primary: #030a36;
     /* --color-secondary: #e2b605; */
     --color-secondary: #C9B037;
-    --color-dark: #181f2f;            
+    --color-dark: #181f2f;
     --color-white: #ffffff;
     --color-gray: #f7f7fda6;
     --color-text: #444;
@@ -17,7 +17,7 @@
 
 .anphu-side-panel {
   position: fixed;
-  top: 36%;
+  top: 70%;
   right: 12px;
   display: flex;
   flex-direction: column;
@@ -61,6 +61,11 @@
   color: var(--anphu-dark);
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+
+.panel-btn--round {
+  margin-top: 5px;
+  border-radius: 50%;
 }
 
 .toggle-icon {
@@ -254,7 +259,7 @@
   padding: 30px;
   width: 320px;
   max-width: 90%;
-  
+
   position: relative;
 }
 
