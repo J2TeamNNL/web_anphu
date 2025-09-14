@@ -1,12 +1,12 @@
 <div class="anphu-side-panel desktop-only">
    <div class="side-buttons">
-      <a href="{{ route('customers.voucher') }}" class="panel-btn panel-btn--round" aria-label="Gọi điện">
-         <i class="fas fa-gift"></i>
+      <a href="tel:{{ $company_settings?->company_phone_2 ?? '' }}" class="panel-btn panel-btn--round" aria-label="Gọi điện">
+         <i class="fas fa-phone"></i>
       </a>
-      <a href="{{ $socialLinks['tiktok'] }}" class="panel-btn panel-btn--round" target="_blank" aria-label="Messenger">
-         <i class="fa-brands fa-tiktok"></i>
+      <a href="{{ $socialLinks['facebook'] }}" class="panel-btn panel-btn--round" target="_blank" aria-label="Messenger">
+         <i class="fa-brands fa-facebook"></i>
       </a>
-      <a href="{{ $company_settings?->company_phone_1 ?? ''}}" class="panel-btn" target="_blank" aria-label="Zalo">
+      <a href="https://zalo.me/{{ $company_settings?->company_phone_1 ?? '' }}" class="panel-btn panel-btn--round" aria-label="Zalo">
          <img src="{{ asset('assets/img/logo/logo_zalo.png') }}" alt="Zalo" class="icon-img">
       </a>
    </div>
