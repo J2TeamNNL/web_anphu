@@ -1,23 +1,14 @@
 <div class="anphu-side-panel desktop-only">
    <div class="side-buttons">
-      <a href="{{ route('customers.voucher') }}" class="panel-btn" aria-label="Gọi điện">
+      <a href="{{ route('customers.voucher') }}" class="panel-btn panel-btn--round" aria-label="Gọi điện">
          <i class="fas fa-gift"></i>
       </a>
-      <a href="{{ $socialLinks['facebook'] }}" class="panel-btn" target="_blank" aria-label="Facebook">
-         <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="{{ $socialLinks['youtube'] }}" class="panel-btn" target="_blank" aria-label="YouTube">
-         <i class="fab fa-youtube"></i>
-      </a>
-      <a href="{{ $socialLinks['tiktok'] }}" class="panel-btn" target="_blank" aria-label="Messenger">
+      <a href="{{ $socialLinks['tiktok'] }}" class="panel-btn panel-btn--round" target="_blank" aria-label="Messenger">
          <i class="fa-brands fa-tiktok"></i>
       </a>
       <a href="{{ $company_settings?->company_phone_1 ?? ''}}" class="panel-btn" target="_blank" aria-label="Zalo">
          <img src="{{ asset('assets/img/logo/logo_zalo.png') }}" alt="Zalo" class="icon-img">
       </a>
-   </div>
-   <div class="toggle-btn" id="toggleSidePanel">
-      <span class="toggle-icon">></span>
    </div>
 </div>
 
@@ -31,7 +22,7 @@
          <i class="fas fa-comment-dots"></i>
          <span>Zalo</span>
       </a>
-      
+
       <a href="tel:{{ $company_settings?->company_phone_2 ?? '' }}" class="panel-btn" aria-label="Gọi điện">
          <i class="fas fa-phone-alt"></i>
          <span>Hotline</span>
