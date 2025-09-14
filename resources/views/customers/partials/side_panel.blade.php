@@ -6,7 +6,7 @@
       <a href="tel:{{ company()?->company_phone_2 ?? '' }}" class="panel-btn panel-btn--round" aria-label="Gọi điện">
          <i class="fas fa-phone"></i>
       </a>
-      <a href="zalo://{{ company()?->company_phone_1 ?? ''}}" class="panel-btn panel-btn--round" target="_blank" aria-label="Zalo">
+      <a href="tel:{{ company()?->company_phone_1 ?? '' }}" class="panel-btn panel-btn--round" target="_blank" aria-label="Zalo">
          <img src="{{ asset('assets/img/logo/logo_zalo.png') }}" alt="Zalo" class="icon-img">
       </a>
    </div>
