@@ -65,11 +65,6 @@
             duration: 800,
             once: true
         });
-        
-        // Side Panel
-        document.getElementById('toggleSidePanel').addEventListener('click', function() {
-            document.querySelector('.anphu-side-panel').classList.toggle('collapsed');
-        });
 
         // Initialize Select2
         $(document).ready(function() {
