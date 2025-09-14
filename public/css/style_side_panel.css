@@ -17,7 +17,7 @@
 
 .anphu-side-panel {
   position: fixed;
-  top: 70%;
+  top: 60%;
   right: 12px;
   display: flex;
   flex-direction: column;
