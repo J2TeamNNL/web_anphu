@@ -58,7 +58,7 @@
                 action="{{ route('consulting_requests.store') }}">
                     @csrf
                     <div class="form-group">
-                        <input type="text" class="form-control" name="name" placeholder="Họ Tên *" required>
+                        <input type="text" class="form-control" name="name" placeholder="Họ Tên">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -69,14 +69,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="location" placeholder="Vị Trí Xây Dựng *" required>
+                        <input type="text" class="form-control" name="location" placeholder="Vị Trí Xây Dựng">
                     </div>
                     <div class="d-flex align-items-center">
                         <button type="submit" class="btn btn-warning mr-3">Gửi cho chúng tôi</button>
-                        <x-social-media 
-                            size="small" 
-                            style="outline" 
-                            class="d-flex justify-content-center" 
+                        <x-social-media
+                            size="small"
+                            style="outline"
+                            class="d-flex justify-content-center"
                         />
                     </div>
                 </form>
@@ -150,7 +150,7 @@ document.querySelectorAll('.consulting-form').forEach(form => {
             form.reset();
             document.getElementById('thank-you-overlay').classList.remove('d-none');
         })
-        
+
         .catch(async error => {
             let errorText = 'Đã có lỗi xảy ra. Vui lòng thử lại!';
 
