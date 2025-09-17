@@ -91,7 +91,7 @@
 
 @section('content')
     @php
-        preg_match_all('/<img[^>]+src="([^">]+)"/i', $page->custom_content_1 ?? '', $matches);
+        preg_match_all('/<img[^>]+src="([^">]+)"/i', $page->custom_content_2 ?? '', $matches);
         $images = array_unique($matches[1] ?? []); // loại bỏ ảnh trùng
     @endphp
 
