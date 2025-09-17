@@ -89,6 +89,29 @@
         border-color: #C9B037;
     }
 
+
+    /* Project Card */
+    .card-project {
+        border: 1px solid var(--lux-gold);
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        min-height: 250px;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.3s ease;
+    }
+    .card-project:hover {
+        transform: translateY(-4px);
+    }
+    .project-overlay {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+        height: 100%;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
 </style>
 @endpush
 
