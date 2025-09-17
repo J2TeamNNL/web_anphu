@@ -291,11 +291,11 @@
                                 <textarea class="form-control" name="requirements" rows="3" placeholder="Nhu cầu (Diện tích đất, số tầng,...)"></textarea>
                             </div>
                             <div class="d-flex align-items-center">
-                                <button type="submit" class="btn btn-warning mr-3">Gửi cho chúng tôi</button>
-                                <x-social-media 
-                                    size="small" 
-                                    style="outline" 
-                                    class="d-flex justify-content-center" 
+                                <button type="submit" class="btn btn-warning mr-3">Đăng kí ngay</button>
+                                <x-social-media
+                                    size="small"
+                                    style="outline"
+                                    class="d-flex justify-content-center"
                                 />
                             </div>
                         </form>
@@ -370,7 +370,7 @@ document.querySelectorAll('.consulting-form').forEach(form => {
             form.reset();
             document.getElementById('consulting-thank-you-overlay').classList.remove('d-none');
         })
-        
+
         .catch(async error => {
             let errorText = 'Đã có lỗi xảy ra. Vui lòng thử lại!';
 
