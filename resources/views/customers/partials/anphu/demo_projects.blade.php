@@ -165,3 +165,17 @@
     </div>
 </section>
 
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const grid = document.querySelector('.project-grid');
+        if (!grid) return;
+
+        const iso = new Isotope(grid, {
+            itemSelector: '.project-item',
+            layoutMode: 'fitRows'
+        });
+    });
+</script>
+@e
