@@ -108,7 +108,7 @@
                 <div class="card-luxury-gold d-flex flex-column w-100">
                     <!-- Icon -->
                     <div class="icon-circle">
-                        <img 
+                        <img
                            src="{{ $service->image }}"
                            alt="{{ $service->name ?? 'Service logo' }}"
                         >
