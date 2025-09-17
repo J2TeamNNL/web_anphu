@@ -241,6 +241,18 @@
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
+                <div class="mt-4 embed-responsive embed-responsive-4by3 border rounded">
+                    <iframe
+                        src="{{ company()->google_map_2['embed_url'] ?? '' }}"
+                        width="500"
+                        height="450"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                    >
+                    </iframe>
+                </div>
             </div>
         </div>
 

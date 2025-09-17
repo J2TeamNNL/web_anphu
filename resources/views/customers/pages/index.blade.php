@@ -29,10 +29,100 @@
         max-width: 100%;
     }
 }
+
+    /* Carousel */
+    .contact-carousel {
+        width: 100vw;
+    }
+    .contact-carousel .carousel-item {
+        height: 60vh;
+    }
+    .contact-carousel .carousel-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: 1px solid var(--anphu-gold);
+    }
+
+    /* Responsive fix */
+    @media (max-width: 767.98px) {
+        .contact-content,
+        .contact-extra-content {
+            padding: 1rem;
+        }
+    }
+
+    /* Carousel indicators tụt hẳn xuống dưới */
+    .carousel-indicators.custom-indicators {
+        position: absolute;
+        bottom: -48px; /* -25px trước + -30px nữa = -55px */
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        padding-left: 0;
+        margin: 0;
+        list-style: none;
+        z-index: 10;
+    }
+
+    .carousel-indicators.custom-indicators li {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        margin: 0 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .carousel-indicators.custom-indicators li.active,
+    .carousel-indicators.custom-indicators li:hover {
+        background-color: var(--anphu-gold);
+        transform: scale(1.2);
+    }
+
+    /* Hiệu ứng slide ảnh nhẹ */
+    .carousel-inner .carousel-item {
+        transition: transform 0.8s ease, opacity 0.8s ease;
+    }
 </style>
 @endpush
 
 @section('content')
+    @php
+        preg_match_all('/<img[^>]+src="([^">]+)"/i', $page->custom_content_1 ?? '', $matches);
+        $images = array_unique($matches[1] ?? []); // loại bỏ ảnh trùng
+    @endphp
+
+    @if(count($images) > 0)
+        <div id="contactImageCarousel" class="carousel slide contact-carousel mb-4" data-ride="carousel">
+            <div class="carousel-inner">
+                @foreach($images as $index => $img)
+                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                        <img src="{{ $img }}" alt="Slide {{ $index + 1 }}">
+                    </div>
+                @endforeach
+            </div>
+
+            {{-- 3 chấm dưới carousel --}}
+            <ol class="carousel-indicators custom-indicators">
+                @foreach($images as $index => $img)
+                    <li data-target="#contactImageCarousel" data-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"></li>
+                @endforeach
+            </ol>
+
+            <a class="carousel-control-prev" href="#contactImageCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </a>
+            <a class="carousel-control-next" href="#contactImageCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </a>
+        </div>
+    @else
+        <p class="text-center">Chưa có hình ảnh liên hệ nào.</p>
+    @endif
+
     <!-- Hero Section -->
     <section class="hero-static-slider d-flex align-items-center justify-content-center py-3 py-md-5" id="hero-static-slider"
         style="background-image: url('{{ asset('assets/img/gallery/background_project_1.jpg') }}'); background-size: cover; background-position: center; min-height: 60vh;">
