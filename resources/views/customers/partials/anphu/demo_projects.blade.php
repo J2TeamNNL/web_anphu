@@ -100,7 +100,7 @@
                 <hr class="border-warning">
                 <div class="row">
                     @foreach ($item['projects'] as $portfolio)
-                        <a href="{{ route('customers.project.detail', $portfolio->slug) }}" class="text-decoration-none">
+                        <a href="{{ route('customers.project.detail', ['slug' => $portfolio->slug]) }}" class="text-decoration-none">
                             <div class="col-md-4 mb-4 project-item">
                                 <div class="card card-project"
                                     style="background-image: url('{{ $portfolio->thumbnail }}');">
