@@ -100,40 +100,37 @@
                 <hr class="border-warning">
                 <div class="row">
                     @foreach ($item['projects'] as $portfolio)
-                        <a href="{{ route('customers.project.detail', $item->slug) }}" class="text-decoration-none">
+                        <a href="{{ route('customers.project.detail', $portfolio->slug) }}" class="text-decoration-none">
                             <div class="col-md-4 mb-4 project-item">
                                 <div class="card card-project"
-                                    style="background-image: url('{{ $item->thumbnail }}');">
+                                    style="background-image: url('{{ $portfolio->thumbnail }}');">
                                     <div class="project-overlay text-white">
-                                        <p>
-                                            {{$portfolio}}
-                                        </p>
-                                        <!-- <h5 class="font-weight-bold text-warning">{{ $item->name }}</h5>
+                                        <h5 class="font-weight-bold text-warning">{{ $portfolio->name }}</h5>
 
                                         <p class="mb-1">
                                             <i class="fa fa-user mr-2 text-warning"></i> Chủ đầu tư:
-                                            {{ $item->client }}
+                                            {{ $portfolio->client }}
                                         </p>
 
                                         <p class="mb-1">
                                             <i class="fa fa-map-marker-alt mr-2 text-warning"></i> Địa điểm:
-                                            {{ $item->location }}
+                                            {{ $portfolio->location }}
                                         </p>
 
                                         <p class="mb-1">
                                             <i class="fa fa-ruler-combined mr-2 text-warning"></i> Diện tích:
-                                            {{ $item->area }}
+                                            {{ $portfolio->area }}
                                         </p>
 
                                         <p class="mb-1">
                                             <i class="fa fa-building mr-2 text-warning"></i> Số tầng:
-                                            {{ $item->floors ?? 'N/A' }}
+                                            {{ $portfolio->floors ?? 'N/A' }}
                                         </p>
 
                                         <p class="mb-0">
                                             <i class="fa fa-paint-brush mr-2 text-warning"></i> Phong cách:
-                                            {{ $item->category?->name ?? 'Không rõ' }}
-                                        </p> -->
+                                            {{ $portfolio->category?->name ?? 'Không rõ' }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
