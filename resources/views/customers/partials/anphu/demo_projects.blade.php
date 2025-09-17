@@ -74,7 +74,7 @@
     .card-luxury-gold:hover .icon-wrapper i {
         color: #15596e;
     }
-    
+
     .btn-luxury {
         border: 1px solid #C9B037;
         color: #C9B037;
@@ -100,24 +100,44 @@
                 <hr class="border-warning">
                 <div class="row">
                     @foreach ($item['projects'] as $portfolio)
-                        <div class="col-md-3 mb-4" data-aos="fade-up">
-                            <div class="card card-luxury-gold h-100 shadow-sm">
-                                <img src="{{ $portfolio->thumbnail }}"
-                                    class="card-img-top object-cover"
-                                    style="height: 200px; width: 100%; object-fit: cover;"
-                                    alt="{{ $portfolio->name }}">
-                                <div class="card-body d-flex flex-column">
-                                    <p class="card-title" style="color: #C9B037">{{ $portfolio->name }}</p>
-                                    <p class="card-text small portfolio-desc">{{ $portfolio->description }}</p>
-                                    <div class="mt-auto">
-                                        <a href="{{ route('customers.project.detail', ['slug' => $portfolio->slug]) }}"
-                                        class="btn btn-sm w-100 btn-luxury">
-                                            Xem chi tiết
-                                        </a>
+                        <a href="{{ route('customers.project.detail', $item->slug) }}" class="text-decoration-none">
+                            <div class="col-md-4 mb-4 project-item">
+                                <div class="card card-project"
+                                    style="background-image: url('{{ $item->thumbnail }}');">
+                                    <div class="project-overlay text-white">
+                                        <p>
+                                            {{$portfolio}}
+                                        </p>
+                                        <!-- <h5 class="font-weight-bold text-warning">{{ $item->name }}</h5>
+
+                                        <p class="mb-1">
+                                            <i class="fa fa-user mr-2 text-warning"></i> Chủ đầu tư:
+                                            {{ $item->client }}
+                                        </p>
+
+                                        <p class="mb-1">
+                                            <i class="fa fa-map-marker-alt mr-2 text-warning"></i> Địa điểm:
+                                            {{ $item->location }}
+                                        </p>
+
+                                        <p class="mb-1">
+                                            <i class="fa fa-ruler-combined mr-2 text-warning"></i> Diện tích:
+                                            {{ $item->area }}
+                                        </p>
+
+                                        <p class="mb-1">
+                                            <i class="fa fa-building mr-2 text-warning"></i> Số tầng:
+                                            {{ $item->floors ?? 'N/A' }}
+                                        </p>
+
+                                        <p class="mb-0">
+                                            <i class="fa fa-paint-brush mr-2 text-warning"></i> Phong cách:
+                                            {{ $item->category?->name ?? 'Không rõ' }}
+                                        </p> -->
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             @endif

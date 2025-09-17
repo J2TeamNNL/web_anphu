@@ -69,7 +69,7 @@
                     </a>
 
                     @foreach($childCategories as $child)
-                        <a 
+                        <a
                             href="{{ route('projects.byCategory', ['slug' => $parentCategory->slug, 'child' => $child->slug]) }}"
                             class="btn btn-sm btn-luxury {{ ($selectedChild && $selectedChild->id === $child->id) ? 'active' : '' }}">
                             {{ $child->name }}
@@ -107,7 +107,7 @@
                                         <i class="fa fa-building mr-2 text-warning"></i> Số tầng:
                                         {{ $item->floors ?? 'N/A' }}
                                     </p>
-                                    
+
                                     <p class="mb-0">
                                         <i class="fa fa-paint-brush mr-2 text-warning"></i> Phong cách:
                                         {{ $item->category?->name ?? 'Không rõ' }}
@@ -122,7 +122,7 @@
     </section>
 
     @include('customers.partials.sign_up_1')
-    @include('customers.partials.anphu.partner')   
+    @include('customers.partials.anphu.partner')
 @endsection
 
 @push('scripts')
