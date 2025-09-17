@@ -121,7 +121,7 @@
             @if (isset($item['projects']) && count($item['projects']) > 0)
                 <h3 class="heading-demo-project">{{ $item['category']->name }}</h3>
                 <hr class="border-warning">
-                <div class="row">
+                <div class="row project-grid">
                     @foreach ($item['projects'] as $portfolio)
                         <a href="{{ route('customers.project.detail', ['slug' => $portfolio->slug]) }}" class="text-decoration-none">
                             <div class="col-md-4 mb-4 project-item">
