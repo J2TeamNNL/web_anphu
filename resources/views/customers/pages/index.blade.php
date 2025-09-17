@@ -55,7 +55,7 @@
     /* Carousel indicators tụt hẳn xuống dưới */
     .carousel-indicators.custom-indicators {
         position: absolute;
-        bottom: -48px; /* -25px trước + -30px nữa = -55px */
+        bottom: -40px; /* Đặt indicators trong khu vực spacing section */
         left: 50%;
         transform: translateX(-50%);
         display: flex;
@@ -96,7 +96,7 @@
     @endphp
 
     @if(count($images) > 0)
-        <div id="contactImageCarousel" class="carousel slide contact-carousel mb-4" data-ride="carousel">
+        <div id="contactImageCarousel" class="carousel slide contact-carousel" data-ride="carousel" style="margin-bottom: 0;">
             <div class="carousel-inner">
                 @foreach($images as $index => $img)
                     <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
@@ -122,6 +122,16 @@
     @else
         <p class="text-center">Chưa có hình ảnh liên hệ nào.</p>
     @endif
+
+    <!-- Spacing Section -->
+    <section style="
+        background-image: linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+            url('/assets/img/gallery/background_danmask_1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 60px;
+    "></section>
 
     <!-- Hero Section -->
     <section class="hero-static-slider d-flex align-items-center justify-content-center py-3 py-md-5" id="hero-static-slider"
