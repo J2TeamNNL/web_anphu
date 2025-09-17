@@ -1,6 +1,7 @@
 @props([
     'title' => 'ĐĂNG KÝ NHẬN MẪU BẢN VẼ MIỄN PHÍ',
     'showValues' => false,
+    'showImage' => true,
     'style' => 'default', // default, voucher
     'class' => ''
 ])
@@ -201,14 +202,16 @@
 @if($style === 'voucher')
     <div class="row no-gutters shadow rounded overflow-hidden voucher-container {{ $class }}">
         <!-- Cột ảnh bên trái -->
+        @if($showImage)
         <div class="col-md-6 voucher-card-preview">
             <div class="voucher-card">
                 <img src="{{ asset('assets/img/gallery/anphu_card.jpg') }}" alt="Ưu đãi">
             </div>
         </div>
+        @endif
 
         <!-- Cột form bên phải -->
-        <div class="col-md-6 p-4 d-flex flex-column justify-content-center voucher-form">
+        <div class="{{ $showImage ? 'col-md-6' : 'col-md-12' }} p-4 d-flex flex-column justify-content-center voucher-form">
             <form class="consulting-form" method="POST" action="{{ route('consulting_requests.store') }}">
                 @csrf
                 <div class="form-row">

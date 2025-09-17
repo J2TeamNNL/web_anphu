@@ -11,7 +11,7 @@
     // Load from database with fallback to config
     $companySetting = company();
     $socialMedia = $companySetting?->social_links ?? [];
-    
+
     // Định nghĩa danh sách đầy đủ các social media có thể có
     $availableSocialMedia = [
         'facebook' => [
@@ -20,14 +20,14 @@
             'name' => 'Facebook'
         ],
         'tiktok' => [
-            'icon' => 'fab fa-tiktok', 
+            'icon' => 'fab fa-tiktok',
             'color' => '#000000',
             'name' => 'TikTok',
             'logo' => 'assets/img/logo/logo_tiktok.png'
         ],
         'youtube' => [
             'icon' => 'fab fa-youtube',
-            'color' => '#ff0000', 
+            'color' => '#ff0000',
             'name' => 'YouTube'
         ],
         'zalo' => [
@@ -48,23 +48,23 @@
         ],
         'twitter' => [
             'icon' => 'fab fa-twitter',
-            'color' => '#1da1f2', 
+            'color' => '#1da1f2',
             'name' => 'Twitter'
         ]
     ];
-    
+
     // Filter platforms if specified
     if ($platforms && is_array($platforms)) {
         $socialMedia = array_intersect_key($socialMedia, array_flip($platforms));
     }
-    
+
     // Size classes
     $sizeClasses = [
         'small' => 'social-sm',
-        'medium' => 'social-md', 
+        'medium' => 'social-md',
         'large' => 'social-lg'
     ];
-    
+
     // Style classes
     $styleClasses = [
         'default' => 'social-default',
@@ -72,8 +72,8 @@
         'minimal' => 'social-minimal',
         'footer' => 'social-footer'
     ];
-    
-    $containerClass = 'social-media-container ' . 
+
+    $containerClass = 'social-media-container ' .
     ($sizeClasses[$size] ?? 'social-md') . ' ' .
     ($styleClasses[$style] ?? 'social-default') . ' ' .
     ($direction === 'vertical' ? 'social-vertical' : 'social-horizontal') . ' ' .
@@ -83,12 +83,12 @@
 <div class="{{ $containerClass }}">
     @foreach($availableSocialMedia as $platform => $social)
         @if(isset($socialMedia[$platform]))
-            <a href="{{ $socialMedia[$platform] }}" 
-            class="social-link social-{{ $platform }}" 
-            target="_blank" 
+            <a href="{{ $socialMedia[$platform] }}"
+            class="social-link social-{{ $platform }}"
+            target="_blank"
             title="{{ $social['name'] }}"
             data-platform="{{ $platform }}">
-                
+
                 <span class="social-icon">
                     @if($social['icon'])
                         <i class="{{ $social['icon'] }}"></i>
@@ -100,7 +100,7 @@
                         >
                     @endif
                 </span>
-                
+
                 @if($showLabels)
                     <span class="social-label">{{ $social['name'] }}</span>
                 @endif

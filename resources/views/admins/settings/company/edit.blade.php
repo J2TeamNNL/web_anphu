@@ -61,16 +61,16 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="font-weight-bold">Người đại diện</label>
-                            <input 
-                                type="text" 
-                                class="form-control @error('director') is-invalid @enderror" 
-                                name="director" 
+                            <input
+                                type="text"
+                                class="form-control @error('director') is-invalid @enderror"
+                                name="director"
                                 placeholder="Tên người đại diện pháp luật"
                                 value="{{ old('director', $setting->director ?? '') }}"
                             >
                             @error('director')
                                 <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror    
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -173,9 +173,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="font-weight-bold">Địa chỉ 1</label>
-                            <textarea 
-                                name="company_address_1" 
-                                class="form-control" 
+                            <textarea
+                                name="company_address_1"
+                                class="form-control"
                                 rows="3"
                                 placeholder="Địa chỉ trụ sở chính"
                             >{{ old('company_address_1', $setting->company_address_1) }}</textarea>
@@ -184,9 +184,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="font-weight-bold">Địa chỉ 2</label>
-                            <textarea 
-                                name="company_address_2" 
-                                class="form-control" 
+                            <textarea
+                                name="company_address_2"
+                                class="form-control"
                                 rows="3"
                                 placeholder="Địa chỉ chi nhánh (nếu có)"
                             >{{ old('company_address_2', $setting->company_address_2) }}</textarea>
@@ -271,16 +271,16 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="font-weight-bold"><i class="fab fa-facebook text-primary"></i> Facebook</label>
-                            <input type="url" name="social_links[facebook]" class="form-control" 
-                                value="{{ old('social_links.facebook', $setting->social_links['facebook'] ?? '') }}" 
+                            <input type="url" name="social_links[facebook]" class="form-control"
+                                value="{{ old('social_links.facebook', $setting->social_links['facebook'] ?? '') }}"
                                 placeholder="https://www.facebook.com/yourpage">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="font-weight-bold"><i class="fab fa-youtube text-danger"></i> YouTube</label>
-                            <input type="url" name="social_links[youtube]" class="form-control" 
-                                value="{{ old('social_links.youtube', $setting->social_links['youtube'] ?? '') }}" 
+                            <input type="url" name="social_links[youtube]" class="form-control"
+                                value="{{ old('social_links.youtube', $setting->social_links['youtube'] ?? '') }}"
                                 placeholder="https://www.youtube.com/channel/xxxx">
                         </div>
                     </div>
@@ -290,16 +290,16 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="font-weight-bold"><i class="fab fa-tiktok text-dark"></i> TikTok</label>
-                            <input type="url" name="social_links[tiktok]" class="form-control" 
-                                value="{{ old('social_links.tiktok', $setting->social_links['tiktok'] ?? '') }}" 
+                            <input type="url" name="social_links[tiktok]" class="form-control"
+                                value="{{ old('social_links.tiktok', $setting->social_links['tiktok'] ?? '') }}"
                                 placeholder="https://www.tiktok.com/@username">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="font-weight-bold"><img src="{{ asset('assets/img/logo/logo_zalo.png') }}" alt="Zalo" style="height: 30px;"> Zalo</label>
-                            <input type="url" name="social_links[zalo]" class="form-control" 
-                                value="{{ old('social_links.zalo', $setting->social_links['zalo'] ?? '') }}" 
+                            <input type="url" name="social_links[zalo]" class="form-control"
+                                value="{{ old('social_links.zalo', $setting->social_links['zalo'] ?? '') }}"
                                 placeholder="https://www.zalo.me/username">
                         </div>
                     </div>

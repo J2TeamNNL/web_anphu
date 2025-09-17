@@ -1,10 +1,10 @@
 /*   ROOT VARIABLES & GLOBALS
 --------------------------- */
 :root {
-    --color-primary: #070f47;    
+    --color-primary: #070f47;
     /* --color-secondary: #e2b605; */
     --color-secondary: #C9B037;
-    --color-dark: #181f2f;            
+    --color-dark: #181f2f;
     --color-white: #ffffff;
     --color-gray: #f7f7fda6;
     --color-text: #444;
@@ -464,50 +464,50 @@ body {
     .anphu-logo {
         height: 45px;
     }
-    
+
     .social-links {
         justify-content: center;
         margin: 0.5rem 0;
     }
-    
+
     .company-info {
         text-align: center;
         margin-bottom: 1rem;
     }
-    
+
     .company-info .info-item {
         white-space: normal;
         text-overflow: unset;
     }
-    
+
     .navbar-nav .nav-link {
         padding: 0.75rem 1rem;
     }
-    
+
     .dropdown-item {
         padding: 0.75rem 1.5rem;
     }
-    
+
     .footer-info .col-lg-4,
     .footer-info .col-md-6 {
         margin-bottom: 2rem;
     }
-    
+
     .social-buttons {
         flex-direction: column;
         gap: 0.75rem;
     }
-    
+
     .footer-social {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
     }
-    
+
     .footer-bottom {
         text-align: center;
     }
-    
+
     .footer-bottom .col-md-6 {
         margin-bottom: 1rem;
     }
@@ -910,7 +910,6 @@ BUTTONS
     background-size: auto;
     background-attachment: fixed; /* parallax */
     position: relative;
-    border-bottom: 2px solid var(--anphu-gold);
 }
 
 .footer-wrapper {
@@ -918,7 +917,7 @@ BUTTONS
 }
 
 .footer-info a {
-    color: var(--color-secondary);
+    color: white;
 }
 .footer-info a:hover {
     color: var(--color-secondary);
@@ -1028,7 +1027,7 @@ BUTTONS
     width: 80px;
     height: 80px;
     background-color: #fff;
-    border: 3px solid var(--color-secondary); 
+    border: 3px solid var(--color-secondary);
     border-radius: 50%;
     z-index: 10;
 }
@@ -1044,7 +1043,7 @@ BUTTONS
     border: 3px solid var(--color-primary);
     border-radius: 50%;
     z-index: 10;
-    
+
 }
 
 /* Icon vòng tròn */
@@ -1453,24 +1452,24 @@ BUTTONS
         background-attachment: scroll; /* Better performance on mobile */
         padding: 2rem 0;
     }
-    
+
     .hero-static-slider .slide-content-box {
         margin: 1rem 0;
         padding: 1.5rem !important;
     }
-    
+
     .hero-static-slider h2 {
         font-size: 1.1rem !important;
         line-height: 1.3;
         margin-bottom: 1rem !important;
     }
-    
+
     .hero-static-slider ul li {
         font-size: 0.85rem;
         line-height: 1.4;
         margin-bottom: 0.75rem !important;
     }
-    
+
     .hero-static-slider .content-secondary {
         display: inline-block;
         word-break: break-word;
@@ -1482,22 +1481,22 @@ BUTTONS
         min-height: 50vh;
         padding: 1.5rem 0;
     }
-    
+
     .hero-static-slider .slide-content-box {
         padding: 1rem !important;
         margin: 0.5rem;
     }
-    
+
     .hero-static-slider h2 {
         font-size: 1rem !important;
         text-align: center;
     }
-    
+
     .hero-static-slider ul li {
         font-size: 0.8rem;
         margin-bottom: 0.5rem !important;
     }
-    
+
     .hero-static-slider .fas {
         font-size: 0.8rem;
     }
@@ -1507,15 +1506,15 @@ BUTTONS
     .hero-static-slider {
         min-height: 65vh;
     }
-    
+
     .hero-static-slider .slide-content-box {
         padding: 2rem !important;
     }
-    
+
     .hero-static-slider h2 {
         font-size: 1.3rem !important;
     }
-    
+
     .hero-static-slider ul li {
         font-size: 0.9rem;
     }
@@ -1525,11 +1524,11 @@ BUTTONS
     .hero-static-slider {
         min-height: 75vh;
     }
-    
+
     .hero-static-slider .slide-content-box {
         padding: 2.5rem !important;
     }
-    
+
     .hero-static-slider h2 {
         font-size: 1.5rem !important;
     }

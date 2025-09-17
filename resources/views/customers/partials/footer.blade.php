@@ -29,7 +29,6 @@
     <div class="container footer-wrapper">
         <div class="row">
             <div class="col-md-6 mb-4">
-                <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Thông Tin Liên Hệ</h5>
                 <p><strong>{{ company()->company_name }}</strong></p>
                 <p>
                     <i class="fa fa-home mr-1 text-warning"></i>
@@ -48,32 +47,32 @@
                 </p>
 
                 <p>
+                    <i class="fas fa-phone me-2 text-warning"></i>
+                    <span style="font-weight: bold" class="text-warning">
+                        Zalo:
+                    </span>
                     <a href="tel:{{ company()->company_phone_1 ?? ''}}">
-                        <i class="fas fa-phone me-2 text-warning"></i>
-                        <span style="font-weight: bold" class="text-warning">
-                            Zalo:
-                        </span>
                         {{ company()->company_phone_1 ?? ''}}
                     </a>
-                    
+
                 </p>
 
                 <p>
+                    <i class="fas fa-phone me-2 text-warning"></i>
+                    <span style="font-weight: bold" class="text-warning">
+                        Hotline:
+                    </span>
                     <a href="tel:{{ company()->company_phone_2 ?? ''}}">
-                        <i class="fas fa-phone me-2 text-warning"></i>
-                        <span style="font-weight: bold" class="text-warning">
-                            Hotline:
-                        </span>
                         {{ company()->company_phone_2 ?? ''}}
                     </a>
                 </p>
 
                 <p>
+                    <i class="fa fa-envelope me-2 text-warning"></i>
+                    <span style="font-weight: bold" class="text-warning">
+                        Email:
+                    </span>
                     <a href="mailto:{{ company()->company_email ?? ''}}">
-                        <i class="fa fa-envelope me-2 text-warning"></i>
-                        <span style="font-weight: bold" class="text-warning">
-                            Email:
-                        </span>
                         {{ company()->company_email ?? ''}}
                     </a>
                 </p>
@@ -119,10 +118,10 @@
             </div>
         </div>
     </div>
-    <div class="footer-copyright text-center py-3 mt-4" style="border-top: 1px solid #C9B037">
-        <p style="font-family: 'Great Vibes', cursive">
+    <div class="footer-copyright text-center py-3 mt-4" style="border-top: .5px solid #C9B037">
+        <span style="font-family: 'Great Vibes', cursive">
             © {{ date('Y') }} An Phú Build. All rights reserved.
-        </p>
+        </span>
     </div>
 </footer>
 

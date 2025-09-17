@@ -41,22 +41,9 @@
         font-family: 'Poppins', sans-serif;
         text-transform: uppercase;
         letter-spacing: 1.5px;
-        background: linear-gradient(90deg, var(--anphu-gold), var(--anphu-gold-2));
+        background: #ffc107;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-    }
-
-    .heading-contact-2 {
-        text-align: center;
-        font-weight: 700;
-        font-family: 'Poppins', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        background: linear-gradient(90deg, #d6aa3a, #d4a537);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-        text-shadow: 0 0 10px rgba(201,176,55,0.6);
     }
 
     /* Nội dung chính */
@@ -109,7 +96,7 @@
     .blog-overlay p {
         color: var(--lux-text-light);
     }
-    
+
     /* Carousel */
     .contact-carousel {
         width: 100vw;
@@ -173,109 +160,94 @@
 @section('content')
 
 <section class="py-5 section-bg-contact">
+    <h4 class="heading-contact mb-4">Liên hệ với chúng tôi</h4>
 
-    <h4 class="heading-contact">Liên hệ với chúng tôi</h4>
-
-    @php
-        preg_match_all('/<img[^>]+src="([^">]+)"/i', $page->custom_content_1 ?? '', $matches);
-        $images = array_unique($matches[1] ?? []); // loại bỏ ảnh trùng
-    @endphp
-
-    @if(count($images) > 0)
-        <div id="contactImageCarousel" class="carousel slide contact-carousel mb-4" data-ride="carousel">
-            <div class="carousel-inner">
-                @foreach($images as $index => $img)
-                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                        <img src="{{ $img }}" alt="Slide {{ $index + 1 }}">
+    <div class="container py-3">
+        <div class="row">
+            <!-- Cột 1: Map -->
+            <div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-start mb-3 mb-md-0">
+                <div class="text-left">
+                    <div>
+                        <i class="fa fa-map-marker-alt mr-1 text-warning"></i>
+                        <span class="text-white">
+                            {{ company()->company_address_1 ?? '' }}
+                        </span>
                     </div>
-                @endforeach
+                    <div class="mt-2">
+                        <i class="fa fa-map-marker-alt mr-1 text-warning"></i>
+                        <span class="text-white">
+                            {{ company()->company_address_2 ?? '' }}
+                        </span>
+                    </div>
+                </div>
             </div>
 
-            {{-- 3 chấm dưới carousel --}}
-            <ol class="carousel-indicators custom-indicators">
-                @foreach($images as $index => $img)
-                    <li data-target="#contactImageCarousel" data-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"></li>
-                @endforeach
-            </ol>
+            <!-- Cột 2: Điện thoại -->
+            <div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-start mb-3 mb-md-0">
+                <div class="text-left">
+                    <div>
+                        <a href="tel:{{ company()->company_phone_1 ?? '' }}">
+                            <i class="fa fa-phone-alt mr-1 text-warning"></i>
+                            <span class="text-white">
+                                {{ company()->company_phone_1 ?? '' }}
+                            </span>
+                        </a>
+                    </div>
+                    <div class="mt-2">
+                        <a href="tel:{{ company()->company_phone_2 ?? '' }}">
+                            <i class="fa fa-phone-alt mr-1 text-warning"></i>
+                            <span class="text-white">
+                                {{ company()->company_phone_2 ?? '' }}
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-            <a class="carousel-control-prev" href="#contactImageCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            </a>
-            <a class="carousel-control-next" href="#contactImageCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            </a>
+            <!-- Cột 3: Email -->
+            <div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-start mb-3 mb-md-0">
+                <div class="text-left">
+                    <div>
+                        <a href="mailto:{{ company()->company_email ?? '' }}">
+                            <i class="fa fa-envelope mr-1 text-warning"></i>
+                            <span class="text-white">
+                                {{ company()->company_email ?? '' }}
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-    @else
-        <p class="text-center">Chưa có hình ảnh liên hệ nào.</p>
-    @endif
-    
+    </div>
+
     <hr>
 
     <div class="container">
-        {{-- PHẦN MAP --}}
-        <div class="mb-5">
-            <h5 class="lux-map-title">Bản Đồ</h5>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <div class="embed-responsive embed-responsive-4by3 border rounded">
-                        <iframe
-                            src="{{ company()->google_map['embed_url'] ?? '' }}"
-                            style="border:0;"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <div class="embed-responsive embed-responsive-4by3 border rounded">
-                        <iframe
-                            src="{{ company()->google_map_2['embed_url'] ?? '' }}"
-                            style="border:0;"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
+        {{-- FORM LIÊN HỆ & MAP --}}
+        <div class="row">
+            <!-- Bên trái: Form liên hệ -->
+            <div class="col-md-6 mb-4">
+                @include('customers.partials.sign_up_3')
+            </div>
+
+            <!-- Bên phải: Map -->
+            <div class="col-md-6 mb-4">
+                <div class="embed-responsive embed-responsive-4by3 border rounded">
+                    <iframe
+                        src="{{ company()->google_map['embed_url'] ?? '' }}"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
             </div>
-        </div>
-        {{-- FORM ĐĂNG KÝ --}}
-        <div class="mt-5">
-            <h5 class="lux-map-title">Đăng ký ngay để nhận ưu đãi</h5>
-            @include('customers.partials.sign_up_2')
         </div>
 
     </div>
 </section>
 
-<section class="py-5 section-bg-contact">
-    <div class="container">
-        <div class="row contact-content">
-            {{-- SƠ LƯỢC --}}
-            <div class="col-md-12" data-aos="fade-right">
-                <h2 class="heading-contact">{{ $page->title_2 }}</h2>
-                {!! $page->custom_content_2 !!}
-            </div>
-        </div>
-        <div class="row mt-4 contact-extra-content" data-aos="fade-up">
-            <x-article-list 
-                :articles="$congTrinhArticles" 
-                title="Dự án thi công"
-                :show-category="true"
-                :show-date="true" />
-            
-            <x-customer-feedback 
-                :articles="$camNhanArticles" 
-                title="Cảm nhận khách hàng"
-                :show-category="true"
-                :show-date="true" />
-        </div>
-    </div>
-    </section>
 
-
-@include('customers.partials.anphu.demo_projects')
 @include('customers.partials.anphu.partner')
 
 @endsection
