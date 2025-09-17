@@ -95,6 +95,16 @@
         $images = array_unique($matches[1] ?? []); // loại bỏ ảnh trùng
     @endphp
 
+    <!-- Top Spacing Section -->
+    <section style="
+        background-image: linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+            url('/assets/img/gallery/background_danmask_1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 40px;
+    "></section>
+
     @if(count($images) > 0)
         <div id="contactImageCarousel" class="carousel slide contact-carousel" data-ride="carousel" style="margin-bottom: 0;">
             <div class="carousel-inner">
