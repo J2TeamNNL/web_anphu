@@ -169,16 +169,16 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const grid = document.querySelectorAll('.project-grid');
+        const grids = document.querySelectorAll('.project-grid');
 
-        if (!grid.length) return;
+        if (!grids.length) return;
 
-        foreach (const g of grid) {
-            const iso = new Isotope(g, {
+        grids.forEach(grid => {
+            new Isotope(grid, {
                 itemSelector: '.project-item',
                 layoutMode: 'fitRows'
             });
-        }
+        });
     });
 </script>
-@e
+@endpush
