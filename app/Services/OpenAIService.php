@@ -127,17 +127,14 @@ class OpenAIService
     /**
      * Tối ưu nội dung bài đăng với Assistant
      */
-    public function optimizePostContent(string $content, ?string $threadId = null): array
+    public function optimizePostContent(string $content): array
     {
         $assistantId = config('openai.assistant.id');
         if (!$assistantId) {
             throw new Exception('Assistant ID chưa được cấu hình. Hãy tạo assistant trước.');
         }
 
-        // Tạo thread mới nếu không có
-        if (!$threadId) {
-            $threadId = $this->createThread();
-        }
+        $threadId = config('openai.assistant.thread_id');
 
         // Thêm message vào thread
         $this->addMessageToThread($threadId, $content);
