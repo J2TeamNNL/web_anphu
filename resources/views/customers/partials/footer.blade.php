@@ -88,32 +88,23 @@
             </div>
 
             <div class="col-md-6 mb-4">
-                <h5 class="text-uppercase font-weight-bold border-left pl-2 mb-3">Bản Đồ</h5>
-
-                <div class="embed-responsive embed-responsive-4by3 border rounded">
-                    <iframe
-                        src="{{ company()->google_map['embed_url'] ?? '' }}"
-                        width="500"
-                        height="450"
-                        style="border:0;"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
+                <div 
+                    class="fb-page" 
+                    data-href="https://www.facebook.com/100054259791134" 
+                    data-tabs="timeline" 
+                    data-width="500" 
+                    data-height="600" 
+                    data-small-header="false" 
+                    data-adapt-container-width="true" 
+                    data-hide-cover="false" 
+                    data-show-facepile="true"
+                >
+                    <blockquote 
+                        cite="https://www.facebook.com/100054259791134" 
+                        class="fb-xfbml-parse-ignore"
                     >
-                    </iframe>
-                </div>
-                <hr>
-                <div class="embed-responsive embed-responsive-4by3 border rounded">
-                    <iframe
-                        src="{{ company()->google_map_2['embed_url'] ?? '' }}"
-                        width="500"
-                        height="450"
-                        style="border:0;"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                    >
-                    </iframe>
+                        <a href="https://www.facebook.com/100054259791134">An Phú Build</a>
+                    </blockquote>
                 </div>
             </div>
         </div>

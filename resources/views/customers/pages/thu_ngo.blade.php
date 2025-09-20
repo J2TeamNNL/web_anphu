@@ -62,8 +62,6 @@
         </div>
     </section>
 
-    @include('customers.partials.anphu.demo_projects')
-
     @include('customers.partials.sign_up_1')
 
     

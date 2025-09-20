@@ -2,12 +2,30 @@
     'title' => 'ĐĂNG KÝ NHẬN MẪU BẢN VẼ MIỄN PHÍ',
     'showValues' => false,
     'showImage' => true,
-    'style' => 'default', // default, voucher
+    'style' => 'default', // default, voucher, map
     'class' => ''
 ])
 
 @push('styles')
 <style>
+    :root {
+        --lux-dark: #0b1c2c;
+        --lux-dark-2: #081420;
+        --lux-text-light: #f5f2e7;
+        --anphu-gold: #d6aa3a;
+        --anphu-gold-2: #d4a537;
+    }
+
+    .consulting-form-container {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 2px solid var(--anphu-gold);
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(214, 170, 58, 0.2);
+        padding: 2rem;
+        margin: 2rem 0;
+        color: var(--lux-text-light);
+    }
+
     .consulting-overlay {
         position: fixed;
         top: 0;
@@ -109,52 +127,62 @@
         }
     }
 
-    /* Voucher style */
-    :root {
-        --lux-dark: #0b1c2c;
-        --lux-dark-2: #081420;
-        --lux-gold: #C9B037;
-        --lux-gold-light: #e4c465;
-        --lux-gold-dark: #b2972b;
-        --lux-text-dark: #0b1c2c;
-        --lux-text-light: #f5f2e7;
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(214, 170, 58, 0.3);
+        border-radius: 8px;
+        color: var(--lux-text-light);
+        transition: border-color 0.3s ease;
     }
 
+    .form-control::placeholder {
+        color: rgba(245, 242, 231, 0.7);
+    }
+
+    .form-control:focus {
+        background-color: rgba(255, 255, 255, 0.15);
+        border-color: var(--anphu-gold);
+        box-shadow: 0 0 0 0.2rem rgba(214, 170, 58, 0.25);
+        color: var(--lux-text-light);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--anphu-gold), var(--anphu-gold-2));
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, var(--anphu-gold-2), var(--anphu-gold));
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(214, 170, 58, 0.4);
+    }
+
+    /* Voucher style */
     .voucher-container {
         border: 2px solid var(--lux-dark-2);
         border-radius: 30px !important;
-        background: linear-gradient(135deg, var(--lux-gold-light) 0%, var(--lux-gold) 50%, var(--lux-gold-dark) 100%);
+        background: linear-gradient(135deg, var(--anphu-gold-light, #e4c465) 0%, var(--anphu-gold) 50%, var(--anphu-gold-2) 100%);
         padding: 1.5rem;
     }
 
     .voucher-form {
-        color: var(--lux-text-dark);
+        color: var(--lux-text-dark, #0b1c2c);
     }
 
     .voucher-form .form-control,
     .voucher-form textarea {
         background-color: transparent;
         border: 1px solid var(--lux-dark-2);
-        color: var(--lux-text-dark);
+        color: var(--lux-text-dark, #0b1c2c);
     }
 
     .voucher-form .form-control::placeholder {
         color: var(--lux-dark);
-    }
-
-    .voucher-form .btn.btn-submit {
-        background-color: #0c2b3a !important;
-        border-color: #0c2b3a !important;
-        color: var(--lux-text-dark) !important;
-        font-weight: bold;
-    }
-
-    .voucher-form .btn.btn-submit:hover {
-        background-color: #0c2b3a !important;
-        border-color: #0c2b3a !important;
-        color: var(--lux-text-dark) !important;
-        box-shadow: 0 0 0 0.2rem rgba(12, 43, 58, 0.25);
-        filter: brightness(1.05);
     }
 
     .voucher-card-preview {
@@ -182,10 +210,14 @@
 
     .voucher-card:hover {
         transform: scale(1.03);
-        box-shadow: 0 12px 30px rgba(201,176,55,0.4);
+        box-shadow: 0 12px 30px rgba(214, 170, 58, 0.4);
     }
 
     @media (max-width: 767.98px) {
+        .consulting-form-container {
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
         .voucher-container {
             border-radius: 20px !important;
         }
@@ -231,92 +263,164 @@
                 </div>
 
                 <div class="form-group text-center">
-                    <button type="submit" class="btn btn-submit btn-block">GỬI YÊU CẦU</button>
+                    <button type="submit" class="btn btn-primary btn-block">GỬI YÊU CẦU</button>
                 </div>
 
-                <p class="small mb-1">
-                    Sau khi nhận được yêu cầu của Quý khách, tư vấn viên của chúng tôi sẽ liên hệ trong thời gian sớm nhất
-                </p>
-                <p class="small mb-0">
-                    <strong>Hotline:</strong>
-                    <a href="tel:{{ company()->company_phone_1 }}">
-                        <span class="font-weight-bold">{{ company()->company_phone_1 }}</span>
-                    </a>
-                    <br>
-                    <strong>Email:</strong>
-                    <a href="mailto:{{ company()->company_email }}">
-                        <span class="font-weight-bold">{{ company()->company_email }}</span>
-                    </a>
-                </p>
+                <div class="text-center">
+                    <p class="small text-muted mb-2">Hoặc liên hệ qua:</p>
+                    <x-social-media
+                        size="small"
+                        style="default"
+                        class="d-flex justify-content-center"
+                    />
+                </div>
+            </form>
+        </div>
+    </div>
+@elseif($style === 'map')
+    <div class="row no-gutters shadow rounded overflow-hidden consulting-form-container {{ $class }}">
+        <!-- Cột bản đồ bên trái -->
+        @if($showImage)
+        <div class="col-md-6 p-3">
+            <div class="embed-responsive embed-responsive-4by3 border rounded">
+                <iframe
+                    src="{{ company()->google_map['embed_url'] ?? '' }}"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+        @endif
+
+        <!-- Cột form bên phải -->
+        <div class="{{ $showImage ? 'col-md-6' : 'col-md-12' }} p-4 d-flex flex-column justify-content-center">
+            <h4 class="text-center mb-4 font-weight-bold" style="color: var(--anphu-gold); text-transform: uppercase; letter-spacing: 1px;">{{ $title }}</h4>
+            
+            <form class="consulting-form" method="POST" action="{{ route('consulting_requests.store') }}">
+                @csrf
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="text" name="name" class="form-control" placeholder="Họ và tên">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại *" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="email" name="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" name="location" class="form-control" placeholder="Địa chỉ">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <textarea class="form-control" name="requirements" rows="3" placeholder="Nhu cầu (Diện tích đất, số tầng,...)"></textarea>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg px-5 mb-3">
+                        <i class="fa fa-paper-plane mr-2"></i>
+                        Đăng ký ngay
+                    </button>
+                    
+                    <div class="mt-3">
+                        <p class="small text-muted mb-2">Hoặc liên hệ qua:</p>
+                        <x-social-media
+                            size="medium"
+                            style="default"
+                            class="d-flex justify-content-center"
+                        />
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 @else
-    <section class="py-5 position-relative section-bg-signup {{ $class }}"
-        style="background-image: url('{{ asset('assets/img/gallery/form_background.webp') }}'); background-size: cover; background-attachment: fixed; background-position: center;">
-        <div class="container py-5">
-            <div class="row">
-                @if($showValues)
-                <!-- LEFT: Values -->
-                <div class="col-lg-6 mb-4">
-                    <h4 class="text-warning font-weight-bold">NHỮNG GIÁ TRỊ VƯỢT TRỘI AN PHÚ MANG ĐẾN</h4>
-                    <ul class="text-white mt-4 pl-3">
-                        <li>Thiết kế thể hiện cá tính, <span class="content-amplify">phong cách sống</span> của gia chủ</li>
-                        <li>Ứng dụng <span class="content-amplify">Phong thủy khoa học</span> vào thiết kế</li>
-                        <li>
-                            Đảm bảo thiết kế phù hợp với ngân sách, <span class="content-amplify">không phát sinh</span>,
-                            tính toán phương án thi công khả thi thực dụng,
-                            phù hợp với mọi đối tượng khách hàng
-                        </li>
-                        <li>Kiểm tra <span class="content-amplify">quy hoạch pháp lý</span> trước khi thiết kế</li>
+    <div class="row no-gutters shadow rounded overflow-hidden consulting-form-container {{ $class }}">
+        <!-- Cột thông tin bên trái -->
+        @if($showValues)
+        <div class="col-lg-6 mb-4 p-4">
+            <h4 class="text-warning font-weight-bold">NHỮNG GIÁ TRỊ VƯỢT TRỘI AN PHÚ MANG ĐẾN</h4>
+            <ul class="text-white mt-4 pl-3">
+                <li>Thiết kế thể hiện cá tính, <span class="content-amplify">phong cách sống</span> của gia chủ</li>
+                <li>Ứng dụng <span class="content-amplify">Phong thủy khoa học</span> vào thiết kế</li>
+                <li>
+                    Đảm bảo thiết kế phù hợp với ngân sách, <span class="content-amplify">không phát sinh</span>,
+                    tính toán phương án thi công khả thi thực dụng,
+                    phù hợp với mọi đối tượng khách hàng
+                </li>
+                <li>Kiểm tra <span class="content-amplify">quy hoạch pháp lý</span> trước khi thiết kế</li>
+            </ul>
+        </div>
+        @endif
+
+        <!-- Cột form bên phải -->
+        <div class="{{ $showValues ? 'col-lg-6' : 'col-12' }} p-4 d-flex flex-column justify-content-center">
+            <h4 class="text-center mb-4 font-weight-bold" style="color: var(--anphu-gold); text-transform: uppercase; letter-spacing: 1px;">{{ $title }}</h4>
+            
+            <form class="consulting-form" method="POST" action="{{ route('consulting_requests.store') }}">
+                @csrf
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="text" name="name" class="form-control" placeholder="Họ và tên">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại *" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="email" name="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" name="location" class="form-control" placeholder="Địa chỉ">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <textarea class="form-control" name="requirements" rows="3" placeholder="Nhu cầu (Diện tích đất, số tầng,...)"></textarea>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg px-5 mb-3">
+                        <i class="fa fa-paper-plane mr-2"></i>
+                        Đăng ký ngay
+                    </button>
+                    
+                    <div class="mt-3">
+                        <p class="small text-muted mb-2">Hoặc liên hệ qua:</p>
+                        <x-social-media
+                            size="medium"
+                            style="default"
+                            class="d-flex justify-content-center"
+                        />
+                    </div>
+                </div>
+            </form>
+
+            <div class="text-center mt-4">
+                <p class="small text-muted mb-1">
+                    Sau khi nhận được yêu cầu của Quý khách, tư vấn viên của chúng tôi sẽ liên hệ trong thời gian sớm nhất
+                </p>
+            </div>
+
+            @if ($errors->any())
+                <div class="alert alert-danger mt-3">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
                     </ul>
                 </div>
-                @endif
-
-                <!-- RIGHT: Form -->
-                <div class="{{ $showValues ? 'col-lg-6' : 'col-12' }}">
-                    <h4 class="text-warning font-weight-bold text-center">{{ $title }}</h4>
-                    <div id="consulting-form-wrapper">
-                        <form class="consulting-form text-dark p-4 rounded" method="post" action="{{ route('consulting_requests.store') }}">
-                            @csrf
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="name" placeholder="Họ tên">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <input type="tel" class="form-control" name="phone" placeholder="Số điện thoại *" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <input type="text" class="form-control" name="location" placeholder="Địa chỉ">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" name="requirements" rows="3" placeholder="Nhu cầu (Diện tích đất, số tầng,...)"></textarea>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <button type="submit" class="btn btn-warning mr-3">Đăng kí ngay</button>
-                                <x-social-media
-                                    size="small"
-                                    style="outline"
-                                    class="d-flex justify-content-center"
-                                />
-                            </div>
-                        </form>
-                    </div>
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                </div>
-            </div>
+            @endif
         </div>
-    </section>
+    </div>
 @endif
 
 <!-- OVERLAY -->
@@ -351,57 +455,47 @@
 @once
 @push('scripts')
 <script>
-document.querySelectorAll('.consulting-form').forEach(form => {
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
+document.querySelector('.consulting-form').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-        let formData = new FormData(form);
+    let formData = new FormData(this);
 
-        fetch(form.action, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
-                'Accept': 'application/json',
-            },
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) throw response;
-            return response.json();
-        })
-        .then(data => {
-            form.reset();
-            document.getElementById('consulting-thank-you-overlay').classList.remove('d-none');
-        })
+    fetch(this.action, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': this.querySelector('input[name="_token"]').value,
+            'Accept': 'application/json',
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) throw response;
+        return response.json();
+    })
+    .then(data => {
+        this.reset();
+        document.getElementById('consulting-thank-you-overlay').classList.remove('d-none');
+    })
+    .catch(async error => {
+        let errorText = 'Đã có lỗi xảy ra. Vui lòng thử lại!';
 
-        .catch(async error => {
-            let errorText = 'Đã có lỗi xảy ra. Vui lòng thử lại!';
+        if (error.status === 429) {
+            document.getElementById('consulting-error-overlay').classList.remove('d-none');
+            return;
+        }
 
-            // (429) Too Many Requests
-            if (error.status === 429) {
-                document.getElementById('consulting-error-overlay').classList.remove('d-none');
-                return;
-            }
-
-            // Validation
-            if (error.json) {
-                const err = await error.json();
-                if (err.errors) {
-                    // kiểm tra riêng lỗi phone
-                    if (err.errors.phone && err.errors.phone.some(msg => msg.includes('taken'))) {
-                        document.getElementById('consulting-error-overlay').classList.remove('d-none');
-                        return;
-                    }
-
-                    // nếu không phải phone thì hiện ra alert mặc định
-                    errorText = Object.values(err.errors).flat().join('<br>');
+        if (error.json) {
+            const err = await error.json();
+            if (err.errors) {
+                if (err.errors.phone && err.errors.phone.some(msg => msg.includes('taken'))) {
+                    document.getElementById('consulting-error-overlay').classList.remove('d-none');
+                    return;
                 }
+                errorText = Object.values(err.errors).flat().join('<br>');
             }
+        }
 
-            // Fallback alert
-            alert(errorText);
-        });
-
+        alert(errorText);
     });
 });
 

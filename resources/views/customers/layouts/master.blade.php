@@ -32,7 +32,8 @@
     
 </head>
 <body>
-    
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v23.0&appId=3841869905956912"></script>
     @include('customers.partials.top_bar')
     @include('customers.partials.nav_bar')
 

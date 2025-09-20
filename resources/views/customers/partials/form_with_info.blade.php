@@ -1,7 +1,6 @@
 <x-consulting-form
     title="ĐĂNG KÝ NHẬN MẪU BẢN VẼ MIỄN PHÍ"
     :showValues="true"
-    :showImage="true"
+    :showImage="false"
     style="default"
-    id="sign_up_1"
 />

@@ -52,6 +52,27 @@
         }
     }
 
+    /* CSS variables */
+    :root {
+        --lux-dark: #0b1c2c;
+        --anphu-gold: #d6aa3a;
+    }
+
+    /* Section background */
+    .section-bg-contact {
+        background-color: var(--lux-dark);
+        background-image:
+            linear-gradient(rgba(11, 28, 44, 0.85), rgba(11, 28, 44, 0.85)),
+            url('/assets/img/gallery/background_danmask_1.jpg');
+        background-position: center;
+        background-repeat: repeat;
+        background-size: auto;
+        background-attachment: fixed;
+        position: relative;
+        border-bottom: 2px solid var(--anphu-gold);
+        width: 100%;
+    }
+
     /* Carousel indicators tụt hẳn xuống dưới */
     .carousel-indicators.custom-indicators {
         position: absolute;
@@ -95,17 +116,18 @@
         $images = array_unique($matches[1] ?? []); // loại bỏ ảnh trùng
     @endphp
 
-    <!-- Top Spacing Section -->
-    <section style="
-        background-image: linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
-            url('/assets/img/gallery/background_danmask_1.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        height: 40px;
-    "></section>
-
     @if(count($images) > 0)
+        <!-- Top Spacing Section -->
+        <section style="
+            background-image: linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+                url('/assets/img/gallery/background_danmask_1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 40px;
+        "></section>
+
+        {{-- Carousel --}}
         <div id="contactImageCarousel" class="carousel slide contact-carousel" data-ride="carousel" style="margin-bottom: 0;">
             <div class="carousel-inner">
                 @foreach($images as $index => $img)
@@ -129,9 +151,6 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
             </a>
         </div>
-    @else
-        <p class="text-center">Chưa có hình ảnh liên hệ nào.</p>
-    @endif
 
     <!-- Spacing Section -->
     <section style="
@@ -142,6 +161,7 @@
         background-repeat: no-repeat;
         height: 60px;
     "></section>
+    @endif
 
     <!-- Hero Section -->
     <section class="hero-static-slider d-flex align-items-center justify-content-center py-3 py-md-5" id="hero-static-slider"
@@ -162,11 +182,13 @@
         </div>
     </section>
 
-    @include('customers.partials.anphu.demo_projects')
-
     @include('customers.partials.anphu.solution')
 
-    @include('customers.partials.sign_up_1')
+    <section class="py-5 section-bg-contact">
+        <div class="container">
+            @include('customers.partials.form_with_info')
+        </div>
+    </section>
 
     @include('customers.partials.anphu.partner')
 @endsection
