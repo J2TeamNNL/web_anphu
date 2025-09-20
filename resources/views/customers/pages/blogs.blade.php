@@ -159,7 +159,7 @@
     </div>
 </section>
 
-@include('customers.partials.sign_up_1')
+@include('customers.partials.form_signup_with_info')
 @include('customers.partials.anphu.partner')
 @endsection
 
