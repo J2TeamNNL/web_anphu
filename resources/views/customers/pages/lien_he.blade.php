@@ -186,7 +186,7 @@
             <div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-start mb-3 mb-md-0">
                 <div class="text-left">
                     <div>
-                        <a href="tel:{{ company()->company_phone_1 ?? '' }}">
+                        <a href="{{ company()->social_links['zalo'] ?? '' }}">
                             <i class="fa fa-phone-alt mr-1 text-warning"></i>
                             <span class="text-white">
                                 {{ company()->company_phone_1 ?? '' }}
@@ -244,8 +244,6 @@
                 <div class="mt-4 embed-responsive embed-responsive-4by3 border rounded">
                     <iframe
                         src="{{ company()->google_map_2['embed_url'] ?? '' }}"
-                        width="500"
-                        height="450"
                         style="border:0;"
                         allowfullscreen=""
                         loading="lazy"
