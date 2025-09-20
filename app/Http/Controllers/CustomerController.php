@@ -76,13 +76,6 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function voucher(){
-
-        $page = CustomPage::where('slug', 'uu-dai')->firstOrFail();
-
-        return view('customers.pages.uu_dai', compact('page'));
-    }
-
     // PORTFOLIOS
 
     public function projectByCategory(Request $request, string $slug)

@@ -1,8 +1,6 @@
 @props([
     'title' => 'ĐĂNG KÝ NHẬN MẪU BẢN VẼ MIỄN PHÍ',
-    'showValues' => false,
-    'showImage' => true,
-    'style' => 'default', // default, voucher, map
+    'showInfo' => false,
     'class' => ''
 ])
 
@@ -162,266 +160,97 @@
         box-shadow: 0 4px 15px rgba(214, 170, 58, 0.4);
     }
 
-    /* Voucher style */
-    .voucher-container {
-        border: 2px solid var(--lux-dark-2);
-        border-radius: 30px !important;
-        background: linear-gradient(135deg, var(--anphu-gold-light, #e4c465) 0%, var(--anphu-gold) 50%, var(--anphu-gold-2) 100%);
-        padding: 1.5rem;
-    }
-
-    .voucher-form {
-        color: var(--lux-text-dark, #0b1c2c);
-    }
-
-    .voucher-form .form-control,
-    .voucher-form textarea {
-        background-color: transparent;
-        border: 1px solid var(--lux-dark-2);
-        color: var(--lux-text-dark, #0b1c2c);
-    }
-
-    .voucher-form .form-control::placeholder {
-        color: var(--lux-dark);
-    }
-
-    .voucher-card-preview {
-        background-color: transparent;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-    }
-
-    .voucher-card {
-        overflow: hidden;
-        border-radius: 20px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-        max-width: 500px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .voucher-card img {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: cover;
-    }
-
-    .voucher-card:hover {
-        transform: scale(1.03);
-        box-shadow: 0 12px 30px rgba(214, 170, 58, 0.4);
-    }
-
     @media (max-width: 767.98px) {
         .consulting-form-container {
             padding: 1.5rem;
             margin: 1rem 0;
         }
-        .voucher-container {
-            border-radius: 20px !important;
-        }
-        .voucher-card-preview {
-            padding: 1rem;
-        }
-        .voucher-card {
-            max-width: 100%;
-        }
     }
 </style>
 @endpush
 
-@if($style === 'voucher')
-    <div class="row no-gutters shadow rounded overflow-hidden voucher-container {{ $class }}">
-        <!-- Cột ảnh bên trái -->
-        @if($showImage)
-        <div class="col-md-6 voucher-card-preview">
-            <div class="voucher-card">
-                <img src="{{ asset('assets/img/gallery/anphu_card.jpg') }}" alt="Ưu đãi">
+<div class="row no-gutters shadow rounded overflow-hidden consulting-form-container {{ $class }}">
+    <!-- Cột thông tin bên trái -->
+    @if($showInfo)
+    <div class="col-lg-6 mb-4 p-4">
+        <h4 class="text-warning font-weight-bold text-center">NHỮNG GIÁ TRỊ VƯỢT TRỘI AN PHÚ MANG ĐẾN</h4>
+        <ul class="text-white mt-4 pl-3">
+            <li>Thiết kế thể hiện cá tính, <span class="content-amplify">phong cách sống</span> của gia chủ</li>
+            <li>Ứng dụng <span class="content-amplify">Phong thủy khoa học</span> vào thiết kế</li>
+            <li>
+                Đảm bảo thiết kế phù hợp với ngân sách, <span class="content-amplify">không phát sinh</span>,
+                tính toán phương án thi công khả thi thực dụng,
+                phù hợp với mọi đối tượng khách hàng
+            </li>
+            <li>Kiểm tra <span class="content-amplify">quy hoạch pháp lý</span> trước khi thiết kế</li>
+        </ul>
+    </div>
+    @endif
+
+    <!-- Cột form bên phải -->
+    <div class="{{ $showInfo ? 'col-lg-6' : 'col-12' }} p-4 d-flex flex-column justify-content-center">
+        <h4 class="text-center mb-4 font-weight-bold" style="color: var(--anphu-gold); text-transform: uppercase; letter-spacing: 1px;">{{ $title }}</h4>
+        
+        <form class="consulting-form" method="POST" action="{{ route('consulting_requests.store') }}">
+            @csrf
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="text" name="name" class="form-control" placeholder="Họ và tên">
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại *" required>
+                </div>
             </div>
-        </div>
-        @endif
-
-        <!-- Cột form bên phải -->
-        <div class="{{ $showImage ? 'col-md-6' : 'col-md-12' }} p-4 d-flex flex-column justify-content-center voucher-form">
-            <form class="consulting-form" method="POST" action="{{ route('consulting_requests.store') }}">
-                @csrf
-                <div class="form-row">
-                    <div class="form-group col-6">
-                        <input type="text" name="name" class="form-control" placeholder="Họ và tên">
-                    </div>
-                    <div class="form-group col-6">
-                        <input type="text" name="phone" class="form-control" placeholder="Số điện thoại *" required>
-                    </div>
-                    <div class="form-group col">
-                        <input type="text" name="location" class="form-control" placeholder="Địa chỉ">
-                    </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="email" name="email" class="form-control" placeholder="Email">
                 </div>
-
-                <div class="form-group">
-                    <textarea class="form-control" name="requirements" rows="3" placeholder="Nhu cầu (Diện tích đất, số tầng,...)"></textarea>
+                <div class="form-group col-md-6">
+                    <input type="text" name="location" class="form-control" placeholder="Địa chỉ">
                 </div>
+            </div>
 
-                <div class="form-group text-center">
-                    <button type="submit" class="btn btn-primary btn-block">GỬI YÊU CẦU</button>
-                </div>
+            <div class="form-group">
+                <textarea class="form-control" name="requirements" rows="3" placeholder="Nhu cầu (Diện tích đất, số tầng,...)"></textarea>
+            </div>
 
-                <div class="text-center">
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg px-5 mb-3">
+                    <i class="fa fa-paper-plane mr-2"></i>
+                    Đăng ký ngay
+                </button>
+                
+                <div class="mt-1">
                     <p class="small text-muted mb-2">Hoặc liên hệ qua:</p>
                     <x-social-media
-                        size="small"
+                        size="medium"
                         style="default"
                         class="d-flex justify-content-center"
                     />
                 </div>
-            </form>
-        </div>
-    </div>
-@elseif($style === 'map')
-    <div class="row no-gutters shadow rounded overflow-hidden consulting-form-container {{ $class }}">
-        <!-- Cột bản đồ bên trái -->
-        @if($showImage)
-        <div class="col-md-6 p-3">
-            <div class="embed-responsive embed-responsive-4by3 border rounded">
-                <iframe
-                    src="{{ company()->google_map['embed_url'] ?? '' }}"
-                    style="border:0;"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
             </div>
+        </form>
+
+        @if(!$showInfo)
+        <div class="text-center mt-4">
+            <p class="small text-muted mb-1">
+                Sau khi nhận được yêu cầu của Quý khách, tư vấn viên của chúng tôi sẽ liên hệ trong thời gian sớm nhất
+            </p>
         </div>
         @endif
 
-        <!-- Cột form bên phải -->
-        <div class="{{ $showImage ? 'col-md-6' : 'col-md-12' }} p-4 d-flex flex-column justify-content-center">
-            <h4 class="text-center mb-4 font-weight-bold" style="color: var(--anphu-gold); text-transform: uppercase; letter-spacing: 1px;">{{ $title }}</h4>
-            
-            <form class="consulting-form" method="POST" action="{{ route('consulting_requests.store') }}">
-                @csrf
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <input type="text" name="name" class="form-control" placeholder="Họ và tên">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại *" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <input type="email" name="email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <input type="text" name="location" class="form-control" placeholder="Địa chỉ">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <textarea class="form-control" name="requirements" rows="3" placeholder="Nhu cầu (Diện tích đất, số tầng,...)"></textarea>
-                </div>
-
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-lg px-5 mb-3">
-                        <i class="fa fa-paper-plane mr-2"></i>
-                        Đăng ký ngay
-                    </button>
-                    
-                    <div class="mt-3">
-                        <p class="small text-muted mb-2">Hoặc liên hệ qua:</p>
-                        <x-social-media
-                            size="medium"
-                            style="default"
-                            class="d-flex justify-content-center"
-                        />
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-@else
-    <div class="row no-gutters shadow rounded overflow-hidden consulting-form-container {{ $class }}">
-        <!-- Cột thông tin bên trái -->
-        @if($showValues)
-        <div class="col-lg-6 mb-4 p-4">
-            <h4 class="text-warning font-weight-bold">NHỮNG GIÁ TRỊ VƯỢT TRỘI AN PHÚ MANG ĐẾN</h4>
-            <ul class="text-white mt-4 pl-3">
-                <li>Thiết kế thể hiện cá tính, <span class="content-amplify">phong cách sống</span> của gia chủ</li>
-                <li>Ứng dụng <span class="content-amplify">Phong thủy khoa học</span> vào thiết kế</li>
-                <li>
-                    Đảm bảo thiết kế phù hợp với ngân sách, <span class="content-amplify">không phát sinh</span>,
-                    tính toán phương án thi công khả thi thực dụng,
-                    phù hợp với mọi đối tượng khách hàng
-                </li>
-                <li>Kiểm tra <span class="content-amplify">quy hoạch pháp lý</span> trước khi thiết kế</li>
-            </ul>
-        </div>
-        @endif
-
-        <!-- Cột form bên phải -->
-        <div class="{{ $showValues ? 'col-lg-6' : 'col-12' }} p-4 d-flex flex-column justify-content-center">
-            <h4 class="text-center mb-4 font-weight-bold" style="color: var(--anphu-gold); text-transform: uppercase; letter-spacing: 1px;">{{ $title }}</h4>
-            
-            <form class="consulting-form" method="POST" action="{{ route('consulting_requests.store') }}">
-                @csrf
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <input type="text" name="name" class="form-control" placeholder="Họ và tên">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại *" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <input type="email" name="email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <input type="text" name="location" class="form-control" placeholder="Địa chỉ">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <textarea class="form-control" name="requirements" rows="3" placeholder="Nhu cầu (Diện tích đất, số tầng,...)"></textarea>
-                </div>
-
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-lg px-5 mb-3">
-                        <i class="fa fa-paper-plane mr-2"></i>
-                        Đăng ký ngay
-                    </button>
-                    
-                    <div class="mt-3">
-                        <p class="small text-muted mb-2">Hoặc liên hệ qua:</p>
-                        <x-social-media
-                            size="medium"
-                            style="default"
-                            class="d-flex justify-content-center"
-                        />
-                    </div>
-                </div>
-            </form>
-
-            <div class="text-center mt-4">
-                <p class="small text-muted mb-1">
-                    Sau khi nhận được yêu cầu của Quý khách, tư vấn viên của chúng tôi sẽ liên hệ trong thời gian sớm nhất
-                </p>
+        @if ($errors->any())
+            <div class="alert alert-danger mt-3">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-
-            @if ($errors->any())
-                <div class="alert alert-danger mt-3">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-        </div>
+        @endif
     </div>
-@endif
+</div>
 
 <!-- OVERLAY -->
 <div id="consulting-thank-you-overlay" class="consulting-overlay d-none">

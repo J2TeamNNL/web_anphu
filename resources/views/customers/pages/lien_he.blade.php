@@ -227,7 +227,7 @@
         <div class="row">
             <!-- Bên trái: Form liên hệ -->
             <div class="col-md-6 mb-4">
-                @include('customers.partials.form_with_map')
+                @include('customers.partials.form_signup')
             </div>
 
             <!-- Bên phải: Map -->

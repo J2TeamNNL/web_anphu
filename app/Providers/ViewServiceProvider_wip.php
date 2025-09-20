@@ -33,7 +33,6 @@ class ViewServiceProvider_wip extends ServiceProvider
         'customers.pages.project_detail',
         'customers.pages.service_detail',
         'customers.pages.service_price',
-        'customers.pages.uu_dai',
         'customers.pages.lien_he',
         'customers.pages.blog_detail',
     ], ExtraContentComposer::class);

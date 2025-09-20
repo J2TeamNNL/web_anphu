@@ -186,7 +186,7 @@
 
     <section class="py-5 section-bg-contact">
         <div class="container">
-            @include('customers.partials.form_with_info')
+            @include('customers.partials.form_signup_with_info')
         </div>
     </section>
 
