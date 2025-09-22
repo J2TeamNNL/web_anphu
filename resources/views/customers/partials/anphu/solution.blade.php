@@ -41,7 +41,7 @@
     .card-luxury-gold h5 {
         margin-top: 50px;
         font-weight: bold;
-        color: #C9B037;
+        color: #ffc107;
         text-shadow: 0 1px 0px rgba(201,176,55,0.8);
     }
 

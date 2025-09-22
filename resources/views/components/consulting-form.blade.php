@@ -10,7 +10,7 @@
         --lux-dark: #0b1c2c;
         --lux-dark-2: #081420;
         --lux-text-light: #f5f2e7;
-        --anphu-gold: #d6aa3a;
+        --anphu-gold: #ffc107;
         --anphu-gold-2: #d4a537;
     }
 
