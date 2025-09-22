@@ -14,7 +14,7 @@
 
     /* Icon vòng tròn vàng */
     .card-luxury-gold .icon-circle {
-        background-color:#091622;
+        background: var(--anphu-gold);
         position: absolute;
         top: -35px;
         left: 50%;
@@ -35,7 +35,6 @@
         height: 80px;
         object-fit: cover;
         border-radius: 50%;
-        background: #0b1c2c;
     }
 
     /* Tiêu đề */
@@ -68,10 +67,6 @@
     .card-luxury-gold:hover p {
         color: white;
         text-shadow: none;
-    }
-
-    .card-luxury-gold:hover .icon-circle {
-        background: #0b1c2c;
     }
 
     .card-luxury-gold:hover .icon-circle img {
