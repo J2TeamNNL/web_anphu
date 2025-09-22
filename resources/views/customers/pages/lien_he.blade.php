@@ -226,7 +226,7 @@
         {{-- FORM LIÊN HỆ & MAP --}}
         <div class="row">
             <!-- Bên trái: Form liên hệ -->
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6 mb-4 d-flex align-items-center">
                 @include('customers.partials.form_signup')
             </div>
 

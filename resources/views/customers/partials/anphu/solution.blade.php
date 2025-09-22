@@ -54,7 +54,6 @@
 
     /* Hover effect */
     .card-luxury-gold:hover {
-        background: linear-gradient(135deg, #d4a537, #eac976);
         border-color: #eac976;
         transform: translateY(-5px);
         box-shadow: 0 8px 20px rgba(201,176,55,0.5);
