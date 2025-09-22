@@ -93,37 +93,43 @@
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
-    /* Bootstrap tabs custom styles */
-    .nav-tabs {
-        border-bottom: 2px solid var(--anphu-gold);
+    /* Bootstrap accordion custom styles */
+    .item_blog .card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 8px;
+        overflow: hidden;
     }
     
-    .nav-tabs .nav-link {
-        border: none;
-        color: #6c757d;
+    .item_blog .btn-link {
+        color: #2c3e50;
         font-weight: 600;
-        padding: 12px 20px;
         transition: all 0.3s ease;
     }
     
-    .nav-tabs .nav-link:hover {
-        border: none;
-        color: var(--anphu-gold);
+    .item_blog .btn-link:hover {
         background-color: rgba(214, 170, 58, 0.1);
-    }
-    
-    .nav-tabs .nav-link.active {
+        text-decoration: none;
         color: var(--anphu-gold);
-        background-color: transparent;
-        border: none;
-        border-bottom: 3px solid var(--anphu-gold);
     }
     
-    .tab-content {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 0 0 8px 8px;
-        min-height: 200px;
+    .item_blog .btn-link:not(.collapsed) {
+        background-color: rgba(214, 170, 58, 0.1);
+        color: var(--anphu-gold);
+    }
+    
+    .item_blog .btn-link i {
+        transition: transform 0.3s ease;
+        color: #6c757d;
+    }
+    
+    .item_blog .btn-link:not(.collapsed) i {
+        transform: rotate(45deg);
+        color: var(--anphu-gold);
+    }
+    
+    .item_blog .card-body {
+        line-height: 1.6;
     }
 </style>
 @endpush
@@ -185,59 +191,49 @@
     <section class="hero-static-slider py-3 py-md-5" id="hero-static-slider"
         style="background-image: url('{{ asset('assets/img/gallery/background_project_1.jpg') }}'); background-size: cover; background-position: center; min-height: 60vh;">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                    <div class="custom-box">
-                        <div class="text-content">
-                            <h2 class="h5 h4-md h3-lg mb-3 text-center text-align-center text-warning">
-                                {{ $page?->title_1}}
-                            </h2>
-                            {!! $page?->custom_content_1 !!}
-                        </div>
-                    </div>
-                </div>
-                
+            <div class="row">                
                 <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 mt-3 mt-lg-0">
                     <div class="mb-4">
                         <p class="text-warning text-uppercase font-weight-bold mb-2">Chúng tôi là ai</p>
-                        <h2 class="text-warning h3">Giới thiệu về FAMILIA</h2>
                     </div>
                     
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" id="familiaTab" role="tablist">
-                        @for($i = 1; $i <= 4; $i++)
-                            @if(!empty($page->{"title_$i"}) || !empty($page->{"custom_content_$i"}))
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link {{ $i === 1 ? 'active' : '' }}" 
-                                       id="tab{{ $i }}-tab" 
-                                       data-toggle="tab" 
-                                       href="#tab{{ $i }}" 
-                                       role="tab" 
-                                       aria-controls="tab{{ $i }}" 
-                                       aria-selected="{{ $i === 1 ? 'true' : 'false' }}">
-                                        {{ $page->{"title_$i"} ?? "Block $i" }}
-                                    </a>
-                                </li>
-                            @endif
-                        @endfor
-                    </ul>
-                    
-                    <!-- Tab panes -->
-                    <div class="tab-content bg-white p-4 shadow-sm" id="familiaTabContent">
-                        @for($i = 1; $i <= 4; $i++)
-                            @if(!empty($page->{"title_$i"}) || !empty($page->{"custom_content_$i"}))
-                                <div class="tab-pane fade {{ $i === 1 ? 'show active' : '' }}" 
-                                     id="tab{{ $i }}" 
-                                     role="tabpanel" 
-                                     aria-labelledby="tab{{ $i }}-tab">
-                                    @if(!empty($page->{"custom_content_$i"}))
-                                        {!! $page->{"custom_content_$i"} !!}
-                                    @else
-                                        <p class="text-muted">Nội dung đang được cập nhật...</p>
-                                    @endif
-                                </div>
-                            @endif
-                        @endfor
+                    <div class="content-blog-index">
+                        <div class="list-blog-index">
+                            @for($i = 1; $i <= 4; $i++)
+                                @if(!empty($page->{"title_$i"}) || !empty($page->{"custom_content_$i"}))
+                                    <div class="item_blog mb-3">
+                                        <div class="card border-0 shadow-sm">
+                                            <div class="card-header bg-light p-0 border-0">
+                                                <button class="btn btn-link btn-block text-left p-3 text-decoration-none {{ $i !== 1 ? 'collapsed' : '' }}" 
+                                                        type="button" 
+                                                        data-toggle="collapse" 
+                                                        data-target="#content{{ $i }}" 
+                                                        aria-expanded="{{ $i === 1 ? 'true' : 'false' }}" 
+                                                        aria-controls="content{{ $i }}">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h4 class="mb-0 font-weight-bold text-dark">
+                                                            {{ $page->{"title_$i"} ?? "Block $i" }}
+                                                        </h4>
+                                                        <i class="fas fa-plus"></i>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                            <div id="content{{ $i }}" 
+                                                 class="collapse {{ $i === 1 ? 'show' : '' }}" 
+                                                 data-parent=".list-blog-index">
+                                                <div class="card-body bg-white">
+                                                    @if(!empty($page->{"custom_content_$i"}))
+                                                        {!! $page->{"custom_content_$i"} !!}
+                                                    @else
+                                                        <p class="text-muted mb-0">Nội dung đang được cập nhật...</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endfor
+                        </div>
                     </div>
                 </div>
             </div>

@@ -22,10 +22,10 @@ class CustomPageSeeder extends Seeder
             'title_2' => 'Kiến tạo không gian sống hoàn hảo',
             'title_3' => 'Dịch vụ chuyên nghiệp',
             'title_4' => 'Cam kết chất lượng',
-            'custom_content_1' => '<p>Với hơn 10 năm kinh nghiệm trong lĩnh vực thiết kế và xây dựng, An Phú tự hào là đối tác tin cậy của hàng nghìn gia đình Việt Nam.</p>',
-            'custom_content_2' => '<p>Chúng tôi chuyên thiết kế và thi công các công trình dân dụng, biệt thự, nhà phố với phong cách hiện đại, sang trọng.</p>',
-            'custom_content_3' => '<ul><li>Thiết kế kiến trúc</li><li>Thiết kế nội thất</li><li>Thi công xây dựng</li><li>Giám sát công trình</li></ul>',
-            'custom_content_4' => '<p>Đảm bảo tiến độ, chất lượng và giá thành hợp lý cho mọi dự án.</p>',
+            'custom_content_1' => 'Với hơn 10 năm kinh nghiệm trong lĩnh vực thiết kế và xây dựng, An Phú tự hào là đối tác tin cậy của hàng nghìn gia đình Việt Nam.',
+            'custom_content_2' => 'Chúng tôi chuyên thiết kế và thi công các công trình dân dụng, biệt thự, nhà phố với phong cách hiện đại, sang trọng.',
+            'custom_content_3' => 'Thiết kế kiến trúc',
+            'custom_content_4' => 'Đảm bảo tiến độ, chất lượng và giá thành hợp lý cho mọi dự án.',
         ]);
 
         // Về An Phú
