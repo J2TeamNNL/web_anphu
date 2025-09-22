@@ -93,6 +93,11 @@
     }
 </style>
 @endpush
+@php
+use App\Models\Service;
+
+$services = Service::all();
+@endphp
 
 <section class="bg-light py-5 section-bg-solution">
    <div class="container">

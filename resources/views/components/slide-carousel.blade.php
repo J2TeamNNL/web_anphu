@@ -1,99 +1,91 @@
-@props([
-    'showTopSpacing' => true,
-    'showBottomSpacing' => true,
-    'carouselId' => 'slideCarousel'
-])
+@php
+use App\Models\Slide;
 
-@if(count($allImages) > 0)
-    @if($showTopSpacing)
-        <!-- Top Spacing Section -->
-        <section style="
-            background-image: linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
-                url('/assets/img/gallery/background_danmask_1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 40px;
-        "></section>
-    @endif
+$allImages = Slide::get();
+@endphp
 
-    {{-- Carousel --}}
-    <div id="{{ $carouselId }}" class="carousel slide contact-carousel" data-ride="carousel" style="margin-bottom: 0;">
+@if($allImages->isNotEmpty())   
+<div class="carousel-wrapper">
+    <div class="carousel-spacing carousel-spacing--top"></div>
+    
+    <div id="slideCarousel" class="carousel slide slide-carousel" data-ride="carousel">
         <div class="carousel-inner">
             @foreach($allImages as $index => $img)
-                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                    <img src="{{ $img }}" alt="Slide {{ $index + 1 }}" class="d-block w-100">
+                <div class="carousel-item @if($index === 0) active @endif">
+                    <img src="{{ $img }}" alt="Slide {{ $index + 1 }}" class="carousel-image">
                 </div>
             @endforeach
         </div>
 
-        {{-- Carousel Indicators --}}
-        @if(count($allImages) > 1)
-            <ol class="carousel-indicators custom-indicators">
-                @foreach($allImages as $index => $img)
-                    <li data-target="#{{ $carouselId }}" 
-                        data-slide-to="{{ $index }}" 
-                        class="{{ $index === 0 ? 'active' : '' }}">
-                    </li>
-                @endforeach
-            </ol>
+        <ol class="carousel-indicators carousel-indicators--custom">
+            @foreach($allImages as $index => $img)
+                <li data-target="#slideCarousel" 
+                    data-slide-to="{{ $index }}" 
+                    @class(['active' => $index === 0])>
+                </li>
+            @endforeach
+        </ol>
 
-            {{-- Carousel Controls --}}
-            <a class="carousel-control-prev" href="#{{ $carouselId }}" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#{{ $carouselId }}" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        @endif
+        <a class="carousel-control-prev" href="#slideCarousel" role="button" data-slide="prev" aria-label="Previous slide">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+        <a class="carousel-control-next" href="#slideCarousel" role="button" data-slide="next" aria-label="Next slide">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
     </div>
-
-    @if($showBottomSpacing)
-        <!-- Bottom Spacing Section -->
-        <section style="
-            background-image: linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
-                url('/assets/img/gallery/background_danmask_1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 60px;
-        "></section>
-    @endif
+    
+    <div class="carousel-spacing carousel-spacing--bottom"></div>
+</div>
 @endif
 
 @push('styles')
 <style>
-    /* Carousel */
-    .contact-carousel {
+    .carousel-wrapper {
+        width: 100%;
+    }
+
+    .carousel-spacing {
+        background: linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
+                    url('/assets/img/gallery/background_danmask_1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .carousel-spacing--top { height: 40px; }
+    .carousel-spacing--bottom { height: 60px; }
+
+    .slide-carousel {
         width: 100vw;
+        margin-bottom: 0;
     }
-    .contact-carousel .carousel-item {
+
+    .slide-carousel .carousel-item {
         height: 60vh;
+        transition: transform 0.8s ease, opacity 0.8s ease;
     }
-    .contact-carousel .carousel-item img {
+
+    .carousel-image {
         width: 100%;
         height: 100%;
         object-fit: cover;
         border: 1px solid #C9B037;
     }
 
-    /* Carousel indicators tụt hẳn xuống dưới */
-    .carousel-indicators.custom-indicators {
+    .carousel-indicators--custom {
         position: absolute;
         bottom: -40px;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
         justify-content: center;
-        padding-left: 0;
+        padding: 0;
         margin: 0;
         list-style: none;
         z-index: 10;
     }
 
-    .carousel-indicators.custom-indicators li {
+    .carousel-indicators--custom li {
         width: 12px;
         height: 12px;
         border-radius: 50%;
@@ -103,15 +95,10 @@
         transition: all 0.3s ease;
     }
 
-    .carousel-indicators.custom-indicators li.active,
-    .carousel-indicators.custom-indicators li:hover {
+    .carousel-indicators--custom li.active,
+    .carousel-indicators--custom li:hover {
         background-color: #C9B037;
         transform: scale(1.2);
-    }
-
-    /* Hiệu ứng slide ảnh nhẹ */
-    .carousel-inner .carousel-item {
-        transition: transform 0.8s ease, opacity 0.8s ease;
     }
 </style>
 @endpush

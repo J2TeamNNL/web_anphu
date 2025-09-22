@@ -11,7 +11,6 @@ use App\Models\Article;
 use App\Models\Portfolio;
 use App\Models\Category;
 use App\Models\Service;
-use App\Models\CustomPage;
 
 use App\Enums\CategoryType;
 
@@ -45,10 +44,6 @@ class ViewServiceProvider extends ServiceProvider
 
         $partners = Partner::get();
 
-        $services = Service::all();
-
-        $custom_pages = CustomPage::all();
-        
         $congTrinhCategory = Category::where('slug', 'cong-trinh')->first();
         $camNhanCategory = Category::where('slug', 'cam-nhan-khach-hang')->first();
 
@@ -75,8 +70,6 @@ class ViewServiceProvider extends ServiceProvider
         View::share([
             'portfolioByCategories' => $portfolioByCategories,
             'partners' => $partners,
-            'services' => $services,
-            'custom_pages' => $custom_pages,
             'congTrinhArticles' => $congTrinhArticles,
             'congTrinhCategory' => $congTrinhCategory,
             'camNhanArticles' => $camNhanArticles,

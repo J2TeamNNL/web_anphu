@@ -44,13 +44,6 @@
                     </a>
                 </li>
 
-                {{-- Custom Pages --}}
-                <li class="nav-item mx-2 {{ request()->routeIs('admin.custom_pages.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('admin.custom_pages.index') }}">
-                        <i class="fa fa-newspaper me-1"></i> Quản lý trang
-                    </a>
-                </li>
-
                 {{-- Admins --}}
                 @if(auth()->check() && auth()->user()->level == 1)
                 <li class="nav-item mx-2 {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
@@ -106,7 +99,7 @@
                     </div>
                 </li>
 
-                <li class="nav-item mx-2 {{ request()->routeIs('admin.custom_pages.index') ? 'active' : '' }}">
+                <li class="nav-item mx-2">
                     <a href="{{ route('admin.auths.logout') }}" class="btn btn-danger px-4">
                         <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất
                     </a>

@@ -96,39 +96,6 @@
 
 @section('content')
 <section class="py-5 about-section-bg">
-    <div class="col-md-12 about-img" data-aos="fade-left">
-        @php
-            preg_match_all('/<img[^>]+src="([^">]+)"/i', $page->custom_content_1 ?? '', $matches);
-            $images = array_unique($matches[1] ?? []);
-        @endphp
-
-        @if(count($images) > 0)
-            <div id="aboutImageCarousel" class="carousel slide about-carousel mb-4" data-ride="carousel">
-                <div class="carousel-inner">
-                    @foreach($images as $index => $img)
-                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                            <img src="{{ $img }}" alt="Slide {{ $index + 1 }}">
-                        </div>
-                    @endforeach
-                </div>
-
-                {{-- Indicators --}}
-                <ol class="carousel-indicators custom-indicators">
-                    @foreach($images as $index => $img)
-                        <li data-target="#aboutImageCarousel" data-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"></li>
-                    @endforeach
-                </ol>
-
-                <a class="carousel-control-prev" href="#aboutImageCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                </a>
-                <a class="carousel-control-next" href="#aboutImageCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                </a>
-            </div>
-        @endif
-    </div>
-    <hr>
     <div class="container">
         <div class="row">
             {{-- Sơ lược --}}
@@ -140,13 +107,6 @@
                 <p><span class="font-weight-bold">Ngày thành lập: </span>{{ optional(company()->license_date)->format('d/m/Y') ?? 'Chưa cập nhật' }}</p>
                 <p><span class="font-weight-bold">Mã số thuế: </span>{{ company()->tax_code ?? 'Chưa cập nhật' }}</p>
                 <p><span class="font-weight-bold">Người đại diện: </span>{{ company()->director ?? 'Chưa cập nhật' }}</p>
-            </div>
-
-            {{-- Lịch sử hình thành --}}
-            <div class="col-md-12 about-content" data-aos="fade-right">
-                <h4 class="heading-about">{{ $page->title_2 }}</h4>
-                <hr class="border-warning">
-                <p>{!! $page->custom_content_2 !!}</p>
             </div>
 
             {{-- Chứng chỉ --}}

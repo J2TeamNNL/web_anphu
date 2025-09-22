@@ -1,16 +1,21 @@
 @php
-    // Initialize collections with default empty collections if not provided
-    $custom_pages = $custom_pages ?? collect();
-    $services = $services ?? collect();
-    $portfoliosCategories = $portfoliosCategories ?? collect();
-    $blogsCategories = $blogsCategories ?? collect();
+use App\Models\Service;
+use App\Enums\CategoryType;
+use App\Models\Category;
 
-    // Define menu slugs for "Về An Phú" section
-    $menuSlugs = ['about-anphu', 'gia-tri-van-hoa', 'thu-ngo'];
+$services = Service::all();
+$portfoliosCategories = Category::where('type', CategoryType::PORTFOLIO)
+                ->whereNull('parent_id')
+                ->with('children') 
+                ->get();
+$blogsCategories = Category::where('type', CategoryType::ARTICLE)
+                ->whereNull('parent_id')
+                ->with('children') 
+                ->get();
 
-    // Common CSS classes for nav items
-    $navItemClasses = 'nav-item mx-2 mx-lg-3 my-1 my-lg-0 small';
-    $dropdownNavItemClasses = $navItemClasses . ' dropdown';
+// Common CSS classes for nav items
+$navItemClasses = 'nav-item mx-2 mx-lg-3 my-1 my-lg-0 small';
+$dropdownNavItemClasses = $navItemClasses . ' dropdown';
 @endphp
 
 {{-- Main Navigation Bar --}}
@@ -55,19 +60,8 @@
                         Về An Phú
                     </a>
                     <div class="dropdown-menu" aria-labelledby="aboutDropdown">
-                        @foreach($menuSlugs as $slug)
-                            @php
-                                $page = $custom_pages->firstWhere('slug', $slug);
-                            @endphp
-                            @if($page)
-                                <a
-                                    class="dropdown-item small {{ request()->is('about/' . $page->slug) ? 'active' : '' }}"
-                                    href="{{ route('customers.custom_page', $page->slug) }}"
-                                >
-                                    {{ $page->name }}
-                                </a>
-                            @endif
-                        @endforeach
+                        <a class="dropdown-item" href="{{ route('customers.about.anphu') }}">Giới thiệu</a>
+                        <a class="dropdown-item" href="{{ route('customers.about.culture') }}">Giá trị văn hóa</a>
                     </div>
                 </li>
 
@@ -178,7 +172,6 @@
                         Liên hệ
                     </a>
                 </li>
-
             </ul>
         </div>
     </div>

@@ -7,9 +7,9 @@ use App\Models\Portfolio;
 use App\Models\Article;
 use App\Models\Service;
 use App\Models\Category;
-use App\Models\CustomPage;
 use Illuminate\Http\Request;
 use App\Models\CompanySetting;
+use App\Models\Slide;
 
 class CustomerController extends Controller
 {       
@@ -19,9 +19,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $page = CustomPage::where('slug', 'index')->first();
-
-        return view('customers.pages.index', compact('page'));
+        return view('customers.pages.index');
     }
 
     public function contact()
@@ -29,20 +27,9 @@ class CustomerController extends Controller
         return view('customers.pages.lien_he');
     }
     
-
-    //CUSTOM PAGES
-    public function showCustomPage($slug)
+    public function aboutAnphu()
     {
-        $page = CustomPage::where('slug', $slug)->firstOrFail();
-
-        // 1 slug load view riêng
-        $viewPath = 'customers.pages.' . str_replace('-', '_', $slug);
-        if (view()->exists($viewPath)) {
-            return view($viewPath, compact('page'));
-        }
-
-        // 1 view chung để hiển thị toàn bộ custom_pages
-        return view('customers.pages.index', compact('page'));
+        return view('customers.pages.about_anphu');
     }
 
     // SERVICES
