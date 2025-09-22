@@ -30,171 +30,77 @@
     }
 }
 
-    /* Carousel */
-    .contact-carousel {
-        width: 100vw;
-    }
-    .contact-carousel .carousel-item {
-        height: 60vh;
-    }
-    .contact-carousel .carousel-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border: 1px solid var(--anphu-gold);
-    }
 
-    /* Responsive fix */
-    @media (max-width: 767.98px) {
-        .contact-content,
-        .contact-extra-content {
-            padding: 1rem;
-        }
-    }
-
-    /* CSS variables */
-    :root {
-        --lux-dark: #0b1c2c;
-        --anphu-gold: #d6aa3a;
-    }
-
-    /* Carousel indicators tụt hẳn xuống dưới */
-    .carousel-indicators.custom-indicators {
-        position: absolute;
-        bottom: -40px; /* Đặt indicators trong khu vực spacing section */
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        justify-content: center;
-        padding-left: 0;
-        margin: 0;
-        list-style: none;
-        z-index: 10;
-    }
-
-    .carousel-indicators.custom-indicators li {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.5);
-        margin: 0 6px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .carousel-indicators.custom-indicators li.active,
-    .carousel-indicators.custom-indicators li:hover {
-        background-color: var(--anphu-gold);
-        transform: scale(1.2);
-    }
-
-    /* Hiệu ứng slide ảnh nhẹ */
-    .carousel-inner .carousel-item {
-        transition: transform 0.8s ease, opacity 0.8s ease;
-    }
-
-    /* Bootstrap accordion custom styles */
+    /* Bootstrap accordion custom styles - AnPhu Theme */
     .item_blog .card {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         border-radius: 8px;
         overflow: hidden;
+        border: 1px solid rgba(7, 15, 71, 0.1);
     }
     
     .item_blog .btn-link {
-        color: #2c3e50;
+        color: #070f47;
         font-weight: 600;
         transition: all 0.3s ease;
+        border-left: 4px solid transparent;
     }
     
     .item_blog .btn-link:hover {
-        background-color: rgba(214, 170, 58, 0.1);
+        background-color: rgba(201, 176, 55, 0.1);
         text-decoration: none;
-        color: var(--anphu-gold);
+        color: #070f47;
+        border-left-color: #C9B037;
     }
     
     .item_blog .btn-link:not(.collapsed) {
-        background-color: rgba(214, 170, 58, 0.1);
-        color: var(--anphu-gold);
+        background-color: rgba(201, 176, 55, 0.15);
+        color: #070f47;
+        border-left-color: #C9B037;
     }
     
     .item_blog .btn-link i {
         transition: transform 0.3s ease;
-        color: #6c757d;
+        color: #C9B037;
+        font-weight: bold;
     }
     
     .item_blog .btn-link:not(.collapsed) i {
         transform: rotate(45deg);
-        color: var(--anphu-gold);
+        color: #070f47;
     }
     
     .item_blog .card-body {
         line-height: 1.6;
+        background: #f8f9fa;
+        color: #444;
+        border-top: 2px solid #C9B037;
     }
 </style>
 @endpush
 
 @section('content')
-    @php
-        preg_match_all('/<img[^>]+src="([^">]+)"/i', $page->custom_content_2 ?? '', $matches);
-        $images = array_unique($matches[1] ?? []); // loại bỏ ảnh trùng
-    @endphp
+    {{-- Slide Carousel Component --}}
+    <x-slide-carousel 
+        carousel-id="homeSlideCarousel" 
+    />
 
-    @if(count($images) > 0)
-        <!-- Top Spacing Section -->
-        <section style="
-            background-image: linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
-                url('/assets/img/gallery/background_danmask_1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 40px;
-        "></section>
-
-        {{-- Carousel --}}
-        <div id="contactImageCarousel" class="carousel slide contact-carousel" data-ride="carousel" style="margin-bottom: 0;">
-            <div class="carousel-inner">
-                @foreach($images as $index => $img)
-                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                        <img src="{{ $img }}" alt="Slide {{ $index + 1 }}">
-                    </div>
-                @endforeach
-            </div>
-
-            {{-- 3 chấm dưới carousel --}}
-            <ol class="carousel-indicators custom-indicators">
-                @foreach($images as $index => $img)
-                    <li data-target="#contactImageCarousel" data-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"></li>
-                @endforeach
-            </ol>
-
-            <a class="carousel-control-prev" href="#contactImageCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            </a>
-            <a class="carousel-control-next" href="#contactImageCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            </a>
-        </div>
-
-    <!-- Spacing Section -->
-    <section style="
+    <!-- Hero Section with Accordion -->
+    <section class="py-5" style="
+        background-color: #0b1c2c;
         background-image: linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
             url('/assets/img/gallery/background_danmask_1.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        height: 60px;
-    "></section>
-    @endif
-
-    <!-- Hero Section with Accordion -->
-    <section class="hero-static-slider py-3 py-md-5" id="hero-static-slider"
-        style="background-image: url('{{ asset('assets/img/gallery/background_project_1.jpg') }}'); background-size: cover; background-position: center; min-height: 60vh;">
+        border-bottom: 3px solid #C9B037;
+    ">
         <div class="container">
             <div class="row">                
                 <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 mt-3 mt-lg-0">
                     <div class="mb-4">
-                        <p class="text-warning text-uppercase font-weight-bold mb-2">Chúng tôi là ai</p>
+                        <p class="text-uppercase font-weight-bold mb-2" style="color: #C9B037;">Giới thiệu về An Phú</p>
                     </div>
                     
                     <div class="content-blog-index">

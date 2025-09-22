@@ -14,6 +14,7 @@ use App\Http\Controllers\ConsultingRequestController;
 use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaProxyController;
+use App\Http\Controllers\Admin\SlideController;
 use App\Http\Middleware\CheckSuperAdminMiddleware;
 
 
@@ -104,6 +105,10 @@ Route::prefix('admin')->name('admin.')
    Route::resource('users', UserController::class)->except([
       'destroy'
    ]);
+
+   // Slide management routes
+   Route::get('slides', [SlideController::class, 'index'])->name('slides.index');
+   Route::post('slides', [SlideController::class, 'store'])->name('slides.store');
 
    Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])
       ->name('users.resetPassword');

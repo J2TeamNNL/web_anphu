@@ -10,14 +10,12 @@ class Media extends Model
         'file_path',
         'url',
         'public_id',
-        
         'type',
         'caption',
         'order',
         'mediaable_id',
-        'mediaable_type'
+        'mediaable_type',
     ];
-
     protected $casts = [
         'order' => 'integer',
     ];
