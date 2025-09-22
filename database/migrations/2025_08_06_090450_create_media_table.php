@@ -24,8 +24,6 @@ class CreateMediaTable extends Migration
             $table->unsignedBigInteger('mediaable_id')->nullable();
             $table->string('mediaable_type')->nullable();
 
-            $table->string('table_name')->nullable(); // nếu bạn vẫn cần
-
             $table->timestamps();
         });
     }
