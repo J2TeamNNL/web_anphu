@@ -11,18 +11,6 @@
       <div class="card-body">
          <form action="{{ route('admin.articles.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
-            @if(isset($facebook_post))
-               <input type="hidden" name="facebook_post[id]" value="{{ $facebook_post['id'] ?? '' }}">
-               <input type="hidden" name="facebook_post[message]" value="{{ $facebook_post['message'] ?? '' }}">
-               <input type="hidden" name="facebook_post[permalink_url]" value="{{ $facebook_post['permalink_url'] ?? '' }}">
-               <input type="hidden" name="facebook_post[full_picture]" value="{{ $facebook_post['full_picture'] ?? '' }}">
-               <input type="hidden" name="facebook_post[source]" value="{{ $facebook_post['source'] ?? '' }}">
-               <input type="hidden" name="facebook_post[name]" value="{{ $facebook_post['name'] ?? '' }}">
-               <input type="hidden" name="facebook_post[caption]" value="{{ $facebook_post['caption'] ?? '' }}">
-               <input type="hidden" name="facebook_post[description]" value="{{ $facebook_post['description'] ?? '' }}">
-               <input type="hidden" name="facebook_post[created_time]" value="{{ $facebook_post['created_time'] ?? '' }}">
-            @endif
             
             <div class="form-group">
                <h5 for="name">Tên bài đăng</h5>
@@ -35,16 +23,6 @@
                   required
                >
             </div>
-
-            <!-- <div class="form-group"> -->
-               <!-- <h5 for="link">Link (nếu có)</h5> -->
-               <input
-                  type="hidden"
-                  name="link"
-                  id="link"
-                  value="{{ old('link', $article->link ?? '') }}"
-               >
-            <!-- </div> -->
 
             <input type="hidden" name="type" value="article">
 
@@ -59,12 +37,6 @@
             <div class="form-group">
                <h5 for="thumbnail">Ảnh mô tả</h5>
                <input type="file" name="thumbnail" id="thumbnail" class="form-control-file">
-               @if(!empty($thumbnail_url))
-                  <div class="mt-2">
-                     <input type="hidden" name="thumbnail_fb" value="{{ $thumbnail_url }}">
-                     <img src="{{ $thumbnail_url }}" class="img-fluid rounded shadow-sm" style="max-height: 200px;">
-                  </div>
-               @endif
             </div>
 
             <div class="form-group">

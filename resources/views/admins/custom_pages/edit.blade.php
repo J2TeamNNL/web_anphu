@@ -60,10 +60,12 @@
                         <div class="form-group">
                             <h5 class="text-primary">Ảnh {{ $i }} (tùy chọn)</h5>
                             <input type="file" name="image_{{ $i }}" class="form-control-file">
-                            <div class="mt-2">
-                                <p>Ảnh hiện tại:</p>
-                                <img src="{{ $page["image_$i"] }}" class="img-thumbnail" width="150" alt="NA">
-                            </div>
+                            @if(!empty($page["image_$i"]))
+                                <div class="mt-2">
+                                    <p>Ảnh hiện tại:</p>
+                                    <img src="{{ $page["image_$i"] }}" class="img-thumbnail" width="150" alt="Lỗi ảnh {{ $i }}">
+                                </div>
+                            @endif
                         </div>
 
                         {{-- Nội dung --}}

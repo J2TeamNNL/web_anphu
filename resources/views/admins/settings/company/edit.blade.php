@@ -145,7 +145,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="font-weight-bold">Điện thoại 1 (Zalo)</label>
+                            <label class="font-weight-bold">Điện thoại (Zalo)</label>
                             <input
                                 type="text"
                                 name="company_phone_1"
@@ -157,7 +157,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="font-weight-bold">Điện thoại 2 (Hotline)</label>
+                            <label class="font-weight-bold">Điện thoại (Hotline)</label>
                             <input
                                 type="text"
                                 name="company_phone_2"

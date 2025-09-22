@@ -92,6 +92,39 @@
     .carousel-inner .carousel-item {
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
+
+    /* Bootstrap tabs custom styles */
+    .nav-tabs {
+        border-bottom: 2px solid var(--anphu-gold);
+    }
+    
+    .nav-tabs .nav-link {
+        border: none;
+        color: #6c757d;
+        font-weight: 600;
+        padding: 12px 20px;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-tabs .nav-link:hover {
+        border: none;
+        color: var(--anphu-gold);
+        background-color: rgba(214, 170, 58, 0.1);
+    }
+    
+    .nav-tabs .nav-link.active {
+        color: var(--anphu-gold);
+        background-color: transparent;
+        border: none;
+        border-bottom: 3px solid var(--anphu-gold);
+    }
+    
+    .tab-content {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 0 0 8px 8px;
+        min-height: 200px;
+    }
 </style>
 @endpush
 
@@ -148,12 +181,12 @@
     "></section>
     @endif
 
-    <!-- Hero Section -->
-    <section class="hero-static-slider d-flex align-items-center justify-content-center py-3 py-md-5" id="hero-static-slider"
+    <!-- Hero Section with Accordion -->
+    <section class="hero-static-slider py-3 py-md-5" id="hero-static-slider"
         style="background-image: url('{{ asset('assets/img/gallery/background_project_1.jpg') }}'); background-size: cover; background-position: center; min-height: 60vh;">
-        <div class="container text-white">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                     <div class="custom-box">
                         <div class="text-content">
                             <h2 class="h5 h4-md h3-lg mb-3 text-center text-align-center text-warning">
@@ -161,6 +194,50 @@
                             </h2>
                             {!! $page?->custom_content_1 !!}
                         </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 mt-3 mt-lg-0">
+                    <div class="mb-4">
+                        <p class="text-warning text-uppercase font-weight-bold mb-2">Chúng tôi là ai</p>
+                        <h2 class="text-warning h3">Giới thiệu về FAMILIA</h2>
+                    </div>
+                    
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" id="familiaTab" role="tablist">
+                        @for($i = 1; $i <= 4; $i++)
+                            @if(!empty($page->{"title_$i"}) || !empty($page->{"custom_content_$i"}))
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link {{ $i === 1 ? 'active' : '' }}" 
+                                       id="tab{{ $i }}-tab" 
+                                       data-toggle="tab" 
+                                       href="#tab{{ $i }}" 
+                                       role="tab" 
+                                       aria-controls="tab{{ $i }}" 
+                                       aria-selected="{{ $i === 1 ? 'true' : 'false' }}">
+                                        {{ $page->{"title_$i"} ?? "Block $i" }}
+                                    </a>
+                                </li>
+                            @endif
+                        @endfor
+                    </ul>
+                    
+                    <!-- Tab panes -->
+                    <div class="tab-content bg-white p-4 shadow-sm" id="familiaTabContent">
+                        @for($i = 1; $i <= 4; $i++)
+                            @if(!empty($page->{"title_$i"}) || !empty($page->{"custom_content_$i"}))
+                                <div class="tab-pane fade {{ $i === 1 ? 'show active' : '' }}" 
+                                     id="tab{{ $i }}" 
+                                     role="tabpanel" 
+                                     aria-labelledby="tab{{ $i }}-tab">
+                                    @if(!empty($page->{"custom_content_$i"}))
+                                        {!! $page->{"custom_content_$i"} !!}
+                                    @else
+                                        <p class="text-muted">Nội dung đang được cập nhật...</p>
+                                    @endif
+                                </div>
+                            @endif
+                        @endfor
                     </div>
                 </div>
             </div>
@@ -173,4 +250,5 @@
 
     @include('customers.partials.anphu.partner')
 @endsection
+
 

@@ -11,7 +11,6 @@ use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use App\Services\CloudinaryService;
-use App\Services\FacebookPostSyncService;
 
 class ArticleController extends Controller
 {
@@ -98,18 +97,6 @@ class ArticleController extends Controller
             $article->categories()->sync($validated['category_ids']);
         }
 
-        // if ($request->filled('facebook_post')) {
-        //     $postData = $request->input('facebook_post');
-        //     $postData['related_type'] = Article::class;
-        //     $postData['related_id']   = $article->id;
-
-        //     $fbPost = $fbService->sync($postData);
-
-        //     $article->update([
-        //         'fb_post_id' => $fbPost->fb_post_id,
-        //     ]);
-        // }
-
         return redirect()->route('admin.articles.index');
     }
 
@@ -167,10 +154,6 @@ class ArticleController extends Controller
         if ($article->thumbnail_public_id) {
             Cloudinary::destroy($article->thumbnail_public_id);
         }
-
-        // if ($article->facebookPost) {
-        //     $article->facebookPost->delete();
-        // }
             
         $article->delete();
 
