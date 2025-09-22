@@ -28,34 +28,6 @@ class CustomPageSeeder extends Seeder
             'custom_content_4' => '<p>Đảm bảo tiến độ, chất lượng và giá thành hợp lý cho mọi dự án.</p>',
         ]);
 
-        // Liên hệ
-        CustomPage::create([
-            'name' => 'Liên hệ',
-            'slug' => 'lien-he',
-            'title_1' => 'LIÊN HỆ VỚI CHÚNG TÔI',
-            'title_2' => 'Thông tin liên hệ',
-            'title_3' => 'Địa chỉ văn phòng',
-            'title_4' => 'Giờ làm việc',
-            'custom_content_1' => '<img src="/assets/img/gallery/contact_1.jpg" alt="Văn phòng An Phú"><img src="/assets/img/gallery/contact_2.jpg" alt="Showroom An Phú"><img src="/assets/img/gallery/contact_3.jpg" alt="Khu vực tư vấn">',
-            'custom_content_2' => '<p>Công ty Thiết kế Xây dựng An Phú luôn sẵn sàng lắng nghe và tư vấn cho quý khách hàng. Hãy liên hệ với chúng tôi để được hỗ trợ tốt nhất.</p><p>Đội ngũ kiến trúc sư và kỹ sư giàu kinh nghiệm sẽ giúp bạn hiện thực hóa ước mơ về ngôi nhà lý tưởng.</p>',
-            'custom_content_3' => '<p>Văn phòng chính: 123 Đường ABC, Quận XYZ, TP.HCM</p><p>Chi nhánh: 456 Đường DEF, Quận GHI, Hà Nội</p>',
-            'custom_content_4' => '<p>Thứ 2 - Thứ 6: 8:00 - 17:30</p><p>Thứ 7: 8:00 - 12:00</p><p>Chủ nhật: Nghỉ</p>',
-        ]);
-
-        // Ưu đãi
-        CustomPage::create([
-            'name' => 'Ưu đãi',
-            'slug' => 'uu-dai',
-            'title_1' => 'CHƯƠNG TRÌNH ƯU ĐÃI ĐẶC BIỆT',
-            'title_2' => 'Ưu đãi tháng này',
-            'title_3' => 'Flash Sale',
-            'title_4' => 'Quà tặng kèm',
-            'custom_content_1' => '<p>Giảm giá lên đến 30% cho dịch vụ thiết kế và thi công trong tháng này!</p>',
-            'custom_content_2' => '<ul><li>Miễn phí thiết kế 3D cho hợp đồng trên 500 triệu</li><li>Tặng gói nội thất cơ bản cho biệt thự</li><li>Bảo hành 5 năm cho công trình</li></ul>',
-            'custom_content_3' => '<p>⚡ Flash Sale cuối tuần: Giảm thêm 10% cho 10 khách hàng đầu tiên!</p><p>Thời gian: Thứ 7 - Chủ nhật hàng tuần</p>',
-            'custom_content_4' => '<ul><li>Tặng bộ thiết kế sân vườn</li><li>Miễn phí tư vấn phong thủy</li><li>Hỗ trợ vay vốn 0% lãi suất</li></ul>',
-        ]);
-
         // Về An Phú
         CustomPage::create([
             'name' => 'Về An Phú',

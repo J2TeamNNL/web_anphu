@@ -26,11 +26,7 @@ class CustomerController extends Controller
 
     public function contact()
     {   
-        $page = CustomPage::where('slug', 'lien-he')->firstOrFail();
-
-        return view('customers.pages.lien_he',[
-            'page' => $page
-        ]);
+        return view('customers.pages.lien_he');
     }
     
 
