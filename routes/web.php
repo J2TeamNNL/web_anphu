@@ -6,7 +6,6 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\CustomPageController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
@@ -15,6 +14,7 @@ use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaProxyController;
 use App\Http\Controllers\Admin\SlideController;
+use App\Http\Controllers\Admin\AboutPageController;
 use App\Http\Middleware\CheckSuperAdminMiddleware;
 
 
@@ -23,8 +23,7 @@ Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
 // Media proxy route for serving images (local or Cloudinary)
 Route::get('/media/{media}', [MediaProxyController::class, 'serve'])->name('media.serve');
 
-Route::get('/about/{slug}', [CustomerController::class, 'showCustomPage'])
-    ->name('customers.custom_page');
+Route::get('/about/{aboutPage:slug}', [CustomerController::class, 'aboutDetail'])->name('customers.about.detail');
 
 Route::get('/dich-vu/{slug}', [CustomerController::class, 'serviceDetail'])->name('customers.service.detail');
 Route::get('/bao-gia/{slug}', [CustomerController::class, 'servicePrice'])->name('customers.service.price');
@@ -98,10 +97,6 @@ Route::prefix('admin')->name('admin.')
       'destroy'
    ]);
 
-   Route::resource('custom_pages', CustomPageController::class)->except([
-      'destroy'
-   ]);
-
    Route::resource('users', UserController::class)->except([
       'destroy'
    ]);
@@ -109,6 +104,9 @@ Route::prefix('admin')->name('admin.')
    // Slide management routes
    Route::get('slides', [SlideController::class, 'index'])->name('slides.index');
    Route::post('slides', [SlideController::class, 'store'])->name('slides.store');
+
+   // About Page management routes
+   Route::resource('about-pages', AboutPageController::class)->except(['show'])->names('about-pages');
 
    Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])
       ->name('users.resetPassword');
@@ -140,7 +138,6 @@ Route::prefix('admin')->name('admin.')
       Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
       Route::delete('partners/{partner}', [PartnerController::class, 'destroy'])->name('partners.destroy');
       Route::delete('services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
-      Route::delete('custom_pages/{custom_page}', [CustomPageController::class, 'destroy'])->name('custom_pages.destroy');
       Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
    });
