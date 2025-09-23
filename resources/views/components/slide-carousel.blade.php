@@ -63,10 +63,6 @@ $slides = Slide::with('media')->get();
     .slide-carousel .carousel-item {
         height: 60vh;
         transition: transform 0.8s ease, opacity 0.8s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
     }
 
     .carousel-image {
