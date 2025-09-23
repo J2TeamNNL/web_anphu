@@ -23,10 +23,11 @@ class AboutPageController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'nullable|string',
+            'content' => 'required|string',
+            'description' => 'required|string',
         ]);
 
-        $data = $request->only(['title', 'content']);
+        $data = $request->only(['title', 'content', 'description']);
 
         AboutPage::create($data);
 
@@ -42,10 +43,11 @@ class AboutPageController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'nullable|string',
+            'content' => 'required|string',
+            'description' => 'required|string',
         ]);
 
-        $data = $request->only(['title', 'content']);
+        $data = $request->only(['title', 'content', 'description']);
 
         $aboutPage->update($data);
 

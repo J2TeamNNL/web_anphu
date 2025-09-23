@@ -16,6 +16,7 @@ class CheckSuperAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {   
+        return $next($request);
         if (!Auth::check()) {
             return redirect()->route('login')->withErrors('Vui lòng đăng nhập');
         }

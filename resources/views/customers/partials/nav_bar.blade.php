@@ -2,6 +2,7 @@
 use App\Models\Service;
 use App\Enums\CategoryType;
 use App\Models\Category;
+use App\Models\AboutPage;
 
 $services = Service::all();
 $portfoliosCategories = Category::where('type', CategoryType::PORTFOLIO)
@@ -12,6 +13,7 @@ $blogsCategories = Category::where('type', CategoryType::ARTICLE)
                 ->whereNull('parent_id')
                 ->with('children') 
                 ->get();
+$aboutPages = AboutPage::all();
 
 // Common CSS classes for nav items
 $navItemClasses = 'nav-item mx-2 mx-lg-3 my-1 my-lg-0 small';
@@ -60,8 +62,11 @@ $dropdownNavItemClasses = $navItemClasses . ' dropdown';
                         Về An Phú
                     </a>
                     <div class="dropdown-menu" aria-labelledby="aboutDropdown">
-                        <a class="dropdown-item" href="{{ route('customers.about.anphu') }}">Giới thiệu</a>
-                        <a class="dropdown-item" href="{{ route('customers.about.culture') }}">Giá trị văn hóa</a>
+                        @foreach($aboutPages as $page)
+                            <a class="dropdown-item" href="{{ route('customers.about.detail', $page) }}">
+                                {{ $page->title }}
+                            </a>
+                        @endforeach
                     </div>
                 </li>
 

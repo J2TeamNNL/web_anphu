@@ -13,6 +13,7 @@ class AboutPage extends Model
     protected $fillable = [
         'title',
         'slug',
+        'description',
         'content',
     ];
 

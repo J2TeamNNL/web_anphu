@@ -44,6 +44,13 @@
                     </a>
                 </li>
 
+                {{-- Trang về An Phú --}}
+                <li class="nav-item mx-2 {{ request()->routeIs('admin.about-pages.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.about-pages.index') }}">
+                        <i class="fa fa-info-circle mr-1"></i> Trang về An Phú
+                    </a>
+                </li>
+
                 {{-- Admins --}}
                 @if(auth()->check() && auth()->user()->level == 1)
                 <li class="nav-item mx-2 {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
@@ -75,12 +82,6 @@
                                 href="{{ route('admin.settings.company.edit') }}"
                             >
                                 <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt thông tin công ty
-                            </a>
-                            <a
-                                class="dropdown-item small {{ request()->routeIs('admin.settings.company.editPolicy') ? 'active' : '' }}"
-                                href="{{ route('admin.settings.company.editPolicy') }}"
-                            >
-                                <i class="fa fa-cog mr-1 icon-highlight"></i> Cài đặt chính sách công ty
                             </a>
                         @endif
                         <a

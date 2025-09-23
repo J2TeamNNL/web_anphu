@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\CategoryType;
+use App\Models\AboutPage;
 use App\Models\Portfolio;
 use App\Models\Article;
 use App\Models\Service;
@@ -27,9 +28,11 @@ class CustomerController extends Controller
         return view('customers.pages.lien_he');
     }
     
-    public function aboutAnphu()
+    public function aboutDetail(AboutPage $aboutPage)
     {
-        return view('customers.pages.about_anphu');
+        $otherPages = AboutPage::where('id', '!=', $aboutPage->id)->get();
+        
+        return view('customers.pages.about_page', compact('aboutPage', 'otherPages'));
     }
 
     // SERVICES

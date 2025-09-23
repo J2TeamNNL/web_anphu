@@ -1,3 +1,8 @@
+@php
+use App\Models\AboutPage;
+
+$pages = AboutPage::get();
+@endphp
 <section class="py-5" style="
     background-color: #0b1c2c;
     background-image: linear-gradient(rgba(11, 28, 44, 0.6), rgba(11, 28, 44, 0.6)),
@@ -20,62 +25,42 @@
             <!-- Tab Headers - Vertical Left Side -->
             <div class="col-lg-4 col-md-4">
                 <div class="about-tab-headers">
-                    <div class="about-tab-header active" data-tab="tab-anphu">
+                    @foreach($pages as $page)
+                    <div class="about-tab-header {{ $loop->first ? 'active' : '' }}" data-tab="tab-{{ $page->slug }}">
                         <div class="tab-header-content">
-                            <h5 class="tab-title">Giới thiệu</h5>
+                            <h5 class="tab-title">{{ $page->title }}</h5>
                             <div class="tab-indicator">
                                 <i class="fas fa-chevron-right"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="about-tab-header" data-tab="tab-culture">
-                        <div class="tab-header-content">
-                            <h5 class="tab-title">Giá trị văn hóa</h5>
-                            <div class="tab-indicator">
-                                <i class="fas fa-chevron-right"></i>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             
             <!-- Tab Content - Right Side -->
             <div class="col-lg-8 col-md-8">
                 <div class="about-tab-content-wrapper">
-                    <div class="about-tab-content active" id="tab-anphu">
+                    @foreach($pages as $page)
+                    <div class="about-tab-content {{ $loop->first ? 'active' : '' }}" id="tab-{{ $page->slug }}">
                         <div class="content-card">
                             <div class="content-body">
                                 <h2 class="h5 h4-md h3-lg mb-3 text-center text-warning">
-                                    {{ $page?->title_1 ?? 'Giới thiệu về An Phú' }}
+                                    {{ $page->title }}
                                 </h2>
                                 <div class="hero-content mb-3">
-                                    {!! $page?->custom_content_1 ?? '<p class="text-muted">An Phú là một trong những công ty đầu tư uy tín nhất tại Việt Nam, với hơn 20 năm kinh nghiệm trong lĩnh vực đầu tư bất động sản.</p>' !!}
+                                    {!! $page->description !!}
                                 </div>
                             </div>
                             <div class="content-footer mt-4">
-                                <button class="btn btn-detail">
+                                <a href="{{ route('customers.about.detail', $page->slug) }}" class="btn btn-detail">
                                     <i class="fas fa-info-circle me-2"></i>
                                     Xem chi tiết
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div class="about-tab-content" id="tab-culture">
-                        <div class="content-card">
-                            <div class="content-body">
-                                <h3 class="text-warning mb-3">Giá trị văn hóa An Phú</h3>
-                                <p class="text-muted mb-3">
-                                    Văn hóa doanh nghiệp của An Phú được xây dựng trên nền tảng uy tín, chất lượng và sự phát triển bền vững.
-                                </p>
-                            </div>
-                            <div class="content-footer mt-4">
-                                <button class="btn btn-detail">
-                                    <i class="fas fa-info-circle me-2"></i>
-                                    Xem chi tiết
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -27,7 +27,6 @@
                                 <th>Tiêu đề</th>
                                 <th>Slug</th>
                                 <th>Nội dung</th>
-                                <th>Ngày tạo</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -39,12 +38,11 @@
                                     <td><code>{{ $page->slug }}</code></td>
                                     <td>
                                         @if($page->content)
-                                            <span class="text-muted">{{ Str::limit(strip_tags($page->content), 50) }}</span>
+                                            <span class="text-muted">{{ htmlToPlainText($page->content, 50) }}</span>
                                         @else
                                             <span class="text-muted">Chưa có nội dung</span>
                                         @endif
                                     </td>
-                                    <td>{{ $page->created_at->format('d/m/Y') }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
                                             <a href="{{ route('admin.about-pages.edit', $page) }}" 

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use App\Helpers\CompanyHelper;
 
 if (!function_exists('isActive')) {
@@ -39,5 +39,22 @@ if (!function_exists('company')) {
     function company()
     {
         return CompanyHelper::getCompanySetting();
+    }
+}
+
+if (!function_exists('htmlToPlainText')) {
+    function htmlToPlainText($html, int $limit = 50)
+    {
+        // Loại bỏ thẻ HTML
+        $text = strip_tags($html);
+        
+        // Chuyển đổi HTML entities thành ký tự thường
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        
+        // Loại bỏ khoảng trắng thừa
+        $text = preg_replace('/\s+/', ' ', $text);
+        $text = trim($text);
+        
+        return Str::limit($text, $limit);
     }
 }
