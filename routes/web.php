@@ -102,8 +102,7 @@ Route::prefix('admin')->name('admin.')
    ]);
 
    // Slide management routes
-   Route::get('slides', [SlideController::class, 'index'])->name('slides.index');
-   Route::post('slides', [SlideController::class, 'store'])->name('slides.store');
+   Route::resource('slides', SlideController::class)->except(['show'])->names('slides');
 
    // About Page management routes
    Route::resource('about-pages', AboutPageController::class)->except(['show'])->names('about-pages');
