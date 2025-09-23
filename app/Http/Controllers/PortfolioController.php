@@ -184,14 +184,6 @@ class PortfolioController extends Controller
 
     public function destroy(Portfolio $portfolio)
     {
-        if ($portfolio->thumbnail_public_id) {
-            Cloudinary::destroy($portfolio->thumbnail_public_id);
-        }
-
-        // if ($portfolio->facebookPost) {
-        //     $portfolio->facebookPost->delete();
-        // }
-
         $portfolio->delete();
 
         return redirect()->route('admin.portfolios.index')

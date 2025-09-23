@@ -125,42 +125,6 @@ class ImageUploadService
     }
 
     /**
-     * Delete image from Cloudinary and database.
-     */
-    public function deleteImage(string $publicId): bool
-    {
-        try {
-            // Delete from Cloudinary
-            Cloudinary::destroy($publicId);
-            
-            // Delete from database
-            Media::where('public_id', $publicId)->delete();
-            
-            return true;
-        } catch (\CloudinaryLabs\CloudinaryLaravel\CloudinaryException $e) {
-            Log::error('Cloudinary deletion failed', [
-                'error' => $e->getMessage(),
-                'public_id' => $publicId
-            ]);
-            return false;
-            
-        } catch (\Illuminate\Database\QueryException $e) {
-            Log::error('Database error during media deletion', [
-                'error' => $e->getMessage(),
-                'public_id' => $publicId
-            ]);
-            return false;
-            
-        } catch (\Exception $e) {
-            Log::error('Unexpected error during image deletion', [
-                'error' => $e->getMessage(),
-                'public_id' => $publicId
-            ]);
-            return false;
-        }
-    }
-
-    /**
      * Get optimized image URL with transformations.
      */
     public function getOptimizedUrl(string $publicId, array $transformations = []): string
@@ -183,6 +147,7 @@ class ImageUploadService
             'partners' => 'partners/content',
             'services' => 'services/content',
             'company_settings' => 'company_settings/content',
+            'slides' => 'slides/content',
             default => 'general/content'
         };
     }

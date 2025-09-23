@@ -3,19 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Slide extends Model
 {
     public $timestamps = false;
     protected $fillable = [];
 
-    /**
-     * Get all media for this slide
-     */
-    public function media(): MorphMany
+    public function media(): MorphOne
     {
-        return $this->morphMany(Media::class, 'mediaable')
-                    ->orderBy('order');
+        return $this->morphOne(Media::class, 'mediaable');
     }
 }

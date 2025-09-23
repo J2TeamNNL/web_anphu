@@ -1,24 +1,24 @@
 @php
 use App\Models\Slide;
 
-$allImages = Slide::get();
+$slides = Slide::with('media')->get();
 @endphp
 
-@if($allImages->isNotEmpty())   
+@if($slides->isNotEmpty())   
 <div class="carousel-wrapper">
     <div class="carousel-spacing carousel-spacing--top"></div>
     
     <div id="slideCarousel" class="carousel slide slide-carousel" data-ride="carousel">
         <div class="carousel-inner">
-            @foreach($allImages as $index => $img)
+            @foreach($slides as $index => $slide)
                 <div class="carousel-item @if($index === 0) active @endif">
-                    <img src="{{ $img }}" alt="Slide {{ $index + 1 }}" class="carousel-image">
+                    <img src="{{ $slide->media->url }}" alt="Slide {{ $index + 1 }}" class="carousel-image">
                 </div>
             @endforeach
         </div>
 
         <ol class="carousel-indicators carousel-indicators--custom">
-            @foreach($allImages as $index => $img)
+            @foreach($slides as $index => $slide)
                 <li data-target="#slideCarousel" 
                     data-slide-to="{{ $index }}" 
                     @class(['active' => $index === 0])>

@@ -51,6 +51,13 @@
                     </a>
                 </li>
 
+                {{-- Slide ảnh --}}
+                <li class="nav-item mx-2 {{ request()->routeIs('admin.slides.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.slides.index') }}">
+                        <i class="fa fa-images mr-1"></i> Slide ảnh
+                    </a>
+                </li>
+
                 {{-- Admins --}}
                 @if(auth()->check() && auth()->user()->level == 1)
                 <li class="nav-item mx-2 {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">

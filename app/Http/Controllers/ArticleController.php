@@ -151,10 +151,6 @@ class ArticleController extends Controller
 
     public function destroy(Article $article)
     {
-        if ($article->thumbnail_public_id) {
-            Cloudinary::destroy($article->thumbnail_public_id);
-        }
-            
         $article->delete();
 
         return redirect()->route('admin.articles.index')
