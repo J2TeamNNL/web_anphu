@@ -10,7 +10,7 @@
         --lux-dark: #0b1c2c;
         --lux-dark-2: #081420;
         --lux-text-light: #f5f2e7;
-        --anphu-gold: #d6aa3a;
+        --anphu-gold: #ffc107;
         --anphu-gold-2: #d4a537;
     }
 
@@ -20,7 +20,6 @@
         border-radius: 15px;
         box-shadow: 0 8px 30px rgba(214, 170, 58, 0.2);
         padding: 2rem;
-        margin: 2rem 0;
         color: var(--lux-text-light);
     }
 
@@ -190,7 +189,7 @@
     <!-- Cột form bên phải -->
     <div class="{{ $showInfo ? 'col-lg-6' : 'col-12' }} p-4 d-flex flex-column justify-content-center">
         <h4 class="text-center mb-4 font-weight-bold" style="color: var(--anphu-gold); text-transform: uppercase; letter-spacing: 1px;">{{ $title }}</h4>
-        
+
         <form class="consulting-form" method="POST" action="{{ route('consulting_requests.store') }}">
             @csrf
             <div class="form-row">
@@ -201,7 +200,7 @@
                     <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại *" required>
                 </div>
             </div>
-            
+
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <input type="email" name="email" class="form-control" placeholder="Email">
@@ -220,7 +219,7 @@
                     <i class="fa fa-paper-plane mr-2"></i>
                     Đăng ký ngay
                 </button>
-                
+
                 <div class="mt-1">
                     <p class="small text-muted mb-2">Hoặc liên hệ qua:</p>
                     <x-social-media

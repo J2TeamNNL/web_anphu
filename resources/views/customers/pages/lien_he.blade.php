@@ -226,8 +226,11 @@
         {{-- FORM LIÊN HỆ & MAP --}}
         <div class="row">
             <!-- Bên trái: Form liên hệ -->
-            <div class="col-md-6 mb-4">
-                @include('customers.partials.form_signup')
+            <div class="col-md-6 mb-4 d-flex align-items-center">
+                <x-consulting-form
+                    title="ĐĂNG KÝ NHẬN MẪU BẢN VẼ MIỄN PHÍ"
+                    style="default"
+                />
             </div>
 
             <!-- Bên phải: Map -->

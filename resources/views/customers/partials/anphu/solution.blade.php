@@ -14,7 +14,7 @@
 
     /* Icon vòng tròn vàng */
     .card-luxury-gold .icon-circle {
-        background-color:#091622;
+        background: var(--anphu-gold);
         position: absolute;
         top: -35px;
         left: 50%;
@@ -35,14 +35,13 @@
         height: 80px;
         object-fit: cover;
         border-radius: 50%;
-        background: #0b1c2c;
     }
 
     /* Tiêu đề */
     .card-luxury-gold h5 {
         margin-top: 50px;
         font-weight: bold;
-        color: #C9B037;
+        color: #ffc107;
         text-shadow: 0 1px 0px rgba(201,176,55,0.8);
     }
 
@@ -54,7 +53,6 @@
 
     /* Hover effect */
     .card-luxury-gold:hover {
-        background: linear-gradient(135deg, #d4a537, #eac976);
         border-color: #eac976;
         transform: translateY(-5px);
         box-shadow: 0 8px 20px rgba(201,176,55,0.5);
@@ -69,10 +67,6 @@
     .card-luxury-gold:hover p {
         color: white;
         text-shadow: none;
-    }
-
-    .card-luxury-gold:hover .icon-circle {
-        background: #0b1c2c;
     }
 
     .card-luxury-gold:hover .icon-circle img {

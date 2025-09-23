@@ -208,6 +208,11 @@
             </div>
         </div>
     </div>
+    <x-consulting-form
+        title="ĐĂNG KÝ NHẬN BÁO GIÁ MIỄN PHÍ"
+        style="default"
+        class="w-50 mx-auto"
+    />
 </section>
 @include('customers.partials.anphu.partner')
 @endsection

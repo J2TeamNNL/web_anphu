@@ -47,7 +47,7 @@
                         Địa chỉ VPGD 1:
                     </span>
                     <br>
-                    <span style="color: #C9B037">
+                    <span style="color: #ffc107">
                         {{ company()->company_address_1 ?? '' }}
                     </span>
                 </div>
@@ -57,7 +57,7 @@
                         Địa chỉ VPGD 2:
                     </span>
                     <br>
-                    <span style="color: #C9B037">
+                    <span style="color: #ffc107">
                         {{ company()->company_address_2 ?? '' }}
                     </span>
                 </div>
