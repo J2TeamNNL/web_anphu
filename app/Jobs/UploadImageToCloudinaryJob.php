@@ -35,6 +35,10 @@ class UploadImageToCloudinaryJob implements ShouldQueue
      */
     public function handle(ImageUploadService $imageUploadService, MediaStorageService $storageService): void
     {
+        if(app()->environment('local')) {
+            return;
+        }
+        
         // Get media record
         $media = Media::find($this->mediaId);
         if (!$media) {
