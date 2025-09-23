@@ -45,8 +45,27 @@
                     <div class="about-tab-content active" id="tab-anphu">
                         <div class="content-card">
                             <div class="content-body">
+                                <h2 class="h5 h4-md h3-lg mb-3 text-center text-warning">
+                                    {{ $page?->title_1 ?? 'Giới thiệu về An Phú' }}
+                                </h2>
+                                <div class="hero-content mb-3">
+                                    {!! $page?->custom_content_1 ?? '<p class="text-muted">An Phú là một trong những công ty đầu tư uy tín nhất tại Việt Nam, với hơn 20 năm kinh nghiệm trong lĩnh vực đầu tư bất động sản.</p>' !!}
+                                </div>
+                            </div>
+                            <div class="content-footer mt-4">
+                                <button class="btn btn-detail">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    Xem chi tiết
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-tab-content" id="tab-culture">
+                        <div class="content-card">
+                            <div class="content-body">
+                                <h3 class="text-warning mb-3">Giá trị văn hóa An Phú</h3>
                                 <p class="text-muted mb-3">
-                                    An Phú là một trong những công ty đầu tư uy tín nhất tại Việt Nam, với hơn 20 năm kinh nghiệm trong lĩnh vực đầu tư bất động sản.
+                                    Văn hóa doanh nghiệp của An Phú được xây dựng trên nền tảng uy tín, chất lượng và sự phát triển bền vững.
                                 </p>
                             </div>
                             <div class="content-footer mt-4">
@@ -62,24 +81,6 @@
         </div>
     </div>
 </section>
-
-<!-- Detail Modal -->
-<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" style="background: linear-gradient(135deg, #070f47, #C9B037);">
-                <h5 class="modal-title text-white" id="detailModalLabel">Chi tiết thông tin</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="detailModalBody">
-                <!-- Content will be loaded here -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 @push('styles')
 <style>
@@ -205,6 +206,17 @@
 }
 
 .content-body p {
+    color: #f8f9fa;
+}
+
+.hero-content ul {
+    padding-left: 1.2rem;
+    list-style-type: disc;
+    color: #f8f9fa;
+}
+
+.hero-content li {
+    margin-bottom: 0.5rem;
     color: #f8f9fa;
 }
 
