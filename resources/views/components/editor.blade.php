@@ -1,39 +1,27 @@
 @props([
-    'selector' => 'quill-editor',
     'uploadRoute' => null,
     'uploadTable' => 'articles',
     'height' => '400px',
     'placeholder' => 'Nhập nội dung...',
-    'toolbar' => 'default',
     'content' => '',
-    'readonly' => false,
-    'textareaName' => 'content'
+    'readonly' => false
 ])
 
 @php
-    $elementId = ltrim($selector, '#');
-
-    $toolbars = [
-        'default' => [
-            ['bold', 'italic', 'underline'],
-            [['header' => 1], ['header' => 2]],
-            [['list' => 'ordered'], ['list' => 'bullet']],
-            ['image']
-        ],
-        'full' => [
-            [['font' => []], ['size' => []]],
-            ['bold', 'italic', 'underline', 'strike'],
-            [['color' => []], ['background' => []]],
-            [['script' => 'sub'], ['script' => 'super']],
-            [['header' => 1], ['header' => 2], ['header' => [3, 4, 5, 6, false]]],
-            [['list' => 'ordered'], ['list' => 'bullet'], ['indent' => '-1'], ['indent' => '+1']],
-            ['direction', ['align' => []]],
-            ['link', 'image', 'video'],
-            ['clean']
-        ]
+    $elementId = 'quill-editor';
+    $textareaName = 'content';
+    
+    $toolbar = [
+        [['font' => []], ['size' => []]],
+        ['bold', 'italic', 'underline', 'strike'],
+        [['color' => []], ['background' => []]],
+        [['script' => 'sub'], ['script' => 'super']],
+        [['header' => 1], ['header' => 2], ['header' => [3, 4, 5, 6, false]]],
+        [['list' => 'ordered'], ['list' => 'bullet'], ['indent' => '-1'], ['indent' => '+1']],
+        ['direction', ['align' => []]],
+        ['link', 'image', 'video'],
+        ['clean']
     ];
-
-    $toolbarOptions = $toolbars[$toolbar] ?? $toolbars['default'];
 @endphp
 
 @push('styles')
@@ -50,14 +38,12 @@
     </style>
 @endpush
 
-<div id="{{ $elementId }}" class="quill-editor">{!! $content !!}</div>
+<div id="{{ $elementId }}" class="quill-editor"></div>
 <textarea
     name="{{ $textareaName }}"
     id="{{ $elementId }}-textarea"
     class="d-none"
->
-    {{ old($textareaName) }}
-</textarea>
+>{{ old($textareaName, $content) }}</textarea>
 
 
 
@@ -82,6 +68,16 @@
                 readonly: @json($readonly),
                 toolbar: @json($toolbar)
             });
+
+            // Load content sau khi Quill đã khởi tạo xong
+            setTimeout(() => {
+                const textarea = document.getElementById('{{ $elementId }}-textarea');
+                const initialContent = textarea ? textarea.value.trim() : '';
+                
+                if (initialContent && quillManager.quill) {
+                    quillManager.setContent(initialContent);
+                }
+            }, 200);
 
             window.quillManagers = window.quillManagers || {};
             window.quillManagers['{{ $elementId }}'] = quillManager;

@@ -74,15 +74,26 @@ class QuillEditorManager {
         editorElem.style.height = this.options.height;
         
         // Add error handling for editor
-        this.quill.on('text-change', () => {
+        this.quill.on('text-change', (delta, oldDelta, source) => {
             this.syncTextarea();
+            
+            // Chỉ clean khi không phải user typing
+            if (source !== 'user') {
+                setTimeout(() => this.cleanQuillContent(), 100);
+            }
         });
     }
 
     /**
-     * Get toolbar configuration based on type
+     * Get toolbar configuration
      */
     getToolbarOptions() {
+        // Nếu toolbar là array, return trực tiếp
+        if (Array.isArray(this.options.toolbar)) {
+            return this.options.toolbar;
+        }
+
+        // Fallback cho string values (backward compatibility)
         const toolbars = {
             default: [
                 ['bold', 'italic', 'underline'],
@@ -266,8 +277,67 @@ class QuillEditorManager {
      */
     syncTextarea() {
         if (this.textarea && this.quill) {
-            this.textarea.value = this.quill.root.innerHTML;
+            // Sử dụng innerHTML và clean HTML để tránh khoảng trắng không mong muốn
+            let html = this.quill.root.innerHTML;
+            html = this.cleanHTML(html);
+            this.textarea.value = html;
         }
+    }
+
+    /**
+     * Clean Quill content in real-time
+     */
+    cleanQuillContent() {
+        if (!this.quill) return;
+        
+        const currentHTML = this.quill.root.innerHTML;
+        const cleanedHTML = this.cleanHTML(currentHTML);
+        
+        if (currentHTML !== cleanedHTML) {
+            // Lưu vị trí cursor
+            const selection = this.quill.getSelection();
+            
+            // Set cleaned HTML
+            this.quill.root.innerHTML = cleanedHTML;
+            
+            // Khôi phục cursor nếu có
+            if (selection) {
+                try {
+                    this.quill.setSelection(selection);
+                } catch (e) {
+                    // Ignore cursor restoration errors
+                }
+            }
+        }
+    }
+
+    /**
+     * Clean HTML to remove unwanted whitespace and empty paragraphs
+     */
+    cleanHTML(html) {
+        return html
+            // Loại bỏ các thẻ p rỗng hoặc chỉ chứa br
+            .replace(/<p>\s*<br\s*\/?>\s*<\/p>/gi, '')
+            .replace(/<p>\s*<\/p>/gi, '')
+            // Loại bỏ khoảng trắng quanh thẻ img - aggressive cleaning
+            .replace(/\s*(<img[^>]*>)\s*/g, '$1')
+            // Loại bỏ khoảng trắng giữa các thẻ
+            .replace(/>\s+</g, '><')
+            // Loại bỏ khoảng trắng ở đầu và cuối các thẻ span
+            .replace(/(<span[^>]*>)\s+/g, '$1')
+            .replace(/\s+(<\/span>)/g, '$1')
+            // Loại bỏ khoảng trắng giữa thẻ đóng và mở
+            .replace(/(<\/[^>]+>)\s+(<[^>]+>)/g, '$1$2')
+            // Loại bỏ khoảng trắng trước img trong span
+            .replace(/(<span[^>]*>)\s*(<img)/g, '$1$2')
+            // Loại bỏ khoảng trắng sau img trong span
+            .replace(/(<img[^>]*>)\s*([^<])/g, '$1$2')
+            // Loại bỏ nhiều br liên tiếp
+            .replace(/(<br\s*\/?>){2,}/gi, '<br>')
+            // Loại bỏ whitespace characters không nhìn thấy
+            .replace(/[\u200B-\u200D\uFEFF]/g, '')
+            // Trim toàn bộ
+            .trim();
     }
 
     /**
@@ -406,15 +476,32 @@ class QuillEditorManager {
      * Get editor content
      */
     getContent() {
-        return this.quill ? this.quill.root.innerHTML : '';
+        if (!this.quill) return '';
+        let html = this.quill.root.innerHTML;
+        return this.cleanHTML(html);
     }
 
     /**
      * Set editor content
      */
     setContent(content) {
-        if (this.quill) {
-            this.quill.root.innerHTML = content;
+        if (this.quill && content) {
+            // Clean content trước khi set
+            const cleanedContent = this.cleanHTML(content);
+            
+            try {
+                // Thử dùng dangerouslyPasteHTML trước
+                this.quill.clipboard.dangerouslyPasteHTML(cleanedContent);
+            } catch (error) {
+                // Fallback: set trực tiếp vào innerHTML
+                this.quill.root.innerHTML = cleanedContent;
+            }
+            
+            // Clean content ngay sau khi set
+            setTimeout(() => {
+                this.cleanQuillContent();
+                this.syncTextarea();
+            }, 50);
         }
     }
 

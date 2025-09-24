@@ -83,14 +83,11 @@
                     <h5 for="content">Nội dung chi tiết</h5>
                     <p claas="text-muted">(Video hợp lệ để nhúng: Youtube, Facebook, Tiktok)</p>
                     <x-editor 
-                        selector="#quill-editor"
                         uploadTable="portfolios"
-                        toolbar="full"
                         height="500px"
                         placeholder="Nhập nội dung mô tả chi tiết..."
                         :uploadRoute="route('admin.media.uploadImage')"
                         :content="old('content', $portfolio->content ?? '')"
-                        textareaName="content"
                     />
                 </div>
 

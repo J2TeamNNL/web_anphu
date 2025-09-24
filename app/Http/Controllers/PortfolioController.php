@@ -111,18 +111,6 @@ class PortfolioController extends Controller
         }
 
 
-        // if ($request->filled('facebook_post')) {
-        //     $postData = $request->input('facebook_post');
-        //     $postData['related_type'] = Portfolio::class;
-        //     $postData['related_id']   = $portfolio->id;
-
-        //     $fbPost = $fbService->sync($postData);
-
-        //     $portfolio->update([
-        //         'fb_post_id' => $fbPost->fb_post_id,
-        //     ]);
-        // }
-
         return redirect()->route('admin.portfolios.index');
     }
 
@@ -145,6 +133,7 @@ class PortfolioController extends Controller
 
     public function update(UpdatePortfolioRequest $request, Portfolio $portfolio, CloudinaryService $cloudinaryService)
     {
+        dd($request->all());
         $data = $request->validated();
 
         if ($request->hasFile('thumbnail')) {
