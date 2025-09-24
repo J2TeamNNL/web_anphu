@@ -15,127 +15,97 @@ class CategorySeeder extends Seeder
     {   
         Category::truncate();
 
-        //PORTFOLIO
-
-        $interior = Category::create([
-            'name' => 'Nội thất',
-            'slug' => Str::slug('Nội thất'),
+        // PORTFOLIO Categories (Parent categories)
+        $xayNhaTronGoi = Category::create([
+            'name' => $name = 'Xây nhà trọn gói',
+            'slug' => Str::slug($name),
             'type' => CategoryType::PORTFOLIO,
         ]);
 
-        $villa = Category::create([
-            'name' => 'Biệt thự',
-            'slug' => Str::slug('Biệt Thự'),
+        $caiTaoNhaCu = Category::create([
+            'name' => $name = 'Cải tạo Nhà cũ',
+            'slug' => Str::slug($name),
             'type' => CategoryType::PORTFOLIO,
         ]);
 
-        $townhouse = Category::create([
-            'name' => 'Nhà phố',
-            'slug' => Str::slug('Nhà phố'),
+        $thietKeKienTruc = Category::create([
+            'name' => $name = 'Thiết kế kiến trúc',
+            'slug' => Str::slug($name),
             'type' => CategoryType::PORTFOLIO,
         ]);
 
-        $commercial = Category::create([
-            'name' => 'Nhà thương mại',
-            'slug' => Str::slug('Nhà thương mại'),
+        $thietKeNoiThat = Category::create([
+            'name' => $name = 'Thiết kế Nội thất',
+            'slug' => Str::slug($name),
             'type' => CategoryType::PORTFOLIO,
         ]);
 
-        // Child categories (PORTFOLIO)
+        // Child categories for Thiết kế kiến trúc
         Category::insert([
             [
-                'name' => 'Hiện đại',
-                'slug' => Str::slug('Hiện đại'),
+                'name' => $name = 'Thiết kế Kiến trúc Hiện đại',
+                'slug' => Str::slug($name),
                 'type' => CategoryType::PORTFOLIO,
-                'parent_id' => $interior->id,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'parent_id' => $thietKeKienTruc->id,
             ],
             [
-                'name' => 'Đông Dương',
-                'slug' => Str::slug('Đông Dương'),
+                'name' => $name = 'Thiết kế kiến trúc Tân cổ điển',
+                'slug' => Str::slug($name),
                 'type' => CategoryType::PORTFOLIO,
-                'parent_id' => $interior->id,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'parent_id' => $thietKeKienTruc->id,
             ],
             [
-                'name' => 'Rustic',
-                'slug' => Str::slug('Rustic'),
+                'name' => $name = 'Thiết kế kiến trúc Khác',
+                'slug' => Str::slug($name),
                 'type' => CategoryType::PORTFOLIO,
-                'parent_id' => $interior->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            
-            [
-                'name' => '2 tầng',
-                'slug' => Str::slug('2 tầng'),
-                'type' => CategoryType::PORTFOLIO,
-                'parent_id' => $townhouse->id,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'parent_id' => $thietKeKienTruc->id,
             ],
             [
-                'name' => '3 tầng',
-                'slug' => Str::slug('3 tầng'),
+                'name' => $name = 'Thiết kế nội thất Hiện đại',
+                'slug' => Str::slug($name),
                 'type' => CategoryType::PORTFOLIO,
-                'parent_id' => $townhouse->id,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'parent_id' => $thietKeNoiThat->id,
             ],
             [
-                'name' => '4 đến 8 tầng',
-                'slug' => Str::slug('4 đến 8 tầng'),
+                'name' => $name = 'Thiết kế Nội thất Tân cổ điển',
+                'slug' => Str::slug($name),
                 'type' => CategoryType::PORTFOLIO,
-                'parent_id' => $townhouse->id,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'parent_id' => $thietKeNoiThat->id,
             ],
             [
-                'name' => 'Nhà cấp 4',
-                'slug' => Str::slug('Nhà cấp 4'),
+                'name' => $name = 'Thiết kế Nội thất khác',
+                'slug' => Str::slug($name),
                 'type' => CategoryType::PORTFOLIO,
-                'parent_id' => $townhouse->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Homestay',
-                'slug' => Str::slug('Homestay'),
-                'type' => CategoryType::PORTFOLIO,
-                'parent_id' => $commercial->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Văn phòng',
-                'slug' => Str::slug('Văn phòng'),
-                'type' => CategoryType::PORTFOLIO,
-                'parent_id' => $commercial->id,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'parent_id' => $thietKeNoiThat->id,
             ],
         ]);
 
-        // Articles
-        Category::create([
-            'name' => 'Đời sống An Phú',
-            'slug' => 'doi-song-an-phu',
-            'type' => CategoryType::ARTICLE,
+        // ARTICLE Categories
+        Category::insert([
+            [
+                'name' => $name = 'Kiến thức Xây dựng',
+                'slug' => Str::slug($name),
+                'type' => CategoryType::ARTICLE,
+                'parent_id' => null,
+            ],
+            [
+                'name' => $name = 'Khuyến mại',
+                'slug' => Str::slug($name),
+                'type' => CategoryType::ARTICLE,
+                'parent_id' => null,
+            ],
+            [
+                'name' => $name = 'Cảm nhận Khách hàng',
+                'slug' => Str::slug($name),
+                'type' => CategoryType::ARTICLE,
+                'parent_id' => null,
+            ],
+            [
+                'name' => $name = 'Khoảnh khắc công trình',
+                'slug' => Str::slug($name),
+                'type' => CategoryType::ARTICLE,
+                'parent_id' => null,
+            ],
         ]);
-
-        Category::create([
-            'name' => 'Sự kiện',
-            'slug' => 'su-kien',
-            'type' => CategoryType::ARTICLE,
-        ]);
-
-        Category::create([
-            'name' => 'Công trình',
-            'slug' => 'cong-trinh',
-            'type' => CategoryType::ARTICLE,
-        ]);
-
     }
 }

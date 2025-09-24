@@ -56,20 +56,7 @@ class Category extends Model
         });
     }
 
-    public function parent()
-    {
-        return $this->belongsTo(Category::class, 'parent_id');
-    }
-
-    public function children()
-    {
-        return $this->hasMany(Category::class, 'parent_id');
-    }
-
-    public function childrenRecursive()
-    {
-        return $this->children()->with('childrenRecursive');
-    }
+    // parent() và children() đã được cung cấp bởi HasRecursiveRelationships trait
 
     public function portfolios()
     {
@@ -89,5 +76,29 @@ class Category extends Model
     public function scopeArticle($query)
     {
         return $query->where('type', CategoryType::ARTICLE->value);
+    }
+
+    /**
+     * Lấy tất cả ID của parent categories (ancestors)
+     */
+    public function getAncestorIds(): array
+    {
+        return $this->ancestors()->pluck('id')->toArray();
+    }
+
+    /**
+     * Lấy tất cả ID của children categories (descendants)
+     */
+    public function getDescendantIds(): array
+    {
+        return $this->descendants()->pluck('id')->toArray();
+    }
+
+    /**
+     * Lấy tất cả ID liên quan (ancestors + descendants + chính nó)
+     */
+    public function getAllRelatedIds(): array
+    {
+        return $this->bloodline()->pluck('id')->toArray();
     }
 }

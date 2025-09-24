@@ -14,6 +14,11 @@
     --anphu-gold: #ffc107;
     --anphu-bg: #0d2135;
     --anphu-dark: #081522;
+    
+    /* Luxury theme colors */
+    --lux-dark: #0b1c2c;
+    --lux-gold: #C9B037;
+    --lux-gold-light: #e4c465;
 }
 
 
@@ -716,25 +721,90 @@ body {
     border-bottom: 3px solid var(--anphu-gold) !important;
 }
 
+/* --------------------------
+   LUXURY COMPONENTS (Unified)
+--------------------------- */
+
+/* Luxury Buttons */
 .btn-luxury {
-    border: 1px solid #C9B037;
-    font-size: 16px;
-    color: white;
+    color: var(--lux-gold);
+    border: 1px solid var(--lux-gold);
     background-color: transparent;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 6px 14px;
+    margin: 0 4px;
+    border-radius: 10px;
     transition: all 0.3s ease;
 }
 
-.video-luxury-gold h4 {
+.btn-luxury:hover,
+.btn-luxury.active {
+    background-color: var(--lux-gold);
+    color: var(--lux-dark);
+}
 
+/* Luxury Headers */
+.video-luxury-gold h4,
+.project-luxury-gold h4 {
     font-weight: bold;
-    color: #C9B037;
+    color: var(--lux-gold);
     text-shadow: 0 1px 0px rgba(201,176,55,0.8);
 }
 
-.btn-luxury:hover {
-    background-color: #C9B037;
-    color: #0b1c2c;
-    border-color: #C9B037;
+/* Project Cards */
+.card-project {
+    border: 1px solid var(--lux-gold);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    min-height: 250px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease;
+}
+
+.card-project:hover {
+    transform: translateY(-4px);
+}
+
+.project-overlay {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+    height: 100%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+/* Project Grid Wrapper */
+.project-grid-wrapper {
+    width: 100%;
+}
+
+.project-grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.project-item {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    padding: 0 15px;
+}
+
+@media (max-width: 768px) {
+    .project-item {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .project-item {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
 }
 
 /* --------------------------
@@ -752,27 +822,6 @@ body {
     background-attachment: fixed;
     position: relative;
     border-bottom: 3px solid var(--anphu-gold) !important;
-}
-
-.btn-luxury {
-    border: 1px solid #C9B037;
-    font-size: 16px;
-    color: white;
-    background-color: transparent;
-    transition: all 0.3s ease;
-}
-
-.project-luxury-gold h4 {
-
-    font-weight: bold;
-    color: #C9B037;
-    text-shadow: 0 1px 0px rgba(201,176,55,0.8);
-}
-
-.btn-luxury:hover {
-    background-color: #C9B037;
-    color: #0b1c2c;
-    border-color: #C9B037;
 }
 
 .section-bg-demo {

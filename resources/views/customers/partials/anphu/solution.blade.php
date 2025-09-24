@@ -73,18 +73,7 @@
         filter: none; /* icon về màu gốc */
     }
 
-    .btn-luxury {
-        border: 1px solid #C9B037;
-        color: white;
-        background-color: transparent;
-        transition: all 0.3s ease;
-    }
-
-    .btn-luxury:hover {
-        background-color: #C9B037;
-        color: #0b1c2c;
-        border-color: #C9B037;
-    }
+    /* btn-luxury đã được định nghĩa trong style_all.css */
 </style>
 @endpush
 @php
