@@ -39,10 +39,7 @@ class ArticleController extends Controller
         if ($request->filled('category_id')) {
             $category = Category::find($request->category_id);
             if ($category) {
-                $categoryIds = collect([$category->id])
-                    ->merge($category->childrenRecursive()->pluck('id'))
-                    ->flatten()
-                    ->toArray();
+                $categoryIds = $category->getAllRelatedIds();
 
                 $query->whereIn('category_id', $categoryIds);
             }
