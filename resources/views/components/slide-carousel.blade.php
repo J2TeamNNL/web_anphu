@@ -61,7 +61,7 @@ $slides = Slide::with('media')->get();
     }
 
     .slide-carousel .carousel-item {
-        height: 60vh;
+        height: 70vh;
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
