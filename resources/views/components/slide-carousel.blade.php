@@ -4,10 +4,10 @@ use App\Models\Slide;
 $slides = Slide::with('media')->get();
 @endphp
 
-@if($slides->isNotEmpty())   
+@if($slides->isNotEmpty())
 <div class="carousel-wrapper">
     <div class="carousel-spacing carousel-spacing--top"></div>
-    
+
     <div id="slideCarousel" class="carousel slide slide-carousel" data-ride="carousel">
         <div class="carousel-inner">
             @foreach($slides as $index => $slide)
@@ -19,21 +19,21 @@ $slides = Slide::with('media')->get();
 
         <ol class="carousel-indicators carousel-indicators--custom">
             @foreach($slides as $index => $slide)
-                <li data-target="#slideCarousel" 
-                    data-slide-to="{{ $index }}" 
+                <li data-target="#slideCarousel"
+                    data-slide-to="{{ $index }}"
                     @class(['active' => $index === 0])>
                 </li>
             @endforeach
         </ol>
 
-        <a class="carousel-control-prev" href="#slideCarousel" role="button" data-slide="prev" aria-label="Previous slide">
+        <button class="carousel-control-prev" type="button" data-target="#slideCarousel" data-slide="prev" aria-label="Previous slide">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        </a>
-        <a class="carousel-control-next" href="#slideCarousel" role="button" data-slide="next" aria-label="Next slide">
+        </button>
+        <button class="carousel-control-next" type="button" data-target="#slideCarousel" data-slide="next" aria-label="Next slide">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </a>
+        </button>
     </div>
-    
+
     <div class="carousel-spacing carousel-spacing--bottom"></div>
 </div>
 @endif
