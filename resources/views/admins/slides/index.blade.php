@@ -12,24 +12,18 @@
                 </div>
 
                 <div class="card-body">
-                    <!-- Upload Form -->
-                    <form action="{{ route('admin.slides.store') }}" method="POST" enctype="multipart/form-data">
+                    <!-- Add Slide Form -->
+                    <form action="{{ route('admin.slides.store') }}" method="POST" enctype="multipart/form-data" id="slide-form">
                         @csrf
-                        <div class="row mb-3">
+                        <div class="row mb-4">
                             <div class="col-md-8">
+                                <label class="form-label fw-bold">Thêm slide mới:</label>
                                 <input type="file" 
-                                       name="images[]" 
-                                       multiple 
+                                       name="image"
                                        accept="image/*"
                                        class="form-control" 
-                                       id="images-input"
+                                       id="image-input"
                                        required>
-                                <small class="text-muted">Chọn ảnh để thay thế toàn bộ slides</small>
-                            </div>
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-danger btn-block">
-                                    <i class="fas fa-save"></i> Save
-                                </button>
                             </div>
                         </div>
                     </form>
@@ -84,47 +78,16 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
-    // Handle file selection
-    $('#images-input').change(function() {
-        const files = this.files;
-        const tbody = $('#slides-table tbody');
-        
-        // Clear existing rows
-        tbody.empty();
-        
-        if (files.length === 0) {
-            tbody.append(`
-                <tr id="no-slides">
-                    <td colspan="3" class="text-center text-muted">
-                        Chưa có slide nào. Chọn ảnh để tạo slides.
-                    </td>
-                </tr>
-            `);
-            return;
+    // Auto submit form when file is selected
+    $('#image-input').change(function() {
+        const file = this.files[0];
+        if (file) {
+            // Update status
+            $('#upload-status').html('<i class="fas fa-spinner fa-spin text-primary"></i> Đang upload...');
+            
+            // Submit form
+            $('#slide-form').submit();
         }
-        
-        // Add preview rows
-        Array.from(files).forEach((file, index) => {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                tbody.append(`
-                    <tr data-index="${index}">
-                        <td>
-                            <img src="${e.target.result}" 
-                                 class="img-thumbnail" 
-                                 style="width: 80px; height: 60px; object-fit: cover;">
-                        </td>
-                        <td>${file.name}</td>
-                        <td>
-                            <button class="btn btn-sm btn-danger remove-slide">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `);
-            };
-            reader.readAsDataURL(file);
-        });
     });
 });
 </script>

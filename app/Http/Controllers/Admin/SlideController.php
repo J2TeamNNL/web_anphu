@@ -23,39 +23,19 @@ class SlideController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'images' => 'required|array|min:1',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'required|image'
         ]);
 
-        // Truncate all slides and their media
-        $this->truncateAllSlides();
-
-        // Create new slides with uploaded images
-        foreach ($request->file('images') as $index => $image) {
-            $slide = Slide::create();
-            
-            // Upload image using ImageUploadService
-            $media = $this->imageUploadService->uploadImage($image, 'slides');
-            
-            // Update media with slide relationship and order
-            $media->update([
-                'order' => $index,
-                'mediaable_id' => $slide->id,
-                'mediaable_type' => Slide::class,
-            ]);
-        }
-
-        return redirect()->route('admin.slides.index')->with('success', 'Slides đã được cập nhật thành công!');
-    }
-
-    private function truncateAllSlides()
-    {
-        $slides = Slide::with('media')->get();
+        $slide = Slide::create();
         
-        foreach ($slides as $slide) {
-            $slide->media->delete();
-            $slide->delete();
-        }
+        $media = $this->imageUploadService->uploadImage($request->file('image'), 'slides');
+        
+        $media->update([
+            'mediaable_id' => $slide->id,
+            'mediaable_type' => Slide::class,
+        ]);
+
+        return redirect()->route('admin.slides.index')->with('success', 'Slide mới đã được thêm thành công!');
     }
 
     public function destroy(Slide $slide)
