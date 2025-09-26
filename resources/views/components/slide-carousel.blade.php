@@ -61,7 +61,7 @@ $slides = Slide::with('media')->get();
     }
 
     .slide-carousel .carousel-item {
-        height: 70vh;
+        height: 55vh;
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
@@ -73,6 +73,24 @@ $slides = Slide::with('media')->get();
         border: 1px solid var(--color-secondary);
         display: block;
         flex-shrink: 0;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+
+    /* Responsive cho mobile */
+    @media (max-width: 768px) {
+        .slide-carousel .carousel-item {
+            height: 50vh;
+        }
+        
+        .carousel-spacing--top { height: 20px; }
+        .carousel-spacing--bottom { height: 30px; }
+    }
+
+    @media (max-width: 480px) {
+        .slide-carousel .carousel-item {
+            height: 40vh;
+        }
     }
 
     .carousel-indicators--custom {
