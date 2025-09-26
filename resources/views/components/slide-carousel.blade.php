@@ -61,7 +61,7 @@ $slides = Slide::with('media')->get();
     }
 
     .slide-carousel .carousel-item {
-        height: 55vh;
+        height: 56.25vh;
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
@@ -89,8 +89,11 @@ $slides = Slide::with('media')->get();
 
     @media (max-width: 480px) {
         .slide-carousel .carousel-item {
-            height: 40vh;
+            height: 45vh;
         }
+        
+        .carousel-spacing--top { height: 15px; }
+        .carousel-spacing--bottom { height: 20px; }
     }
 
     .carousel-indicators--custom {
