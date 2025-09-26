@@ -71,7 +71,7 @@
     }
 
     .card-blog {
-        border: 1px solid #C9B037;
+        border: 1px solid var(--color-secondary);
         border-radius: 8px;
         overflow: hidden;
         position: relative;

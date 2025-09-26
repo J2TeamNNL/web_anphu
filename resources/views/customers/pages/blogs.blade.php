@@ -5,7 +5,7 @@
     :root {
         --lux-dark: #0b1c2c; /* xanh than đậm */
         --lux-dark-2: #081420;
-        --lux-gold: #C9B037; /* vàng ánh kim */
+        --lux-gold: var(--color-secondary); /* vàng ánh kim */
         --lux-gold-light: #e4c465;
         --lux-text-light: #f5f2e7;
     }

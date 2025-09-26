@@ -10,13 +10,13 @@ $pages = AboutPage::get();
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    border-bottom: 3px solid #C9B037;
+    border-bottom: 3px solid var(--color-secondary);
 ">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="mb-4 text-center">
-                    <p class="text-uppercase font-weight-bold mb-2" style="color: #C9B037; font-size: 1.2rem;">Giới thiệu về An Phú</p>
+                    <p class="text-uppercase font-weight-bold mb-2 text-warning" style="font-size: 1.2rem;">Giới thiệu về An Phú</p>
                 </div>
             </div>
         </div>
@@ -91,12 +91,12 @@ $pages = AboutPage::get();
 .about-tab-header:hover {
     background: linear-gradient(135deg, #142d4c, #1a3a5c);
     transform: translateX(5px);
-    border-color: #C9B037;
+    border-color: var(--color-secondary);
     box-shadow: 0 4px 15px rgba(214, 177, 98, 0.3);
 }
 
 .about-tab-header.active {
-    background: linear-gradient(135deg, #d6b162, #C9B037);
+    background: linear-gradient(135deg, #d6b162, var(--color-secondary));
     border-color: #d6b162;
     transform: translateX(8px);
     color: #070f47;
@@ -164,7 +164,7 @@ $pages = AboutPage::get();
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #d6b162, #C9B037, #d6b162);
+    background: linear-gradient(90deg, #d6b162, var(--color-secondary), #d6b162);
     border-radius: 15px 15px 0 0;
 }
 
@@ -175,7 +175,7 @@ $pages = AboutPage::get();
 }
 
 .content-body h1, .content-body h2, .content-body h3, .content-body h4, .content-body h5, .content-body h6 {
-    color: #C9B037;
+    color: var(--color-secondary);
     margin-bottom: 15px;
     font-weight: bold;
 }
@@ -212,8 +212,8 @@ $pages = AboutPage::get();
 
 .btn-detail {
     background: transparent;
-    color: #C9B037;
-    border: 2px solid #C9B037;
+    color: var(--color-secondary);
+    border: 2px solid var(--color-secondary);
     padding: 12px 25px;
     border-radius: 25px;
     font-weight: 600;
@@ -223,7 +223,7 @@ $pages = AboutPage::get();
 }
 
 .btn-detail:hover {
-    background: #C9B037;
+    background: var(--color-secondary);
     color: #070f47;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(201, 176, 55, 0.4);

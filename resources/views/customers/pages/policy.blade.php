@@ -5,7 +5,7 @@
 :root {
     --lux-dark: #0b1c2c;
     --lux-dark-2: #081420;
-    --lux-gold: #C9B037;
+    --lux-gold: var(--color-secondary);
     --lux-gold-light: #e4c465;
     --lux-text-light: #f5f2e7;
 }

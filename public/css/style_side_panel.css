@@ -155,8 +155,8 @@
     height: 58px; /* Giới hạn chiều cao thanh nút */
     justify-content: space-around;
     align-items: center;
-    background: #C9B037;
-    border-top: 1px solid #b79a2d;
+    background: var(--color-secondary);
+    border-top: 1px solid var(--color-secondary);
     padding: 0;
     z-index: 9999;
   }
@@ -184,8 +184,8 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background: #C9B037; /* màu vàng thương hiệu */
-    border-top: 1px solid #b79a2d;
+    background: var(--color-secondary); /* màu vàng thương hiệu */
+    border-top: 1px solid var(--color-secondary);
     z-index: 9999;
     padding: 0;
   }
@@ -216,7 +216,7 @@
 
   /* Đường ngăn giữa các nút */
   .panel-btn:not(:last-child) {
-    border-right: 1px solid #b79a2d;
+    border-right: 1px solid rgba(255, 193, 7, 0.8);
   }
 
   .panel-btn i {

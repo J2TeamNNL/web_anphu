@@ -70,7 +70,7 @@ $slides = Slide::with('media')->get();
         height: 100%;
         object-fit: cover;
         object-position: center;
-        border: 1px solid #C9B037;
+        border: 1px solid var(--color-secondary);
         display: block;
         flex-shrink: 0;
     }
@@ -100,7 +100,7 @@ $slides = Slide::with('media')->get();
 
     .carousel-indicators--custom li.active,
     .carousel-indicators--custom li:hover {
-        background-color: #C9B037;
+        background-color: var(--color-secondary);
         transform: scale(1.2);
     }
 </style>

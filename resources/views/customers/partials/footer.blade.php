@@ -109,7 +109,7 @@
             </div>
         </div>
     </div>
-    <div class="footer-copyright text-center py-3 mt-4" style="border-top: .5px solid #C9B037">
+    <div class="footer-copyright text-center py-3 mt-4" style="border-top: .5px solid var(--color-secondary)">
         <span style="font-family: 'Great Vibes', cursive">
             © {{ date('Y') }} An Phú Build. All rights reserved.
         </span>
