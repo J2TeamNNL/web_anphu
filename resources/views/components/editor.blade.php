@@ -10,18 +10,6 @@
 @php
     $elementId = 'quill-editor';
     $textareaName = 'content';
-    
-    $toolbar = [
-        [['font' => []], ['size' => []]],
-        ['bold', 'italic', 'underline', 'strike'],
-        [['color' => []], ['background' => []]],
-        [['script' => 'sub'], ['script' => 'super']],
-        [['header' => 1], ['header' => 2], ['header' => [3, 4, 5, 6, false]]],
-        [['list' => 'ordered'], ['list' => 'bullet'], ['indent' => '-1'], ['indent' => '+1']],
-        ['direction', ['align' => []]],
-        ['link', 'image', 'video'],
-        ['clean']
-    ];
 @endphp
 
 @push('styles')
@@ -66,7 +54,6 @@
                 height: @json($height),
                 placeholder: @json($placeholder),
                 readonly: @json($readonly),
-                toolbar: @json($toolbar)
             });
 
             // Load content sau khi Quill đã khởi tạo xong

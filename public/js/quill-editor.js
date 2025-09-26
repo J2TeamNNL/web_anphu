@@ -88,37 +88,21 @@ class QuillEditorManager {
      * Get toolbar configuration
      */
     getToolbarOptions() {
-        // Nếu toolbar là array, return trực tiếp
-        if (Array.isArray(this.options.toolbar)) {
-            return this.options.toolbar;
-        }
-
-        // Fallback cho string values (backward compatibility)
-        const toolbars = {
-            default: [
-                ['bold', 'italic', 'underline'],
-                [{ 'header': 1 }, { 'header': 2 }],
-                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                ['image']
-            ],
-            full: [
-                [{ 'font': [
-                    'arial', 'helvetica', 'open-sans', 'roboto', 'montserrat',
-                    'times-new-roman', 'georgia', 'merriweather', 'playfair-display'
-                ] }],
-                [{ 'size': [] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'script': 'sub' }, { 'script': 'super' }],
-                [{ 'header': 1 }, { 'header': 2 }, { 'header': [3, 4, 5, 6, false] }],
-                [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-                ['direction', { 'align': [] }],
-                ['link', 'image', 'video'],
-                ['clean']
-            ]
-        };
-
-        return toolbars[this.options.toolbar] || toolbars.default;
+        return [
+            [{ 'font': [
+                'arial', 'helvetica', 'open-sans', 'roboto', 'montserrat',
+                'times-new-roman', 'georgia', 'merriweather', 'playfair-display'
+            ] }],
+            [{ 'size': [] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],
+            [{ 'header': 1 }, { 'header': 2 }, { 'header': [3, 4, 5, 6, false] }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['direction', { 'align': [] }],
+            ['link', 'image', 'video'],
+            ['clean']
+        ];
     }
 
     /**
