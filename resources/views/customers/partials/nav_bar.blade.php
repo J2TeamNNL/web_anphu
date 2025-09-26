@@ -59,7 +59,7 @@ $dropdownNavItemClasses = $navItemClasses . ' dropdown';
                         aria-expanded="false"
                     >
                         <i class="fa fa-building me-1"></i>
-                        Về An Phú
+                        Về chúng tôi
                     </a>
                     <div class="dropdown-menu" aria-labelledby="aboutDropdown">
                         @foreach($aboutPages as $page)

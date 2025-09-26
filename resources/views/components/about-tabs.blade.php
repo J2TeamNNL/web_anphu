@@ -12,15 +12,7 @@ $pages = AboutPage::get();
     background-repeat: no-repeat;
     border-bottom: 3px solid var(--color-secondary);
 ">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="mb-4 text-center">
-                    <p class="text-uppercase font-weight-bold mb-2 text-warning" style="font-size: 1.2rem;">Giới thiệu về An Phú</p>
-                </div>
-            </div>
-        </div>
-        
+    <div class="container">        
         <div class="row">
             <!-- Tab Headers - Vertical Left Side -->
             <div class="col-lg-4 col-md-4">
