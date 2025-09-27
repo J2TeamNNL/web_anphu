@@ -67,14 +67,17 @@ $slides = Slide::with('media')->get();
     }
 
     .slide-carousel .carousel-item {
-        height: 70vh; /* Laptop - 70vh như yêu cầu */
+        /* Không fix height - để ảnh quyết định */
+        aspect-ratio: 16/9; /* Tỷ lệ chuẩn */
+        width: 100%;
+        max-height: 70vh; /* Giới hạn tối đa */
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
     /* Desktop lớn */
     @media (min-width: 1400px) {
         .slide-carousel .carousel-item {
-            height: 70vh; /* Desktop lớn - 70vh như yêu cầu */
+            max-height: 70vh;
         }
     }
 
@@ -102,7 +105,7 @@ $slides = Slide::with('media')->get();
     .slide-carousel .carousel-item img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: cover; /* Trở lại cover nhưng với aspect-ratio */
         object-position: center;
         border-radius: 0;
     }
