@@ -97,7 +97,7 @@ $slides = Slide::with('media')->get();
     .slide-carousel .carousel-item img {
         width: 100%;
         height: 100%;
-        object-fit: contain; /* KHÔNG crop - hiển thị toàn bộ ảnh */
+        object-fit: cover; /* Thay đổi thành cover để không có letterbox */
         object-position: center;
         border-radius: 0;
     }
