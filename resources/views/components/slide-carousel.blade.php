@@ -67,33 +67,44 @@ $slides = Slide::with('media')->get();
     }
 
     .slide-carousel .carousel-item {
-    /* Carousel container - đơn giản và clean */
-    /* Image styling - tối ưu và đơn giản */
-    .slide-carousel .carousel-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Hiển thị tốt nhất cho carousel */
-        object-position: center;
-        border-radius: 0;
+        height: 70vh; /* Laptop - 70vh như yêu cầu */
+        transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
-    /* Responsive adjustments */
+    /* Desktop lớn */
+    @media (min-width: 1400px) {
+        .slide-carousel .carousel-item {
+            height: 70vh; /* Desktop lớn - 70vh như yêu cầu */
+        }
+    }
+
+    /* Tablet */
     @media (max-width: 768px) {
         .slide-carousel .carousel-item {
-            height: 60vh; /* Nhỏ hơn cho tablet/mobile */
+            height: 40vh; /* Tablet */
         }
 
         .carousel-spacing--top { height: 20px; }
         .carousel-spacing--bottom { height: 30px; }
     }
 
+    /* Mobile */
     @media (max-width: 480px) {
         .slide-carousel .carousel-item {
-            height: 50vh; /* Compact cho mobile nhỏ */
+            height: 35vh; /* Mobile nhỏ gọn */
         }
 
         .carousel-spacing--top { height: 15px; }
         .carousel-spacing--bottom { height: 20px; }
+    }
+
+    /* Image styling */
+    .slide-carousel .carousel-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 0;
     }
 
     .carousel-image {
