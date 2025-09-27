@@ -118,13 +118,22 @@ $slides = Slide::with('media')->get();
     .carousel-image {
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Fill perfect với 16:9 containers */
+        object-fit: contain; /* Hiển thị toàn bộ ảnh, không crop */
         object-position: center;
+        background-color: #000; /* Background đen cho letterbox nếu cần */
         border: 1px solid var(--color-secondary);
         display: block;
         flex-shrink: 0;
         image-rendering: -webkit-optimize-contrast;
         image-rendering: crisp-edges;
+    }
+
+    /* Object-fit responsive - cover chỉ trên mobile */
+    @media (max-width: 768px) {
+        .carousel-image {
+            object-fit: cover; /* Mobile vẫn dùng cover để tối ưu space */
+            background-color: transparent;
+        }
     }
 
     .carousel-indicators--custom {
