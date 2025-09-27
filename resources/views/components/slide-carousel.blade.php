@@ -85,6 +85,9 @@ $slides = Slide::with('media')->get();
             height: 56.25vw; /* Giữ 16:9 ratio */
             max-height: 60vh; /* Giới hạn thấp hơn cho tablet */
         }
+
+        .carousel-spacing--top { height: 20px; }
+        .carousel-spacing--bottom { height: 30px; }
     }
 
     @media (max-width: 576px) {
@@ -92,6 +95,16 @@ $slides = Slide::with('media')->get();
             height: 56.25vw; /* Giữ 16:9 ratio */
             max-height: 50vh; /* Giới hạn cho mobile */
         }
+    }
+
+    @media (max-width: 480px) {
+        .slide-carousel .carousel-item {
+            height: 56.25vw; /* Giữ 16:9 ratio */
+            max-height: 45vh; /* Giới hạn thấp hơn cho mobile nhỏ */
+        }
+
+        .carousel-spacing--top { height: 15px; }
+        .carousel-spacing--bottom { height: 20px; }
     }
 
     /* Mobile landscape - vẫn giữ 16:9 */
@@ -112,25 +125,6 @@ $slides = Slide::with('media')->get();
         flex-shrink: 0;
         image-rendering: -webkit-optimize-contrast;
         image-rendering: crisp-edges;
-    }
-
-    /* Responsive cho mobile */
-    @media (max-width: 768px) {
-        .slide-carousel .carousel-item {
-            height: 50vh;
-        }
-
-        .carousel-spacing--top { height: 20px; }
-        .carousel-spacing--bottom { height: 30px; }
-    }
-
-    @media (max-width: 480px) {
-        .slide-carousel .carousel-item {
-            height: 45vh;
-        }
-
-        .carousel-spacing--top { height: 15px; }
-        .carousel-spacing--bottom { height: 20px; }
     }
 
     .carousel-indicators--custom {
