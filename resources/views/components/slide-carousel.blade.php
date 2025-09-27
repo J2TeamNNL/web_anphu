@@ -68,29 +68,34 @@ $slides = Slide::with('media')->get();
 
     .slide-carousel .carousel-item {
         width: 100vw;
-        height: 50vh; /* Sử dụng viewport height để adapt mọi màn hình */
+        height: auto; /* Để ảnh quyết định chiều cao */
+        min-height: 300px; /* Chiều cao tối thiểu */
+        max-height: 80vh; /* Giới hạn tối đa */
         transition: transform 0.8s ease, opacity 0.8s ease;
         background-color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     /* Desktop lớn */
     @media (min-width: 1400px) {
         .slide-carousel .carousel-item {
-            height: 55vh; /* Cao hơn một chút cho desktop */
+            max-height: 70vh;
         }
     }
 
     /* MacBook và laptop */
     @media (min-width: 1024px) and (max-width: 1399px) {
         .slide-carousel .carousel-item {
-            height: 45vh; /* Vừa phải cho laptop */
+            max-height: 60vh;
         }
     }
 
     /* Tablet */
     @media (max-width: 768px) {
         .slide-carousel .carousel-item {
-            height: 35vh; /* Compact cho tablet */
+            max-height: 50vh; /* Tablet */
         }
 
         .carousel-spacing--top { height: 20px; }
@@ -100,20 +105,24 @@ $slides = Slide::with('media')->get();
     /* Mobile */
     @media (max-width: 480px) {
         .slide-carousel .carousel-item {
-            height: 30vh; /* Nhỏ gọn cho mobile */
+            max-height: 40vh; /* Mobile */
+            min-height: 200px;
         }
 
         .carousel-spacing--top { height: 15px; }
         .carousel-spacing--bottom { height: 20px; }
     }
 
-    /* Image styling - Universal fit */
+    /* Image styling - No crop solution */
     .slide-carousel .carousel-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Cover để vừa hết màn hình */
+        max-width: 100vw;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain; /* Không crop - hiển thị toàn bộ ảnh */
         object-position: center;
         border-radius: 0;
+        display: block;
     }
 
     .carousel-image {
