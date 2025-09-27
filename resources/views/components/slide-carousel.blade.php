@@ -67,57 +67,38 @@ $slides = Slide::with('media')->get();
     }
 
     .slide-carousel .carousel-item {
-        width: 100vw;
-        height: 56.25vw; /* 16:9 aspect ratio */
-        max-height: 70vh; /* Giới hạn để không quá cao */
+        width: 100vw; /* CHIỀU NGANG: toàn bộ màn hình */
+        height: 70vh; /* CHIỀU DỌC: 70vh cố định */
         transition: transform 0.8s ease, opacity 0.8s ease;
-        background-color: #000;
+        background-color: #000; /* Nền đen professional */
+        overflow: hidden;
     }
 
-    /* Desktop lớn - màn hình rộng */
-    @media (min-width: 1400px) {
-        .slide-carousel .carousel-item {
-            height: 50vw; /* Tỷ lệ rộng hơn cho desktop */
-            max-height: 65vh;
-        }
-    }
-
-    /* MacBook và laptop */
-    @media (min-width: 1024px) and (max-width: 1399px) {
-        .slide-carousel .carousel-item {
-            height: 52vw; /* Điều chỉnh cho MacBook */
-            max-height: 60vh;
-        }
-    }
-
-    /* Tablet */
+    /* Mobile responsive - giữ nguyên logic */
     @media (max-width: 768px) {
         .slide-carousel .carousel-item {
-            height: 60vw; /* Tỷ lệ cho tablet */
-            max-height: 50vh;
+            height: 50vh; /* Nhỏ hơn cho mobile */
         }
 
         .carousel-spacing--top { height: 20px; }
         .carousel-spacing--bottom { height: 30px; }
     }
 
-    /* Mobile */
     @media (max-width: 480px) {
         .slide-carousel .carousel-item {
-            height: 70vw; /* Tỷ lệ cho mobile */
-            max-height: 40vh;
+            height: 40vh; /* Compact cho mobile nhỏ */
         }
 
         .carousel-spacing--top { height: 15px; }
         .carousel-spacing--bottom { height: 20px; }
     }
 
-    /* Image styling - Smart cover */
+    /* Image styling - KHÔNG CROP, hiển thị đầy đủ */
     .slide-carousel .carousel-item img {
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Cover nhưng với tỷ lệ thông minh */
-        object-position: center center;
+        object-fit: contain; /* KHÔNG crop - hiển thị toàn bộ ảnh */
+        object-position: center;
         border-radius: 0;
     }
 
