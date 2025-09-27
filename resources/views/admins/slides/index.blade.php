@@ -56,20 +56,20 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th width="100">Ảnh</th>
                                         <th>Thứ tự</th>
-                                        <th width="100">Thao tác</th>
+                                        <th>Ảnh Desktop</th>
+                                        <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($slides->where('is_mobile', false) as $slide)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 <img src="{{ $slide->media->file_path }}" 
                                                         class="img-thumbnail" 
-                                                        style="width: 80px; height: 45px; object-fit: cover;">
+                                                        style="width: 320px; height: 180px; object-fit: cover;">
                                             </td>
-                                            <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <form action="{{ route('admin.slides.update', $slide->id) }}" method="POST" class="d-inline">
@@ -129,20 +129,20 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th width="100">Ảnh</th>
                                         <th>Thứ tự</th>
-                                        <th width="100">Thao tác</th>
+                                        <th>Ảnh Mobile</th>
+                                        <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($slides->where('is_mobile', true) as $slide)
                                         <tr>
+                                            <td class="text-center align-middle">{{ $loop->iteration }}</td>
                                             <td>
                                                 <img src="{{ $slide->media->file_path }}" 
                                                         class="img-thumbnail" 
-                                                        style="width: 45px; height: 80px; object-fit: cover;">
+                                                        style="width: 180px; height: 320px; object-fit: cover;">
                                             </td>
-                                            <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <form action="{{ route('admin.slides.update', $slide->id) }}" method="POST" class="d-inline">
