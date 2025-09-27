@@ -67,45 +67,45 @@ $slides = Slide::with('media')->get();
     }
 
     .slide-carousel .carousel-item {
-        height: 70vh;
+        height: 56.25vw; /* 16:9 ratio: 100vw × 9/16 = 56.25vw */
+        max-height: 70vh; /* Giới hạn chiều cao tối đa */
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
-    /* Responsive carousel heights */
+    /* Responsive carousel heights - consistent 16:9 ratio */
     @media (max-width: 1200px) {
         .slide-carousel .carousel-item {
-            height: 60vh; /* Giảm chiều cao trên laptop nhỏ */
+            height: 56.25vw; /* Giữ 16:9 ratio */
+            max-height: 70vh;
         }
     }
 
     @media (max-width: 768px) {
         .slide-carousel .carousel-item {
-            height: 45vh; /* Chiều cao phù hợp cho tablet */
+            height: 56.25vw; /* Giữ 16:9 ratio */
+            max-height: 60vh; /* Giới hạn thấp hơn cho tablet */
         }
     }
 
     @media (max-width: 576px) {
         .slide-carousel .carousel-item {
-            height: 35vh; /* Chiều cao compact cho mobile */
-        }
-
-        .carousel-image {
-            object-fit: contain; /* Hiển thị toàn bộ ảnh trên mobile */
-            background-color: #000; /* Background cho letterbox nếu cần */
+            height: 56.25vw; /* Giữ 16:9 ratio */
+            max-height: 50vh; /* Giới hạn cho mobile */
         }
     }
 
-    /* Orientation handling cho mobile */
+    /* Mobile landscape - vẫn giữ 16:9 */
     @media (max-width: 576px) and (orientation: landscape) {
         .slide-carousel .carousel-item {
-            height: 50vh; /* Cao hơn khi mobile nằm ngang */
+            height: 56.25vw;
+            max-height: 80vh; /* Cao hơn khi landscape */
         }
     }
 
     .carousel-image {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: cover; /* Fill perfect với 16:9 containers */
         object-position: center;
         border: 1px solid #C9B037;
         display: block;
