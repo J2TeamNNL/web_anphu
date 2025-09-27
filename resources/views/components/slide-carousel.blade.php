@@ -68,7 +68,7 @@ $slides = Slide::with('media')->get();
 
     .slide-carousel .carousel-item {
         height: 56.25vw; /* Pure 16:9 ratio: 100vw × 9/16 = 56.25vw */
-        max-height: 60vh; /* Giới hạn chiều cao trên desktop */
+        max-height: 70vh; /* Tăng chiều cao trên desktop */
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
@@ -76,7 +76,7 @@ $slides = Slide::with('media')->get();
     @media (min-width: 1400px) {
         .slide-carousel .carousel-item {
             height: 56.25vw;
-            max-height: 55vh; /* Thấp hơn cho màn hình rất lớn */
+            max-height: 70vh; /* Tăng lên 70vh cho màn hình rất lớn */
         }
     }
 
