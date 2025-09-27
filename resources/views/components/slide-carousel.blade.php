@@ -67,30 +67,27 @@ $slides = Slide::with('media')->get();
     }
 
     .slide-carousel .carousel-item {
-        height: 56.25vw; /* Pure 16:9 ratio: 100vw × 9/16 = 56.25vw */
-        max-height: 70vh; /* Tăng chiều cao trên desktop */
+        height: 70vh; /* Desktop: 70vh trực tiếp */
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
-    /* Desktop lớn - constraint cao hơn */
+    /* Desktop lớn - giữ 70vh */
     @media (min-width: 1400px) {
         .slide-carousel .carousel-item {
-            height: 56.25vw;
-            max-height: 70vh; /* Tăng lên 70vh cho màn hình rất lớn */
+            height: 70vh; /* 70vh trực tiếp */
         }
     }
 
-    /* Tất cả breakpoints nhỏ hơn vẫn giữ pure 16:9 */
+    /* Laptop và các màn hình nhỏ hơn */
     @media (max-width: 1200px) {
         .slide-carousel .carousel-item {
-            height: 56.25vw; /* Pure 16:9 ratio */
-            max-height: 65vh; /* Cho phép cao hơn trên laptop */
+            height: 60vh; /* 60vh cho laptop */
         }
     }
 
     @media (max-width: 768px) {
         .slide-carousel .carousel-item {
-            height: 56.25vw; /* Pure 16:9 ratio */
+            height: 50vh; /* 50vh cho tablet */
         }
 
         .carousel-spacing--top { height: 20px; }
@@ -99,23 +96,23 @@ $slides = Slide::with('media')->get();
 
     @media (max-width: 576px) {
         .slide-carousel .carousel-item {
-            height: 56.25vw; /* Pure 16:9 ratio */
+            height: 40vh; /* 40vh cho mobile */
         }
     }
 
     @media (max-width: 480px) {
         .slide-carousel .carousel-item {
-            height: 56.25vw; /* Pure 16:9 ratio */
+            height: 35vh; /* 35vh cho mobile nhỏ */
         }
 
         .carousel-spacing--top { height: 15px; }
         .carousel-spacing--bottom { height: 20px; }
     }
 
-    /* Mobile landscape - vẫn giữ pure 16:9 */
+    /* Mobile landscape */
     @media (max-width: 576px) and (orientation: landscape) {
         .slide-carousel .carousel-item {
-            height: 56.25vw; /* Pure 16:9 ratio */
+            height: 55vh; /* 55vh khi mobile nằm ngang */
         }
     }
 
