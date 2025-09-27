@@ -55,6 +55,12 @@ $slides = Slide::with('media')->get();
     .carousel-spacing--top { height: 40px; }
     .carousel-spacing--bottom { height: 60px; }
 
+    /* Responsive spacing */
+    @media (max-width: 768px) {
+        .carousel-spacing--top { height: 20px; }
+        .carousel-spacing--bottom { height: 40px; }
+    }
+
     .slide-carousel {
         width: 100vw;
         margin-bottom: 0;
@@ -63,6 +69,37 @@ $slides = Slide::with('media')->get();
     .slide-carousel .carousel-item {
         height: 70vh;
         transition: transform 0.8s ease, opacity 0.8s ease;
+    }
+
+    /* Responsive carousel heights */
+    @media (max-width: 1200px) {
+        .slide-carousel .carousel-item {
+            height: 60vh; /* Giảm chiều cao trên laptop nhỏ */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .slide-carousel .carousel-item {
+            height: 45vh; /* Chiều cao phù hợp cho tablet */
+        }
+    }
+
+    @media (max-width: 576px) {
+        .slide-carousel .carousel-item {
+            height: 35vh; /* Chiều cao compact cho mobile */
+        }
+
+        .carousel-image {
+            object-fit: contain; /* Hiển thị toàn bộ ảnh trên mobile */
+            background-color: #000; /* Background cho letterbox nếu cần */
+        }
+    }
+
+    /* Orientation handling cho mobile */
+    @media (max-width: 576px) and (orientation: landscape) {
+        .slide-carousel .carousel-item {
+            height: 50vh; /* Cao hơn khi mobile nằm ngang */
+        }
     }
 
     .carousel-image {
