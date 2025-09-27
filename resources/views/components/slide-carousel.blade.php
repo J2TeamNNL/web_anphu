@@ -67,7 +67,7 @@ $slides = Slide::with('media')->get();
     }
 
     .slide-carousel .carousel-item {
-        height: 70vh; /* Quay lại fixed height cho ổn định */
+        height: 500px; /* Fixed height - ổn định trên mọi màn hình */
         transition: transform 0.8s ease, opacity 0.8s ease;
         background-color: #000; /* Màu nền đen để che khoảng trống */
     }
@@ -75,14 +75,14 @@ $slides = Slide::with('media')->get();
     /* Desktop lớn */
     @media (min-width: 1400px) {
         .slide-carousel .carousel-item {
-            height: 70vh;
+            height: 600px; /* Lớn hơn một chút cho desktop */
         }
     }
 
     /* Tablet */
     @media (max-width: 768px) {
         .slide-carousel .carousel-item {
-            height: 40vh; /* Tablet */
+            height: 350px; /* Fixed height cho tablet */
         }
 
         .carousel-spacing--top { height: 20px; }
@@ -92,7 +92,7 @@ $slides = Slide::with('media')->get();
     /* Mobile */
     @media (max-width: 480px) {
         .slide-carousel .carousel-item {
-            height: 35vh; /* Mobile nhỏ gọn */
+            height: 250px; /* Fixed height cho mobile */
         }
 
         .carousel-spacing--top { height: 15px; }
