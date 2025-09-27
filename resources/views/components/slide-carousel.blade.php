@@ -67,23 +67,21 @@ $slides = Slide::with('media')->get();
     }
 
     .slide-carousel .carousel-item {
-        height: 56.25vw; /* 16:9 ratio: 100vw × 9/16 = 56.25vw */
-        max-height: 70vh; /* Giới hạn chiều cao tối đa */
+        height: 56.25vw; /* Pure 16:9 ratio: 100vw × 9/16 = 56.25vw */
+        /* Không có max-height - để container hoàn toàn 16:9 */
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
-    /* Responsive carousel heights - consistent 16:9 ratio */
+    /* Tất cả breakpoints đều giữ pure 16:9 */
     @media (max-width: 1200px) {
         .slide-carousel .carousel-item {
-            height: 56.25vw; /* Giữ 16:9 ratio */
-            max-height: 70vh;
+            height: 56.25vw; /* Pure 16:9 ratio */
         }
     }
 
     @media (max-width: 768px) {
         .slide-carousel .carousel-item {
-            height: 56.25vw; /* Giữ 16:9 ratio */
-            max-height: 60vh; /* Giới hạn thấp hơn cho tablet */
+            height: 56.25vw; /* Pure 16:9 ratio */
         }
 
         .carousel-spacing--top { height: 20px; }
@@ -92,48 +90,36 @@ $slides = Slide::with('media')->get();
 
     @media (max-width: 576px) {
         .slide-carousel .carousel-item {
-            height: 56.25vw; /* Giữ 16:9 ratio */
-            max-height: 50vh; /* Giới hạn cho mobile */
+            height: 56.25vw; /* Pure 16:9 ratio */
         }
     }
 
     @media (max-width: 480px) {
         .slide-carousel .carousel-item {
-            height: 56.25vw; /* Giữ 16:9 ratio */
-            max-height: 45vh; /* Giới hạn thấp hơn cho mobile nhỏ */
+            height: 56.25vw; /* Pure 16:9 ratio */
         }
 
         .carousel-spacing--top { height: 15px; }
         .carousel-spacing--bottom { height: 20px; }
     }
 
-    /* Mobile landscape - vẫn giữ 16:9 */
+    /* Mobile landscape - vẫn giữ pure 16:9 */
     @media (max-width: 576px) and (orientation: landscape) {
         .slide-carousel .carousel-item {
-            height: 56.25vw;
-            max-height: 80vh; /* Cao hơn khi landscape */
+            height: 56.25vw; /* Pure 16:9 ratio */
         }
     }
 
     .carousel-image {
         width: 100%;
         height: 100%;
-        object-fit: contain; /* Hiển thị toàn bộ ảnh, không crop */
+        object-fit: cover; /* Cover trên tất cả màn hình - không letterbox */
         object-position: center;
-        background-color: #000; /* Background đen cho letterbox nếu cần */
         border: 1px solid var(--color-secondary);
         display: block;
         flex-shrink: 0;
         image-rendering: -webkit-optimize-contrast;
         image-rendering: crisp-edges;
-    }
-
-    /* Object-fit responsive - cover chỉ trên mobile */
-    @media (max-width: 768px) {
-        .carousel-image {
-            object-fit: cover; /* Mobile vẫn dùng cover để tối ưu space */
-            background-color: transparent;
-        }
     }
 
     .carousel-indicators--custom {
