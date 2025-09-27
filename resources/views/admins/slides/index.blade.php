@@ -12,62 +12,168 @@
                 </div>
 
                 <div class="card-body">
-                    <!-- Add Slide Form -->
-                    <form action="{{ route('admin.slides.store') }}" method="POST" enctype="multipart/form-data" id="slide-form">
-                        @csrf
-                        <div class="row mb-4">
-                            <div class="col-md-8">
-                                <label class="form-label fw-bold">Thêm slide mới:</label>
-                                <input type="file" 
-                                       name="image"
-                                       accept="image/*"
-                                       class="form-control" 
-                                       id="image-input"
-                                       required>
-                            </div>
+                    <!-- Tabs Navigation -->
+                    <ul class="nav nav-tabs" id="slideTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="desktop-tab" data-toggle="tab" href="#desktop" role="tab" aria-controls="desktop" aria-selected="true">
+                                <i class="fas fa-desktop"></i> Desktop (16:9)
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="mobile-tab" data-toggle="tab" href="#mobile" role="tab" aria-controls="mobile" aria-selected="false">
+                                <i class="fas fa-mobile-alt"></i> Mobile (9:16)
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab Content -->
+                    <div class="tab-content mt-3" id="slideTabContent">
+                        <!-- Desktop Tab -->
+                        <div class="tab-pane fade show active" id="desktop" role="tabpanel">
+                            <!-- Desktop Upload Form -->
+                            <form action="{{ route('admin.slides.store') }}" method="POST" enctype="multipart/form-data" id="desktop-form">
+                                @csrf
+                                <input type="hidden" name="is_mobile" value="0">
+                                <div class="row mb-4">
+                                    <div class="col-md-8">
+                                        <label class="form-label fw-bold">Thêm slide Desktop (1920×1080px):</label>
+                                        <input type="file" 
+                                               name="image"
+                                               accept="image/*"
+                                               class="form-control" 
+                                               id="desktop-input"
+                                               required>
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-end">
+                                        <button type="submit" class="btn btn-success" id="desktop-btn" disabled>
+                                            <i class="fas fa-upload"></i> Upload Desktop
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- Desktop Slides Table -->
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th width="100">Ảnh</th>
+                                        <th>Thứ tự</th>
+                                        <th width="100">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($slides->where('is_mobile', false) as $slide)
+                                        <tr>
+                                            <td>
+                                                <img src="{{ $slide->media->file_path }}" 
+                                                        class="img-thumbnail" 
+                                                        style="width: 80px; height: 45px; object-fit: cover;">
+                                            </td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <form action="{{ route('admin.slides.update', $slide->id) }}" method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="is_mobile" value="1">
+                                                        <button type="submit" class="btn btn-sm btn-info" title="Chuyển sang Mobile">
+                                                            <i class="fas fa-mobile-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                    <form action="{{ route('admin.slides.destroy', $slide->id) }}" method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger" title="Xóa slide">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center text-muted">
+                                                Chưa có slide Desktop nào.
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </div>
-                    </form>
 
-                    <hr>
+                        <!-- Mobile Tab -->
+                        <div class="tab-pane fade" id="mobile" role="tabpanel">
+                            <!-- Mobile Upload Form -->
+                            <form action="{{ route('admin.slides.store') }}" method="POST" enctype="multipart/form-data" id="mobile-form">
+                                @csrf
+                                <input type="hidden" name="is_mobile" value="1">
+                                <div class="row mb-4">
+                                    <div class="col-md-8">
+                                        <label class="form-label fw-bold">Thêm slide Mobile (1080×1920px):</label>
+                                        <input type="file" 
+                                               name="image"
+                                               accept="image/*"
+                                               class="form-control" 
+                                               id="mobile-input"
+                                               required>
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-end">
+                                        <button type="submit" class="btn btn-info" id="mobile-btn" disabled>
+                                            <i class="fas fa-upload"></i> Upload Mobile
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
 
-                    <!-- Preview Table -->
-                    <h5>Preview:</h5>
-                    <table class="table table-bordered" id="slides-table">
-                        <thead>
-                            <tr>
-                                <th width="100">Ảnh</th>
-                                <th>Tên file</th>
-                                <th width="100">Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($slides as $index => $slide)
-                                <tr data-index="{{ $index }}">
-                                    <td>
-                                        <img src="{{ $slide->media->file_path }}" 
-                                                class="img-thumbnail" 
-                                                style="width: 80px; height: 60px; object-fit: cover;">
-                                    </td>
-                                    <td>Slide {{ $index + 1 }}</td>
-                                    <td>
-                                        <form action="{{ route('admin.slides.destroy', $slide->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger remove-slide">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr id="no-slides">
-                                    <td colspan="3" class="text-center text-muted">
-                                        Chưa có slide nào. Chọn ảnh để tạo slides.
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            <!-- Mobile Slides Table -->
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th width="100">Ảnh</th>
+                                        <th>Thứ tự</th>
+                                        <th width="100">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($slides->where('is_mobile', true) as $slide)
+                                        <tr>
+                                            <td>
+                                                <img src="{{ $slide->media->file_path }}" 
+                                                        class="img-thumbnail" 
+                                                        style="width: 45px; height: 80px; object-fit: cover;">
+                                            </td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <form action="{{ route('admin.slides.update', $slide->id) }}" method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="is_mobile" value="0">
+                                                        <button type="submit" class="btn btn-sm btn-success" title="Chuyển sang Desktop">
+                                                            <i class="fas fa-desktop"></i>
+                                                        </button>
+                                                    </form>
+                                                    <form action="{{ route('admin.slides.destroy', $slide->id) }}" method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger" title="Xóa slide">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center text-muted">
+                                                Chưa có slide Mobile nào.
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,15 +184,23 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
-    // Auto submit form when file is selected
-    $('#image-input').change(function() {
+    // Enable desktop upload button when file is selected
+    $('#desktop-input').change(function() {
         const file = this.files[0];
         if (file) {
-            // Update status
-            $('#upload-status').html('<i class="fas fa-spinner fa-spin text-primary"></i> Đang upload...');
-            
-            // Submit form
-            $('#slide-form').submit();
+            $('#desktop-btn').prop('disabled', false);
+        } else {
+            $('#desktop-btn').prop('disabled', true);
+        }
+    });
+
+    // Enable mobile upload button when file is selected
+    $('#mobile-input').change(function() {
+        const file = this.files[0];
+        if (file) {
+            $('#mobile-btn').prop('disabled', false);
+        } else {
+            $('#mobile-btn').prop('disabled', true);
         }
     });
 });

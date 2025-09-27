@@ -1,14 +1,27 @@
 @php
 use App\Models\Slide;
 
-$slides = Slide::with('media')->get();
+// Phát hiện thiết bị từ User Agent
+$userAgent = request()->header('User-Agent');
+$isMobile = preg_match('/(Mobile|Android|iPhone|iPad)/', $userAgent);
+
+// Lấy slides phù hợp với thiết bị
+if ($isMobile) {
+    $slides = Slide::mobile()->with('media')->get();
+    // Nếu không có slide mobile, fallback về desktop
+    if ($slides->isEmpty()) {
+        $slides = Slide::desktop()->with('media')->get();
+    }
+} else {
+    $slides = Slide::desktop()->with('media')->get();
+}
 @endphp
 
 @if($slides->isNotEmpty())
 <div class="carousel-wrapper">
     <div class="carousel-spacing carousel-spacing--top"></div>
 
-    <div id="slideCarousel" class="carousel slide slide-carousel" data-ride="carousel">
+    <div id="slideCarousel" class="carousel slide slide-carousel {{ $isMobile && $slides->first()?->is_mobile ? 'mobile-slides' : '' }}" data-ride="carousel">
         <div class="carousel-inner">
             @foreach($slides as $index => $slide)
                 <div class="carousel-item @if($index === 0) active @endif">
@@ -61,7 +74,7 @@ $slides = Slide::with('media')->get();
     }
 
     .slide-carousel .carousel-item {
-        height: 56.25vh;
+        height: 56.25vh; /* Tỉ lệ 16:9 chuẩn */
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
@@ -89,11 +102,31 @@ $slides = Slide::with('media')->get();
 
     @media (max-width: 480px) {
         .slide-carousel .carousel-item {
-            height: 45vh;
+            height: 40vh; /* Giảm thêm cho mobile nhỏ */
         }
         
-        .carousel-spacing--top { height: 15px; }
-        .carousel-spacing--bottom { height: 20px; }
+        .carousel-spacing--top { height: 10px; }
+        .carousel-spacing--bottom { height: 15px; }
+    }
+
+    /* Tối ưu cho điện thoại ngang */
+    @media (max-width: 768px) and (orientation: landscape) {
+        .slide-carousel .carousel-item {
+            height: 70vh; /* Tăng chiều cao khi ngang */
+        }
+    }
+
+    /* CSS cho slide mobile (9:16) */
+    @media (max-width: 768px) {
+        .slide-carousel.mobile-slides .carousel-item {
+            height: 80vh; /* Chiều cao lớn hơn cho slide mobile */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .slide-carousel.mobile-slides .carousel-item {
+            height: 75vh; /* Điều chỉnh cho màn hình nhỏ */
+        }
     }
 
     .carousel-indicators--custom {
