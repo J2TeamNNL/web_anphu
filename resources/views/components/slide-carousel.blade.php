@@ -68,26 +68,24 @@ $slides = Slide::with('media')->get();
 
     .slide-carousel .carousel-item {
         width: 100vw;
-        height: auto; /* Để ảnh quyết định chiều cao */
-        min-height: 300px; /* Chiều cao tối thiểu */
-        max-height: 80vh; /* Giới hạn tối đa */
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 70vh; /* Giới hạn để không quá cao */
         transition: transform 0.8s ease, opacity 0.8s ease;
         background-color: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 
-    /* Desktop lớn */
+    /* Desktop lớn - màn hình rộng */
     @media (min-width: 1400px) {
         .slide-carousel .carousel-item {
-            max-height: 70vh;
+            height: 50vw; /* Tỷ lệ rộng hơn cho desktop */
+            max-height: 65vh;
         }
     }
 
     /* MacBook và laptop */
     @media (min-width: 1024px) and (max-width: 1399px) {
         .slide-carousel .carousel-item {
+            height: 52vw; /* Điều chỉnh cho MacBook */
             max-height: 60vh;
         }
     }
@@ -95,7 +93,8 @@ $slides = Slide::with('media')->get();
     /* Tablet */
     @media (max-width: 768px) {
         .slide-carousel .carousel-item {
-            max-height: 50vh; /* Tablet */
+            height: 60vw; /* Tỷ lệ cho tablet */
+            max-height: 50vh;
         }
 
         .carousel-spacing--top { height: 20px; }
@@ -105,24 +104,21 @@ $slides = Slide::with('media')->get();
     /* Mobile */
     @media (max-width: 480px) {
         .slide-carousel .carousel-item {
-            max-height: 40vh; /* Mobile */
-            min-height: 200px;
+            height: 70vw; /* Tỷ lệ cho mobile */
+            max-height: 40vh;
         }
 
         .carousel-spacing--top { height: 15px; }
         .carousel-spacing--bottom { height: 20px; }
     }
 
-    /* Image styling - No crop solution */
+    /* Image styling - Smart cover */
     .slide-carousel .carousel-item img {
-        max-width: 100vw;
-        max-height: 100%;
-        width: auto;
-        height: auto;
-        object-fit: contain; /* Không crop - hiển thị toàn bộ ảnh */
-        object-position: center;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Cover nhưng với tỷ lệ thông minh */
+        object-position: center center;
         border-radius: 0;
-        display: block;
     }
 
     .carousel-image {
