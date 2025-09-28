@@ -1069,12 +1069,12 @@ BUTTONS
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    transform: translateY(100%);
+    transform: translateY(0);
     transition: transform 0.4s ease;
 }
 
 .card-project:hover .project-overlay {
-    transform: translateY(0);
+    transform: translateY(100%);
 }
 
 
