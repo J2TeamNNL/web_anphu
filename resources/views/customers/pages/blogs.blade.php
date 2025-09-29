@@ -1,102 +1,5 @@
 @extends('customers.layouts.master')
 
-@push('styles')
-<style>
-    :root {
-        --lux-dark: #0b1c2c; /* xanh than đậm */
-        --lux-dark-2: #081420;
-        --lux-gold: var(--color-secondary); /* vàng ánh kim */
-        --lux-gold-light: #e4c465;
-        --lux-text-light: #f5f2e7;
-    }
-
-    #blog {
-        background-color: var(--lux-dark);
-        color: var(--lux-text-light);
-    }
-
-    #blog-title {
-        color: var(--lux-gold);
-    }
-
-    #blog hr {
-        border-top: 2px solid var(--lux-gold);
-        width: 60px;
-        margin: 0 auto;
-    }
-
-    /* Filter Buttons */
-    .btn-luxury {
-        color: var(--lux-gold);
-        border: 1px solid var(--lux-gold);
-        background-color: transparent;
-        font-weight: 600;
-        font-size: 0.9rem;
-        padding: 6px 14px;
-        margin: 0 4px;
-        border-radius: 10px;
-        transition: all 0.3s ease;
-    }
-    .btn-luxury:hover,
-    .btn-luxury.active {
-        background-color: var(--lux-gold);
-        color: var(--lux-dark);
-    }
-
-    /* Blog Card */
-    .card-blog {
-        border: 1px solid var(--lux-gold);
-        border-radius: 8px;
-        overflow: hidden;
-        position: relative;
-        min-height: 250px;
-        transition: transform 0.3s ease;
-    }
-    .card-blog:hover {
-        transform: translateY(-4px);
-    }
-    .blog-overlay {
-        background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-    }
-    .blog-overlay h5 {
-        color: var(--lux-gold-light);
-    }
-    .blog-overlay p {
-        color: var(--lux-text-light);
-    }
-
-    /* Pagination */
-    .pagination .page-link {
-        background-color: transparent;
-        border: 1px solid var(--lux-gold);
-        color: var(--lux-gold);
-    }
-    .pagination .page-item.active .page-link {
-        background-color: var(--lux-gold);
-        color: var(--lux-dark);
-        border-color: var(--lux-gold);
-    }
-
-    .section-bg-blog-detail {
-        background-color: var(--lux-dark);
-        background-image:
-            linear-gradient(rgba(11, 28, 44, 0.85), rgba(11, 28, 44, 0.85)),
-            url('/assets/img/gallery/background_danmask_1.jpg');
-        background-position: center;
-        background-repeat: repeat;
-        background-size: auto;
-        background-attachment: fixed;
-        position: relative;
-        border-bottom: 2px solid var(--lux-gold);
-        width: 100%;
-    }
-</style>
-@endpush
-
 @section('content')
 <section id="blog" class="py-5 section-bg-blog-detail">
     <div class="container-fluid px-5">
@@ -134,10 +37,6 @@
                              style="background-image: url('{{ $article->thumbnail }}'); background-size: cover; background-position: center;">
                             <div class="blog-overlay p-3">
                                 <h5 class="font-weight-bold">{{ $article->name }}</h5>
-
-                                @if (!empty($article->category))
-                                    <p class="mb-0 font-weight-bold">Chủ đề: {{ $article->category->name }}</p>
-                                @endif
 
                                 @if (!empty($article->category))
                                     <p class="mb-0 font-weight-bold small">

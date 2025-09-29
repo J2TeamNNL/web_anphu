@@ -1079,7 +1079,22 @@ BUTTONS
 
 
 
-/* ARTICLE */
+/* ARTICLE & BLOG PAGES */
+#blog {
+    background-color: var(--lux-dark);
+    color: var(--lux-text-light);
+}
+
+#blog-title {
+    color: var(--lux-gold);
+}
+
+#blog hr {
+    border-top: 2px solid var(--lux-gold);
+    width: 60px;
+    margin: 0 auto;
+}
+
 #blog .btn-outline-warning {
     color: var(--color-primary);
     border-color: var(--color-dark);
@@ -1092,14 +1107,34 @@ BUTTONS
     color: #000;
 }
 
+/* Filter Buttons */
+.btn-luxury {
+    color: var(--lux-gold);
+    border: 1px solid var(--lux-gold);
+    background-color: transparent;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 6px 14px;
+    margin: 0 4px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+.btn-luxury:hover,
+.btn-luxury.active {
+    background-color: var(--lux-gold);
+    color: var(--lux-dark);
+}
+
 .card-blog {
+    border: 1px solid var(--lux-gold);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    min-height: 250px;
     height: 350px;
     background-size: cover;
     background-position: center;
-    border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-    overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -1120,12 +1155,35 @@ BUTTONS
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    transform: translateY(100%);
+    transform: translateY(0);
     transition: transform 0.4s ease;
 }
 
 .card-blog:hover .blog-overlay {
-    transform: translateY(0);
+    transform: translateY(100%);
+}
+
+/* Blog overlay styling */
+.blog-overlay h5 {
+    color: var(--lux-gold-light);
+}
+.blog-overlay p {
+    color: var(--lux-text-light);
+}
+
+/* Blog section background */
+.section-bg-blog-detail {
+    background-color: var(--lux-dark);
+    background-image:
+        linear-gradient(rgba(11, 28, 44, 0.85), rgba(11, 28, 44, 0.85)),
+        url('/assets/img/gallery/background_danmask_1.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: auto;
+    background-attachment: fixed;
+    position: relative;
+    border-bottom: 2px solid var(--lux-gold);
+    width: 100%;
 }
 
 /* ADMIN PAGINATION */
@@ -1157,6 +1215,18 @@ BUTTONS
     background-color: #007bff;
     color: #fff;
     border-color: #007bff;
+}
+
+/* Blog page pagination luxury theme */
+#blog .pagination .page-link {
+    background-color: transparent;
+    border: 1px solid var(--lux-gold);
+    color: var(--lux-gold);
+}
+#blog .pagination .page-item.active .page-link {
+    background-color: var(--lux-gold);
+    color: var(--lux-dark);
+    border-color: var(--lux-gold);
 }
 
 .pagination .page-item.disabled .page-link {
