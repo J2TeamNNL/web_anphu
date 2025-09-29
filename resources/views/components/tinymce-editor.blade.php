@@ -38,7 +38,7 @@
 
 @push('scripts')
     @once
-        <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
+        <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script src="{{ asset('js/tinymce-editor.js') }}"></script>
     @endonce
 

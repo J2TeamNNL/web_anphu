@@ -1,0 +1,11 @@
+# TinyMCE Security
+<Files "*.php">
+    Require all denied
+</Files>
+
+# Cache static files
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/css "access plus 1 year"
+</IfModule>
