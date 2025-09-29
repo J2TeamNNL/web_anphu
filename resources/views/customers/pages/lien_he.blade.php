@@ -11,7 +11,7 @@
 
     }
 
-    .section-bg-contact {
+    .section-bg {
         background-color: var(--lux-dark);
         background-image:
             linear-gradient(rgba(11, 28, 44, 0.85), rgba(11, 28, 44, 0.85)),
@@ -159,7 +159,7 @@
 
 @section('content')
 
-<section class="py-5 section-bg-contact">
+<section class="py-5 section-bg">
     <h4 class="heading-contact mb-4">Liên hệ với chúng tôi</h4>
 
     <div class="container py-3">

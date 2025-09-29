@@ -1,28 +1,5 @@
 @extends('customers.layouts.master')
 
-@push('styles')
-<style>
-    :root {
-        --lux-dark: #0b1c2c;
-        --lux-dark-2: #081420;
-        --lux-gold: var(--color-secondary);
-        --lux-gold-light: #e4c465;
-        --lux-text-light: #f5f2e7;
-    }
-
-    .section-bg-project-detail {
-        background-color: var(--lux-dark);
-        background-image:
-            linear-gradient(rgba(11, 28, 44, 0.85), rgba(11, 28, 44, 0.85)),
-            url('/assets/img/gallery/background_danmask_1.jpg');
-        background-position: center;
-        background-repeat: repeat;
-        background-size: auto;
-        background-attachment: fixed;
-        position: relative;
-        border-bottom: 2px solid var(--lux-gold);
-        width: 100%;
-    }
     
     .portfolio-wrapper {
         display: flex;
@@ -190,7 +167,7 @@
 @endpush
 
 @section('content')
-<section class="py-4 section-bg-project-detail">
+<section class="py-4 section-bg">
     <div class="container my-4">
         <h2 class="mb-3 portfolio-title">{{ $portfolio->name }}</h2>
         <p class="text-muted small">

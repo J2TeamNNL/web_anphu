@@ -1,7 +1,7 @@
 @extends('customers.layouts.master')
 
 @section('content')
-<section id="blog" class="py-5 section-bg-blog-detail">
+<section id="blog" class="py-5 section-bg">
     <div class="container-fluid px-5">
 
         <div class="text-center mb-4">

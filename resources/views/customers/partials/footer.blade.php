@@ -25,7 +25,7 @@
     }
 </style>
 
-<footer class="footer-info pt-5 section-bg-footer">
+<footer class="footer-info pt-5 section-bg">
     <div class="container footer-wrapper">
         <div class="row">
             <div class="col-md-6 mb-4">

@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <section id="project" class="bg-white py-5 section-bg-project">
+    <section id="project" class="bg-white py-5 section-bg">
         <div class="container-fluid px-5">
 
             <div class="text-center mb-4 project-luxury-gold">

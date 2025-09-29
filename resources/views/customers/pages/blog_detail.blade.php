@@ -1,184 +1,15 @@
 @extends('customers.layouts.master')
 
-@push('styles')
-<style>
-:root {
-    --lux-dark: #0b1c2c;
-    --lux-dark-2: #081420;
-    --lux-gold: var(--color-secondary);
-    --lux-gold-light: #e4c465;
-    --lux-text-light: #f5f2e7;
-}
-
-.section-bg-blog-detail {
-    background-color: var(--lux-dark);
-    background-image:
-        linear-gradient(rgba(11, 28, 44, 0.85), rgba(11, 28, 44, 0.85)),
-        url('/assets/img/gallery/background_danmask_1.jpg');
-    background-position: center;
-    background-repeat: repeat;
-    background-size: auto;
-    background-attachment: fixed;
-    position: relative;
-    /* border-bottom: 2px solid var(--lux-gold); */
-    width: 100%;
-}
-
-.blog-wrapper {
-    display: flex;
-    gap: 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: flex-start;
-}
-
-/* Cột trái: bài viết */
-.blog-content {
-    flex: 1;
-    padding: 2rem;
-    background-color: var(--lux-dark-2);
-    border: 1px solid var(--lux-gold);
-    border-radius: 8px;
-    color: var(--lux-text-light);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-}
-
-.blog-content img {
-    max-width: 100% !important;
-    height: auto !important;
-    display: block;
-    margin: 0 auto;
-    border-radius: 6px;
-    border: 1px solid var(--lux-gold);
-}
-
-/* Cột phải: TOC + extra */
-.blog-right {
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    position: sticky;
-    top: 100px;
-    align-self: flex-start;
-}
-
-/* TOC */
-.blog-toc {
-    background: var(--lux-dark-2);
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--lux-gold);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    color: var(--lux-text-light);
-}
-.blog-toc h5 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--lux-gold);
-}
-.blog-toc ul {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-}
-.blog-toc li {
-    margin-bottom: 0.4rem;
-    line-height: 1.4;
-}
-.blog-toc a {
-    text-decoration: none;
-    color: var(--lux-text-light);
-    font-size: 0.9rem;
-    display: block;
-    padding: 6px 8px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-.blog-toc a:hover {
-    background-color: rgba(201,176,55,0.15);
-    color: var(--lux-gold-light);
-}
-.blog-toc a.active {
-    background-color: var(--lux-gold);
-    color: var(--lux-dark);
-    font-weight: 500;
-}
-
-/* Extra content */
-.blog-extra {
-    background: var(--lux-dark-2);
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--lux-gold);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    color: var(--lux-text-light);
-}
-.blog-extra h5 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--lux-gold);
-}
-.blog-extra p {
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-/* Media gallery */
-.img-wrapper {
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-    border-radius: 6px;
-}
-.img-wrapper img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    border: 1px solid var(--lux-gold);
-}
-
-.blog-overlay {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.685).404), rgba(0, 0, 0, 0.822);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    border: 1px solid var(--lux-text-light);
-}
-.blog-overlay h5 {
-    color: var(--lux-gold-light);
-    font-weight: 600;
-}
-.blog-overlay p {
-    color: var(--lux-text-light);
-}
-
-/* Responsive */
-@media (max-width:1024px){
-    .blog-wrapper{
-        flex-direction: column;
-    }
-    .blog-right{
-        width: 100%;
-        position: static;
-    }
-}
-</style>
-@endpush
-
 @section('content')
 
 @php
 use Illuminate\Support\Str;
 @endphp
-<section class="py-5 section-bg-blog-detail">
+<section class="py-5 section-bg">
 <div class="container my-4">
-    <div class="blog-wrapper">
+    <div class="page-wrapper">
         <!-- Cột trái: nội dung bài viết -->
-        <div class="blog-content" id="blog-content">
+        <div class="main-content" id="blog-content">
             <h2>{{ $article->name }}</h2>
             <p class="text-muted small">Đăng ngày {{ $article->created_at->format('d/m/Y') }}</p>
             <div class="ql-editor">
@@ -217,10 +48,10 @@ use Illuminate\Support\Str;
         </div>
 
         <!-- Cột phải: TOC + extra -->
-        <div class="blog-right">
-            <aside class="blog-toc">
+        <div class="sidebar">
+            <aside class="sidebar-box">
                 <h5>Mục lục</h5>
-                <ul id="blog-toc-list"></ul>
+                <ul class="toc-list" id="blog-toc-list"></ul>
             </aside>
 
             <x-sidebar-articles 
@@ -228,7 +59,7 @@ use Illuminate\Support\Str;
                 :cam-nhan-articles="$camNhanArticles"
                 :show-category="true"
                 :show-date="true" 
-                class="blog-extra" />
+                class="sidebar-box" />
         </div>
     </div>
 </div>

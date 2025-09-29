@@ -33,12 +33,6 @@ $duAnThietKeKienTrucVaNoiThat = Portfolio::query()
 
 @extends('customers.layouts.master')
 
-@push('styles')
-<style>
-
-
-</style>
-@endpush
 
 @section('content')
     {{-- Slide Carousel Component --}}
@@ -48,7 +42,7 @@ $duAnThietKeKienTrucVaNoiThat = Portfolio::query()
     <x-about-tabs />
 
     {{-- PROJECT GRID COMPONENT --}}
-    <section class="bg-white py-5 section-bg-project">
+    <section class="bg-white py-5 section-bg">
         <div class="container-fluid px-5">
 
             <div class="text-center mb-4 project-luxury-gold">
@@ -61,7 +55,7 @@ $duAnThietKeKienTrucVaNoiThat = Portfolio::query()
         </div>
     </section>
 
-    <section class="bg-white py-5 section-bg-project">
+    <section class="bg-white py-5 section-bg">
         <div class="container-fluid px-5">
 
             <div class="text-center mb-4 project-luxury-gold">

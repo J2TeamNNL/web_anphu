@@ -80,7 +80,7 @@ use App\Models\Service;
 $services = Service::all();
 @endphp
 
-<section class="bg-light py-5 section-bg-solution">
+<section class="bg-light py-5 section-bg">
    <div class="container">
         <div class="text-center mb-5">
                 <h3 class="text-warning font-weight-bold">GIẢI PHÁP TOÀN DIỆN</h3>

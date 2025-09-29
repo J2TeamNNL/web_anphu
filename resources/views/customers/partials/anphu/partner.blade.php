@@ -1,7 +1,7 @@
 @push('styles')
 <style>
   .logo-marquee {
-    background: inherit; /* Kế thừa nền từ section-bg-partner */
+    background: inherit; /* Kế thừa nền từ section-bg */
     padding: 10px; /* cho logo không sát viền */
     overflow: hidden; /* tránh logo tràn ra ngoài */
     border-radius: 8px; /* bo góc nếu muốn */
@@ -36,7 +36,7 @@
   }
 
   .logo-marquee {
-    background: inherit; /* lấy nền từ section-bg-partner */
+    background: inherit; /* lấy nền từ section-bg */
     width: 100%;
     overflow: hidden; /* ẩn phần tràn khi chạy */
     padding: 10px 0; /* khoảng cách trên dưới */
@@ -61,7 +61,7 @@
 
 @if ($partners->isNotEmpty())
 <!-- ĐỐI TÁC TIN CẬY -->
-<section class="py-4 section-bg-partner">
+<section class="py-4 section-bg">
   <div class="container">
     <h5 class="text-warning font-weight-bold">ĐỐI TÁC TIN CẬY</h5>
   </div>

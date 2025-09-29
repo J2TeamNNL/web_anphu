@@ -10,7 +10,7 @@
     --lux-text-light: #f5f2e7;
 }
 
-.section-bg-policy-detail {
+.section-bg {
     background-color: var(--lux-dark);
     background-image:
         linear-gradient(rgba(11, 28, 44, 0.85), rgba(11, 28, 44, 0.85)),
@@ -134,7 +134,7 @@
 @endpush
 
 @section('content')
-<section class="py-4 section-bg-policy-detail">
+<section class="py-4 section-bg">
     <div class="container my-4 policy-wrapper">
         <!-- Nội dung chính -->
         <div class="policy-content" id="policy-content">
