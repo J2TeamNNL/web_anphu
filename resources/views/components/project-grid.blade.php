@@ -9,20 +9,26 @@
                     <div class="card card-project"
                          style="background-image: url('{{ $item->thumbnail }}');">
                         <div class="project-overlay text-white">
+                            @if($item->client)
                             <p class="mb-1">
                                 <i class="fa fa-user mr-2 text-warning"></i> Chủ đầu tư:
                                 {{ $item->client }}
                             </p>
+                            @endif
 
+                            @if($item->location)
                             <p class="mb-1">
                                 <i class="fa fa-map-marker-alt mr-2 text-warning"></i> Địa điểm:
                                 {{ $item->location }}
                             </p>
+                            @endif
 
+                            @if($item->area)
                             <p class="mb-1">
                                 <i class="fa fa-ruler-combined mr-2 text-warning"></i> Diện tích:
                                 {{ $item->area }}
                             </p>
+                            @endif
 
                             @if($item->story)
                             <p class="mb-1">
