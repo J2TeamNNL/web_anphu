@@ -16,12 +16,12 @@
                     <ul class="nav nav-tabs" id="slideTabs" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" id="desktop-tab" data-toggle="tab" href="#desktop" role="tab" aria-controls="desktop" aria-selected="true">
-                                <i class="fas fa-desktop"></i> Desktop (16:9)
+                                <i class="fas fa-desktop"></i> Desktop (21:9)
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="mobile-tab" data-toggle="tab" href="#mobile" role="tab" aria-controls="mobile" aria-selected="false">
-                                <i class="fas fa-mobile-alt"></i> Mobile (9:16)
+                                <i class="fas fa-mobile-alt"></i> Mobile (4:3)
                             </a>
                         </li>
                     </ul>
@@ -36,7 +36,7 @@
                                 <input type="hidden" name="is_mobile" value="0">
                                 <div class="row mb-4">
                                     <div class="col-md-8">
-                                        <label class="form-label fw-bold">Thêm slide Desktop (1920×1080px):</label>
+                                        <label class="form-label fw-bold">Thêm slide Desktop (21:9 - VD: 2100×900px):</label>
                                         <input type="file" 
                                                name="image"
                                                accept="image/*"
@@ -68,7 +68,7 @@
                                             <td>
                                                 <img src="{{ $slide->media->file_path }}" 
                                                         class="img-thumbnail" 
-                                                        style="width: 320px; height: 180px; object-fit: cover;">
+                                                        style="width: 280px; height: 120px; object-fit: cover;">
                                             </td>
                                             <td>
                                                 <div class="btn-group">
@@ -109,7 +109,7 @@
                                 <input type="hidden" name="is_mobile" value="1">
                                 <div class="row mb-4">
                                     <div class="col-md-8">
-                                        <label class="form-label fw-bold">Thêm slide Mobile (1080×1920px):</label>
+                                        <label class="form-label fw-bold">Thêm slide Mobile (4:3 - VD: 1200×900px):</label>
                                         <input type="file" 
                                                name="image"
                                                accept="image/*"
@@ -141,7 +141,7 @@
                                             <td>
                                                 <img src="{{ $slide->media->file_path }}" 
                                                         class="img-thumbnail" 
-                                                        style="width: 180px; height: 320px; object-fit: cover;">
+                                                        style="width: 240px; height: 180px; object-fit: cover;">
                                             </td>
                                             <td>
                                                 <div class="btn-group">

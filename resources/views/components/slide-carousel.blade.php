@@ -74,59 +74,41 @@ if ($isMobile) {
     }
 
     .slide-carousel .carousel-item {
-        height: 56.25vh; /* Tỉ lệ 16:9 chuẩn */
+        width: 100%;
+        aspect-ratio: 21/9; /* Tỉ lệ rộng cho banner desktop */
+        overflow: hidden;
         transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
     .carousel-image {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain; /* Hiển thị toàn bộ ảnh không bị cắt */
         object-position: center;
         border: 1px solid var(--color-secondary);
         display: block;
-        flex-shrink: 0;
+        background-color: #000; /* Nền đen cho phần trống nếu có */
         image-rendering: -webkit-optimize-contrast;
         image-rendering: crisp-edges;
     }
 
-    /* Responsive cho mobile */
-    @media (max-width: 768px) {
+    /* Mobile - chỉ áp dụng cho màn hình dọc nhỏ */
+    @media (max-width: 768px) and (orientation: portrait) {
         .slide-carousel .carousel-item {
-            height: 50vh;
+            aspect-ratio: 4/3; /* Tỉ lệ cho mobile dọc */
         }
         
         .carousel-spacing--top { height: 20px; }
         .carousel-spacing--bottom { height: 30px; }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 480px) and (orientation: portrait) {
         .slide-carousel .carousel-item {
-            height: 40vh; /* Giảm thêm cho mobile nhỏ */
+            aspect-ratio: 4/3; /* Tỉ lệ cho mobile nhỏ dọc */
         }
         
         .carousel-spacing--top { height: 10px; }
         .carousel-spacing--bottom { height: 15px; }
-    }
-
-    /* Tối ưu cho điện thoại ngang */
-    @media (max-width: 768px) and (orientation: landscape) {
-        .slide-carousel .carousel-item {
-            height: 70vh; /* Tăng chiều cao khi ngang */
-        }
-    }
-
-    /* CSS cho slide mobile (9:16) */
-    @media (max-width: 768px) {
-        .slide-carousel.mobile-slides .carousel-item {
-            height: 80vh; /* Chiều cao lớn hơn cho slide mobile */
-        }
-    }
-
-    @media (max-width: 480px) {
-        .slide-carousel.mobile-slides .carousel-item {
-            height: 75vh; /* Điều chỉnh cho màn hình nhỏ */
-        }
     }
 
     .carousel-indicators--custom {
