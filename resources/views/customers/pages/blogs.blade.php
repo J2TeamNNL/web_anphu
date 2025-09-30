@@ -34,17 +34,9 @@
                 <div class="col-md-4 mb-4 blog-item">
                     <a href="{{ route('customers.blog.detail', $article->slug) }}" class="text-decoration-none">
                         <div class="card card-blog"
-                             style="background-image: url('{{ $article->thumbnail }}'); background-size: cover; background-position: center;">
-                            <div class="blog-overlay p-3">
-                                <h5 class="font-weight-bold">{{ $article->name }}</h5>
-
-                                @if (!empty($article->category))
-                                    <p class="mb-0 font-weight-bold small">
-                                        Đăng ngày {{ $article->created_at->format('d/m/Y') }}
-                                    </p>
-                                @endif
-                            </div>
+                             style="background-image: url('{{ $article->thumbnail }}');">
                         </div>
+                        <h5 class="font-weight-bold text-warning text-center">{{ $article->name }}</h5>
                     </a>
                 </div>
             @endforeach

@@ -9,8 +9,6 @@
                     <div class="card card-project"
                          style="background-image: url('{{ $item->thumbnail }}');">
                         <div class="project-overlay text-white">
-                            <h5 class="font-weight-bold text-warning">{{ $item->name }}</h5>
-
                             <p class="mb-1">
                                 <i class="fa fa-user mr-2 text-warning"></i> Chủ đầu tư:
                                 {{ $item->client }}
@@ -26,10 +24,12 @@
                                 {{ $item->area }}
                             </p>
 
+                            @if($item->story)
                             <p class="mb-1">
                                 <i class="fa fa-ruler-combined mr-2 text-warning"></i> Số tầng:
                                 {{ $item->story }}
                             </p>
+                            @endif
 
                             @if($item->category)
                             <p class="mb-0">
@@ -39,6 +39,7 @@
                             @endif
                         </div>
                     </div>
+                    <h5 class="font-weight-bold text-warning text-center">{{ $item->name }}</h5>
                 </div>
             </a>
         @endforeach
