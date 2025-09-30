@@ -1934,6 +1934,29 @@ BUTTONS
 }
 
 /* --------------------------
+   PORTFOLIO DETAIL PAGE
+--------------------------- */
+.portfolio-title {
+    color: var(--lux-gold);
+    text-shadow: 0 1px 1px rgba(201, 176, 55, 0.7);
+    font-weight: bold;
+    min-height: 48px;
+}
+
+/* Video embed trong content */
+.ql-editor .ql-video,
+.main-content .ql-video {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: 1px solid var(--lux-text-light);
+    border-radius: 10px;
+    margin: 1.5rem 0;
+}
+
+/* --------------------------
    RESPONSIVE CHUNG CHO TẤT CẢ LAYOUTS
 --------------------------- */
 /* --------------------------

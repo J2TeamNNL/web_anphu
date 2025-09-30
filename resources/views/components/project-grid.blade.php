@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 @props(['portfolios'])
 
 <div class="project-grid-wrapper">
@@ -45,7 +48,9 @@
                             @endif
                         </div>
                     </div>
-                    <h5 class="font-weight-bold text-warning text-center">{{ $item->name }}</h5>
+                    <h5 class="font-weight-bold text-warning text-center">
+                        {{ Str::limit($item->name, 70) }}
+                    </h5>
                 </div>
             </a>
         @endforeach
