@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 @extends('customers.layouts.master')
 
 @section('content')
@@ -36,7 +39,9 @@
                         <div class="card card-blog"
                              style="background-image: url('{{ $article->thumbnail }}');">
                         </div>
-                        <h5 class="font-weight-bold text-warning text-center">{{ $article->name }}</h5>
+                        <h5 class="font-weight-bold text-warning text-center">
+                            {{ Str::limit($article->name, 70) }}
+                        </h5>
                     </a>
                 </div>
             @endforeach
