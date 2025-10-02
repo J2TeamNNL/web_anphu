@@ -90,7 +90,6 @@ class FacebookApiService
         }
 
         $response = $this->client
-            // ->dd()
             ->get("{$this->pageId}/posts", $params);
 
         if (!$response->successful()) {

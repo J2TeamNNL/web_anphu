@@ -12,7 +12,6 @@ class CompanySettingController extends Controller
     public function edit()
     {
         $setting = CompanySetting::first();
-        // dd($setting->toArray());
         return view('admins.settings.company.edit', [
             'setting' => $setting,
         ]);
