@@ -133,7 +133,6 @@ class PortfolioController extends Controller
 
     public function update(UpdatePortfolioRequest $request, Portfolio $portfolio, CloudinaryService $cloudinaryService)
     {
-        dd($request->all());
         $data = $request->validated();
 
         if ($request->hasFile('thumbnail')) {
